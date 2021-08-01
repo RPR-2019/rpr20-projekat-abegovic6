@@ -329,6 +329,11 @@ public class ProjectDAO {
         return LocalDateTime.parse(string, formatter);
     }
 
+    private String localeDateTimeToString(LocalDateTime date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return date.format(formatter);
+    }
+
     private NoteColor stringToNoteColor(String string) {
         return NoteColor.valueOf(string);
     }

@@ -34,4 +34,8 @@ CREATE TABLE IF NOT EXISTS "account" (
 	"password"	TEXT,
 	PRIMARY KEY("id")
 );
+CREATE TABLE IF NOT EXISTS "intertable" (
+	"noteId"	INTEGER,
+	"labelId"	INTEGER
+);
 COMMIT;

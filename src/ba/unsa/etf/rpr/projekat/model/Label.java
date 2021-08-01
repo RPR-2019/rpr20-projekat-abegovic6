@@ -31,7 +31,7 @@ public class Label {
     }
 
     public void setLabelName(String labelName) {
-        this.labelName = labelName;
+        this.labelName = labelName.substring(0, 1).toUpperCase() + labelName.substring(1);;
     }
 
     public String getDescription() {

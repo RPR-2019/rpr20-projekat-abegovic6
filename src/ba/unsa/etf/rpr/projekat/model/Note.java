@@ -48,7 +48,7 @@ public class Note {
     }
 
     public void setNoteTitle(String noteTitle) {
-        this.noteTitle = noteTitle;
+        this.noteTitle = noteTitle.substring(0, 1).toUpperCase() + noteTitle.substring(1);
     }
 
     public String getDescription() {

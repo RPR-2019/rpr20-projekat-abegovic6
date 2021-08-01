@@ -25,7 +25,7 @@ public class Group {
     }
 
     public void setGroupName(String groupName) {
-        this.groupName = groupName;
+        this.groupName = groupName.substring(0, 1).toUpperCase() + groupName.substring(1);;
     }
 
     public String getDescription() {

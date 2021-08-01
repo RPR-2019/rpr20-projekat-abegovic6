@@ -6,8 +6,6 @@ import java.util.regex.Pattern;
 
 
 public class Account {
-
-    public static class AccountStatic {
         private int id;
         private String firstName;
         private String lastName;
@@ -15,7 +13,7 @@ public class Account {
         private String emailAdress;
         private String password;
 
-        public AccountStatic() {
+        public Account() {
         }
 
         private static void validateEmailAddress(String emailAddress) {
@@ -117,7 +115,7 @@ public class Account {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-            AccountStatic account = (AccountStatic) o;
+            Account account = (Account) o;
             return id == account.id &&
                     userName.equals(account.userName) &&
                     emailAdress.equals(account.emailAdress);
@@ -128,5 +126,3 @@ public class Account {
             return Objects.hash(id, userName, emailAdress);
         }
     }
-
-}

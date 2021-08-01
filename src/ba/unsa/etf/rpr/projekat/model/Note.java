@@ -19,11 +19,11 @@ public class Note {
         labels = new ArrayList<>();
     }
 
-    public NoteColor getColor() {
+    public NoteColor getNoteColor() {
         return noteColor;
     }
 
-    public void setColor(NoteColor groupColor) {
+    public void setNoteColor(NoteColor groupColor) {
         this.noteColor = groupColor;
     }
 

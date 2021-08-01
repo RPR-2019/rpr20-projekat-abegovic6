@@ -1,8 +1,16 @@
-package ba.unsa.etf.rpr.projekat;
+package ba.unsa.etf.rpr.projekat.database;
+
+
+import ba.unsa.etf.rpr.projekat.model.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class ProjectDAO {
@@ -22,7 +30,7 @@ public class ProjectDAO {
     // LABELS
     private PreparedStatement createLabelStatement, getAllLabelsForAccountStatement, deleteLabelStatement,
             updateLabelNameLabelStatement, updateDescriptionLabelStatement, updateLabelColorLabelStatement,
-            getNewIdLabelStatement, deleteLabelsForAccountStatement;
+            getNewIdLabelStatement, deleteLabelsForAccountStatement, getLabelFromIdStatement;
 
     // INTERTABLE
     private PreparedStatement getAllLabelsIdForNoteStatement, getAllNotesIdForNoteStatement, addNewLabelForNoteStatement,
@@ -72,6 +80,7 @@ public class ProjectDAO {
                 createLabelStatement = connection.prepareStatement("INSERT INTO label (id, accountId, labelName, " +
                         "description, labelColor) VALUES (?, ?, ?, ?, ?)");
                 getAllLabelsForAccountStatement = connection.prepareStatement("SELECT * FROM label WHERE accountId = ?");
+                getLabelFromIdStatement = connection.prepareStatement("SELECT * FROM label WHERE id = ?");
                 updateLabelNameLabelStatement = connection.prepareStatement("UPDATE label SET labelName = ? WHERE id = ?");
                 updateLabelColorLabelStatement = connection.prepareStatement("UPDATE label SET labelColor = ? WHERE id = ?");
                 updateDescriptionLabelStatement = connection.prepareStatement("UPDATE label SET description = ? WHERE id = ?");
@@ -106,6 +115,9 @@ public class ProjectDAO {
         }
     }
 
+    // ------------------------------------------------------------------------------- //
+
+    // METHODS FOR DATABASE
     public static ProjectDAO getInstance() {
         if(instance == null) instance = new ProjectDAO();
         return instance;
@@ -156,7 +168,214 @@ public class ProjectDAO {
 
     }
 
+    // ------------------------------------------------------------------------------- //
 
+    // ACCOUNT
+    public Account getAccountFromResultSet(ResultSet resultSetAccount) {
+        try {
+            Account account = new Account();
+            if(resultSetAccount.next()) {
+                account.setId(resultSetAccount.getInt(1));
+                account.setFirstName(resultSetAccount.getString(2));
+                account.setLastName(resultSetAccount.getString(3));
+                account.setUserName(resultSetAccount.getString(4));
+                account.setEmailAdress(resultSetAccount.getString(5));
+                account.setPassword(resultSetAccount.getString(6));
+            }
+            return account;
 
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public List<Account> getAccountListFromResultSet(ResultSet resultSetAccountList) {
+        try {
+            List<Account> accounts = new ArrayList<>();
+            while(resultSetAccountList.next()) {
+                resultSetAccountList.previous();
+                accounts.add(getAccountFromResultSet(resultSetAccountList));
+            }
+            return  accounts;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return Collections.emptyList();
+    }
+
+    public boolean deleteAccount(ResultSet resultSet, Account account) {
+        return true;
+    }
+
+    // ------------------------------------------------------------------------------- //
+
+    // GROUP
+    private GroupColor stringToGroupColor(String string) {
+        return GroupColor.valueOf(string);
+    }
+
+    public Group getGroupFromResultSet(ResultSet resultSetGroup) {
+        try {
+            Group group = new Group();
+            if(resultSetGroup.next()) {
+                group.setId(resultSetGroup.getInt(1));
+                group.setAccountId(resultSetGroup.getInt(2));
+                group.setGroupName(resultSetGroup.getString(3));
+                group.setDescription(resultSetGroup.getString(4));
+                group.setGroupColor(stringToGroupColor(resultSetGroup.getString(5)));
+            }
+            return group;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public List<Group> getGroupListFromResultSet(ResultSet resultSetGroupList) {
+        try {
+            List<Group> groups = new ArrayList<>();
+            while(resultSetGroupList.next()) {
+                resultSetGroupList.previous();
+                groups.add(getGroupFromResultSet(resultSetGroupList));
+            }
+            return  groups;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return Collections.emptyList();
+    }
+
+    // ------------------------------------------------------------------------------- //
+
+    // LABEL
+    private LabelColor stringToLabelColor(String string) {
+        return LabelColor.valueOf(string);
+    }
+
+    public Label getLabelFromResultSet(ResultSet resultSetLabel) {
+        try {
+            Label label = new Label();
+            if(resultSetLabel.next()) {
+                label.setId(resultSetLabel.getInt(1));
+                label.setAccountId(resultSetLabel.getInt(2));
+                label.setLabelName(resultSetLabel.getString(3));
+                label.setDescription(resultSetLabel.getString(4));
+                label.setLabelColor(stringToLabelColor(resultSetLabel.getString(5)));
+            }
+            return label;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public Label getLabelFromId(int labelId) {
+        try {
+            getLabelFromIdStatement.setInt(1, labelId);
+            return getLabelFromResultSet(getLabelFromIdStatement.executeQuery());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public List<Label> getLabelListFromResultSet(ResultSet resultSetLabel) {
+        try {
+            List<Label> labels = new ArrayList<>();
+            while(resultSetLabel.next()) {
+                resultSetLabel.previous();
+                labels.add(getLabelFromResultSet(resultSetLabel));
+            }
+            return labels;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return Collections.emptyList();
+    }
+
+    // ------------------------------------------------------------------------------- //
+
+    // INTERTABLE
+    public boolean deleteNotesFromIntertable(ResultSet resultSet, Note note) {
+        return true;
+    }
+
+    public List<Label> getLabelListForNote(int noteId) {
+        try {
+            List<Label> labels = new ArrayList<>();
+            getAllLabelsIdForNoteStatement.setInt(1, noteId);
+            ResultSet resultSet = getAllLabelsIdForNoteStatement.executeQuery();
+            while (resultSet.next()) {
+                labels.add(getLabelFromId(resultSet.getInt(1)));
+            }
+            return labels;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return Collections.emptyList();
+    }
+
+    // ------------------------------------------------------------------------------- //
+
+    // NOTE
+    private LocalDateTime stringToLocalDateTime(String string) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return LocalDateTime.parse(string, formatter);
+    }
+
+    private NoteColor stringToNoteColor(String string) {
+        return NoteColor.valueOf(string);
+    }
+
+    public Note getNoteFromResultSet (ResultSet resultSetNotes) {
+        try {
+            Note note = new Note();
+            if(resultSetNotes.next()) {
+                note.setId(resultSetNotes.getInt(1));
+                note.setGroupId(resultSetNotes.getInt(2));
+                note.setNoteTitle(resultSetNotes.getString(3));
+                note.setDescription(resultSetNotes.getString(4));
+                note.setDateCreated(stringToLocalDateTime(resultSetNotes.getString(5)));
+                note.setDateUpdated(stringToLocalDateTime(resultSetNotes.getString(6)));
+                note.setNoteColor(stringToNoteColor(resultSetNotes.getString(7)));
+                note.setLabels(getLabelListForNote(resultSetNotes.getInt(1)));
+            }
+            return note;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Note> getNoteListFromResultSet(ResultSet resultSetNotes) {
+        try {
+            List<Note> notes = new ArrayList<>();
+            while(resultSetNotes.next()) {
+                resultSetNotes.previous();
+                notes.add(getNoteFromResultSet(resultSetNotes));
+            }
+            return notes;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return Collections.emptyList();
+    }
+
+    public List<Note> getAllNotesForGroup(int groupId) {
+        try {
+            getAllNotesForGroupStatement.setInt(1, groupId);
+            return getNoteListFromResultSet(getAllNotesForGroupStatement.executeQuery());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return Collections.emptyList();
+    }
 
 }

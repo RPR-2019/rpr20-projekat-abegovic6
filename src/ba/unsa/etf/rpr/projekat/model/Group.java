@@ -20,6 +20,22 @@ public class Group {
         this.id = id;
     }
 
+    public int getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(int accountId) {
+        this.accountId = accountId;
+    }
+
+    public GroupColor getGroupColor() {
+        return groupColor;
+    }
+
+    public void setGroupColor(GroupColor groupColor) {
+        this.groupColor = groupColor;
+    }
+
     public String getGroupName() {
         return groupName;
     }
@@ -27,6 +43,7 @@ public class Group {
     public void setGroupName(String groupName) {
         this.groupName = groupName.substring(0, 1).toUpperCase() + groupName.substring(1);;
     }
+
 
     public String getDescription() {
         return description;
@@ -36,13 +53,6 @@ public class Group {
         this.description = description;
     }
 
-    public GroupColor getColor() {
-        return groupColor;
-    }
-
-    public void setColor(GroupColor groupColor) {
-        this.groupColor = groupColor;
-    }
 
     @Override
     public boolean equals(Object o) {

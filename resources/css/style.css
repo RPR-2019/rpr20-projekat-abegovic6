@@ -1,6 +1,5 @@
-.h1 {
+.heading {
     -fx-text-fill: #C3083F;
-    -fx-font-family: 'Helvetica Neue', sans-serif;
     -fx-font-size: 48px;
     -fx-font-weight: bold;
     -fx-letter-spacing: -1px;
@@ -8,20 +7,15 @@
     -fx-text-align:
     -fx-center;
 }
-
-.h2 {
+.subheading {
     -fx-text-fill: #6F2232;
-    -fx-font-family: 'Open Sans', sans-serif;
     -fx-font-size: 25px;
     -fx-font-weight: 300;
     -fx-line-height: 32px;
     -fx-margin: 0 0 72px;
     -fx-text-align: center;
 }
-
-
-
-.p {
+.paragraph {
     -fx-text-fill: #F2F4F3;
     -fx-font-family: 'Helvetica Neue', sans-serif;
     -fx-font-size: 14px;
@@ -31,8 +25,7 @@
     -fx-text-justify:
     -fx-inter-word;
 }
-
-.btn{
+.buttonframe {
   -fx-position: relative;
   -fx-display: block;
   -fx-background-color: Transparent;
@@ -47,18 +40,4 @@
   -fx-padding: 10px 30px;
   -fx-text-transform: uppercase;
   -fx-overflow: hidden;
-}
-
-
-#demoFont {
-    font-family: "Lucida Console", Monaco, monospace;
-    font-size: 18px;
-    letter-spacing: -0.6px;
-    word-spacing: -1.2px;
-    color: #FFFFFF;
-    font-weight: 400;
-    text-decoration: none solid rgb(68, 68, 68);
-    font-style: normal;
-    font-variant: small-caps;
-    text-transform: none;
 }

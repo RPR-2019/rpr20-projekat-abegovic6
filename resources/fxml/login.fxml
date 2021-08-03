@@ -1,110 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"  xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: FFFFFF;">
+<GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <stylesheets>
-      <URL value="@../css/login.css" />
+      <URL value="@../css/style.css" />
    </stylesheets>
   <columnConstraints>
-    <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="-Infinity" />
-      <ColumnConstraints halignment="RIGHT" hgrow="ALWAYS" />
+    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" />
+      <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" valignment="CENTER" vgrow="ALWAYS" />
   </rowConstraints>
    <children>
-      <VBox alignment="CENTER" style="-fx-background-color: #1A1A1C;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-         <children>
-            <Label styleClass="h1" text="WELCOME TO NOTA" />
-            <Label styleClass="h2" text="A PLACE FOR ALL YOUR SCHOOL NOTES">
-
-            </Label>
-            <HBox>
-               <children>
-                  <VBox alignment="CENTER" HBox.hgrow="NEVER">
-                     <children>
-                        <Label styleClass="p" text="Username:" textAlignment="CENTER">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <padding>
-                              <Insets bottom="5.0" top="5.0" />
-                           </padding>
-                        </Label>
-                        <Label styleClass="p" text="Password: " textAlignment="CENTER">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <padding>
-                              <Insets bottom="5.0" top="5.0" />
-                           </padding>
-                        </Label>
-                     </children>
-                     <HBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </HBox.margin>
-                     <padding>
-                        <Insets bottom="5.0" top="5.0" />
-                     </padding>
-                  </VBox>
-                  <VBox alignment="TOP_CENTER" HBox.hgrow="ALWAYS">
-                     <children>
-                        <PasswordField maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                           <VBox.margin>
-                              <Insets bottom="5.0" top="5.0" />
-                           </VBox.margin>
-                        </PasswordField>
-                        <TextField maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
-                           <VBox.margin>
-                              <Insets bottom="5.0" top="5.0" />
-                           </VBox.margin>
-                        </TextField>
-                     </children>
-                     <HBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </HBox.margin>
-                     <padding>
-                        <Insets bottom="5.0" top="5.0" />
-                     </padding>
-                  </VBox>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" spacing="10.0" VBox.vgrow="NEVER">
-               <children>
-                  <Label alignment="CENTER_RIGHT" styleClass="p" text="Don't have an account?">
-                     <HBox.margin>
-                        <Insets bottom="5.0" top="5.0" />
-                     </HBox.margin>
-                  </Label>
-                <Button maxWidth="1.7976931348623157E308" minWidth="70.0" mnemonicParsing="false" text="Sign UP" textAlignment="CENTER" styleClass="btn" />
-                  <ButtonBar HBox.hgrow="ALWAYS">
-                    <buttons>
-                        <Button defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Log IN" styleClass="btn" />
-                    </buttons>
-                     <HBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </HBox.margin>
-                  </ButtonBar>
-               </children>
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </VBox.margin>
-            </HBox>
-         </children>
-         <GridPane.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </GridPane.margin>
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
-      </VBox>
-      <VBox  GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" style="-fx-background-color: FFFFFF;">
+      <VBox alignment="CENTER" style="-fx-background-color: FFFFFF;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <children>
             <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" VBox.vgrow="ALWAYS">
                <image>
@@ -115,6 +39,73 @@
                </VBox.margin>
             </ImageView>
          </children>
+      </VBox>
+      <VBox alignment="CENTER" style="-fx-background-color: #1A1A1C;" GridPane.columnIndex="1">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" styleClass="heading" text="WELCOME TO NOTA" VBox.vgrow="ALWAYS" />
+            <Label alignment="CENTER" styleClass="subheading" text="A PLACE FOR ALL YOUR SCHOOL NOTES">
+
+            </Label>
+            <HBox maxWidth="1.7976931348623157E308">
+               <children>
+                  <Label styleClass="paragraph" text="Username:" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox maxWidth="1.7976931348623157E308">
+               <children>
+                  <Label styleClass="paragraph" text="Password: " textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="5.0" top="5.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <PasswordField maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </PasswordField>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <ButtonBar>
+              <buttons>
+                  <Label alignment="CENTER_RIGHT" styleClass="paragraph" text="Don't have an account?" />
+                <Button maxWidth="1.7976931348623157E308" minWidth="70.0" mnemonicParsing="false" styleClass="buttonframe" text="Sign UP" textAlignment="CENTER" />
+                  <Button defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="buttonframe" text="Log IN" />
+              </buttons>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="70.0" top="10.0" />
+               </VBox.margin>
+            </ButtonBar>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
       </VBox>
    </children>
 </GridPane>

@@ -13,9 +13,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
         primaryStage.setTitle("NOTA");
-        primaryStage.setScene(new Scene(root, 900, 400));
-        primaryStage.setMinHeight(400);
-        primaryStage.setMinWidth(900);
+        primaryStage.setScene(new Scene(root, 1100, 600));
+        primaryStage.setMinHeight(600);
+        primaryStage.setMinWidth(1100);
         primaryStage.show();
     }
 

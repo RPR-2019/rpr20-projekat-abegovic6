@@ -1,6 +1,8 @@
 package ba.unsa.etf.rpr.projekat.model;
 
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,48 +14,51 @@ public class Account {
         private String userName;
         private String emailAdress;
         private String password;
+        private ResourceBundle resourceBundle;
 
         public Account() {
+            Locale currentLocale = Locale.getDefault();
+            resourceBundle = ResourceBundle.getBundle("Translation", currentLocale);
         }
 
-        private static void validateEmailAddress(String emailAddress) {
+        private void validateEmailAddress(String emailAddress) {
             Pattern regexPattern = Pattern.compile("^[(a-zA-Z-0-9-\\_\\+\\.)]+@[(a-z-A-z)]+\\.[(a-zA-z)]{2,3}$");
             Matcher regMatcher = regexPattern.matcher(emailAddress);
             if (regMatcher.matches()) {
                 return;
             } else {
-                throw new IllegalArgumentException("Invalid Email Address");
+                throw new IllegalArgumentException(resourceBundle.getString("InvalidEmailAddress"));
             }
         }
 
-        private static void validateUserName(String userName) {
+        private void validateUserName(String userName) {
             if (userName.length() >= 5) {
                 return;
             } else {
-                throw new IllegalArgumentException("Invalid Email Address");
+                throw new IllegalArgumentException(resourceBundle.getString("UssernameLenghtError"));
             }
         }
 
 
-        private static boolean validatePassword(String password) {
+        private boolean validatePassword(String password) {
             if (password.length() > 25 || password.length() < 8) {
-                throw new IllegalArgumentException("Password must be less than 25 and more than 8 characters in length.");
+                throw new IllegalArgumentException(resourceBundle.getString("PasswordLengthError"));
             }
             String upperCaseChars = "(.*[A-Z].*)";
             if (!password.matches(upperCaseChars)) {
-                throw new IllegalArgumentException("Password must have atleast one uppercase character");
+                throw new IllegalArgumentException(resourceBundle.getString("PasswordUppercaseError"));
             }
             String lowerCaseChars = "(.*[a-z].*)";
             if (!password.matches(lowerCaseChars)) {
-                throw new IllegalArgumentException("Password must have atleast one lowercase character");
+                throw new IllegalArgumentException(resourceBundle.getString("PasswordLowercaseError"));
             }
             String numbers = "(.*[0-9].*)";
             if (!password.matches(numbers)) {
-                throw new IllegalArgumentException("Password must have atleast one number");
+                throw new IllegalArgumentException(resourceBundle.getString("PasswordNumberError"));
             }
             String specialChars = "(.*[@,#,$,%].*$)";
             if (!password.matches(specialChars)) {
-                throw new IllegalArgumentException("Password must have atleast one special character among @#$%");
+                throw new IllegalArgumentException(resourceBundle.getString("PasswordSpecialCharacterError"));
             }
             return true;
         }

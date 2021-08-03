@@ -49,14 +49,69 @@ public class ProjectDAO {
         }
 
         try {
+            getAllAccountsStatement = connection.prepareStatement("SELECT * FROM account");
+            createAccountStatement = connection.prepareStatement("INSERT INTO account (id, firstName, lastName," +
+                    " userName, emailAdress, password) VALUES (?,?,?,?,?,?)");
+
+            updateFirstNameAccountStatement = connection.prepareStatement("UPDATE account SET firstName = ? WHERE id = ?");
+            updateLastNameAccountStatement = connection.prepareStatement("UPDATE account SET lastName = ? WHERE id = ?");
+            updateUserNameAccountStatement = connection.prepareStatement("UPDATE account SET userName = ? WHERE id = ?");
+            updateEmailAccountStatement = connection.prepareStatement("UPDATE account SET emailAdress = ? WHERE id = ?");
+            updatePasswordAccountStatement = connection.prepareStatement("UPDATE account SET password = ? WHERE id = ?");
+            deleteAccountStatement = connection.prepareStatement("DELETE FROM account WHERE id = ?");
+            getNewIdAccountStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM account");
+
+            // GROUPS
+            /*createGroupStatement = connection.prepareStatement("INSERT INTO group (id, accountId, groupName, " +
+                  "description, groupColor) VALUES (?, ?, ?, ?, ?)");
+            getAllGroupsForAccountStatement = connection.prepareStatement("SELECT * FROM group WHERE accountId = ?");
+            updateGroupNameGroupStatement = connection.prepareStatement("UPDATE group SET groupName = ? WHERE id = ?");
+            updateDescriptionGroupStatement = connection.prepareStatement("UPDATE group SET description = ? WHERE id = ?");
+            updateGroupColorGroupStatement = connection.prepareStatement("UPDATE group SET groupColor = ? WHERE id = ?");
+            deleteGroupStatement = connection.prepareStatement("DELETE FROM group WHERE id = ?");
+            deleteGroupsForAccountStatement = connection.prepareStatement("DELETE FROM group WHERE accountId = ?");
+            getNewIdGroupStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM group");*/
+
+            // LABELS
+            createLabelStatement = connection.prepareStatement("INSERT INTO label (id, accountId, labelName, " +
+                    "description, labelColor) VALUES (?, ?, ?, ?, ?)");
+            getAllLabelsForAccountStatement = connection.prepareStatement("SELECT * FROM label WHERE accountId = ?");
+            getLabelFromIdStatement = connection.prepareStatement("SELECT * FROM label WHERE id = ?");
+            updateLabelNameLabelStatement = connection.prepareStatement("UPDATE label SET labelName = ? WHERE id = ?");
+            updateLabelColorLabelStatement = connection.prepareStatement("UPDATE label SET labelColor = ? WHERE id = ?");
+            updateDescriptionLabelStatement = connection.prepareStatement("UPDATE label SET description = ? WHERE id = ?");
+            deleteLabelStatement = connection.prepareStatement("DELETE FROM label WHERE id = ?");
+            deleteLabelsForAccountStatement = connection.prepareStatement("DELETE FROM label WHERE accountId = ?");
+            getNewIdLabelStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM label");
+
+            // INTERTABLE
+            getAllLabelsIdForNoteStatement = connection.prepareStatement("SELECT labelId FROM intertable WHERE noteId = ?");
+            getAllNotesIdForNoteStatement = connection.prepareStatement("SELECT noteId FROM intertable WHERE labelId = ?");
+            addNewLabelForNoteStatement = connection.prepareStatement("INSERT INTO intertable (noteId, labelId) VALUES (?, ?)");
+            removeLAbelFromNoteStatement = connection.prepareStatement("DELETE FROM intertable WHERE labelId = ? AND noteId = ?");
+            deleteLabelIdStatement = connection.prepareStatement("DELETE FROM intertable WHERE labelId = ?");
+            deleteNoteIdStatement = connection.prepareStatement("DELETE FROM intertable WHERE noteId = ?");
+
+            // NOTES
+            createNoteStatement = connection.prepareStatement("INSERT INTO note (id, groupId, noteTitle, " +
+                    "description, dateCreated, dateUpdated, noteColor) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            updateNoteTitleNoteStatement = connection.prepareStatement("UPDATE notes SET noteTitle = ? WHERE id = ?");
+            updateGroupIdNoteStatement = connection.prepareStatement("UPDATE notes SET groupId = ? WHERE id = ?");
+            updateNoteColorNoteStatement = connection.prepareStatement("UPDATE notes SET noteColor = ? WHERE id = ?");
+            updateDateUpdatedNoteStatement = connection.prepareStatement("UPDATE notes SET dateUpdated = ? WHERE id = ?");
+            updateDescriptionNoteStatement = connection.prepareStatement("UPDATE notes SET description = ? WHERE id = ?");
             getAllNotesForGroupStatement = connection.prepareStatement("SELECT * FROM notes WHERE groupId = ?");
+            deleteNoteStatement = connection.prepareStatement("DELETE FROM notes WHERE id = ?");
+            deleteNotesForGroupStatement = connection.prepareStatement("DELETE FROM notes WHERE groupId = ?");
+            getNewIdNoteStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM notes");
         } catch (SQLException throwables) {
             createDatabase();
             try {
                 // ACCOUNT
+                getAllAccountsStatement = connection.prepareStatement("SELECT * FROM account");
                 createAccountStatement = connection.prepareStatement("INSERT INTO account (id, firstName, lastName," +
                         " userName, emailAdress, password) VALUES (?,?,?,?,?,?)");
-                getAllAccountsStatement = connection.prepareStatement("SELECT * FROM account");
+
                 updateFirstNameAccountStatement = connection.prepareStatement("UPDATE account SET firstName = ? WHERE id = ?");
                 updateLastNameAccountStatement = connection.prepareStatement("UPDATE account SET lastName = ? WHERE id = ?");
                 updateUserNameAccountStatement = connection.prepareStatement("UPDATE account SET userName = ? WHERE id = ?");
@@ -66,15 +121,14 @@ public class ProjectDAO {
                 getNewIdAccountStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM account");
 
                 // GROUPS
-                createGroupStatement = connection.prepareStatement("INSERT INTO group (id, accountId, groupName, " +
-                        "description, groupColor) VALUES (?, ?, ?, ?, ?)");
-                getAllGroupsForAccountStatement = connection.prepareStatement("SELECT * FROM groups WHERE accountId = ?");
+                /*createGroupStatement = connection.prepareStatement("INSERT INTO group (id, accountId, groupName, description, groupColor) VALUES (?,?,?,?,?)");
+                getAllGroupsForAccountStatement = connection.prepareStatement("SELECT * FROM group WHERE accountId = ?");
                 updateGroupNameGroupStatement = connection.prepareStatement("UPDATE group SET groupName = ? WHERE id = ?");
                 updateDescriptionGroupStatement = connection.prepareStatement("UPDATE group SET description = ? WHERE id = ?");
                 updateGroupColorGroupStatement = connection.prepareStatement("UPDATE group SET groupColor = ? WHERE id = ?");
                 deleteGroupStatement = connection.prepareStatement("DELETE FROM group WHERE id = ?");
                 deleteGroupsForAccountStatement = connection.prepareStatement("DELETE FROM group WHERE accountId = ?");
-                getNewIdGroupStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM group");
+                getNewIdGroupStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM group");*/
 
                 // LABELS
                 createLabelStatement = connection.prepareStatement("INSERT INTO label (id, accountId, labelName, " +
@@ -97,7 +151,7 @@ public class ProjectDAO {
                 deleteNoteIdStatement = connection.prepareStatement("DELETE FROM intertable WHERE noteId = ?");
 
                 // NOTES
-                createNoteStatement = connection.prepareStatement("INSERT INTO note (id, groupId, noteTitle, " +
+                createNoteStatement = connection.prepareStatement("INSERT INTO notes (id, groupId, noteTitle, " +
                         "description, dateCreated, dateUpdated, noteColor) VALUES (?, ?, ?, ?, ?, ?, ?)");
                 updateNoteTitleNoteStatement = connection.prepareStatement("UPDATE notes SET noteTitle = ? WHERE id = ?");
                 updateGroupIdNoteStatement = connection.prepareStatement("UPDATE notes SET groupId = ? WHERE id = ?");
@@ -171,7 +225,7 @@ public class ProjectDAO {
     // ------------------------------------------------------------------------------- //
 
     // ACCOUNT
-    public Account getAccountFromResultSet(ResultSet resultSetAccount) {
+    private Account getAccountFromResultSet(ResultSet resultSetAccount) {
         try {
             Account account = new Account();
             if(resultSetAccount.next()) {
@@ -191,7 +245,7 @@ public class ProjectDAO {
         return null;
     }
 
-    public List<Account> getAccountListFromResultSet(ResultSet resultSetAccountList) {
+    private List<Account> getAccountListFromResultSet(ResultSet resultSetAccountList) {
         try {
             List<Account> accounts = new ArrayList<>();
             while(resultSetAccountList.next()) {
@@ -205,6 +259,15 @@ public class ProjectDAO {
         return Collections.emptyList();
     }
 
+    public List<Account> getAllAccounts() {
+        try {
+            return getAccountListFromResultSet(getAllAccountsStatement.executeQuery());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
     public boolean deleteAccount(ResultSet resultSet, Account account) {
         return true;
     }
@@ -216,7 +279,7 @@ public class ProjectDAO {
         return GroupColor.valueOf(string);
     }
 
-    public Group getGroupFromResultSet(ResultSet resultSetGroup) {
+    private Group getGroupFromResultSet(ResultSet resultSetGroup) {
         try {
             Group group = new Group();
             if(resultSetGroup.next()) {
@@ -235,7 +298,7 @@ public class ProjectDAO {
         return null;
     }
 
-    public List<Group> getGroupListFromResultSet(ResultSet resultSetGroupList) {
+    private List<Group> getGroupListFromResultSet(ResultSet resultSetGroupList) {
         try {
             List<Group> groups = new ArrayList<>();
             while(resultSetGroupList.next()) {
@@ -256,7 +319,7 @@ public class ProjectDAO {
         return LabelColor.valueOf(string);
     }
 
-    public Label getLabelFromResultSet(ResultSet resultSetLabel) {
+    private Label getLabelFromResultSet(ResultSet resultSetLabel) {
         try {
             Label label = new Label();
             if(resultSetLabel.next()) {
@@ -274,7 +337,7 @@ public class ProjectDAO {
         return null;
     }
 
-    public Label getLabelFromId(int labelId) {
+    private Label getLabelFromId(int labelId) {
         try {
             getLabelFromIdStatement.setInt(1, labelId);
             return getLabelFromResultSet(getLabelFromIdStatement.executeQuery());
@@ -285,7 +348,7 @@ public class ProjectDAO {
         return null;
     }
 
-    public List<Label> getLabelListFromResultSet(ResultSet resultSetLabel) {
+    private List<Label> getLabelListFromResultSet(ResultSet resultSetLabel) {
         try {
             List<Label> labels = new ArrayList<>();
             while(resultSetLabel.next()) {
@@ -338,7 +401,7 @@ public class ProjectDAO {
         return NoteColor.valueOf(string);
     }
 
-    public Note getNoteFromResultSet (ResultSet resultSetNotes) {
+    private Note getNoteFromResultSet (ResultSet resultSetNotes) {
         try {
             Note note = new Note();
             if(resultSetNotes.next()) {
@@ -359,7 +422,7 @@ public class ProjectDAO {
         return null;
     }
 
-    public List<Note> getNoteListFromResultSet(ResultSet resultSetNotes) {
+    private List<Note> getNoteListFromResultSet(ResultSet resultSetNotes) {
         try {
             List<Note> notes = new ArrayList<>();
             while(resultSetNotes.next()) {

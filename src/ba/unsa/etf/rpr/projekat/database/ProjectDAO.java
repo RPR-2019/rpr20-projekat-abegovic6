@@ -20,7 +20,8 @@ public class ProjectDAO {
     // ACCOUNT
     private PreparedStatement createAccountStatement, getAllAccountsStatement, updateFirstNameAccountStatement,
             updateLastNameAccountStatement, updateUserNameAccountStatement, updateEmailAccountStatement,
-            updatePasswordAccountStatement, deleteAccountStatement, getNewIdAccountStatement;
+            updatePasswordAccountStatement, deleteAccountStatement, getNewIdAccountStatement,
+            emailAdressUniqueStatement, usernameUniqueStatement;
 
     // GROUPS
     private PreparedStatement createGroupStatement, getAllGroupsForAccountStatement, deleteGroupStatement,
@@ -52,7 +53,6 @@ public class ProjectDAO {
             getAllAccountsStatement = connection.prepareStatement("SELECT * FROM account");
             createAccountStatement = connection.prepareStatement("INSERT INTO account (id, firstName, lastName," +
                     " userName, emailAdress, password) VALUES (?,?,?,?,?,?)");
-
             updateFirstNameAccountStatement = connection.prepareStatement("UPDATE account SET firstName = ? WHERE id = ?");
             updateLastNameAccountStatement = connection.prepareStatement("UPDATE account SET lastName = ? WHERE id = ?");
             updateUserNameAccountStatement = connection.prepareStatement("UPDATE account SET userName = ? WHERE id = ?");
@@ -60,6 +60,8 @@ public class ProjectDAO {
             updatePasswordAccountStatement = connection.prepareStatement("UPDATE account SET password = ? WHERE id = ?");
             deleteAccountStatement = connection.prepareStatement("DELETE FROM account WHERE id = ?");
             getNewIdAccountStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM account");
+            usernameUniqueStatement = connection.prepareStatement("SELECT COUNT(id) FROM account WHERE userName = ?");
+            emailAdressUniqueStatement = connection.prepareStatement("SELECT COUNT(id) FROM account WHERE emailAdress = ?");
 
             // GROUPS
             /*createGroupStatement = connection.prepareStatement("INSERT INTO group (id, accountId, groupName, " +
@@ -119,6 +121,8 @@ public class ProjectDAO {
                 updatePasswordAccountStatement = connection.prepareStatement("UPDATE account SET password = ? WHERE id = ?");
                 deleteAccountStatement = connection.prepareStatement("DELETE FROM account WHERE id = ?");
                 getNewIdAccountStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM account");
+                usernameUniqueStatement = connection.prepareStatement("SELECT COUNT(id) FROM account WHERE userName = ?");
+                emailAdressUniqueStatement = connection.prepareStatement("SELECT COUNT(id) FROM account WHERE emailAdress = ?");
 
                 // GROUPS
                 /*createGroupStatement = connection.prepareStatement("INSERT INTO group (id, accountId, groupName, description, groupColor) VALUES (?,?,?,?,?)");
@@ -266,6 +270,32 @@ public class ProjectDAO {
             throwables.printStackTrace();
         }
         return null;
+    }
+
+    public boolean isEmailUnique (String emailAdress) {
+        try {
+            emailAdressUniqueStatement.setString(1, emailAdress);
+            ResultSet resultSet = emailAdressUniqueStatement.executeQuery();
+            if(resultSet.next()) {
+                return resultSet.getInt(1) == 0;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean isUsernameUnique (String username) {
+        try {
+            usernameUniqueStatement.setString(1, username);
+            ResultSet resultSet = usernameUniqueStatement.executeQuery();
+            if(resultSet.next()) {
+                return resultSet.getInt(1) == 0;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return false;
     }
 
     public boolean deleteAccount(ResultSet resultSet, Account account) {

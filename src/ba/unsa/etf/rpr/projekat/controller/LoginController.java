@@ -23,10 +23,9 @@ public class LoginController {
     @FXML
     public TextField usernameLoginTextField;
 
-    private SignupController signupController;
     private final ProjectDAO projectDAO;
     private final Account user;
-    private ResourceBundle resourceBundle;
+    private final ResourceBundle resourceBundle;
 
 
     public LoginController(ProjectDAO projectDAO, Account user, ResourceBundle resourceBundle) {
@@ -41,7 +40,7 @@ public class LoginController {
 
     }
 
-    public void logInNota() {
+    public void logIn() {
         List<Account> accounts = projectDAO.getAllAccounts();
         boolean isPasswordCorrect = false;
         boolean isUsernameCorrect = false;
@@ -82,8 +81,11 @@ public class LoginController {
 
             alert.showAndWait();
         }
-
     }
+
+
+
+
 
     public void openSignUpPage(ActionEvent actionEvent) {
         try {
@@ -91,7 +93,7 @@ public class LoginController {
             Stage oldStage  = (Stage) source.getScene().getWindow();
             Stage newStage = new Stage();
 
-            signupController = new SignupController(projectDAO, user, resourceBundle);
+            SignupController signupController = new SignupController(projectDAO, user, resourceBundle);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/signup.fxml"), resourceBundle);
             loader.setController(signupController);

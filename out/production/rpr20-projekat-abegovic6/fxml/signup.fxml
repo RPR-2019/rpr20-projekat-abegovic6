@@ -11,6 +11,7 @@
 <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: FFFFFF;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@../css/style.css" />
+        <URL value="@../css/validations.css" />
     </stylesheets>
     <columnConstraints>
         <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="-Infinity" />
@@ -50,7 +51,7 @@
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </HBox.margin>
                         </Label>
-                        <TextField maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="firstNameSignUpTextField" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                             <HBox.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </HBox.margin>
@@ -73,7 +74,7 @@
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </HBox.margin>
                         </Label>
-                        <TextField maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="lastNameSignUpTextField" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                             <HBox.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </HBox.margin>
@@ -96,7 +97,7 @@
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </HBox.margin>
                         </Label>
-                        <TextField maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="usernameSignUpTextField" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                             <HBox.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </HBox.margin>
@@ -119,7 +120,7 @@
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </HBox.margin>
                         </Label>
-                        <TextField maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="emailAdressSignUpTextField" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                             <HBox.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </HBox.margin>
@@ -142,7 +143,7 @@
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </HBox.margin>
                         </Label>
-                        <PasswordField maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                        <PasswordField fx:id="passwordSignUpPasswordField" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                             <HBox.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </HBox.margin>
@@ -165,7 +166,7 @@
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </HBox.margin>
                         </Label>
-                        <PasswordField maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
+                        <PasswordField fx:id="repeatPasswordSignUpPasswordField" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS">
                             <HBox.margin>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </HBox.margin>
@@ -178,7 +179,7 @@
                 <ButtonBar>
                     <buttons>
                         <Label alignment="CENTER_RIGHT" styleClass="paragraph" text="%SignupCreateAccountLabel" />
-                        <Button defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="buttonframe" text="%SignUp">
+                        <Button defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="buttonframe" text="%SignUp" onAction="#signUp">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>

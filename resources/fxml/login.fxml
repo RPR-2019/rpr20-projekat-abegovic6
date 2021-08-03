@@ -91,7 +91,7 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
-                  <Button defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#logInNota" styleClass="buttonframe" text="%LogIn">
+                  <Button defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#logIn" styleClass="buttonframe" text="%LogIn">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>

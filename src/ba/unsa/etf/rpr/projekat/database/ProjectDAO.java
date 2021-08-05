@@ -8,14 +8,12 @@ import java.io.FileNotFoundException;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class ProjectDAO {
     private static ProjectDAO instance = null;
     private static Connection connection;
+    private ResourceBundle resourceBundle;
 
     // ACCOUNT
     private PreparedStatement createAccountStatement, getAllAccountsStatement, updateFirstNameAccountStatement,
@@ -43,6 +41,9 @@ public class ProjectDAO {
             getNewIdNoteStatement, deleteNotesForGroupStatement;
 
     private ProjectDAO() {
+        Locale currentLocale = Locale.getDefault();
+        resourceBundle = ResourceBundle.getBundle("Translation", currentLocale);
+
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:projectdatabase.db");
         } catch (SQLException throwables) {
@@ -232,14 +233,12 @@ public class ProjectDAO {
     private Account getAccountFromResultSet(ResultSet resultSetAccount) {
         try {
             Account account = new Account();
-            if(resultSetAccount.next()) {
-                account.setId(resultSetAccount.getInt(1));
-                account.setFirstName(resultSetAccount.getString(2));
-                account.setLastName(resultSetAccount.getString(3));
-                account.setUserName(resultSetAccount.getString(4));
-                account.setEmailAdress(resultSetAccount.getString(5));
-                account.setPassword(resultSetAccount.getString(6));
-            }
+            account.setId(resultSetAccount.getInt(1));
+            account.setFirstName(resultSetAccount.getString(2));
+            account.setLastName(resultSetAccount.getString(3));
+            account.setUserName(resultSetAccount.getString(4));
+            account.setEmailAdress(resultSetAccount.getString(5));
+            account.setPassword(resultSetAccount.getString(6));
             return account;
 
         } catch (SQLException throwables) {
@@ -253,7 +252,7 @@ public class ProjectDAO {
         try {
             List<Account> accounts = new ArrayList<>();
             while(resultSetAccountList.next()) {
-                resultSetAccountList.previous();
+                //resultSetAccountList.previous();
                 accounts.add(getAccountFromResultSet(resultSetAccountList));
             }
             return  accounts;
@@ -272,30 +271,52 @@ public class ProjectDAO {
         return null;
     }
 
-    public boolean isEmailUnique (String emailAdress) {
+    public void isEmailUnique (String emailAdress) {
         try {
             emailAdressUniqueStatement.setString(1, emailAdress);
             ResultSet resultSet = emailAdressUniqueStatement.executeQuery();
-            if(resultSet.next()) {
-                return resultSet.getInt(1) == 0;
-            }
+            if(resultSet.next() && resultSet.getInt(1) != 0)
+                throw new IllegalArgumentException(resourceBundle.getString("EmailNotUniqueError"));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return false;
+        return;
     }
 
-    public boolean isUsernameUnique (String username) {
+    public void isUsernameUnique (String username) {
         try {
             usernameUniqueStatement.setString(1, username);
             ResultSet resultSet = usernameUniqueStatement.executeQuery();
-            if(resultSet.next()) {
-                return resultSet.getInt(1) == 0;
-            }
+            if(resultSet.next() && resultSet.getInt(1) != 0)
+                    throw new IllegalArgumentException(resourceBundle.getString("UsernameNotUniqueError"));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return false;
+    }
+
+    public boolean createAccount(Account account) {
+        try {
+            ResultSet resultSet = getNewIdAccountStatement.executeQuery();
+            if(resultSet.next()) {
+                account.setId(resultSet.getInt(1));
+            } else {
+                account.setId(1);
+            }
+            createAccountStatement.setInt(1, account.getId());
+            createAccountStatement.setString(2, account.getFirstName());
+            createAccountStatement.setString(3, account.getLastName());
+            createAccountStatement.setString(4, account.getUserName());
+            createAccountStatement.setString(5, account.getEmailAdress());
+            createAccountStatement.setString(6, account.getPassword());
+
+            createAccountStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+
+
+        return true;
     }
 
     public boolean deleteAccount(ResultSet resultSet, Account account) {
@@ -312,13 +333,11 @@ public class ProjectDAO {
     private Group getGroupFromResultSet(ResultSet resultSetGroup) {
         try {
             Group group = new Group();
-            if(resultSetGroup.next()) {
-                group.setId(resultSetGroup.getInt(1));
-                group.setAccountId(resultSetGroup.getInt(2));
-                group.setGroupName(resultSetGroup.getString(3));
-                group.setDescription(resultSetGroup.getString(4));
-                group.setGroupColor(stringToGroupColor(resultSetGroup.getString(5)));
-            }
+            group.setId(resultSetGroup.getInt(1));
+            group.setAccountId(resultSetGroup.getInt(2));
+            group.setGroupName(resultSetGroup.getString(3));
+            group.setDescription(resultSetGroup.getString(4));
+            group.setGroupColor(stringToGroupColor(resultSetGroup.getString(5)));
             return group;
 
         } catch (SQLException throwables) {
@@ -332,7 +351,6 @@ public class ProjectDAO {
         try {
             List<Group> groups = new ArrayList<>();
             while(resultSetGroupList.next()) {
-                resultSetGroupList.previous();
                 groups.add(getGroupFromResultSet(resultSetGroupList));
             }
             return  groups;
@@ -352,13 +370,12 @@ public class ProjectDAO {
     private Label getLabelFromResultSet(ResultSet resultSetLabel) {
         try {
             Label label = new Label();
-            if(resultSetLabel.next()) {
-                label.setId(resultSetLabel.getInt(1));
-                label.setAccountId(resultSetLabel.getInt(2));
-                label.setLabelName(resultSetLabel.getString(3));
-                label.setDescription(resultSetLabel.getString(4));
-                label.setLabelColor(stringToLabelColor(resultSetLabel.getString(5)));
-            }
+            label.setId(resultSetLabel.getInt(1));
+            label.setAccountId(resultSetLabel.getInt(2));
+            label.setLabelName(resultSetLabel.getString(3));
+            label.setDescription(resultSetLabel.getString(4));
+            label.setLabelColor(stringToLabelColor(resultSetLabel.getString(5)));
+
             return label;
 
         } catch (SQLException throwables) {
@@ -370,7 +387,9 @@ public class ProjectDAO {
     private Label getLabelFromId(int labelId) {
         try {
             getLabelFromIdStatement.setInt(1, labelId);
-            return getLabelFromResultSet(getLabelFromIdStatement.executeQuery());
+            ResultSet resultSet = getLabelFromIdStatement.executeQuery();
+            if(resultSet.next())
+                return getLabelFromResultSet(resultSet);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -382,7 +401,6 @@ public class ProjectDAO {
         try {
             List<Label> labels = new ArrayList<>();
             while(resultSetLabel.next()) {
-                resultSetLabel.previous();
                 labels.add(getLabelFromResultSet(resultSetLabel));
             }
             return labels;
@@ -434,16 +452,15 @@ public class ProjectDAO {
     private Note getNoteFromResultSet (ResultSet resultSetNotes) {
         try {
             Note note = new Note();
-            if(resultSetNotes.next()) {
-                note.setId(resultSetNotes.getInt(1));
-                note.setGroupId(resultSetNotes.getInt(2));
-                note.setNoteTitle(resultSetNotes.getString(3));
-                note.setDescription(resultSetNotes.getString(4));
-                note.setDateCreated(stringToLocalDateTime(resultSetNotes.getString(5)));
-                note.setDateUpdated(stringToLocalDateTime(resultSetNotes.getString(6)));
-                note.setNoteColor(stringToNoteColor(resultSetNotes.getString(7)));
-                note.setLabels(getLabelListForNote(resultSetNotes.getInt(1)));
-            }
+            note.setId(resultSetNotes.getInt(1));
+            note.setGroupId(resultSetNotes.getInt(2));
+            note.setNoteTitle(resultSetNotes.getString(3));
+            note.setDescription(resultSetNotes.getString(4));
+            note.setDateCreated(stringToLocalDateTime(resultSetNotes.getString(5)));
+            note.setDateUpdated(stringToLocalDateTime(resultSetNotes.getString(6)));
+            note.setNoteColor(stringToNoteColor(resultSetNotes.getString(7)));
+            note.setLabels(getLabelListForNote(resultSetNotes.getInt(1)));
+
             return note;
 
         } catch (SQLException throwables) {
@@ -456,7 +473,6 @@ public class ProjectDAO {
         try {
             List<Note> notes = new ArrayList<>();
             while(resultSetNotes.next()) {
-                resultSetNotes.previous();
                 notes.add(getNoteFromResultSet(resultSetNotes));
             }
             return notes;

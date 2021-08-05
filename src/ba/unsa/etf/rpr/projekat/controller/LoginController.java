@@ -40,10 +40,12 @@ public class LoginController {
 
     }
 
-    public void logIn() {
+    public void logIn(ActionEvent actionEvent) {
         List<Account> accounts = projectDAO.getAllAccounts();
         boolean isPasswordCorrect = false;
         boolean isUsernameCorrect = false;
+
+        user.setId(-1);
 
         if(accounts != null) {
             for (Account account : accounts) {
@@ -52,14 +54,17 @@ public class LoginController {
                     isUsernameCorrect = true;
                     isPasswordCorrect = true;
 
+                    user.setId(account.getId());
                     user.setFirstName(account.getFirstName());
                     user.setLastName(account.getLastName());
                     user.setEmailAdress(account.getEmailAdress());
                     user.setUserName(account.getUserName());
                     user.setPassword(account.getPassword());
+                    break;
                 }
                 if(account.getUserName().equals(usernameLoginTextField.getText())) {
                     isUsernameCorrect = true;
+                    account.setId(-1);
                 }
             }
         }
@@ -81,9 +86,35 @@ public class LoginController {
 
             alert.showAndWait();
         }
+
+        if (user.getId() != -1) {
+            opetNotesPage(actionEvent);
+        }
+
     }
 
+    private void opetNotesPage(ActionEvent actionEvent) {
+        try {
+            Node source = (Node)  actionEvent.getSource();
+            Stage oldStage  = (Stage) source.getScene().getWindow();
+            Stage newStage = new Stage();
 
+            NotesController notesController = new NotesController(projectDAO, user, resourceBundle);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/notes.fxml"), resourceBundle);
+            loader.setController(notesController);
+
+            newStage.setTitle(resourceBundle.getString("NotesTitle"));
+            newStage.setScene(new Scene(loader.load(), 1100, 600));
+            newStage.setMinHeight(600);
+            newStage.setMinWidth(1100);
+
+            oldStage.close();
+            newStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
@@ -98,7 +129,7 @@ public class LoginController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/signup.fxml"), resourceBundle);
             loader.setController(signupController);
 
-            newStage.setTitle("SIGN UP");
+            newStage.setTitle(resourceBundle.getString("SignUpTitle"));
             newStage.setScene(new Scene(loader.load(), 1100, 600));
             newStage.setMinHeight(600);
             newStage.setMinWidth(1100);

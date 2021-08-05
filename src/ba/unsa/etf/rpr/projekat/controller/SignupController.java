@@ -2,12 +2,18 @@ package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.database.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.Account;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
-import java.util.List;
+import java.io.IOException;
 import java.util.ResourceBundle;
 
 public class SignupController {
@@ -16,9 +22,6 @@ public class SignupController {
     private final ProjectDAO projectDAO;
 
     private boolean isAlertNeeded;
-    private String alertTitle;
-    private String alertHeading;
-    private String alertContent;
 
     @FXML
     public TextField firstNameSignUpTextField;
@@ -32,6 +35,14 @@ public class SignupController {
     public PasswordField passwordSignUpPasswordField;
     @FXML
     public PasswordField repeatPasswordSignUpPasswordField;
+    @FXML
+    public Label usernameErrorLabel;
+    @FXML
+    public Label emailErrorLabel;
+    @FXML
+    public Label passwordErrorLabel;
+    @FXML
+    public Label repeatPasswordErrorLabel;
 
 
     public SignupController(ProjectDAO projectDAO, Account user, ResourceBundle resourceBundle) {
@@ -46,9 +57,21 @@ public class SignupController {
 
     }
 
-    public void signUp() {
+    public void signUp(ActionEvent actionEvent) {
         usernameSignUpTextField.getStyleClass().remove("turnRed");
         emailAdressSignUpTextField.getStyleClass().remove("turnRed");
+        passwordSignUpPasswordField.getStyleClass().remove("turnRed");
+        repeatPasswordSignUpPasswordField.getStyleClass().remove("turnRed");
+
+        usernameErrorLabel.getStyleClass().remove("errorLabel");
+        emailErrorLabel.getStyleClass().remove("errorLabel");
+        passwordErrorLabel.getStyleClass().remove("errorLabel");
+        repeatPasswordErrorLabel.getStyleClass().remove("errorLabel");
+
+        usernameErrorLabel.setText("");
+        passwordErrorLabel.setText("");
+        emailErrorLabel.setText("");
+        repeatPasswordErrorLabel.setText("");
 
         isAlertNeeded = false;
 
@@ -57,81 +80,85 @@ public class SignupController {
         checkPassword();
         checkRepeatPassword();
 
-        createANewUser();
+        if(isAlertNeeded) openAlertMessage();
+        else createANewUser(actionEvent);
+
+
+        isAlertNeeded = false;
 
     }
 
-    private void createANewUser() {
+    private void createANewUser(ActionEvent actionEvent) {
+        user.setFirstName(firstNameSignUpTextField.getText());
+        user.setLastName(lastNameSignUpTextField.getText());
+        user.setUserName(usernameSignUpTextField.getText());
+        user.setEmailAdress(emailAdressSignUpTextField.getText());
+        user.setPassword(passwordSignUpPasswordField.getText());
 
-    }
+        if(projectDAO.createAccount(user)) {
+            try {
+                Node source = (Node)  actionEvent.getSource();
+                Stage oldStage  = (Stage) source.getScene().getWindow();
+                Stage newStage = new Stage();
 
-    private void open() {
+                NotesController notesController = new NotesController(projectDAO, user, resourceBundle);
 
-    }
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/notes.fxml"), resourceBundle);
+                loader.setController(notesController);
 
-    private void alert() {
-        if (isAlertNeeded) {
-            passwordSignUpPasswordField.setText("");
-            repeatPasswordSignUpPasswordField.setText("");
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(alertTitle);
-            alert.setHeaderText(alertHeading);
-            alert.setContentText(alertContent);
+                newStage.setTitle(resourceBundle.getString("NotesTitle"));
+                newStage.setScene(new Scene(loader.load(), 1100, 600));
+                newStage.setMinHeight(600);
+                newStage.setMinWidth(1100);
 
-            isAlertNeeded = false;
-
-            alert.showAndWait();
+                oldStage.close();
+                newStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
+
+
+    }
+
+    private void openAlertMessage() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(resourceBundle.getString("Error"));
+        alert.setHeaderText(resourceBundle.getString("ProblemNewAccountAlert"));
+        alert.setContentText(resourceBundle.getString("PleaseTryAgain"));
+
+        alert.showAndWait();
+
     }
 
     private void checkEmail() {
         try {
             user.setEmailAdress(emailAdressSignUpTextField.getText());
-            if(projectDAO.isEmailUnique(emailAdressSignUpTextField.getText())) {
-                isAlertNeeded = true;
-                alertTitle = resourceBundle.getString("EmailNotUniqueError");
-                alertHeading = resourceBundle.getString("EmailNotUniqueHeaderError");
-                alertContent = resourceBundle.getString("PleaseTryAgain");
-            }
+            projectDAO.isEmailUnique(emailAdressSignUpTextField.getText());
 
         } catch (IllegalArgumentException exception) {
             isAlertNeeded = true;
-            alertTitle = resourceBundle.getString("InvalidEmailAddress");
-            alertHeading = exception.getMessage();
-            alertContent = resourceBundle.getString("PleaseTryAgain");
-
-        }
-
-        if(isAlertNeeded) {
             emailAdressSignUpTextField.getStyleClass().add("turnRed");
+            emailErrorLabel.getStyleClass().add("errorLabel");
+            emailErrorLabel.setText("*" + exception.getMessage());
+
         }
 
-        alert();
 
     }
 
     private void checkUsername() {
         try {
             user.setUserName(usernameSignUpTextField.getText());
-            if(projectDAO.isUsernameUnique(usernameSignUpTextField.getText())) {
-                isAlertNeeded = true;
-                alertTitle = resourceBundle.getString("UsernameNotUniqueError");
-                alertHeading = resourceBundle.getString("UsernameNotUniqueHeaderError");
-                alertContent = resourceBundle.getString("PleaseTryAgain");
-            }
+            projectDAO.isUsernameUnique(usernameSignUpTextField.getText());
 
         } catch (IllegalArgumentException exception) {
             isAlertNeeded = true;
-            alertTitle = resourceBundle.getString("UssernameError");
-            alertHeading = exception.getMessage();
-            alertContent = resourceBundle.getString("PleaseTryAgain");
-        }
-
-        if(isAlertNeeded) {
             usernameSignUpTextField.getStyleClass().add("turnRed");
+            usernameErrorLabel.getStyleClass().add("errorLabel");
+            usernameErrorLabel.setText("*" + exception.getMessage());
         }
-
-        alert();
 
     }
 
@@ -141,25 +168,47 @@ public class SignupController {
 
         } catch (IllegalArgumentException exception) {
             isAlertNeeded = true;
-            alertTitle = resourceBundle.getString("PasswordError");
-            alertHeading = exception.getMessage();
-            alertContent = resourceBundle.getString("PleaseTryAgain");
+            passwordSignUpPasswordField.getStyleClass().add("turnRed");
+            passwordErrorLabel.getStyleClass().add("errorLabel");
+            passwordErrorLabel.setText("*" + exception.getMessage());
+            repeatPasswordSignUpPasswordField.setText("");
+            passwordSignUpPasswordField.setText("");
         }
-
-        alert();
-
-
     }
 
     private void checkRepeatPassword() {
         if(!repeatPasswordSignUpPasswordField.getText().equals(passwordSignUpPasswordField.getText())) {
             isAlertNeeded = true;
-            alertTitle = resourceBundle.getString("PasswordsDontMatchError");
-            alertHeading = resourceBundle.getString("PasswordsDontMatchHeaderError");
-            alertContent = resourceBundle.getString("PleaseTryAgain");
-        }
+            repeatPasswordSignUpPasswordField.getStyleClass().add("turnRed");
+            repeatPasswordErrorLabel.getStyleClass().add("errorLabel");
+            repeatPasswordErrorLabel.setText("*" + resourceBundle.getString("PasswordsDontMatchHeaderError"));
+            repeatPasswordSignUpPasswordField.setText("");
+            passwordSignUpPasswordField.setText("");
 
-        alert();
+        }
+    }
+
+    public void opetLogInPage(ActionEvent actionEvent) {
+        try {
+            Node source = (Node)  actionEvent.getSource();
+            Stage oldStage  = (Stage) source.getScene().getWindow();
+            Stage newStage = new Stage();
+
+            LoginController loginController = new LoginController(projectDAO, user, resourceBundle);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"), resourceBundle);
+            loader.setController(loginController);
+
+            newStage.setTitle(resourceBundle.getString("LogInTitle"));
+            newStage.setScene(new Scene(loader.load(), 1100, 600));
+            newStage.setMinHeight(600);
+            newStage.setMinWidth(1100);
+
+            oldStage.close();
+            newStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

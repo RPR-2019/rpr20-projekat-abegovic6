@@ -30,7 +30,7 @@ public class Main extends Application {
         primaryStage.setMinHeight(600);
         primaryStage.setMinWidth(1100);
         primaryStage.show();
-        ProjectDAO.removeInstance();
+        //ProjectDAO.removeInstance();
     }
 
 

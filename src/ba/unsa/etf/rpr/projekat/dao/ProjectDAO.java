@@ -1,4 +1,4 @@
-package ba.unsa.etf.rpr.projekat.database;
+package ba.unsa.etf.rpr.projekat.dao;
 
 
 import ba.unsa.etf.rpr.projekat.model.*;
@@ -65,15 +65,15 @@ public class ProjectDAO {
             emailAdressUniqueStatement = connection.prepareStatement("SELECT COUNT(id) FROM account WHERE emailAdress = ?");
 
             // GROUPS
-            /*createGroupStatement = connection.prepareStatement("INSERT INTO group (id, accountId, groupName, " +
+            createGroupStatement = connection.prepareStatement("INSERT INTO groups (id, accountId, groupName, " +
                   "description, groupColor) VALUES (?, ?, ?, ?, ?)");
-            getAllGroupsForAccountStatement = connection.prepareStatement("SELECT * FROM group WHERE accountId = ?");
-            updateGroupNameGroupStatement = connection.prepareStatement("UPDATE group SET groupName = ? WHERE id = ?");
-            updateDescriptionGroupStatement = connection.prepareStatement("UPDATE group SET description = ? WHERE id = ?");
-            updateGroupColorGroupStatement = connection.prepareStatement("UPDATE group SET groupColor = ? WHERE id = ?");
-            deleteGroupStatement = connection.prepareStatement("DELETE FROM group WHERE id = ?");
-            deleteGroupsForAccountStatement = connection.prepareStatement("DELETE FROM group WHERE accountId = ?");
-            getNewIdGroupStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM group");*/
+            getAllGroupsForAccountStatement = connection.prepareStatement("SELECT * FROM groups WHERE accountId = ?");
+            updateGroupNameGroupStatement = connection.prepareStatement("UPDATE groups SET groupName = ? WHERE id = ?");
+            updateDescriptionGroupStatement = connection.prepareStatement("UPDATE groups SET description = ? WHERE id = ?");
+            updateGroupColorGroupStatement = connection.prepareStatement("UPDATE groups SET groupColor = ? WHERE id = ?");
+            deleteGroupStatement = connection.prepareStatement("DELETE FROM groups WHERE id = ?");
+            deleteGroupsForAccountStatement = connection.prepareStatement("DELETE FROM groups WHERE accountId = ?");
+            getNewIdGroupStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM groups");
 
             // LABELS
             createLabelStatement = connection.prepareStatement("INSERT INTO label (id, accountId, labelName, " +
@@ -126,14 +126,15 @@ public class ProjectDAO {
                 emailAdressUniqueStatement = connection.prepareStatement("SELECT COUNT(id) FROM account WHERE emailAdress = ?");
 
                 // GROUPS
-                /*createGroupStatement = connection.prepareStatement("INSERT INTO group (id, accountId, groupName, description, groupColor) VALUES (?,?,?,?,?)");
-                getAllGroupsForAccountStatement = connection.prepareStatement("SELECT * FROM group WHERE accountId = ?");
-                updateGroupNameGroupStatement = connection.prepareStatement("UPDATE group SET groupName = ? WHERE id = ?");
-                updateDescriptionGroupStatement = connection.prepareStatement("UPDATE group SET description = ? WHERE id = ?");
-                updateGroupColorGroupStatement = connection.prepareStatement("UPDATE group SET groupColor = ? WHERE id = ?");
-                deleteGroupStatement = connection.prepareStatement("DELETE FROM group WHERE id = ?");
-                deleteGroupsForAccountStatement = connection.prepareStatement("DELETE FROM group WHERE accountId = ?");
-                getNewIdGroupStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM group");*/
+                createGroupStatement = connection.prepareStatement("INSERT INTO groups (id, accountId, " +
+                        "groupName, description, groupColor) VALUES (?,?,?,?,?)");
+                getAllGroupsForAccountStatement = connection.prepareStatement("SELECT * FROM groups WHERE accountId = ?");
+                updateGroupNameGroupStatement = connection.prepareStatement("UPDATE groups SET groupName = ? WHERE id = ?");
+                updateDescriptionGroupStatement = connection.prepareStatement("UPDATE groups SET description = ? WHERE id = ?");
+                updateGroupColorGroupStatement = connection.prepareStatement("UPDATE groups SET groupColor = ? WHERE id = ?");
+                deleteGroupStatement = connection.prepareStatement("DELETE FROM groups WHERE id = ?");
+                deleteGroupsForAccountStatement = connection.prepareStatement("DELETE FROM groups WHERE accountId = ?");
+                getNewIdGroupStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM groups");
 
                 // LABELS
                 createLabelStatement = connection.prepareStatement("INSERT INTO label (id, accountId, labelName, " +
@@ -196,7 +197,7 @@ public class ProjectDAO {
     public void returnToDefault() throws SQLException {
         Statement stmt = connection.createStatement();
         stmt.executeUpdate("DELETE FROM account");
-        stmt.executeUpdate("DELETE FROM group");
+        stmt.executeUpdate("DELETE FROM groups");
         stmt.executeUpdate("DELETE FROM notes");
         stmt.executeUpdate("DELETE FROM label");
         stmt.executeUpdate("DELETE FROM intertable");
@@ -330,6 +331,8 @@ public class ProjectDAO {
         return GroupColor.valueOf(string);
     }
 
+    private String groupColorToString(GroupColor groupColor) { return groupColor.toString(); }
+
     private Group getGroupFromResultSet(ResultSet resultSetGroup) {
         try {
             Group group = new Group();
@@ -358,6 +361,41 @@ public class ProjectDAO {
             throwables.printStackTrace();
         }
         return Collections.emptyList();
+    }
+
+    public List<Group> getAllGroupsForAccount(Account account) {
+        try {
+            getAllGroupsForAccountStatement.setInt(1, account.getId());
+            return getGroupListFromResultSet(getAllGroupsForAccountStatement.executeQuery());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean createGroup(Group group) {
+        try {
+            ResultSet resultSet = getNewIdGroupStatement.executeQuery();
+            if(resultSet.next()) {
+                group.setId(resultSet.getInt(1));
+            } else {
+                group.setId(1);
+            }
+            createGroupStatement.setInt(1, group.getId());
+            createGroupStatement.setInt(2, group.getAccountId());
+            createGroupStatement.setString(3, group.getGroupName());
+            createGroupStatement.setString(4, group.getDescription());
+            createGroupStatement.setString(5, group.getGroupColor().name());
+
+            createGroupStatement.executeUpdate();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+
+
+        return true;
     }
 
     // ------------------------------------------------------------------------------- //
@@ -397,6 +435,16 @@ public class ProjectDAO {
         return null;
     }
 
+    public List<Label> getAllLabelsForAccount(Account account) {
+        try {
+            getAllLabelsForAccountStatement.setInt(1, account.getId());
+            return getLabelListFromResultSet(getAllLabelsForAccountStatement.executeQuery());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
     private List<Label> getLabelListFromResultSet(ResultSet resultSetLabel) {
         try {
             List<Label> labels = new ArrayList<>();
@@ -408,6 +456,30 @@ public class ProjectDAO {
             throwables.printStackTrace();
         }
         return Collections.emptyList();
+    }
+
+    public boolean createLabel(Label label) {
+        try {
+            ResultSet resultSet = getNewIdLabelStatement.executeQuery();
+            if(resultSet.next()) {
+                label.setId(resultSet.getInt(1));
+            } else {
+                label.setId(1);
+            }
+            createLabelStatement.setInt(1, label.getId());
+            createLabelStatement.setInt(2, label.getAccountId());
+            createLabelStatement.setString(3, label.getLabelName());
+            createLabelStatement.setString(4, label.getDescription());
+            createLabelStatement.setString(5, label.getLabelColor().name());
+
+            createLabelStatement.executeUpdate();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 
     // ------------------------------------------------------------------------------- //
@@ -492,4 +564,11 @@ public class ProjectDAO {
         return Collections.emptyList();
     }
 
+    public boolean updateGroup(Group group) {
+        return  true;
+    }
+
+    public boolean updateLabel(Label label) {
+        return true;
+    }
 }

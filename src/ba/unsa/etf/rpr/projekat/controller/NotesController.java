@@ -1,13 +1,16 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
-import ba.unsa.etf.rpr.projekat.database.ProjectDAO;
+import ba.unsa.etf.rpr.projekat.GroupListViewCell;
+import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.Account;
-import javafx.event.ActionEvent;
+import ba.unsa.etf.rpr.projekat.model.Group;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -18,24 +21,31 @@ public class NotesController {
     private final ResourceBundle resourceBundle;
     private final ProjectDAO projectDAO;
 
-//    @FXML
-//    public Label userid;
+    private ObservableList<Group> groupsObservableList;
+    private ObservableList<ba.unsa.etf.rpr.projekat.model.Label> labelObservableList;
+
     @FXML
     public Label userEmailLabel;
     @FXML
     public Label userNameLabel;
     @FXML
-//    public Label userpassword;
-//    @FXML
     public Label userUsernameLabel;
-//    @FXML
-//    public Label userlastname;
+
+    @FXML
+    public ListView notaListView;
+
 
 
     public NotesController(ProjectDAO projectDAO, Account user, ResourceBundle resourceBundle) {
         this.projectDAO = projectDAO;
         this.user = user;
         this.resourceBundle = resourceBundle;
+
+        this.groupsObservableList = FXCollections.observableArrayList();
+        this.labelObservableList = FXCollections.observableArrayList();
+
+        this.groupsObservableList.addAll(this.projectDAO.getAllGroupsForAccount(this.user));
+        this.labelObservableList.addAll(this.projectDAO.getAllLabelsForAccount(this.user));
     }
 
     @FXML
@@ -43,6 +53,9 @@ public class NotesController {
         userEmailLabel.setText(resourceBundle.getString("EmailAdress") + " " + user.getEmailAdress());
         userNameLabel.setText(resourceBundle.getString("Name") + " " +  user.getFirstName() + " " + user.getLastName());
         userUsernameLabel.setText(resourceBundle.getString("Username") + " " +user.getUserName());
+
+        notaListView.setItems(groupsObservableList);
+        notaListView.setCellFactory(listView -> new GroupListViewCell(groupsObservableList, projectDAO, resourceBundle));
 
 
 
@@ -52,7 +65,11 @@ public class NotesController {
         try {
             Stage newStage = new Stage();
 
-            GroupController groupController = new GroupController(projectDAO, user, resourceBundle);
+            Group group = new Group();
+            group.setId(-2);
+            group.setAccountId(user.getId());
+
+            GroupController groupController = new GroupController(group, groupsObservableList, user, resourceBundle);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/group.fxml"), resourceBundle);
             loader.setController(groupController);
@@ -63,10 +80,19 @@ public class NotesController {
             newStage.setMinWidth(700);
 
             newStage.show();
+
+            newStage.setOnHiding(windowEvent -> {
+                if(group.getId() == -1) {
+                    if(projectDAO.createGroup(group)) {
+                        groupsObservableList.add(group);
+                    }
+
+
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
-
 
     }
 
@@ -74,7 +100,11 @@ public class NotesController {
         try {
             Stage newStage = new Stage();
 
-            LabelController labelController = new LabelController(projectDAO, user, resourceBundle);
+            ba.unsa.etf.rpr.projekat.model.Label label = new ba.unsa.etf.rpr.projekat.model.Label();
+            label.setId(-2);
+            label.setAccountId(user.getId());
+
+            LabelController labelController = new LabelController(label, labelObservableList, user, resourceBundle);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/label.fxml"), resourceBundle);
             loader.setController(labelController);
@@ -85,6 +115,16 @@ public class NotesController {
             newStage.setMinWidth(700);
 
             newStage.show();
+
+            newStage.setOnHiding(windowEvent -> {
+                if(label.getId() == -1) {
+                    if(projectDAO.createLabel(label)) {
+                        labelObservableList.add(label);
+                    }
+
+
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }

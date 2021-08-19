@@ -9,7 +9,17 @@ public class Group {
     private String description;
     private GroupColor groupColor;
 
+    private boolean isUpdatedNeeded;
+
     public Group() {
+    }
+
+    public boolean isUpdatedNeeded() {
+        return isUpdatedNeeded;
+    }
+
+    public void setUpdatedNeeded(boolean updatedNeeded) {
+        isUpdatedNeeded = updatedNeeded;
     }
 
     public int getId() {

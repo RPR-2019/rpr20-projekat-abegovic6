@@ -7,7 +7,17 @@ public class Label {
     private String description;
     private LabelColor labelColor;
 
+    private boolean isUpdateNeeded;
+
     public Label() {
+    }
+
+    public boolean isUpdateNeeded() {
+        return isUpdateNeeded;
+    }
+
+    public void setUpdateNeeded(boolean updateNeeded) {
+        isUpdateNeeded = updateNeeded;
     }
 
     public int getId() {

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="groupItemVbox" alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@../css/style.css" />
+        <URL value="@../css/validations.css" />
+    </stylesheets>
+    <children>
+      <HBox alignment="CENTER_LEFT" VBox.vgrow="ALWAYS">
+         <children>
+            <Label fx:id="groupItemNameLabel" maxWidth="1.7976931348623157E308" styleClass="paragraph" text="Label" HBox.hgrow="ALWAYS">
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </Label>
+            <Button mnemonicParsing="false" onAction="#openInformation" style="-fx-background-color: transparent;">
+               <graphic>
+                   <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                       <image>
+                           <Image url="@../images/info-512.png" />
+                       </image>
+                   </ImageView>
+               </graphic>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </HBox>
+      <Label fx:id="groupItemDescriptionLabel" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" styleClass="paragraphsmaller" text="Label">
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+         <VBox.margin>
+            <Insets bottom="3.0" />
+         </VBox.margin>
+      </Label>
+   </children>
+</VBox>

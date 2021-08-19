@@ -1,7 +1,7 @@
 package ba.unsa.etf.rpr.projekat;
 
 import ba.unsa.etf.rpr.projekat.controller.LoginController;
-import ba.unsa.etf.rpr.projekat.database.ProjectDAO;
+import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.Account;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

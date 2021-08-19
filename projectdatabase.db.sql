@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS "label" (
 	"labelColor"	TEXT,
 	PRIMARY KEY("id")
 );
-CREATE TABLE IF NOT EXISTS "group" (
+CREATE TABLE IF NOT EXISTS "groups" (
 	"id"	INTEGER,
 	"accountId"	INTEGER,
 	"groupName"	TEXT,

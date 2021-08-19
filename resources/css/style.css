@@ -68,7 +68,7 @@
   -fx-overflow: hidden;
 }
 
-.choiceboxframe {
+.choice-box {
     -fx-position: relative;
     -fx-display: block;
     -fx-background-color: #6F2232;
@@ -77,6 +77,12 @@
     -fx-text-fill: #F2F4F3;
     -fx-text-decoration: none;
     -fx-padding: 5px 15px;
+}
 
+.choice-box .label {
+    -fx-text-fill: #F2F4F3;
+}
 
+.choice-box .context-menu {
+    -fx-background-color: black;
 }

@@ -1,17 +1,22 @@
 package ba.unsa.etf.rpr.projekat.model;
 
+import javafx.beans.property.SimpleStringProperty;
+
 import java.util.Objects;
 
 public class Group {
     private int id;
     private int accountId;
-    private String groupName;
-    private String description;
-    private GroupColor groupColor;
+    private SimpleStringProperty groupName;
+    private SimpleStringProperty description;
+    private SimpleStringProperty groupColor;
 
     private boolean isUpdatedNeeded;
 
     public Group() {
+        groupName = new SimpleStringProperty();
+        description = new SimpleStringProperty();
+        groupColor = new SimpleStringProperty();
     }
 
     public boolean isUpdatedNeeded() {
@@ -39,30 +44,45 @@ public class Group {
     }
 
     public GroupColor getGroupColor() {
-        return groupColor;
+        return GroupColor.valueOf(groupColor.get());
     }
 
     public void setGroupColor(GroupColor groupColor) {
-        this.groupColor = groupColor;
+        this.groupColor.set(groupColor.name());
     }
 
     public String getGroupName() {
-        return groupName;
+        return groupName.get();
     }
 
     public void setGroupName(String groupName) {
-        this.groupName = groupName.substring(0, 1).toUpperCase() + groupName.substring(1);;
+        this.groupName.set(groupName.substring(0, 1).toUpperCase() + groupName.substring(1));
     }
 
 
     public String getDescription() {
-        return description;
+        return description.get();
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description.set(description);
     }
 
+    public SimpleStringProperty groupNameProperty() {
+        return groupName;
+    }
+
+    public SimpleStringProperty descriptionProperty() {
+        return description;
+    }
+
+    public SimpleStringProperty groupColorProperty() {
+        return groupColor;
+    }
+
+    public void setGroupColor(String groupColor) {
+        this.groupColor.set(groupColor);
+    }
 
     @Override
     public boolean equals(Object o) {

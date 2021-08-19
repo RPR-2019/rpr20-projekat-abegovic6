@@ -3,6 +3,7 @@ package ba.unsa.etf.rpr.projekat;
 import ba.unsa.etf.rpr.projekat.controller.GroupController;
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.Group;
+import ba.unsa.etf.rpr.projekat.model.GroupColor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -63,9 +64,37 @@ public class GroupListViewCell extends ListCell<Group> {
 
             }
 
-            groupItemNameLabel.setText(String.valueOf(group.getGroupName()));
-            groupItemDescriptionLabel.setText(String.valueOf(group.getDescription()));
+            groupItemNameLabel.setText(group.getGroupName());
+            group.groupNameProperty().addListener((obs, oldName, newName) -> {
+                if(oldName != null) {
+                    groupItemNameLabel.setText(oldName);
+                }
+                if(newName != null) {
+                    groupItemNameLabel.setText(newName);
+                }
+            });
+            groupItemDescriptionLabel.setText(group.getDescription());
+            group.descriptionProperty().addListener((obs, oldName, newName) -> {
+                if(oldName != null) {
+                    groupItemDescriptionLabel.setText(oldName);
+                }
+                if(newName != null) {
+                    groupItemDescriptionLabel.setText(newName);
+                }
+            });
             groupItemVbox.setStyle("-fx-background-color: " + group.getGroupColor().getHexCode());
+            group.groupColorProperty().addListener((obs, oldColor, newColor) -> {
+                if(oldColor != null) {
+                    groupItemVbox.setStyle("-fx-background-color: " + GroupColor.valueOf(oldColor).getHexCode());
+                }
+                if(newColor != null) {
+                    groupItemVbox.setStyle("-fx-background-color: " + GroupColor.valueOf(newColor).getHexCode());
+                }
+
+
+            });
+            //groupItemDescriptionLabel.setText(String.valueOf(group.getDescription()));
+            //groupItemVbox.setStyle("-fx-background-color: " + group.getGroupColor().getHexCode());
 
 
 

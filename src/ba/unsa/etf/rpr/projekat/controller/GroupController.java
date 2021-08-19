@@ -40,6 +40,10 @@ public class GroupController {
     public Label groupNameErrorLabel;
     @FXML
     public Label groupColorErrorLabel;
+    @FXML
+    public Button groupCancelButton;
+    @FXML
+    public Button groupOkButton;
 
     public GroupController(Group group, List<Group> groups, Account user, ResourceBundle resourceBundle) {
         this.group = group;
@@ -56,7 +60,7 @@ public class GroupController {
 
         groupColorModel.currentColorProperty().addListener((obp, oldColor, newColor) -> {
             String hex = GroupColor.valueOf(newColor).getHexCode();
-            groupGridPane.setStyle("-fx-background-color: " + hex);
+            changeColor(hex);
             color = newColor;
         });
 
@@ -70,8 +74,13 @@ public class GroupController {
             groupColorChoiceBox.getSelectionModel().select(group.getGroupColor().toString());
         }
 
+    }
 
-
+    private void changeColor(String hex) {
+        groupsTitleLabel.setStyle("-fx-text-fill: " + hex);
+        groupColorChoiceBox.setStyle("-fx-background-color: "+ hex);
+        groupCancelButton.setStyle("-fx-border-color: " + hex);
+        groupOkButton.setStyle("-fx-border-color: " + hex);
     }
 
     public void changeCurrentColor() {

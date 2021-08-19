@@ -65,12 +65,12 @@
       </ChoiceBox>
       <ButtonBar GridPane.columnIndex="1" GridPane.rowIndex="6">
         <buttons>
-          <Button defaultButton="true" mnemonicParsing="false" onAction="#confirmGroupChanges" styleClass="buttonframe" text="%OK">
+          <Button fx:id="groupOkButton" defaultButton="true" mnemonicParsing="false" onAction="#confirmGroupChanges" styleClass="buttonframe" text="%OK">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelGroupChanges" styleClass="buttonframe" text="%Cancel">
+            <Button fx:id="groupCancelButton" cancelButton="true" mnemonicParsing="false" onAction="#cancelGroupChanges" styleClass="buttonframe" text="%Cancel">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

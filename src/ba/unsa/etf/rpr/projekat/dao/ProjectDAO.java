@@ -16,19 +16,18 @@ public class ProjectDAO {
     private ResourceBundle resourceBundle;
 
     // ACCOUNT
-    private PreparedStatement createAccountStatement, getAllAccountsStatement, updateFirstNameAccountStatement,
-            updateLastNameAccountStatement, updateUserNameAccountStatement, updateEmailAccountStatement,
-            updatePasswordAccountStatement, deleteAccountStatement, getNewIdAccountStatement,
+    private PreparedStatement createAccountStatement, getAllAccountsStatement, updateAccountStatement,
+            deleteAccountStatement, getNewIdAccountStatement,
             emailAdressUniqueStatement, usernameUniqueStatement;
 
     // GROUPS
     private PreparedStatement createGroupStatement, getAllGroupsForAccountStatement, deleteGroupStatement,
-            updateGroupNameGroupStatement, updateDescriptionGroupStatement, updateGroupColorGroupStatement, getNewIdGroupStatement,
+            updateGroupStatement,  getNewIdGroupStatement,
             deleteGroupsForAccountStatement;
 
     // LABELS
     private PreparedStatement createLabelStatement, getAllLabelsForAccountStatement, deleteLabelStatement,
-            updateLabelNameLabelStatement, updateDescriptionLabelStatement, updateLabelColorLabelStatement,
+            updateLabelStatement,
             getNewIdLabelStatement, deleteLabelsForAccountStatement, getLabelFromIdStatement;
 
     // INTERTABLE
@@ -54,11 +53,8 @@ public class ProjectDAO {
             getAllAccountsStatement = connection.prepareStatement("SELECT * FROM account");
             createAccountStatement = connection.prepareStatement("INSERT INTO account (id, firstName, lastName," +
                     " userName, emailAdress, password) VALUES (?,?,?,?,?,?)");
-            updateFirstNameAccountStatement = connection.prepareStatement("UPDATE account SET firstName = ? WHERE id = ?");
-            updateLastNameAccountStatement = connection.prepareStatement("UPDATE account SET lastName = ? WHERE id = ?");
-            updateUserNameAccountStatement = connection.prepareStatement("UPDATE account SET userName = ? WHERE id = ?");
-            updateEmailAccountStatement = connection.prepareStatement("UPDATE account SET emailAdress = ? WHERE id = ?");
-            updatePasswordAccountStatement = connection.prepareStatement("UPDATE account SET password = ? WHERE id = ?");
+            updateAccountStatement = connection.prepareStatement("UPDATE account SET (firstName, lastName, " +
+                    "userName, emailAdress, password) = (?,?,?,?,?) WHERE id = ?");
             deleteAccountStatement = connection.prepareStatement("DELETE FROM account WHERE id = ?");
             getNewIdAccountStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM account");
             usernameUniqueStatement = connection.prepareStatement("SELECT COUNT(id) FROM account WHERE userName = ?");
@@ -68,9 +64,8 @@ public class ProjectDAO {
             createGroupStatement = connection.prepareStatement("INSERT INTO groups (id, accountId, groupName, " +
                   "description, groupColor) VALUES (?, ?, ?, ?, ?)");
             getAllGroupsForAccountStatement = connection.prepareStatement("SELECT * FROM groups WHERE accountId = ?");
-            updateGroupNameGroupStatement = connection.prepareStatement("UPDATE groups SET groupName = ? WHERE id = ?");
-            updateDescriptionGroupStatement = connection.prepareStatement("UPDATE groups SET description = ? WHERE id = ?");
-            updateGroupColorGroupStatement = connection.prepareStatement("UPDATE groups SET groupColor = ? WHERE id = ?");
+            updateGroupStatement = connection.prepareStatement("UPDATE groups SET (groupName, description, groupColor) " +
+                    "= (?,?,?) WHERE id = ?");
             deleteGroupStatement = connection.prepareStatement("DELETE FROM groups WHERE id = ?");
             deleteGroupsForAccountStatement = connection.prepareStatement("DELETE FROM groups WHERE accountId = ?");
             getNewIdGroupStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM groups");
@@ -80,9 +75,8 @@ public class ProjectDAO {
                     "description, labelColor) VALUES (?, ?, ?, ?, ?)");
             getAllLabelsForAccountStatement = connection.prepareStatement("SELECT * FROM label WHERE accountId = ?");
             getLabelFromIdStatement = connection.prepareStatement("SELECT * FROM label WHERE id = ?");
-            updateLabelNameLabelStatement = connection.prepareStatement("UPDATE label SET labelName = ? WHERE id = ?");
-            updateLabelColorLabelStatement = connection.prepareStatement("UPDATE label SET labelColor = ? WHERE id = ?");
-            updateDescriptionLabelStatement = connection.prepareStatement("UPDATE label SET description = ? WHERE id = ?");
+            updateLabelStatement = connection.prepareStatement("UPDATE label SET (labelName, description, labelColor) " +
+                    "= (?,?,?) WHERE id = ?");
             deleteLabelStatement = connection.prepareStatement("DELETE FROM label WHERE id = ?");
             deleteLabelsForAccountStatement = connection.prepareStatement("DELETE FROM label WHERE accountId = ?");
             getNewIdLabelStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM label");
@@ -114,12 +108,8 @@ public class ProjectDAO {
                 getAllAccountsStatement = connection.prepareStatement("SELECT * FROM account");
                 createAccountStatement = connection.prepareStatement("INSERT INTO account (id, firstName, lastName," +
                         " userName, emailAdress, password) VALUES (?,?,?,?,?,?)");
-
-                updateFirstNameAccountStatement = connection.prepareStatement("UPDATE account SET firstName = ? WHERE id = ?");
-                updateLastNameAccountStatement = connection.prepareStatement("UPDATE account SET lastName = ? WHERE id = ?");
-                updateUserNameAccountStatement = connection.prepareStatement("UPDATE account SET userName = ? WHERE id = ?");
-                updateEmailAccountStatement = connection.prepareStatement("UPDATE account SET emailAdress = ? WHERE id = ?");
-                updatePasswordAccountStatement = connection.prepareStatement("UPDATE account SET password = ? WHERE id = ?");
+                updateAccountStatement = connection.prepareStatement("UPDATE account SET (firstName, lastName, " +
+                        "userName, emailAdress, password) = (?,?,?,?,?) WHERE id = ?");
                 deleteAccountStatement = connection.prepareStatement("DELETE FROM account WHERE id = ?");
                 getNewIdAccountStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM account");
                 usernameUniqueStatement = connection.prepareStatement("SELECT COUNT(id) FROM account WHERE userName = ?");
@@ -129,9 +119,8 @@ public class ProjectDAO {
                 createGroupStatement = connection.prepareStatement("INSERT INTO groups (id, accountId, " +
                         "groupName, description, groupColor) VALUES (?,?,?,?,?)");
                 getAllGroupsForAccountStatement = connection.prepareStatement("SELECT * FROM groups WHERE accountId = ?");
-                updateGroupNameGroupStatement = connection.prepareStatement("UPDATE groups SET groupName = ? WHERE id = ?");
-                updateDescriptionGroupStatement = connection.prepareStatement("UPDATE groups SET description = ? WHERE id = ?");
-                updateGroupColorGroupStatement = connection.prepareStatement("UPDATE groups SET groupColor = ? WHERE id = ?");
+                updateGroupStatement = connection.prepareStatement("UPDATE groups SET (groupName, description, groupColor) " +
+                        "= (?,?,?) WHERE id = ?");
                 deleteGroupStatement = connection.prepareStatement("DELETE FROM groups WHERE id = ?");
                 deleteGroupsForAccountStatement = connection.prepareStatement("DELETE FROM groups WHERE accountId = ?");
                 getNewIdGroupStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM groups");
@@ -139,11 +128,10 @@ public class ProjectDAO {
                 // LABELS
                 createLabelStatement = connection.prepareStatement("INSERT INTO label (id, accountId, labelName, " +
                         "description, labelColor) VALUES (?, ?, ?, ?, ?)");
+                updateLabelStatement = connection.prepareStatement("UPDATE label SET (labelName, description, labelColor) " +
+                        "= (?,?,?) WHERE id = ?");
                 getAllLabelsForAccountStatement = connection.prepareStatement("SELECT * FROM label WHERE accountId = ?");
                 getLabelFromIdStatement = connection.prepareStatement("SELECT * FROM label WHERE id = ?");
-                updateLabelNameLabelStatement = connection.prepareStatement("UPDATE label SET labelName = ? WHERE id = ?");
-                updateLabelColorLabelStatement = connection.prepareStatement("UPDATE label SET labelColor = ? WHERE id = ?");
-                updateDescriptionLabelStatement = connection.prepareStatement("UPDATE label SET description = ? WHERE id = ?");
                 deleteLabelStatement = connection.prepareStatement("DELETE FROM label WHERE id = ?");
                 deleteLabelsForAccountStatement = connection.prepareStatement("DELETE FROM label WHERE accountId = ?");
                 getNewIdLabelStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM label");
@@ -394,8 +382,25 @@ public class ProjectDAO {
             return false;
         }
 
-
         return true;
+    }
+
+
+
+    public boolean updateGroup(Group group) {
+        try {
+            updateGroupStatement.setInt(4, group.getId());
+            updateGroupStatement.setString(1, group.getGroupName());
+            updateGroupStatement.setString(2, group.getDescription());
+            updateGroupStatement.setString(3, group.getGroupColor().name());
+            updateGroupStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return  false;
+        }
+
+
+        return  true;
     }
 
     // ------------------------------------------------------------------------------- //
@@ -482,6 +487,21 @@ public class ProjectDAO {
         return true;
     }
 
+    public boolean updateLabel(Label label) {
+
+        try {
+            updateLabelStatement.setInt(4, label.getId());
+            updateLabelStatement.setString(1, label.getLabelName());
+            updateLabelStatement.setString(2, label.getDescription());
+            updateLabelStatement.setString(3, label.getLabelColor().name());
+            updateLabelStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return  false;
+        }
+        return true;
+    }
+
     // ------------------------------------------------------------------------------- //
 
     // INTERTABLE
@@ -564,11 +584,4 @@ public class ProjectDAO {
         return Collections.emptyList();
     }
 
-    public boolean updateGroup(Group group) {
-        return  true;
-    }
-
-    public boolean updateLabel(Label label) {
-        return true;
-    }
 }

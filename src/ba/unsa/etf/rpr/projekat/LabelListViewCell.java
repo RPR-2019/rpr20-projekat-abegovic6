@@ -1,9 +1,8 @@
 package ba.unsa.etf.rpr.projekat;
 
-import ba.unsa.etf.rpr.projekat.controller.GroupController;
 import ba.unsa.etf.rpr.projekat.controller.LabelController;
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.model.Group;
+import ba.unsa.etf.rpr.projekat.model.LabelColor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -64,10 +63,35 @@ public class LabelListViewCell extends ListCell<ba.unsa.etf.rpr.projekat.model.L
 
             }
 
-            groupItemNameLabel.setText(String.valueOf(label.getLabelName()));
-            groupItemDescriptionLabel.setText(String.valueOf(label.getDescription()));
+            groupItemNameLabel.setText(label.getLabelName());
+            label.labelNameProperty().addListener((obs, oldName, newName) -> {
+                if(oldName != null) {
+                    groupItemNameLabel.setText(oldName);
+                }
+                if(newName != null) {
+                    groupItemNameLabel.setText(newName);
+                }
+            });
+            groupItemDescriptionLabel.setText(label.getDescription());
+            label.descriptionProperty().addListener((obs, oldName, newName) -> {
+                if(oldName != null) {
+                    groupItemDescriptionLabel.setText(oldName);
+                }
+                if(newName != null) {
+                    groupItemDescriptionLabel.setText(newName);
+                }
+            });
             groupItemVbox.setStyle("-fx-background-color: " + label.getLabelColor().getHexCode());
+            label.labelColorProperty().addListener((obs, oldColor, newColor) -> {
+                if(oldColor != null) {
+                    groupItemVbox.setStyle("-fx-background-color: " + LabelColor.valueOf(oldColor).getHexCode());
+                }
+                if(newColor != null) {
+                    groupItemVbox.setStyle("-fx-background-color: " + LabelColor.valueOf(newColor).getHexCode());
+                }
 
+
+            });
             setText(null);
             setGraphic(groupItemVbox);
         }

@@ -73,7 +73,7 @@ public class LoginController {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(resourceBundle.getString("PasswordError"));
             alert.setHeaderText(resourceBundle.getString("PasswordNotCorrectHeaderError"));
-            alert.setContentText(resourceBundle.getString("PasswordNotCorrectContentError"));
+            alert.setContentText(resourceBundle.getString("PleaseTryAgain"));
 
             alert.showAndWait();
         }

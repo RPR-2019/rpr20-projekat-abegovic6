@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.GroupListViewCell;
+import ba.unsa.etf.rpr.projekat.LabelListViewCell;
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.Account;
 import ba.unsa.etf.rpr.projekat.model.Group;
@@ -11,6 +12,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -32,7 +35,7 @@ public class NotesController {
     public Label userUsernameLabel;
 
     @FXML
-    public ListView notaListView;
+    public VBox vboxForListview;
 
 
 
@@ -54,11 +57,29 @@ public class NotesController {
         userNameLabel.setText(resourceBundle.getString("Name") + " " +  user.getFirstName() + " " + user.getLastName());
         userUsernameLabel.setText(resourceBundle.getString("Username") + " " +user.getUserName());
 
-        notaListView.setItems(groupsObservableList);
-        notaListView.setCellFactory(listView -> new GroupListViewCell(groupsObservableList, projectDAO, resourceBundle));
 
+        ListView<Group> groupListView = new ListView<>();
+        groupListView.setItems(groupsObservableList);
+        groupListView.setCellFactory(listView -> new GroupListViewCell(groupsObservableList, projectDAO, resourceBundle));
+        vboxForListview.getChildren().add(2, groupListView);
 
+    }
 
+    public void changeToGroups() {
+        ListView<Group> groupListView = new ListView<>();
+        groupListView.setItems(groupsObservableList);
+        groupListView.setCellFactory(listView -> new GroupListViewCell(groupsObservableList, projectDAO, resourceBundle));
+        vboxForListview.getChildren().remove(2);
+        vboxForListview.getChildren().add(2, groupListView);
+
+    }
+
+    public void changeToLabels() {
+        ListView<ba.unsa.etf.rpr.projekat.model.Label> labelListView = new ListView<>();
+        labelListView.setItems(labelObservableList);
+        labelListView.setCellFactory(listView -> new LabelListViewCell(labelObservableList, projectDAO, resourceBundle));
+        vboxForListview.getChildren().remove(2);
+        vboxForListview.getChildren().add(2, labelListView);
     }
 
     public void createNewGroup() {

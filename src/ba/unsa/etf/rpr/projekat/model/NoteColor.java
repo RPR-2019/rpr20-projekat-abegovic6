@@ -1,13 +1,14 @@
 package ba.unsa.etf.rpr.projekat.model;
 
 public enum NoteColor {
-    BLUE("#CFE7EA"),
-    GREEN("D4E6C4"),
-    PINK("#FBC1AD"),
-    POLOBLUE("#7DABD0"),
-    PURPLE("#E5E1E0"),
-    RED("#F56E4A"),
-    YELLOW("#FFDF6F");
+    BLUE("#048a81"),
+    GREEN("#70ae6e"),
+    PINK("#d81159"),
+    PURPLE("#6e2594"),
+    RED("#f8333c"),
+    ORANGE("#ec7d10"),
+    YELLOW("f5b301"),
+    COPPER("#c57b57");
 
     private String value;
 

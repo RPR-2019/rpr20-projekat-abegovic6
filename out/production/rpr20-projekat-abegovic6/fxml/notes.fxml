@@ -135,7 +135,7 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="buttonframe" text="%NewNote" HBox.hgrow="ALWAYS">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#createNewNote" styleClass="buttonframe" text="%NewNote" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets bottom="10.0" left="2.0" right="10.0" top="10.0" />
                      </HBox.margin>

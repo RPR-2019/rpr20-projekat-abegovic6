@@ -5,6 +5,7 @@ import ba.unsa.etf.rpr.projekat.LabelListViewCell;
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.Account;
 import ba.unsa.etf.rpr.projekat.model.Group;
+import ba.unsa.etf.rpr.projekat.model.Note;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,7 +20,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
-public class NotesController {
+public class MainController {
     private final Account user;
     private final ResourceBundle resourceBundle;
     private final ProjectDAO projectDAO;
@@ -39,7 +40,7 @@ public class NotesController {
 
 
 
-    public NotesController(ProjectDAO projectDAO, Account user, ResourceBundle resourceBundle) {
+    public MainController(ProjectDAO projectDAO, Account user, ResourceBundle resourceBundle) {
         this.projectDAO = projectDAO;
         this.user = user;
         this.resourceBundle = resourceBundle;
@@ -146,6 +147,38 @@ public class NotesController {
 
                 }
             });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public void createNewNote() {
+        try {
+            Stage newStage = new Stage();
+
+            Note note = new Note();
+
+            NoteController noteController = new NoteController(note, labelObservableList, groupsObservableList, projectDAO,
+                                resourceBundle);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/note.fxml"), resourceBundle);
+            loader.setController(noteController);
+
+            newStage.setTitle(resourceBundle.getString("CreateNote"));
+            newStage.setScene(new Scene(loader.load(), 700, 500));
+            newStage.setMinHeight(500);
+            newStage.setMinWidth(700);
+
+            newStage.show();
+
+//            newStage.setOnHiding(windowEvent -> {
+//
+//
+//
+//                }
+//            });
         } catch (IOException e) {
             e.printStackTrace();
         }

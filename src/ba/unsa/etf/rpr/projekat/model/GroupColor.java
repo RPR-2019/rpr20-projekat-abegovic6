@@ -7,7 +7,7 @@ public enum GroupColor {
     PURPLE("#6e2594"),
     RED("#f8333c"),
     ORANGE("#ec7d10"),
-    YELLOW("f80700"),
+    YELLOW("f5b301"),
     COPPER("#c57b57");
 
     private String value;

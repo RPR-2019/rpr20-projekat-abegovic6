@@ -101,10 +101,10 @@ public class SignupController {
                 Stage oldStage  = (Stage) source.getScene().getWindow();
                 Stage newStage = new Stage();
 
-                NotesController notesController = new NotesController(projectDAO, user, resourceBundle);
+                MainController mainController = new MainController(projectDAO, user, resourceBundle);
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/notes.fxml"), resourceBundle);
-                loader.setController(notesController);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"), resourceBundle);
+                loader.setController(mainController);
 
                 newStage.setTitle(resourceBundle.getString("NotesTitle"));
                 newStage.setScene(new Scene(loader.load(), 1100, 600));

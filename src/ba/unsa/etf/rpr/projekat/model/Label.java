@@ -5,9 +5,9 @@ import javafx.beans.property.SimpleStringProperty;
 public class Label {
     private int id;
     private int accountId;
-    private SimpleStringProperty labelName;
-    private SimpleStringProperty description;
-    private SimpleStringProperty labelColor;
+    private final SimpleStringProperty labelName;
+    private final SimpleStringProperty description;
+    private final SimpleStringProperty labelColor;
 
     private boolean isUpdateNeeded;
 

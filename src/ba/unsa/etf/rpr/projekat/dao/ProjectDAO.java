@@ -584,4 +584,7 @@ public class ProjectDAO {
         return Collections.emptyList();
     }
 
+    public boolean createNote (Note note) {
+        return  true;
+    }
 }

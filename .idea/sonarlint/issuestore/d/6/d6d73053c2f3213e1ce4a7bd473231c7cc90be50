@@ -1,0 +1,93 @@
+
+X
+java:S1659"";Declare "getAllNotesIdForNoteStatement" on a separate line.(Û´ØÂ8Øµü°/
+j
+java:S2095Ì"GUse try-with-resources or close this "Statement" in a "finally" clause.(õ½ÛØşÿÿÿÿ8ñ™ûµ/
+X
+java:S2209±"5Change this instance-reference to a static reference.(‹¿õ±øÿÿÿÿ8ñ™ûµ/
+I
+java:S1168„"+Return an empty collection instead of null.(¥¹ï8ñ™ûµ/
+Y
+java:S1144—";Remove this unused private "localeDateTimeToString" method.(¥‘¤8¡‹­ûµ/
+Z
+java:S1659"8Declare "emailAdressUniqueStatement" on a separate line.(…¾Œÿÿÿÿÿ8Ü¯õå°/
+D
+java:S1172ü"&Remove these unused method parameters.(˜—ı–8¡‹­ûµ/
+R
+java:S1659"5Declare "getLabelFromIdStatement" on a separate line.(·´åÉ8 ¥”°/
+^	java:S125ô"<This block of commented-out lines of code should be removed.(¾ó¹øÿÿÿÿ8ñ™ûµ/
+9
+java:S1643É"Use a StringBuilder instead.(¯¤8ñ™ûµ/
+Q
+java:S1659"4Declare "getNewIdGroupStatement" on a separate line.(”·±8˜Ï·°/
+Y
+java:S1659'"<Declare "updateDateUpdatedNoteStatement" on a separate line.(ÍÛ¥ò8ö‘™°/
+W
+java:S1659'":Declare "updateNoteColorNoteStatement" on a separate line.(ÍÛ¥ò8ö‘™°/
+Z
+java:S1659"=Declare "deleteLabelsForAccountStatement" on a separate line.(·´åÉ8£œ×°/
+T
+java:S1659"2Declare "deleteLabelStatement" on a separate line.(§“¦üÿÿÿÿ8ôÂ†Œ°/
+_
+java:S1659"=Declare "deleteGroupsForAccountStatement" on a separate line.(™ìûøüÿÿÿÿ8ü›Õ°/
+T
+java:S1659"2Declare "updateLabelStatement" on a separate line.(å‡ç¿ıÿÿÿÿ8œÍ¡ûµ/
+U
+java:S1144Â"7Remove this unused private "groupColorToString" method.(áññ8ñ™ûµ/
+_
+java:S1659"=Declare "getAllGroupsForAccountStatement" on a separate line.(ÈÔ¢¿üÿÿÿÿ8İâŒ°/
+_
+java:S1659"=Declare "getAllLabelsForAccountStatement" on a separate line.(§“¦üÿÿÿÿ8­‡Œ°/
+I
+java:S1168Â"+Return an empty collection instead of null.(¥¹ï8¡‹­ûµ/
+I
+java:S1172·"&Remove these unused method parameters.(´„ı×ùÿÿÿÿ8ñ™ûµ/
+T
+java:S1659"2Declare "deleteGroupStatement" on a separate line.(ÈÔ¢¿üÿÿÿÿ8’í…Œ°/
+R
+java:S1659"5Declare "getAllAccountsStatement" on a separate line.(şĞ»‹8ô‡…Œ°/
+Y
+java:S1659'"<Declare "updateDescriptionNoteStatement" on a separate line.(ÍÛ¥ò8¢ó•°/
+U
+java:S1659("3Declare "getNewIdNoteStatement" on a separate line.(âÃ‘Öúÿÿÿÿ8×¹º°/
+V
+java:S1659"4Declare "deleteAccountStatement" on a separate line.(½ÅÇ¼ÿÿÿÿÿ8µ¼Œ°/
+U
+java:S1659#"3Declare "deleteNoteIdStatement" on a separate line.(É³şéúÿÿÿÿ8İğØ°/
+V
+java:S1659""9Declare "addNewLabelForNoteStatement" on a separate line.(Û´ØÂ8Øµü°/
+S
+java:S1659&"1Declare "createNoteStatement" on a separate line.(¿äÄıÿÿÿÿ8©÷‹Œ°/
+V	java:S106Ö"9Replace this use of System.out or System.err by a logger.(Ç¿ÀÛ8ñ™ûµ/
+\
+java:S1659#":Declare "removeLAbelFromNoteStatement" on a separate line.(É³şéúÿÿÿÿ8ôË°/
+W
+java:S1659"5Declare "usernameUniqueStatement" on a separate line.(…¾Œÿÿÿÿÿ8Ü¯õå°/
+X
+java:S1659"6Declare "getNewIdAccountStatement" on a separate line.(½ÅÇ¼ÿÿÿÿÿ8¯–·°/
+O
+java:S1659"2Declare "updateGroupStatement" on a separate line.(”·±8²˜›ûµ/
+Z
+java:S1659&"8Declare "updateGroupIdNoteStatement" on a separate line.(¿äÄıÿÿÿÿ8”ü’°/
+Q
+java:S1659"4Declare "updateAccountStatement" on a separate line.(şĞ»‹8û‚“ûµ/
+j
+java:S2095º"GUse try-with-resources or close this "Statement" in a "finally" clause.(õ½ÛØşÿÿÿÿ8ñ™ûµ/
+9
+java:S3626"Remove this redundant jump.(ûÁİ…8ñ™ûµ/
+I
+java:S1168é"+Return an empty collection instead of null.(¥¹ï8ñ™ûµ/
+\
+java:S1659(":Declare "deleteNotesForGroupStatement" on a separate line.(âÃ‘Öúÿÿÿÿ8íóÚ°/
+Q
+java:S1659"4Declare "getNewIdLabelStatement" on a separate line.(·´åÉ8ÜÆ¸°/
+X
+java:S1141Ë"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8ñ™ûµ/
+V
+java:S1659#"4Declare "deleteLabelIdStatement" on a separate line.(É³şéúÿÿÿÿ8İğØ°/
+\
+java:S1659&":Declare "updateNoteTitleNoteStatement" on a separate line.(¿äÄıÿÿÿÿ8“´”°/
+N
+java:S1659'"1Declare "deleteNoteStatement" on a separate line.(ÍÛ¥ò8–ÀŒŒ°/
+D
+java:S3010/"'Remove this assignment of "connection".(ì„«8ÁÿŞ‰°/

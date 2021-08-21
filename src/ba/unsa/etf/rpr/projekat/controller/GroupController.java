@@ -66,6 +66,7 @@ public class GroupController {
 
         if(group.getId() == -2) {
             groupsTitleLabel.setText(resourceBundle.getString("CreateANewGroup"));
+            groupColorChoiceBox.getSelectionModel().selectFirst();
         } else {
             groupsTitleLabel.setText(resourceBundle.getString("GroupInformation"));
             groupNameTextField.setText(group.getGroupName());
@@ -149,7 +150,7 @@ public class GroupController {
     private void openAlertMessage() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(resourceBundle.getString("Error"));
-        alert.setHeaderText(resourceBundle.getString("ProblemNewAccountAlert"));
+        alert.setHeaderText(resourceBundle.getString("ProblemPreformingTheAction"));
         alert.setContentText(resourceBundle.getString("PleaseTryAgain"));
 
         alert.showAndWait();

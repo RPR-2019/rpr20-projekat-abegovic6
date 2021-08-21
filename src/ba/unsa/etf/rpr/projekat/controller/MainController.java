@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
@@ -155,32 +156,43 @@ public class MainController {
     }
 
     public void createNewNote() {
-        try {
-            Stage newStage = new Stage();
+        if(groupsObservableList.isEmpty ()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(resourceBundle.getString("Error"));
+            alert.setHeaderText(resourceBundle.getString("NeedAGroupAction"));
+            alert.setContentText(resourceBundle.getString("NeedAGroupActionContent"));
 
-            Note note = new Note();
+            alert.showAndWait();
+        } else {
+            try {
 
-            NoteController noteController = new NoteController(note, labelObservableList, groupsObservableList, projectDAO,
-                                resourceBundle);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/note.fxml"), resourceBundle);
-            loader.setController(noteController);
+                Stage newStage = new Stage ();
+                Note note = new Note ();
+                note.setId (-2);
 
-            newStage.setTitle(resourceBundle.getString("CreateNote"));
-            newStage.setScene(new Scene(loader.load(), 700, 500));
-            newStage.setMinHeight(500);
-            newStage.setMinWidth(700);
+                NoteController noteController = new NoteController (note, labelObservableList, groupsObservableList, resourceBundle);
 
-            newStage.show();
+                FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/note.fxml"), resourceBundle);
+                loader.setController (noteController);
 
-//            newStage.setOnHiding(windowEvent -> {
-//
-//
-//
-//                }
-//            });
-        } catch (IOException e) {
-            e.printStackTrace();
+                newStage.setTitle (resourceBundle.getString ("CreateNote"));
+                newStage.setScene (new Scene (loader.load (), 800, 600));
+                newStage.setMinHeight (600);
+                newStage.setMinWidth (800);
+
+                newStage.show ();
+
+                newStage.setOnHiding (windowEvent -> {
+                    if (note.getId () == -1) {
+                        if (projectDAO.createNote (note)) {
+
+                        }
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
         }
 
 

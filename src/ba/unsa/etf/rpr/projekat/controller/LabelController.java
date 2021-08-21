@@ -126,7 +126,7 @@ public class LabelController {
     private void openAlertMessage() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(resourceBundle.getString("Error"));
-        alert.setHeaderText(resourceBundle.getString("ProblemNewAccountAlert"));
+        alert.setHeaderText(resourceBundle.getString("ProblemPreformingTheAction"));
         alert.setContentText(resourceBundle.getString("PleaseTryAgain"));
 
         alert.showAndWait();

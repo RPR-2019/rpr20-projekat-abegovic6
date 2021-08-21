@@ -15,6 +15,10 @@ public class Note {
     private LocalDateTime dateUpdated;
     private NoteColor noteColor;
 
+    private boolean isUpdateNeeded = false;
+
+
+
     public Note() {
         labels = new ArrayList<>();
     }
@@ -81,6 +85,14 @@ public class Note {
 
     public void setLabels(List<Label> labels) {
         this.labels = labels;
+    }
+
+    public boolean isUpdateNeeded () {
+        return isUpdateNeeded;
+    }
+
+    public void setUpdateNeeded (boolean updateNeeded) {
+        isUpdateNeeded = updateNeeded;
     }
 
     @Override

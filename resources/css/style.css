@@ -86,3 +86,23 @@
 .choice-box .context-menu {
     -fx-background-color: black;
 }
+
+.check-box {
+    -fx-position: relative;
+    -fx-display: block;
+    -fx-background-repeat:no-repeat;
+    -fx-text-fill: #F2F4F3;
+    -fx-font-family: 'Helvetica Neue', sans-serif;
+    -fx-font-size: 10px;
+    -fx-text-decoration: none;
+    -fx-text-align: justify;
+    -fx-text-justify:
+    -fx-inter-word;
+    -fx-padding: 5px 15px;
+    -fx-margin: 10px 0;
+}
+
+.scroll-pane {
+   -fx-background: #1A1A1C;
+   -fx-border-color: #1A1A1C;
+}

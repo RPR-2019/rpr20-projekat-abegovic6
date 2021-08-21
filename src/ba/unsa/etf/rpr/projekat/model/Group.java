@@ -7,9 +7,9 @@ import java.util.Objects;
 public class Group {
     private int id;
     private int accountId;
-    private SimpleStringProperty groupName;
-    private SimpleStringProperty description;
-    private SimpleStringProperty groupColor;
+    private final SimpleStringProperty groupName;
+    private final SimpleStringProperty description;
+    private final SimpleStringProperty groupColor;
 
     private boolean isUpdatedNeeded;
 
@@ -96,5 +96,10 @@ public class Group {
     @Override
     public int hashCode() {
         return Objects.hash(id, groupName);
+    }
+
+    @Override
+    public String toString() {
+        return groupName.get();
     }
 }

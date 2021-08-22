@@ -2,7 +2,6 @@ package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.GroupModel;
 import ba.unsa.etf.rpr.projekat.NoteColorModel;
-import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.*;
 import ba.unsa.etf.rpr.projekat.model.Label;
 import javafx.event.ActionEvent;
@@ -10,9 +9,13 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -50,6 +53,8 @@ public class NoteController {
     public javafx.scene.control.Label noteGroupErrorLabel;
     @FXML
     public javafx.scene.control.Label noteColorErrorLabel;
+    @FXML
+    public ImageView noteImage;
 
     public NoteController(Note note, List<Label> labels, List<Group> groups, ResourceBundle resourceBundle) {
         this.note = note;
@@ -109,6 +114,36 @@ public class NoteController {
 
     }
 
+    public void getPictureForNote(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(resourceBundle.getString ("GetImage"));
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("JPG", "*.jpg"),
+                new FileChooser.ExtensionFilter("PNG", "*.png")
+        );
+        File file = fileChooser.showOpenDialog(noteTitleLabel.getContextMenu());
+        if (file != null) {
+            try {
+                Image image = new Image(file.toURI().toString());
+                noteImage.setImage(image);
+                FileInputStream fileInputStream = new FileInputStream (file);
+
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                byte[] buf = new byte[1024];
+                for (int readNum; (readNum = fileInputStream.read(buf)) != -1;){
+                    byteArrayOutputStream.write(buf, 0, readNum);
+                }
+                fileInputStream.close();
+
+                note.setImage (buf);
+
+            } catch (IOException e) {
+                e.printStackTrace ();
+            }
+        }
+    }
+
     public void changeCurrentColor() {
         noteColorModel.setCurrentColor(noteColorChoiceBox.getValue());
     }
@@ -123,6 +158,7 @@ public class NoteController {
         noteGroupChoiceBox.setStyle("-fx-background-color: "+ hex);
         noteCancelButton.setStyle("-fx-border-color: " + hex);
         noteOkButton.setStyle("-fx-border-color: " + hex);
+        noteDescriptionTextArea.setStyle("-fx-background-color: "+ hex);
     }
 
     public void confirmNoteChanges(ActionEvent actionEvent) {
@@ -189,12 +225,13 @@ public class NoteController {
         note.setGroupId (groupModel.getIdFromName (groupName));
 
         List<Label> labelsList = new ArrayList<> ();
-        for(Node node : noteFlowPane.getChildren ()){
-            CheckBox checkBox = (CheckBox) node;
-            if(checkBox.isSelected ()) {
-                labelsList.add (labels.stream().filter(l -> l.getLabelName().equals (checkBox.getText())).findFirst().get());
+        if(!labelsList.isEmpty ())
+            for(Node node : noteFlowPane.getChildren ()){
+                CheckBox checkBox = (CheckBox) node;
+                if(checkBox.isSelected ()) {
+                    labelsList.add (labels.stream().filter(l -> l.getLabelName().equals (checkBox.getText())).findFirst().get());
+                }
             }
-        }
 
         note.setLabels (labelsList);
 

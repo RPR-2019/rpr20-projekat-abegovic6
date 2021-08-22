@@ -1,0 +1,9 @@
+
+]	java:S110"<This class has 9 parents which is greater than 5 authorized.(›şÒ´ÿÿÿÿÿ8æêöµ/
+]	java:S125`"<This block of commented-out lines of code should be removed.(‡Í‘ùÿÿÿÿ8’êûµ/
+O
+java:S1172k"2Remove this unused method parameter "actionEvent".(ñœÂ8şğËûµ/
+v
+java:S1128"TRemove this unnecessary import: same package classes are always implicitly imported.(İ­µÿÿÿÿÿ8èÔçÎ¶/
+t
+java:S3776*"RRefactor this method to reduce its Cognitive Complexity from 26 to the 15 allowed.(öÍÃàıÿÿÿÿ8à“ıµ/

@@ -1,4 +1,4 @@
-package ba.unsa.etf.rpr.projekat;
+package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.controller.LabelController;
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class LabelListViewCell extends ListCell<ba.unsa.etf.rpr.projekat.model.Label> {
+public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.model.Label> {
     private final ResourceBundle resourceBundle;
     private final ProjectDAO projectDAO;
     private final List<ba.unsa.etf.rpr.projekat.model.Label> labels;
@@ -31,7 +31,7 @@ public class LabelListViewCell extends ListCell<ba.unsa.etf.rpr.projekat.model.L
 
     private FXMLLoader mLLoader;
 
-    public LabelListViewCell(List<ba.unsa.etf.rpr.projekat.model.Label> labels, ProjectDAO projectDAO, ResourceBundle resourceBundle) {
+    public LabelListCellController (List<ba.unsa.etf.rpr.projekat.model.Label> labels, ProjectDAO projectDAO, ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
         this.projectDAO = projectDAO;
         this.labels = labels;

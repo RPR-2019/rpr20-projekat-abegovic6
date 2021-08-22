@@ -1,7 +1,5 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
-import ba.unsa.etf.rpr.projekat.GroupListViewCell;
-import ba.unsa.etf.rpr.projekat.LabelListViewCell;
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.Account;
 import ba.unsa.etf.rpr.projekat.model.Group;
@@ -10,15 +8,23 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class MainController {
@@ -28,6 +34,7 @@ public class MainController {
 
     private ObservableList<Group> groupsObservableList;
     private ObservableList<ba.unsa.etf.rpr.projekat.model.Label> labelObservableList;
+    private Map<Group, ObservableList<Note>> noteObservableListMap;
 
     @FXML
     public Label userEmailLabel;
@@ -35,9 +42,10 @@ public class MainController {
     public Label userNameLabel;
     @FXML
     public Label userUsernameLabel;
-
     @FXML
     public VBox vboxForListview;
+    @FXML
+    public FlowPane flowPaneForNotes;
 
 
 
@@ -48,29 +56,84 @@ public class MainController {
 
         this.groupsObservableList = FXCollections.observableArrayList();
         this.labelObservableList = FXCollections.observableArrayList();
+        this.noteObservableListMap = new HashMap<> ();
 
         this.groupsObservableList.addAll(this.projectDAO.getAllGroupsForAccount(this.user));
         this.labelObservableList.addAll(this.projectDAO.getAllLabelsForAccount(this.user));
+
+        for(Group group : groupsObservableList) {
+            ObservableList<Note> notes = FXCollections.observableArrayList ();
+            notes.addAll (this.projectDAO.getAllNotesForGroup (group.getId ()));
+            this.noteObservableListMap.put (group, notes);
+        }
+
     }
 
     @FXML
     public void initialize () {
-        userEmailLabel.setText(resourceBundle.getString("EmailAdress") + " " + user.getEmailAdress());
-        userNameLabel.setText(resourceBundle.getString("Name") + " " +  user.getFirstName() + " " + user.getLastName());
-        userUsernameLabel.setText(resourceBundle.getString("Username") + " " +user.getUserName());
+        userEmailLabel.setText (resourceBundle.getString ("EmailAdress") + " " + user.getEmailAdress ());
+        userNameLabel.setText (resourceBundle.getString ("Name") + " " + user.getFirstName () + " " + user.getLastName ());
+        userUsernameLabel.setText (resourceBundle.getString ("Username") + " " + user.getUserName ());
 
 
-        ListView<Group> groupListView = new ListView<>();
-        groupListView.setItems(groupsObservableList);
-        groupListView.setCellFactory(listView -> new GroupListViewCell(groupsObservableList, projectDAO, resourceBundle));
-        vboxForListview.getChildren().add(2, groupListView);
+        ListView<Group> groupListView = new ListView<> ();
+        groupListView.setItems (groupsObservableList);
+        groupListView.setCellFactory (listView -> new GroupListCellController (groupsObservableList, projectDAO, resourceBundle));
+        vboxForListview.getChildren ().add (2, groupListView);
+
+//        for (Note note : noteObservableListMap.get (groupsObservableList.get (0))) {
+//
+//
+//
+//
+//        }
+
+//            try {
+////                //NoteCardController noteCardController = new NoteCardController ();
+////
+////                FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/notecard.fxml"), resourceBundle);
+////                loader.setController (noteCardController);
+////                Node node = loader.load ();
+////
+////                noteCardController.getNoteCardDescription ().setText (note.getDescription ());
+////                noteCardController.getNoteCardTitle ().setText (note.getNoteTitle ());
+////                noteCardController.getNoteCardGridPane ().setStyle ("-fx-background-color: "+ note.getNoteColor ().getHexCode ());
+//
+//
+//            } catch (IOException e) {
+//                e.printStackTrace ();
+//            }
+//
+//        groupListView.getSelectionModel ().selectionModeProperty ().addListener ((obp, oldGroup, newGroup) -> {
+//            if(newGroup != null) {
+//                for(Note note : noteObservableListMap.get (newGroup)) {
+//                    try {
+//                        NoteCardController noteCardController = new NoteCardController ();
+//                        noteCardController.getNoteCardDescription ().setText (note.getDescription ());
+//                        noteCardController.getNoteCardTitle ().setText (note.getNoteTitle ());
+//                        noteCardController.getNoteCardGridPane ().setStyle ("-fx-background-color: "+ note.getNoteColor ().getHexCode ());
+//                        FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/notecard.fxml"), resourceBundle);
+//                        loader.setController (noteCardController);
+//                        Node node = loader.load ();
+//
+//                        flowPaneForNotes.getChildren ().add (node);
+//                    } catch (IOException e) {
+//                        e.printStackTrace ();
+//                    }
+//                }
+//            }
+//        });
+//
+//        groupListView.getSelectionModel ().selectFirst ();
 
     }
+
+
 
     public void changeToGroups() {
         ListView<Group> groupListView = new ListView<>();
         groupListView.setItems(groupsObservableList);
-        groupListView.setCellFactory(listView -> new GroupListViewCell(groupsObservableList, projectDAO, resourceBundle));
+        groupListView.setCellFactory(listView -> new GroupListCellController (groupsObservableList, projectDAO, resourceBundle));
         vboxForListview.getChildren().remove(2);
         vboxForListview.getChildren().add(2, groupListView);
 
@@ -79,7 +142,7 @@ public class MainController {
     public void changeToLabels() {
         ListView<ba.unsa.etf.rpr.projekat.model.Label> labelListView = new ListView<>();
         labelListView.setItems(labelObservableList);
-        labelListView.setCellFactory(listView -> new LabelListViewCell(labelObservableList, projectDAO, resourceBundle));
+        labelListView.setCellFactory(listView -> new LabelListCellController (labelObservableList, projectDAO, resourceBundle));
         vboxForListview.getChildren().remove(2);
         vboxForListview.getChildren().add(2, labelListView);
     }

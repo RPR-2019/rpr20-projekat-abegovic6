@@ -5,6 +5,7 @@ import ba.unsa.etf.rpr.projekat.model.*;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,6 +14,7 @@ import java.util.*;
 public class ProjectDAO {
     private static ProjectDAO instance = null;
     private static Connection connection;
+    private FileInputStream fileInputStream;
     private ResourceBundle resourceBundle;
 
     // ACCOUNT
@@ -35,13 +37,14 @@ public class ProjectDAO {
             removeLAbelFromNoteStatement, deleteNoteIdStatement, deleteLabelIdStatement;
 
     // NOTES
-    private PreparedStatement getAllNotesForGroupStatement, createNoteStatement, updateGroupIdNoteStatement, updateNoteTitleNoteStatement,
-            deleteNoteStatement, updateDescriptionNoteStatement, updateDateUpdatedNoteStatement, updateNoteColorNoteStatement,
-            getNewIdNoteStatement, deleteNotesForGroupStatement;
+    private PreparedStatement getAllNotesForGroupStatement, createNoteStatement, updateGroupIdNoteStatement, updateNotesStatement,
+            deleteNoteStatement, getNewIdNoteStatement, deleteNotesForGroupStatement;
 
     private ProjectDAO() {
         Locale currentLocale = Locale.getDefault();
         resourceBundle = ResourceBundle.getBundle("Translation", currentLocale);
+
+
 
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:projectdatabase.db");
@@ -90,13 +93,10 @@ public class ProjectDAO {
             deleteNoteIdStatement = connection.prepareStatement("DELETE FROM intertable WHERE noteId = ?");
 
             // NOTES
-            createNoteStatement = connection.prepareStatement("INSERT INTO note (id, groupId, noteTitle, " +
-                    "description, dateCreated, dateUpdated, noteColor) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            updateNoteTitleNoteStatement = connection.prepareStatement("UPDATE notes SET noteTitle = ? WHERE id = ?");
-            updateGroupIdNoteStatement = connection.prepareStatement("UPDATE notes SET groupId = ? WHERE id = ?");
-            updateNoteColorNoteStatement = connection.prepareStatement("UPDATE notes SET noteColor = ? WHERE id = ?");
-            updateDateUpdatedNoteStatement = connection.prepareStatement("UPDATE notes SET dateUpdated = ? WHERE id = ?");
-            updateDescriptionNoteStatement = connection.prepareStatement("UPDATE notes SET description = ? WHERE id = ?");
+            createNoteStatement = connection.prepareStatement("INSERT INTO notes (id, groupId, noteTitle, " +
+                    "description, noteColor, image) VALUES (?, ?, ?, ?, ?, ?)");
+            updateNotesStatement = connection.prepareStatement("UPDATE notes SET (noteTitle, description, noteColor, image) " +
+                    "= (?,?,?,?) WHERE id = ?");
             getAllNotesForGroupStatement = connection.prepareStatement("SELECT * FROM notes WHERE groupId = ?");
             deleteNoteStatement = connection.prepareStatement("DELETE FROM notes WHERE id = ?");
             deleteNotesForGroupStatement = connection.prepareStatement("DELETE FROM notes WHERE groupId = ?");
@@ -146,12 +146,9 @@ public class ProjectDAO {
 
                 // NOTES
                 createNoteStatement = connection.prepareStatement("INSERT INTO notes (id, groupId, noteTitle, " +
-                        "description, dateCreated, dateUpdated, noteColor) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                updateNoteTitleNoteStatement = connection.prepareStatement("UPDATE notes SET noteTitle = ? WHERE id = ?");
-                updateGroupIdNoteStatement = connection.prepareStatement("UPDATE notes SET groupId = ? WHERE id = ?");
-                updateNoteColorNoteStatement = connection.prepareStatement("UPDATE notes SET noteColor = ? WHERE id = ?");
-                updateDateUpdatedNoteStatement = connection.prepareStatement("UPDATE notes SET dateUpdated = ? WHERE id = ?");
-                updateDescriptionNoteStatement = connection.prepareStatement("UPDATE notes SET description = ? WHERE id = ?");
+                        "description, noteColor, image) VALUES (?, ?, ?, ?, ?, ?)");
+                updateNotesStatement = connection.prepareStatement("UPDATE notes SET (noteTitle, description, noteColor, image) " +
+                        "= (?,?,?,?) WHERE id = ?");
                 getAllNotesForGroupStatement = connection.prepareStatement("SELECT * FROM notes WHERE groupId = ?");
                 deleteNoteStatement = connection.prepareStatement("DELETE FROM notes WHERE id = ?");
                 deleteNotesForGroupStatement = connection.prepareStatement("DELETE FROM notes WHERE groupId = ?");
@@ -527,16 +524,6 @@ public class ProjectDAO {
     // ------------------------------------------------------------------------------- //
 
     // NOTE
-    private LocalDateTime stringToLocalDateTime(String string) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        return LocalDateTime.parse(string, formatter);
-    }
-
-    private String localeDateTimeToString(LocalDateTime date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        return date.format(formatter);
-    }
-
     private NoteColor stringToNoteColor(String string) {
         return NoteColor.valueOf(string);
     }
@@ -548,10 +535,9 @@ public class ProjectDAO {
             note.setGroupId(resultSetNotes.getInt(2));
             note.setNoteTitle(resultSetNotes.getString(3));
             note.setDescription(resultSetNotes.getString(4));
-            note.setDateCreated(stringToLocalDateTime(resultSetNotes.getString(5)));
-            note.setDateUpdated(stringToLocalDateTime(resultSetNotes.getString(6)));
-            note.setNoteColor(stringToNoteColor(resultSetNotes.getString(7)));
-            note.setLabels(getLabelListForNote(resultSetNotes.getInt(1)));
+            note.setNoteColor(stringToNoteColor(resultSetNotes.getString(5)));
+            note.setImage (null);
+
 
             return note;
 
@@ -585,6 +571,27 @@ public class ProjectDAO {
     }
 
     public boolean createNote (Note note) {
-        return  true;
+        try {
+            ResultSet resultSet = getNewIdNoteStatement.executeQuery();
+            if(resultSet.next()) {
+                note.setId(resultSet.getInt(1));
+            } else {
+                note.setId(1);
+            }
+            createNoteStatement.setInt(1, note.getId());
+            createNoteStatement.setInt(2, note.getGroupId ());
+            createNoteStatement.setString(3, note.getNoteTitle ());
+            createNoteStatement.setString(4, note.getDescription ());
+            createNoteStatement.setString(5, note.getNoteColor ().name ());
+            createNoteStatement.setBytes (6, note.getImage ());
+
+            createNoteStatement.executeUpdate();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 }

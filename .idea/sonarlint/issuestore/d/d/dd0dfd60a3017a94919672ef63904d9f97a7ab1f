@@ -1,5 +1,5 @@
 
-Z
-java:S1128"=Remove this unused import 'javafx.scene.control.RadioButton'.(¹ü˜–8Ş³‡›¶/
-c
-java:S1128"FRemove this unused import 'ba.unsa.etf.rpr.projekat.model.GroupColor'.(öÎ×Ğ8ßÊŠ›¶/
+I
+java:S1602S",Remove useless curly braces around statement(ıœĞ…8ÏÚèÂ¶/
+a
+java:S1128"DRemove this unused import 'ba.unsa.etf.rpr.projekat.dao.ProjectDAO'.(ÄÉÏ8µÔ™Ã¶/

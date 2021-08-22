@@ -1,14 +1,4 @@
 BEGIN TRANSACTION;
-CREATE TABLE IF NOT EXISTS "notes" (
-	"id"	INTEGER,
-	"groupId"	INTEGER,
-	"noteTitle"	TEXT,
-	"description"	TEXT,
-	"dateCreated"	TEXT,
-	"dateUpdated"	TEXT,
-	"noteColor"	TEXT,
-	PRIMARY KEY("id")
-);
 CREATE TABLE IF NOT EXISTS "label" (
 	"id"	INTEGER,
 	"accountId"	INTEGER,
@@ -38,4 +28,14 @@ CREATE TABLE IF NOT EXISTS "intertable" (
 	"noteId"	INTEGER,
 	"labelId"	INTEGER
 );
+CREATE TABLE IF NOT EXISTS "notes" (
+	"id"	INTEGER,
+	"groupId"	INTEGER,
+	"noteTitle"	TEXT,
+	"description"	TEXT,
+	"noteColor"	TEXT,
+	"image"	BLOB,
+	PRIMARY KEY("id")
+);
+INSERT INTO "notes" VALUES (1,1,'title','neki opis','BLUE',NULL);
 COMMIT;

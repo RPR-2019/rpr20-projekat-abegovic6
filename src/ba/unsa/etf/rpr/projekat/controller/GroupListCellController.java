@@ -1,4 +1,4 @@
-package ba.unsa.etf.rpr.projekat;
+package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.controller.GroupController;
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class GroupListViewCell extends ListCell<Group> {
+public class GroupListCellController extends ListCell<Group> {
     private final List<Group> groups;
     private final ResourceBundle resourceBundle;
     private final ProjectDAO projectDAO;
@@ -32,7 +32,7 @@ public class GroupListViewCell extends ListCell<Group> {
 
     private FXMLLoader mLLoader;
 
-    public GroupListViewCell(List<Group> groups, ProjectDAO projectDAO, ResourceBundle resourceBundle) {
+    public GroupListCellController (List<Group> groups, ProjectDAO projectDAO, ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
         this.projectDAO = projectDAO;
         this.groups = groups;

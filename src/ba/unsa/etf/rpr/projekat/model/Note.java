@@ -1,5 +1,7 @@
 package ba.unsa.etf.rpr.projekat.model;
 
+import java.io.File;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +17,27 @@ public class Note {
     private LocalDateTime dateUpdated;
     private NoteColor noteColor;
 
+    private byte[] image;
+
+    public byte[] getImage () {
+        return image;
+    }
+
+    public void setImage (byte[] image) {
+        this.image = image;
+    }
+
     private boolean isUpdateNeeded = false;
+
 
 
 
     public Note() {
         labels = new ArrayList<>();
+
     }
+
+
 
     public NoteColor getNoteColor() {
         return noteColor;

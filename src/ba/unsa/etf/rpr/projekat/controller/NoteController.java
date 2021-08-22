@@ -1,7 +1,7 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
-import ba.unsa.etf.rpr.projekat.GroupModel;
-import ba.unsa.etf.rpr.projekat.NoteColorModel;
+import ba.unsa.etf.rpr.projekat.model.GroupModel;
+import ba.unsa.etf.rpr.projekat.model.NoteColorModel;
 import ba.unsa.etf.rpr.projekat.model.*;
 import ba.unsa.etf.rpr.projekat.model.Label;
 import javafx.event.ActionEvent;
@@ -225,7 +225,7 @@ public class NoteController {
         note.setGroupId (groupModel.getIdFromName (groupName));
 
         List<Label> labelsList = new ArrayList<> ();
-        if(!labelsList.isEmpty ())
+        if(!labels.isEmpty ())
             for(Node node : noteFlowPane.getChildren ()){
                 CheckBox checkBox = (CheckBox) node;
                 if(checkBox.isSelected ()) {

@@ -1,4 +1,4 @@
-package ba.unsa.etf.rpr.projekat;
+package ba.unsa.etf.rpr.projekat.model;
 
 import ba.unsa.etf.rpr.projekat.model.GroupColor;
 import ba.unsa.etf.rpr.projekat.model.NoteColor;

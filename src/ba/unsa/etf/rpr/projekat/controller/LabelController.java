@@ -1,8 +1,7 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
-import ba.unsa.etf.rpr.projekat.LabelColorModel;
+import ba.unsa.etf.rpr.projekat.model.LabelColorModel;
 import ba.unsa.etf.rpr.projekat.model.Account;
-import ba.unsa.etf.rpr.projekat.model.GroupColor;
 import ba.unsa.etf.rpr.projekat.model.LabelColor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

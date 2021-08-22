@@ -37,7 +37,7 @@ public class ProjectDAO {
             removeLAbelFromNoteStatement, deleteNoteIdStatement, deleteLabelIdStatement;
 
     // NOTES
-    private PreparedStatement getAllNotesForGroupStatement, createNoteStatement, updateGroupIdNoteStatement, updateNotesStatement,
+    private PreparedStatement getAllNotesForGroupStatement, getAllNotesForLabelStatement, createNoteStatement, updateGroupIdNoteStatement, updateNotesStatement,
             deleteNoteStatement, getNewIdNoteStatement, deleteNotesForGroupStatement;
 
     private ProjectDAO() {
@@ -101,6 +101,8 @@ public class ProjectDAO {
             deleteNoteStatement = connection.prepareStatement("DELETE FROM notes WHERE id = ?");
             deleteNotesForGroupStatement = connection.prepareStatement("DELETE FROM notes WHERE groupId = ?");
             getNewIdNoteStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM notes");
+            getAllNotesForLabelStatement = connection.prepareStatement ("SELECT n.* FROM notes n, intertable i" +
+                    " WHERE i.labelId = ? AND n.id = i.noteId");
         } catch (SQLException throwables) {
             createDatabase();
             try {
@@ -153,6 +155,8 @@ public class ProjectDAO {
                 deleteNoteStatement = connection.prepareStatement("DELETE FROM notes WHERE id = ?");
                 deleteNotesForGroupStatement = connection.prepareStatement("DELETE FROM notes WHERE groupId = ?");
                 getNewIdNoteStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM notes");
+                getAllNotesForLabelStatement = connection.prepareStatement ("SELECT n.* FROM notes n, intertable i" +
+                        " WHERE i.labelId = ? AND n.id = i.noteId");
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -502,11 +506,11 @@ public class ProjectDAO {
     // ------------------------------------------------------------------------------- //
 
     // INTERTABLE
-    public boolean deleteNotesFromIntertable(ResultSet resultSet, Note note) {
+    private boolean deleteNotesFromIntertable(ResultSet resultSet, Note note) {
         return true;
     }
 
-    public List<Label> getLabelListForNote(int noteId) {
+    private List<Label> getLabelListForNote(int noteId) {
         try {
             List<Label> labels = new ArrayList<>();
             getAllLabelsIdForNoteStatement.setInt(1, noteId);
@@ -519,6 +523,18 @@ public class ProjectDAO {
             throwables.printStackTrace();
         }
         return Collections.emptyList();
+    }
+
+    private void setLabelListForNote(int id, List<Label> labels) {
+        for (Label label : labels) {
+            try {
+                addNewLabelForNoteStatement.setInt (1, id);
+                addNewLabelForNoteStatement.setInt (2, label.getId ());
+                addNewLabelForNoteStatement.executeUpdate ();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace ();
+            }
+        }
     }
 
     // ------------------------------------------------------------------------------- //
@@ -536,6 +552,8 @@ public class ProjectDAO {
             note.setNoteTitle(resultSetNotes.getString(3));
             note.setDescription(resultSetNotes.getString(4));
             note.setNoteColor(stringToNoteColor(resultSetNotes.getString(5)));
+
+            note.setLabels (getLabelListForNote (note.getId ()));
             note.setImage (null);
 
 
@@ -570,6 +588,16 @@ public class ProjectDAO {
         return Collections.emptyList();
     }
 
+    public List<Note> getAllNotesForLabel(int labelId) {
+        try {
+            getAllNotesForLabelStatement.setInt (1, labelId);
+            return getNoteListFromResultSet (getAllNotesForLabelStatement.executeQuery ());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return Collections.emptyList();
+    }
+
     public boolean createNote (Note note) {
         try {
             ResultSet resultSet = getNewIdNoteStatement.executeQuery();
@@ -584,6 +612,8 @@ public class ProjectDAO {
             createNoteStatement.setString(4, note.getDescription ());
             createNoteStatement.setString(5, note.getNoteColor ().name ());
             createNoteStatement.setBytes (6, note.getImage ());
+
+            setLabelListForNote (note.getId (), note.getLabels ());
 
             createNoteStatement.executeUpdate();
 

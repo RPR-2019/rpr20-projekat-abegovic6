@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
-import ba.unsa.etf.rpr.projekat.GroupColorModel;
+import ba.unsa.etf.rpr.projekat.model.GroupColorModel;
 import ba.unsa.etf.rpr.projekat.model.Account;
 import ba.unsa.etf.rpr.projekat.model.Group;
 import ba.unsa.etf.rpr.projekat.model.GroupColor;
@@ -8,8 +8,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 

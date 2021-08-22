@@ -1,17 +1,16 @@
-package ba.unsa.etf.rpr.projekat;
+package ba.unsa.etf.rpr.projekat.model;
 
 import ba.unsa.etf.rpr.projekat.model.GroupColor;
-import ba.unsa.etf.rpr.projekat.model.LabelColor;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class LabelColorModel {
+public class GroupColorModel {
 
     ObservableList<String> colors;
     SimpleStringProperty currentColor;
 
-    public LabelColorModel() {
+    public GroupColorModel() {
         this.colors = FXCollections.observableArrayList();
         currentColor = new SimpleStringProperty();
         fill();
@@ -30,8 +29,8 @@ public class LabelColorModel {
     }
 
     public void fill() {
-        for(LabelColor labelColor : LabelColor.values()) {
-            colors.add(labelColor.toString());
+        for(GroupColor groupColor : GroupColor.values()) {
+            colors.add(groupColor.toString());
         }
     }
 

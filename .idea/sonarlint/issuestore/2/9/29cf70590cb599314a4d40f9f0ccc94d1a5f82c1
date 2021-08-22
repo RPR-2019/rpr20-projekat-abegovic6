@@ -1,9 +1,18 @@
 
-R
-java:S1066ï"/Merge this if statement with the enclosing one.(õá¿œıÿÿÿÿ8İÌÎ¶/
-R
-java:S1066Ã"/Merge this if statement with the enclosing one.(´›ëÿÿÿÿÿ8İÌÎ¶/
-K	java:S108ï")Either remove or fill this block of code.(õá¿œıÿÿÿÿ8İÌÎ¶/
 M
-java:S1066 "/Merge this if statement with the enclosing one.(’èÔ8İÌÎ¶/
-]	java:S125O"<This block of commented-out lines of code should be removed.(°â‘öıÿÿÿÿ8¡‘ØÏ¶/
+java:S1066¬"/Merge this if statement with the enclosing one.(’èÔ8´æÑô¶/
+K	java:S108û")Either remove or fill this block of code.(õá¿œıÿÿÿÿ8µæÑô¶/
+[
+java:S1128"9Remove this unused import 'javafx.scene.image.ImageView'.(áÿ®Ãüÿÿÿÿ8ÔÆüö¶/
+R
+java:S1066û"/Merge this if statement with the enclosing one.(õá¿œıÿÿÿÿ8µæÑô¶/
+O
+java:S1128"2Remove this unused import 'javax.imageio.ImageIO'.(‘çÔû8‚øÕõ¶/
+R
+java:S1066Ï"/Merge this if statement with the enclosing one.(´›ëÿÿÿÿÿ8´æÑô¶/
+[
+java:S1128"9Remove this unused import 'java.awt.image.BufferedImage'.(×íĞ‡şÿÿÿÿ8‚øÕõ¶/
+R
+java:S1128"5Remove this unused import 'javafx.scene.image.Image'.(‰¿½Ç8ÔÆüö¶/
+]	java:S125["<This block of commented-out lines of code should be removed.(ñ¥ùšøÿÿÿÿ8µæÑô¶/
+]	java:S125T"<This block of commented-out lines of code should be removed.(ùÅğÙÿÿÿÿÿ8äûüö¶/

@@ -1,10 +1,7 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.model.Account;
-import ba.unsa.etf.rpr.projekat.model.Group;
-import ba.unsa.etf.rpr.projekat.model.Note;
-import ba.unsa.etf.rpr.projekat.model.NoteModel;
+import ba.unsa.etf.rpr.projekat.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -16,16 +13,15 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MainController {
@@ -33,11 +29,14 @@ public class MainController {
     private final ResourceBundle resourceBundle;
     private final ProjectDAO projectDAO;
 
-    private ObservableList<Group> groupsObservableList;
-    private ObservableList<ba.unsa.etf.rpr.projekat.model.Label> labelObservableList;
-    private Map<Group, ObservableList<Note>> noteObservableListMap;
+    private final ObservableList<Group> groupsObservableList;
+    private final ObservableList<ba.unsa.etf.rpr.projekat.model.Label> labelObservableList;
+    private final ObservableList<Note> noteObservableList;
+    private List<Node> nodes;
 
     private NoteModel noteModel;
+    private SortModel sortNotesModel;
+    private SortModel sortGroupLabelsModel;
 
     @FXML
     public ListView<Group> groupListView;
@@ -53,6 +52,12 @@ public class MainController {
     public VBox vboxForListview;
     @FXML
     public FlowPane flowPaneForNotes;
+    @FXML
+    public ChoiceBox<String> sortGroupLabelsChoiceBox;
+    @FXML
+    public ChoiceBox<String> sortNotesChoiceBox;
+    @FXML
+    public TextField searchNotesField;
 
 
 
@@ -63,17 +68,11 @@ public class MainController {
 
         this.groupsObservableList = FXCollections.observableArrayList();
         this.labelObservableList = FXCollections.observableArrayList();
-        this.noteObservableListMap = new HashMap<> ();
+        this.noteObservableList = FXCollections.observableArrayList();
 
         this.groupsObservableList.addAll(this.projectDAO.getAllGroupsForAccount(this.user));
         this.labelObservableList.addAll(this.projectDAO.getAllLabelsForAccount(this.user));
-
-        for(Group group : groupsObservableList) {
-            ObservableList<Note> notes = FXCollections.observableArrayList ();
-            notes.addAll (this.projectDAO.getAllNotesForGroup (group.getId ()));
-            this.noteObservableListMap.put (group, notes);
-        }
-
+        this.noteObservableList.addAll (this.projectDAO.getAllNotesForUser (this.user));
     }
 
     @FXML
@@ -84,35 +83,39 @@ public class MainController {
 
         noteModel = new NoteModel ();
 
-        noteModel.getNotes ().addListener (new ListChangeListener<Note>() {
-            public void onChanged(Change<? extends Note> c) {
-                while (c.next()) {
-                    if (c.wasPermutated()) {
-                        for (int i = c.getFrom(); i < c.getTo(); ++i) {
-                            //permutate
-                        }
-                    } else if (c.wasUpdated()) {
-                        changeFlowPane (c.getList ());
-                    } else {
-                        for (Note remitem : c.getRemoved()) {
-                            removeItemFromPane(remitem);
-                        }
-                        for (Note additem : c.getAddedSubList()) {
-                            flowPaneForNotes.getChildren ().add (getNoteBlock (additem));
-                        }
+        noteModel.getNotes ().addListener ((ListChangeListener<Note>) c -> {
+            while (c.next()) {
+                if (c.wasPermutated()) {
+                    for (int i = c.getFrom(); i < c.getTo(); ++i) {
+                        //permutate
+                    }
+                } else if (c.wasUpdated()) {
+
+                } else {
+                    for (Note remitem : c.getRemoved()) {
+                        hideTheNode (remitem);
+                    }
+                    for (Note additem : c.getAddedSubList()) {
+                        showTheNode (additem);
                     }
                 }
             }
         });
 
+        nodes = new ArrayList<> ();
+
+        setUpTheFlowPane ();
+
 
         groupListView = new ListView<> ();
         groupListView.setItems (groupsObservableList);
         groupListView.setCellFactory (listView -> new GroupListCellController (groupsObservableList, projectDAO, resourceBundle));
-        groupListView.getSelectionModel ().selectedItemProperty().addListener((obs, oldKorisnik, newKorisnik) -> {
-            if(newKorisnik != null) {
+        groupListView.getSelectionModel ().selectedItemProperty().addListener((obs, oldGroup, newGroup) -> {
+            if(newGroup != null) {
                 noteModel.getNotes ().clear ();
-                noteModel.getNotes ().addAll (projectDAO.getAllNotesForGroup (newKorisnik.getId ()));
+                noteModel.getNotes ().addAll (getNotesForGroup (newGroup.getId ()));
+                var selected = sortNotesChoiceBox.getSelectionModel ().selectedItemProperty ().get ();
+                if (selected != null) sortNotes (selected);
             }
         });
         vboxForListview.getChildren ().add (2, groupListView);
@@ -120,82 +123,143 @@ public class MainController {
         labelListView = new ListView<>();
         labelListView.setItems(labelObservableList);
         labelListView.setCellFactory(listView -> new LabelListCellController (labelObservableList, projectDAO, resourceBundle));
-
         labelListView.getSelectionModel ().selectedItemProperty ().addListener ((obs, oldLabel, newLabel) -> {
             if(newLabel != null) {
                 noteModel.getNotes ().clear ();
-                noteModel.getNotes ().addAll (projectDAO.getAllNotesForLabel(newLabel.getId ()));
+                noteModel.getNotes ().addAll (getNotesForLabel (newLabel.getId ()));
+                var selected = sortNotesChoiceBox.getSelectionModel ().selectedItemProperty ().get ();
+                if (selected != null) sortNotes (selected);
             }
         });
 
+        sortNotesModel = new SortModel (resourceBundle);
+        sortGroupLabelsModel = new SortModel (resourceBundle);
 
-//        for (Note note : noteObservableListMap.get (groupsObservableList.get (0))) {
-//
-//
-//
-//
-//        }
-
-//            try {
-////                //NoteCardController noteCardController = new NoteCardController ();
-////
-////                FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/notecard.fxml"), resourceBundle);
-////                loader.setController (noteCardController);
-////                Node node = loader.load ();
-////
-////                noteCardController.getNoteCardDescription ().setText (note.getDescription ());
-////                noteCardController.getNoteCardTitle ().setText (note.getNoteTitle ());
-////                noteCardController.getNoteCardGridPane ().setStyle ("-fx-background-color: "+ note.getNoteColor ().getHexCode ());
-//
-//
-//            } catch (IOException e) {
-//                e.printStackTrace ();
-//            }
-//
-//        groupListView.getSelectionModel ().selectionModeProperty ().addListener ((obp, oldGroup, newGroup) -> {
-//            if(newGroup != null) {
-//                for(Note note : noteObservableListMap.get (newGroup)) {
-//                    try {
-//                        NoteCardController noteCardController = new NoteCardController ();
-//                        noteCardController.getNoteCardDescription ().setText (note.getDescription ());
-//                        noteCardController.getNoteCardTitle ().setText (note.getNoteTitle ());
-//                        noteCardController.getNoteCardGridPane ().setStyle ("-fx-background-color: "+ note.getNoteColor ().getHexCode ());
-//                        FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/notecard.fxml"), resourceBundle);
-//                        loader.setController (noteCardController);
-//                        Node node = loader.load ();
-//
-//                        flowPaneForNotes.getChildren ().add (node);
-//                    } catch (IOException e) {
-//                        e.printStackTrace ();
-//                    }
-//                }
-//            }
-//        });
-//
-//        groupListView.getSelectionModel ().selectFirst ();
-
-    }
-
-    private void removeItemFromPane (Note remitem) {
-        Node remove = null;
-        for(Node node : flowPaneForNotes.getChildren ()) {
-            if(((Label)((GridPane) node).getChildren ().get (2)).getText().equals (String.valueOf (remitem.getId ()))) {
-                remove = node;
+        sortNotesChoiceBox.setItems (sortNotesModel.getSorting ());
+        sortNotesModel.currentSortingProperty ().addListener ((obs, oldSort, newSort) -> {
+            if(newSort != null) {
+                sortNotes (newSort);
             }
-        }
+        });
 
-        if (remove != null) {
-            flowPaneForNotes.getChildren ().remove (remove);
-        }
+        sortGroupLabelsChoiceBox.setItems (sortGroupLabelsModel.getSorting ());
+        sortGroupLabelsModel.currentSortingProperty ().addListener ((obs, oldSort, newSort) -> {
+            if(newSort != null) {
+                sortGroups (newSort);
+                sortLabels (newSort);
+            }
+        });
 
     }
 
-    private void changeFlowPane(ObservableList<? extends Note> notes) {
-        List<Node> nodes = flowPaneForNotes.getChildren ();
-        flowPaneForNotes.getChildren ().removeAll (nodes);
-        for(Note note : notes) {
+
+    public void changeCurrentNoteSort() {
+        sortNotesModel.setCurrentSorting (sortNotesChoiceBox.getValue());
+    }
+
+    public void changeCurrentGroupLabelSort() {
+        sortGroupLabelsModel.setCurrentSorting (sortGroupLabelsChoiceBox.getValue ());
+    }
+
+    private void sortGroups (String sort) {
+        if(sort.equals (resourceBundle.getString ("LastAdded"))) {
+            groupListView.getItems ()
+                    .sort (Comparator.comparingInt (Group::getId).reversed ());
+        } else if (sort.equals (resourceBundle.getString ("FirstAdded"))) {
+            groupListView.getItems ()
+                    .sort (Comparator.comparingInt (Group::getId));
+        } else if (sort.equals (resourceBundle.getString ("ByNameAsc"))) {
+            groupListView.getItems ()
+                    .sort (Comparator.comparing(Group::getGroupName));
+        } else if (sort.equals (resourceBundle.getString ("ByNameDesc"))) {
+            groupListView.getItems ()
+                    .sort (Comparator.comparing(Group::getGroupName).reversed ());
+        } else if (sort.equals (resourceBundle.getString ("ByDescriptionAsc"))) {
+            groupListView.getItems ()
+                    .sort (Comparator.comparing(Group::getDescription));
+        } else  {
+            groupListView.getItems ()
+                    .sort (Comparator.comparing(Group::getDescription).reversed ());
+        }
+        groupListView.refresh ();
+
+    }
+
+    private void sortLabels (String sort) {
+        if(sort.equals (resourceBundle.getString ("LastAdded"))) {
+            labelListView.getItems ()
+                    .sort (Comparator.comparingInt (ba.unsa.etf.rpr.projekat.model.Label::getId).reversed ());
+        } else if (sort.equals (resourceBundle.getString ("FirstAdded"))) {
+            labelListView.getItems ()
+                    .sort (Comparator.comparingInt (ba.unsa.etf.rpr.projekat.model.Label::getId));
+        } else if (sort.equals (resourceBundle.getString ("ByNameAsc"))) {
+            labelListView.getItems ()
+                    .sort (Comparator.comparing(ba.unsa.etf.rpr.projekat.model.Label::getLabelName));
+        } else if (sort.equals (resourceBundle.getString ("ByNameDesc"))) {
+            labelListView.getItems ()
+                    .sort (Comparator.comparing(ba.unsa.etf.rpr.projekat.model.Label::getLabelName).reversed ());
+        } else if (sort.equals (resourceBundle.getString ("ByDescriptionAsc"))) {
+            labelListView.getItems ()
+                    .sort (Comparator.comparing(ba.unsa.etf.rpr.projekat.model.Label::getDescription));
+        } else  {
+            labelListView.getItems ()
+                    .sort (Comparator.comparing(ba.unsa.etf.rpr.projekat.model.Label::getDescription).reversed ());
+        }
+        labelListView.refresh ();
+
+    }
+
+    private void sortNotes(String sort) {
+        ArrayList<Node> list;
+        if(sort.equals (resourceBundle.getString ("LastAdded"))) {
+            list = new ArrayList<> (flowPaneForNotes.getChildren ().sorted (Comparator.comparing (Node::getId).reversed ()));
+        } else if (sort.equals (resourceBundle.getString ("FirstAdded"))) {
+            list= new ArrayList<> (flowPaneForNotes.getChildren ().sorted (Comparator.comparing (Node::getId)));
+        } else if (sort.equals (resourceBundle.getString ("ByNameAsc"))) {
+            list = new ArrayList<> (flowPaneForNotes.getChildren ()
+                    .sorted ((Comparator.comparing (node -> ((Label)((GridPane)node).getChildren ().get (0)).getText ()))));
+        } else if (sort.equals (resourceBundle.getString ("ByNameDesc"))) {
+            list = new ArrayList<> (flowPaneForNotes.getChildren ()
+                    .sorted ((Comparator.comparing (node -> ((Label)((GridPane)node).getChildren().get(0)).getText(),
+                            Comparator.reverseOrder ()))));
+        } else if (sort.equals (resourceBundle.getString ("ByDescriptionAsc"))) {
+            list = new ArrayList<> (flowPaneForNotes.getChildren ()
+                    .sorted ((Comparator.comparing (node -> ((Label)((GridPane)node).getChildren ().get (1)).getText ()))));
+        } else  {
+            list = new ArrayList<> (flowPaneForNotes.getChildren ()
+                    .sorted ((Comparator.comparing (node -> ((Label)((GridPane)node).getChildren().get(1)).getText(),
+                            Comparator.reverseOrder ()))));
+        }
+
+        flowPaneForNotes.getChildren ().clear ();
+        flowPaneForNotes.getChildren ().addAll (list);
+    }
+
+    private List<Note> getNotesForGroup(int groupId) {
+        return noteObservableList.stream ().filter (n -> n.getGroupId () == groupId).collect (Collectors.toList ());
+    }
+
+    private List<Note> getNotesForLabel(int labelId) {
+        return noteObservableList.stream ().filter (n -> n.getLabels ().stream ().anyMatch (l -> l.getId () == labelId))
+                .collect (Collectors.toList ());
+    }
+
+    private void showTheNode(Note note) {
+        Optional<Node> node = nodes.stream ().filter (n -> n.getId ().equals ("id" + note.getId ())).findFirst ();
+        node.ifPresent (value -> flowPaneForNotes.getChildren ().add (node.get ()));
+    }
+
+    private void hideTheNode(Note note) {
+        Optional<Node> node = nodes.stream ().filter (n -> n.getId ().equals ("id" + note.getId ())).findFirst ();
+        node.ifPresent (value -> flowPaneForNotes.getChildren ().remove (node.get ()));
+    }
+
+    private void setUpTheFlowPane() {
+        for (Note note : noteObservableList) {
             flowPaneForNotes.getChildren ().add (getNoteBlock (note));
         }
+        nodes = new ArrayList<> (flowPaneForNotes.getChildren ());
+        flowPaneForNotes.getChildren ().clear ();
     }
 
     private GridPane getNoteBlock(Note note) {
@@ -237,21 +301,38 @@ public class MainController {
         gridPane.add (noteDescription, 0, 1);
         gridPane.add (noteId, 0, 2);
 
+        gridPane.setId ("id" + note.getId ());
+
         return gridPane;
 
     }
 
-
-
     public void changeToGroups() {
         vboxForListview.getChildren().remove(2);
         vboxForListview.getChildren().add(2, groupListView);
+        groupListView.getSelectionModel ().clearSelection ();
     }
-
 
     public void changeToLabels() {
         vboxForListview.getChildren().remove(2);
         vboxForListview.getChildren().add(2, labelListView);
+        labelListView.getSelectionModel ().clearSelection ();
+    }
+
+    public void searchNotesAction() {
+        flowPaneForNotes.getChildren ().clear ();
+        flowPaneForNotes.getChildren ().addAll (nodes.stream ()
+                .filter (node ->  ((Label)((GridPane) node).getChildren ().get (0)).getText().toLowerCase ()
+                        .contains(searchNotesField.getText ().toLowerCase ())
+                        || ((Label)((GridPane) node).getChildren ().get (1)).getText().toLowerCase ()
+                        .contains(searchNotesField.getText ().toLowerCase ())).collect(Collectors.toList ()));
+        var selected = sortNotesChoiceBox.getSelectionModel ().selectedItemProperty ().get ();
+        if (selected != null) sortNotes (selected);
+    }
+
+    public void resetNoteListAction() {
+        flowPaneForNotes.getChildren ().clear ();
+        searchNotesField.clear ();
     }
 
     public void createNewGroup() {
@@ -355,6 +436,8 @@ public class MainController {
 
                 newStage.setOnHiding (windowEvent -> {
                     if (note.getId () == -1 && projectDAO.createNote (note) && !noteModel.getNotes ().isEmpty ()) {
+                        nodes.add (getNoteBlock (note));
+                        noteObservableList.add (note);
                         if(groupListView.getSelectionModel ().selectedItemProperty ().get () != null &&
                                 groupListView.getSelectionModel ().selectedItemProperty ().get ().getId () == note.getGroupId ())
                             noteModel.getNotes ().add (note);
@@ -364,6 +447,8 @@ public class MainController {
                                         .selectedItemProperty ().get ().getId () == l.getId ())
                                 .collect (Collectors.toList ()).isEmpty ())
                             noteModel.getNotes ().add (note);
+
+
                     }
                 });
             } catch (IOException e) {

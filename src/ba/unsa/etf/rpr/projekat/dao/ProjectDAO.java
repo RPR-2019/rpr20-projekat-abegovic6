@@ -38,7 +38,7 @@ public class ProjectDAO {
 
     // NOTES
     private PreparedStatement getAllNotesForGroupStatement, getAllNotesForLabelStatement, createNoteStatement, updateGroupIdNoteStatement, updateNotesStatement,
-            deleteNoteStatement, getNewIdNoteStatement, deleteNotesForGroupStatement;
+            deleteNoteStatement, getNewIdNoteStatement, deleteNotesForGroupStatement, getAllNotesForAccountStatement;
 
     private ProjectDAO() {
         Locale currentLocale = Locale.getDefault();
@@ -103,6 +103,8 @@ public class ProjectDAO {
             getNewIdNoteStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM notes");
             getAllNotesForLabelStatement = connection.prepareStatement ("SELECT n.* FROM notes n, intertable i" +
                     " WHERE i.labelId = ? AND n.id = i.noteId");
+            getAllNotesForAccountStatement = connection.prepareStatement ("SELECT n.* FROM notes n, groups g WHERE g.accountId = ? " +
+                    "AND g.id = n.groupId");
         } catch (SQLException throwables) {
             createDatabase();
             try {
@@ -157,6 +159,8 @@ public class ProjectDAO {
                 getNewIdNoteStatement = connection.prepareStatement("SELECT MAX(id) + 1 FROM notes");
                 getAllNotesForLabelStatement = connection.prepareStatement ("SELECT n.* FROM notes n, intertable i" +
                         " WHERE i.labelId = ? AND n.id = i.noteId");
+                getAllNotesForAccountStatement = connection.prepareStatement ("SELECT n.* FROM notes n, groups g WHERE g.accountId = ? " +
+                        "AND g.id = n.groupId");
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -576,6 +580,17 @@ public class ProjectDAO {
             throwables.printStackTrace();
         }
         return Collections.emptyList();
+    }
+
+    public List<Note> getAllNotesForUser(Account user) {
+        try {
+            getAllNotesForAccountStatement.setInt (1, user.getId ());
+            return getNoteListFromResultSet(getAllNotesForAccountStatement.executeQuery());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return Collections.emptyList();
+
     }
 
     public List<Note> getAllNotesForGroup(int groupId) {

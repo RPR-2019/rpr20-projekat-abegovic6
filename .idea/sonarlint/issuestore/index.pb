@@ -61,8 +61,6 @@ l
 <src/ba/unsa/etf/rpr/projekat/controller/LabelController.java,4\9\49dc681ab3b6f077feb331156d6db47c04a25443
 I
 resources/fxml/login.fxml,8\2\82c591fb13b8d561beda7548c6e5f0df218b604c
-I
-resources/fxml/label.fxml,d\d\dda1ea7deebaa2b192b69125fb770986016937f5
 n
 >out/production/rpr20-projekat-abegovic6/fxml/listviewitem.fxml,7\9\793d5c2f819d6b9c4a9c2ba6affdf46bc0ea6294
 `
@@ -95,3 +93,5 @@ g
 7src/ba/unsa/etf/rpr/projekat/model/LabelColorModel.java,b\3\b35480d5632d29ef6c77ee633c83f1c1fbaa9069
 f
 6src/ba/unsa/etf/rpr/projekat/model/NoteColorModel.java,3\5\35d68948e91bde758f46864c5785ad048087cc51
+a
+1src/ba/unsa/etf/rpr/projekat/model/NoteModel.java,8\b\8b9047c1e36ceac80e6cbd42e5283201d7a74c87

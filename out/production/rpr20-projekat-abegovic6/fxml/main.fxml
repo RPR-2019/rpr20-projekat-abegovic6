@@ -25,12 +25,12 @@
          <children>
             <HBox alignment="CENTER_LEFT" VBox.vgrow="SOMETIMES">
                <children>
-                  <TextField HBox.hgrow="ALWAYS">
+                  <TextField fx:id="searchNotesField" promptText="%SearchAllNotes" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="buttonframesmaller" text="%Search">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#searchNotesAction" styleClass="buttonframesmaller" text="%Search">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
@@ -38,7 +38,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </Button>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" styleClass="buttonframesmaller" text="%Reset">
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#resetNoteListAction" styleClass="buttonframesmaller" text="%Reset">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                      </HBox.margin>
@@ -55,7 +55,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </Label>
-                  <ChoiceBox maxWidth="1.7976931348623157E308" styleClass="choiceboxframe" HBox.hgrow="ALWAYS">
+                  <ChoiceBox fx:id="sortNotesChoiceBox" maxWidth="1.7976931348623157E308" onAction="#changeCurrentNoteSort" styleClass="choiceboxframe" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
                      </HBox.margin>
@@ -87,7 +87,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </Label>
-                  <ChoiceBox maxWidth="1.7976931348623157E308" styleClass="choiceboxframe" HBox.hgrow="ALWAYS">
+                  <ChoiceBox fx:id="sortGroupLabelsChoiceBox" maxWidth="1.7976931348623157E308" onAction="#changeCurrentGroupLabelSort" styleClass="choiceboxframe" HBox.hgrow="ALWAYS">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
@@ -102,7 +102,7 @@
             </HBox>
             <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="10.0">
                <children>
-                  <RadioButton mnemonicParsing="false" onAction="#changeToGroups" selected="true" styleClass="paragraph" text="%Groups" HBox.hgrow="ALWAYS">
+                  <RadioButton fx:id="groupRadioButton" mnemonicParsing="false" onAction="#changeToGroups" selected="true" styleClass="paragraph" text="%Groups" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
@@ -110,7 +110,7 @@
                         <ToggleGroup fx:id="groupOrLabel" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" onAction="#changeToLabels" styleClass="paragraph" text="%Label" toggleGroup="$groupOrLabel" HBox.hgrow="ALWAYS">
+                  <RadioButton fx:id="labelRadioButton" mnemonicParsing="false" onAction="#changeToLabels" styleClass="paragraph" text="%Label" toggleGroup="$groupOrLabel" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>

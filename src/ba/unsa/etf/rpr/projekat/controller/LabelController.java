@@ -96,6 +96,7 @@ public class LabelController {
             labelNameErrorLabel.getStyleClass().add("errorLabel");
             labelNameTextField.getStyleClass().add("turnRed");
         } else if(labels.stream().anyMatch(g -> g.getLabelName().equals(groupName))) {
+            isAlertNeeded = true;
             labelNameErrorLabel.setText(resourceBundle.getString("NewLabelNameError"));
             labelNameErrorLabel.getStyleClass().add("errorLabel");
             labelNameTextField.getStyleClass().add("turnRed");

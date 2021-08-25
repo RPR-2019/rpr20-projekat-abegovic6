@@ -5,11 +5,13 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
+<?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <GridPane alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #1A1A1C;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
+        <URL value="@../css/menu.css" />
         <URL value="@../css/style.css" />
         <URL value="@../css/validations.css" />
     </stylesheets>
@@ -32,19 +34,34 @@
     <children>
         <MenuBar style="-fx-background-color: #FFFFFF;" GridPane.columnSpan="2147483647">
             <menus>
-                <Menu mnemonicParsing="false" text="File">
+                <Menu text="%File">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem id="menuItemSave" onAction="#fileSave" styleClass="menuItemSave" text="%Save">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <MenuItem id="menuItemPrint" onAction="#filePrint" text="%Print" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem id="menuItemSettings" onAction="#fileSettings" text="%Settings" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem  onAction="#fileExit" styleClass="menuItem" text="%Exit" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
+                <Menu text="%Edit">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Delete" />
+                  <MenuItem onAction="#editEditNote" styleClass="menuItem" text="%EditNote" />
+                  <MenuItem id="menuItemDelete" onAction="#editDelete" text="%Delete">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="DELETE" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Help">
+                <Menu text="%Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
+                  <MenuItem id="menuItemUserGuide" onAction="#helpUserGuide" text="%UserGuide"/>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem onAction="#helpAbout" styleClass="menuItem" text="%About" />
                     </items>
                 </Menu>
             </menus>
@@ -169,7 +186,4 @@
             <Font size="1.0" />
          </font></Label>
     </children>
-    <padding>
-        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-    </padding>
 </GridPane>

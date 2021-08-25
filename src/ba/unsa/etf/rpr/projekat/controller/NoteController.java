@@ -108,7 +108,7 @@ public class NoteController {
             noteNameTextField.setText(note.getNoteTitle());
             noteDescriptionTextArea.setText(note.getDescription());
             noteColorChoiceBox.getSelectionModel().select(note.getNoteColor().name());
-            noteGroupChoiceBox.getSelectionModel().select(groupModel.getNameFromId(note.getId()));
+            noteGroupChoiceBox.getSelectionModel().select(groupModel.getNameFromId(note.getGroupId ()));
 
         }
 
@@ -252,6 +252,40 @@ public class NoteController {
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
     }
+
+    public void fileSave() {
+
+    }
+
+    public void filePrint() {
+
+    }
+
+    public void fileSettings() {
+
+    }
+
+    public void fileExit() {
+
+    }
+
+    public void editEditNote() {
+
+    }
+
+    public void editDelete() {
+
+    }
+
+    public void helpUserGuide() {
+
+    }
+
+    public void helpAbout() {
+
+    }
+
+
 
 
 }

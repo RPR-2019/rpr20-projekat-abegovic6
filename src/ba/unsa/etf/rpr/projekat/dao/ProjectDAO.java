@@ -639,4 +639,19 @@ public class ProjectDAO {
 
         return true;
     }
+
+    public boolean updateNote (Note note) {
+        try {
+            updateNotesStatement.setInt(5, note.getId());
+            updateNotesStatement.setString(1, note.getNoteTitle ());
+            updateNotesStatement.setString(2, note.getDescription());
+            updateNotesStatement.setString(3, note.getNoteColor ().name ());
+            updateNotesStatement.setBytes (4, note.getImage ());
+            updateNotesStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return  false;
+        }
+        return true;
+    }
 }

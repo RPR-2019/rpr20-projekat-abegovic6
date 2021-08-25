@@ -303,7 +303,79 @@ public class MainController {
 
         gridPane.setId ("id" + note.getId ());
 
+        gridPane.setOnMouseClicked (mouseEvent -> {
+            opetNoteDetails (note);
+
+        });
+
         return gridPane;
+
+    }
+
+    private void opetNoteDetails(Note note) {
+        try {
+            Stage newStage = new Stage();
+
+            note.setUpdateNeeded (true);
+
+            NoteController noteController = new NoteController (note, labelObservableList, groupsObservableList, resourceBundle);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/note.fxml"), resourceBundle);
+            loader.setController(noteController);
+
+            newStage.setTitle(resourceBundle.getString("NoteInformations"));
+            newStage.setScene (new Scene (loader.load (), 800, 600));
+            newStage.setMinHeight (600);
+            newStage.setMinWidth (800);
+
+            newStage.show();
+
+            newStage.setOnHiding(windowEvent -> {
+                if(note.isUpdateNeeded ()) {
+                    projectDAO.updateNote(note);
+                    updateNode(note);
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateNode (Note note) {
+        Node newNode = getNoteBlock (note);
+
+        Node oldNode = null;
+        int position = -1;
+        for(int i = 0; i < nodes.size (); i++) {
+            if(nodes.get (i).getId ().equals ("id" + note.getId ())) {
+                oldNode = nodes.get (i);
+                position = i;
+            }
+        }
+
+        if(oldNode != null) {
+            nodes.remove (position);
+            nodes.add (position, newNode);
+        }
+
+        oldNode = null;
+        position = -1;
+
+        for(int i = 0; i < flowPaneForNotes.getChildren ().size (); i++) {
+            if(flowPaneForNotes.getChildren ().get (i).getId ().equals ("id" + note.getId ())) {
+                oldNode = flowPaneForNotes.getChildren ().get (i);
+                position = i;
+            }
+        }
+
+        if(oldNode != null) {
+            flowPaneForNotes.getChildren ().remove (position);
+            flowPaneForNotes.getChildren ().add (position, newNode);
+        }
+
+
+
+
 
     }
 
@@ -456,6 +528,38 @@ public class MainController {
             }
         }
 
+
+    }
+
+    public void fileSave() {
+
+    }
+
+    public void filePrint() {
+
+    }
+
+    public void fileSettings() {
+
+    }
+
+    public void fileExit() {
+
+    }
+
+    public void editEditNote() {
+
+    }
+
+    public void editDelete() {
+
+    }
+
+    public void helpUserGuide() {
+
+    }
+
+    public void helpAbout() {
 
     }
 }

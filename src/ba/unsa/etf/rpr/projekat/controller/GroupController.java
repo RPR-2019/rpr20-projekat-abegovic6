@@ -155,4 +155,36 @@ public class GroupController {
 
     }
 
+    public void fileSave() {
+
+    }
+
+    public void filePrint() {
+
+    }
+
+    public void fileSettings() {
+
+    }
+
+    public void fileExit() {
+
+    }
+
+    public void editEditNote() {
+
+    }
+
+    public void editDelete() {
+
+    }
+
+    public void helpUserGuide() {
+
+    }
+
+    public void helpAbout() {
+
+    }
+
 }

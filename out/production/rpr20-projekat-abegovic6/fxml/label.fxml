@@ -4,11 +4,13 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <GridPane fx:id="labelGridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
+        <URL value="@../css/menu.css" />
         <URL value="@../css/style.css" />
     </stylesheets>
     <columnConstraints>
@@ -16,6 +18,7 @@
         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
     </columnConstraints>
     <rowConstraints>
+      <RowConstraints minHeight="10.0" />
         <RowConstraints minHeight="10.0" />
       <RowConstraints minHeight="0.0" vgrow="SOMETIMES" />
         <RowConstraints minHeight="10.0" vgrow="NEVER" />
@@ -25,36 +28,70 @@
         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <Label fx:id="labelTitleLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="heading" text="%CreateANewLabel" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
+        <MenuBar style="-fx-background-color: #FFFFFF;" GridPane.columnSpan="2147483647">
+            <menus>
+                <Menu text="%_File">
+                    <items>
+                        <MenuItem id="menuItemSave" onAction="#fileSave" styleClass="menuItemSave" text="%Save">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator></MenuItem>
+                        <MenuItem id="menuItemPrint" onAction="#filePrint" text="%Print" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem id="menuItemSettings" onAction="#fileSettings" text="%Settings" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem onAction="#fileExit" styleClass="menuItem" text="%Exit" />
+                    </items>
+                </Menu>
+                <Menu text="%Edit">
+                    <items>
+                        <MenuItem onAction="#editEditNote" styleClass="menuItem" text="%EditLabel" />
+                        <MenuItem id="menuItemDelete" onAction="#editDelete" text="%Delete">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="DELETE" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                    </items>
+                </Menu>
+                <Menu text="%Help">
+                    <items>
+                        <MenuItem id="menuItemUserGuide" onAction="#helpUserGuide" text="%UserGuide" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem onAction="#helpAbout" styleClass="menuItem" text="%About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <Label fx:id="labelTitleLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="heading" text="%CreateANewLabel" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
             <GridPane.margin>
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </GridPane.margin></Label>
-        <Label styleClass="paragraph" text="%LabelName" GridPane.rowIndex="2">
+        <Label styleClass="paragraph" text="%LabelName" GridPane.rowIndex="3">
             <GridPane.margin>
                 <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
             </GridPane.margin>
         </Label>
-        <Label styleClass="paragraph" text="%LabelColor" GridPane.rowIndex="4">
+        <Label styleClass="paragraph" text="%LabelColor" GridPane.rowIndex="5">
             <GridPane.margin>
                 <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
             </GridPane.margin>
         </Label>
-        <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" styleClass="paragraph" text="%LabelDescription" GridPane.rowIndex="5">
+        <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" styleClass="paragraph" text="%LabelDescription" GridPane.rowIndex="6">
             <GridPane.margin>
                 <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
             </GridPane.margin>
         </Label>
-        <TextArea fx:id="labelDescriptionTextField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+        <TextArea fx:id="labelDescriptionTextField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
             <GridPane.margin>
                 <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
             </GridPane.margin>
         </TextArea>
-        <TextField fx:id="labelNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <TextField fx:id="labelNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="3">
             <GridPane.margin>
                 <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
             </GridPane.margin>
         </TextField>
-        <ChoiceBox fx:id="labelColorChoiceBox" maxWidth="1.7976931348623157E308" onAction="#changeCurrentColor" styleClass="choiceboxframe" GridPane.columnIndex="1" GridPane.rowIndex="4">
+        <ChoiceBox fx:id="labelColorChoiceBox" maxWidth="1.7976931348623157E308" onAction="#changeCurrentColor" styleClass="choiceboxframe" GridPane.columnIndex="1" GridPane.rowIndex="5">
             <GridPane.margin>
                 <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
             </GridPane.margin>
@@ -62,7 +99,7 @@
                 <Cursor fx:constant="HAND" />
             </cursor>
         </ChoiceBox>
-        <ButtonBar GridPane.columnIndex="1" GridPane.rowIndex="6">
+        <ButtonBar GridPane.columnIndex="1" GridPane.rowIndex="7">
             <buttons>
                 <Button defaultButton="true" mnemonicParsing="false" onAction="#confirmLabelChanges" styleClass="buttonframe" text="%OK">
                     <cursor>
@@ -79,7 +116,7 @@
                 <Insets bottom="30.0" left="20.0" right="20.0" top="30.0" />
             </GridPane.margin>
         </ButtonBar>
-      <Label fx:id="labelNameErrorLabel" minWidth="0.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <Label fx:id="labelNameErrorLabel" minWidth="0.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <font>
             <Font size="1.0" />
          </font>
@@ -87,7 +124,7 @@
             <Insets left="10.0" />
          </GridPane.margin>
       </Label>
-      <Label fx:id="labelColorErrorLabel" minWidth="0.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <Label fx:id="labelColorErrorLabel" minWidth="0.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <font>
             <Font size="1.0" />
          </font>

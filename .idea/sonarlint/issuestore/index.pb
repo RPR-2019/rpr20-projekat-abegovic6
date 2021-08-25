@@ -79,8 +79,6 @@ o
 ?src/ba/unsa/etf/rpr/projekat/controller/NoteCardController.java,3\8\38c3ef1e1cff74ba26c47476a9cffaf5acf822f0
 t
 Dsrc/ba/unsa/etf/rpr/projekat/controller/GroupListCellController.java,3\a\3a02bb0f41a99aa6ff6c23324473dff979a46b4d
-H
-resources/fxml/note.fxml,3\0\308988374b9bb7b799170653d58cef377f780557
 j
 :out/production/rpr20-projekat-abegovic6/fxml/notecard.fxml,1\d\1dc215b1bae338a5e4e95d1a565ee7db88c56525
 L
@@ -95,3 +93,5 @@ f
 6src/ba/unsa/etf/rpr/projekat/model/NoteColorModel.java,3\5\35d68948e91bde758f46864c5785ad048087cc51
 a
 1src/ba/unsa/etf/rpr/projekat/model/NoteModel.java,8\b\8b9047c1e36ceac80e6cbd42e5283201d7a74c87
+a
+1src/ba/unsa/etf/rpr/projekat/model/SortModel.java,4\9\4925a4b4914c1470f7fdd0df2dea27405962c4ec

@@ -1,13 +1,10 @@
 
-t
-java:S3776P"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(·òşÿÿÿÿ8ŸÏïû¶/
-^	java:S125„"<This block of commented-out lines of code should be removed.(ùÅğÙÿÿÿÿÿ8ñôû¶/
-E
-java:S1604W"(Make this anonymous inner class a lambda(ê¦˜ë8ŸÏïû¶/
-u
-java:S3776È"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(³Ø†¼ûÿÿÿÿ8¿ˆü¶/
-M
-java:S1066—"/Merge this if statement with the enclosing one.(’èÔ8¿ˆü¶/
 R
-java:S1066º"/Merge this if statement with the enclosing one.(´›ëÿÿÿÿÿ8¿ˆü¶/
-^	java:S125‹"<This block of commented-out lines of code should be removed.(ñ¥ùšøÿÿÿÿ8ñôû¶/
+java:S1066‹"/Merge this if statement with the enclosing one.(´›ëÿÿÿÿÿ8ûùõ–·/
+u
+java:S3776™"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(³Ø†¼ûÿÿÿÿ8ûùõ–·/
+t
+java:S3776O"RRefactor this method to reduce its Cognitive Complexity from 33 to the 15 allowed.(·òşÿÿÿÿ8ŸÏïû¶/
+J	java:S108\")Either remove or fill this block of code.(ûï›±úÿÿÿÿ8ºûâ’·/
+M
+java:S1066è"/Merge this if statement with the enclosing one.(’èÔ8ûùõ–·/

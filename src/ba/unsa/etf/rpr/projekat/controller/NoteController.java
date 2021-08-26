@@ -57,6 +57,8 @@ public class NoteController {
     public javafx.scene.control.Label noteColorErrorLabel;
     @FXML
     public ImageView noteImage;
+    @FXML
+    public Button imageButton;
 
     public NoteController(Note note, List<Label> labels, List<Group> groups, ResourceBundle resourceBundle) {
         this.note = note;
@@ -108,7 +110,6 @@ public class NoteController {
             notesMenuBar.setVisible (false);
 
         } else {
-            noteTitleLabel.setText(resourceBundle.getString("NoteInformation"));
             noteNameTextField.setText(note.getNoteTitle());
             noteDescriptionTextArea.setText(note.getDescription());
             noteColorChoiceBox.getSelectionModel().select(note.getNoteColor().name());
@@ -117,8 +118,22 @@ public class NoteController {
                 var node = noteFlowPane.getChildren ().stream ().filter (n -> n.getId ().equals ("labelId" + label.getId ())).findAny ();
                 node.ifPresent (value -> ((CheckBox) value).setSelected (true));
             }
+
+            setEditFalse ();
         }
 
+    }
+
+    private void setEditFalse() {
+        noteTitleLabel.setText(resourceBundle.getString("NoteInformations"));
+        noteOkButton.setVisible (false);
+        noteOkButton.setDisable (true);
+        imageButton.setDisable (true);
+        noteColorChoiceBox.setDisable (true);
+        noteGroupChoiceBox.setDisable (true);
+        noteDescriptionTextArea.setDisable (true);
+        noteNameTextField.setDisable (true);
+        noteFlowPane.getChildren ().forEach (node1 -> node1.setDisable (true));
     }
 
 
@@ -219,6 +234,7 @@ public class NoteController {
         } else {
             note.setUpdateNeeded (true);
             setTheNoteatributes (noteName);
+
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();
@@ -292,6 +308,15 @@ public class NoteController {
     }
 
     public void editEditNote() {
+        noteTitleLabel.setText(resourceBundle.getString("NoteInformations"));
+        noteOkButton.setVisible (true);
+        noteOkButton.setDisable (false);
+        imageButton.setDisable (false);
+        noteColorChoiceBox.setDisable (false);
+        noteGroupChoiceBox.setDisable (false);
+        noteDescriptionTextArea.setDisable (false);
+        noteNameTextField.setDisable (false);
+        noteFlowPane.getChildren ().forEach (node1 -> node1.setDisable (false));
 
     }
 

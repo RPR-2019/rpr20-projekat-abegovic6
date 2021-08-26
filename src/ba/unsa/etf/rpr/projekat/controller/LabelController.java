@@ -142,8 +142,9 @@ public class LabelController {
             label.setDescription(labelDescriptionTextField.getText());
             label.setLabelColor(LabelColor.valueOf(color));
 
-
-            setEditFalse ();
+            Node n = (Node) actionEvent.getSource();
+            Stage stage = (Stage) n.getScene().getWindow();
+            stage.close();
         }
     }
 

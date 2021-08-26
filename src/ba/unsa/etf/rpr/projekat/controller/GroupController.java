@@ -147,13 +147,15 @@ public class GroupController {
                 group.setGroupColor(GroupColor.valueOf(color));
                 group.setUpdatedNeeded(true);
 
-                setEditFalse ();
+                Node n = (Node) actionEvent.getSource();
+                Stage stage = (Stage) n.getScene().getWindow();
+                stage.close();
             }
         }
     }
 
     private void setEditFalse() {
-        groupsTitleLabel.setText(resourceBundle.getString("LabelInformation"));
+        groupsTitleLabel.setText(resourceBundle.getString("GroupInformation"));
         groupOkButton.setVisible (false);
         groupOkButton.setDisable (true);
         groupColorChoiceBox.setDisable (true);

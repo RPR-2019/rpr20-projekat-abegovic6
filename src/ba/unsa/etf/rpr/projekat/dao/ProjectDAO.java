@@ -641,6 +641,7 @@ public class ProjectDAO {
     }
 
     public boolean updateNote (Note note) {
+        System.out.println ("update note");
         try {
             updateNotesStatement.setInt(5, note.getId());
             updateNotesStatement.setString(1, note.getNoteTitle ());

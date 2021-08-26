@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.ToDoubleBiFunction;
 import java.util.stream.Collectors;
 
 public class GroupListCellController extends ListCell<Group> {
@@ -125,6 +126,7 @@ public class GroupListCellController extends ListCell<Group> {
                 if(group.isUpdatedNeeded()) {
                     System.out.println ("udje??");
                     projectDAO.updateGroup(group);
+
                 }
             });
         } catch (IOException e) {

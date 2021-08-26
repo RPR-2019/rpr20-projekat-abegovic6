@@ -14,7 +14,6 @@ import java.util.*;
 public class ProjectDAO {
     private static ProjectDAO instance = null;
     private static Connection connection;
-    private FileInputStream fileInputStream;
     private ResourceBundle resourceBundle;
 
     // ACCOUNT
@@ -94,9 +93,9 @@ public class ProjectDAO {
 
             // NOTES
             createNoteStatement = connection.prepareStatement("INSERT INTO notes (id, groupId, noteTitle, " +
-                    "description, noteColor, image) VALUES (?, ?, ?, ?, ?, ?)");
-            updateNotesStatement = connection.prepareStatement("UPDATE notes SET (noteTitle, description, noteColor, image) " +
-                    "= (?,?,?,?) WHERE id = ?");
+                    "description, noteColor, image, dateCreated, dateUpdated) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            updateNotesStatement = connection.prepareStatement("UPDATE notes SET (noteTitle, description, noteColor, image, " +
+                    "dateUpdated) " + "= (?,?,?,?,?) WHERE id = ?");
             getAllNotesForGroupStatement = connection.prepareStatement("SELECT * FROM notes WHERE groupId = ?");
             deleteNoteStatement = connection.prepareStatement("DELETE FROM notes WHERE id = ?");
             deleteNotesForGroupStatement = connection.prepareStatement("DELETE FROM notes WHERE groupId = ?");
@@ -150,9 +149,9 @@ public class ProjectDAO {
 
                 // NOTES
                 createNoteStatement = connection.prepareStatement("INSERT INTO notes (id, groupId, noteTitle, " +
-                        "description, noteColor, image) VALUES (?, ?, ?, ?, ?, ?)");
-                updateNotesStatement = connection.prepareStatement("UPDATE notes SET (noteTitle, description, noteColor, image) " +
-                        "= (?,?,?,?) WHERE id = ?");
+                        "description, noteColor, image, dateCreated, dateUpdated) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                updateNotesStatement = connection.prepareStatement("UPDATE notes SET (noteTitle, description, noteColor, image, " +
+                        "dateUpdated) " + "= (?,?,?,?,?) WHERE id = ?");
                 getAllNotesForGroupStatement = connection.prepareStatement("SELECT * FROM notes WHERE groupId = ?");
                 deleteNoteStatement = connection.prepareStatement("DELETE FROM notes WHERE id = ?");
                 deleteNotesForGroupStatement = connection.prepareStatement("DELETE FROM notes WHERE groupId = ?");
@@ -548,6 +547,16 @@ public class ProjectDAO {
         return NoteColor.valueOf(string);
     }
 
+    private String localeDateTimeToString(LocalDateTime date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return date.format (formatter);
+    }
+
+    private LocalDateTime stringToLocalDateTime(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return LocalDateTime.parse(date, formatter);
+    }
+
     private Note getNoteFromResultSet (ResultSet resultSetNotes) {
         try {
             Note note = new Note();
@@ -556,7 +565,8 @@ public class ProjectDAO {
             note.setNoteTitle(resultSetNotes.getString(3));
             note.setDescription(resultSetNotes.getString(4));
             note.setNoteColor(stringToNoteColor(resultSetNotes.getString(5)));
-
+            note.setDateCreated (stringToLocalDateTime (resultSetNotes.getString (7)));
+            note.setDateUpdated (stringToLocalDateTime (resultSetNotes.getString (8)));
             note.setLabels (getLabelListForNote (note.getId ()));
             note.setImage (null);
 
@@ -627,6 +637,9 @@ public class ProjectDAO {
             createNoteStatement.setString(4, note.getDescription ());
             createNoteStatement.setString(5, note.getNoteColor ().name ());
             createNoteStatement.setBytes (6, note.getImage ());
+            createNoteStatement.setString (7, localeDateTimeToString (LocalDateTime.now ()));
+            createNoteStatement.setString (8, localeDateTimeToString (LocalDateTime.now ()));
+
 
             setLabelListForNote (note.getId (), note.getLabels ());
 
@@ -648,6 +661,7 @@ public class ProjectDAO {
             updateNotesStatement.setString(2, note.getDescription());
             updateNotesStatement.setString(3, note.getNoteColor ().name ());
             updateNotesStatement.setBytes (4, note.getImage ());
+            updateNotesStatement.setString (5, localeDateTimeToString (LocalDateTime.now ()));
             updateNotesStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

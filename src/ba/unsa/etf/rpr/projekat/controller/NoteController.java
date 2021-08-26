@@ -287,7 +287,7 @@ public class NoteController {
         if(file == null) return;
         try {
             FileWriter fileWriter = new FileWriter(file.getAbsolutePath());
-            fileWriter.write(note.writeInFile());
+            fileWriter.write(note.writeInFile(resourceBundle));
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -303,8 +303,11 @@ public class NoteController {
 
     }
 
-    public void fileExit() {
-
+    public void fileExit(ActionEvent actionEvent) {
+        note.setUpdateNeeded (false);
+        Node n = (Node) actionEvent.getSource();
+        Stage stage = (Stage) n.getScene().getWindow();
+        stage.close();
     }
 
     public void editEditNote() {

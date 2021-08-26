@@ -182,7 +182,7 @@ public class GroupController {
         if(file == null) return;
         try {
             FileWriter fileWriter = new FileWriter(file.getAbsolutePath());
-            fileWriter.write(group.writeInFile(notes));
+            fileWriter.write(group.writeInFile(notes, resourceBundle));
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -197,8 +197,11 @@ public class GroupController {
 
     }
 
-    public void fileExit() {
-
+    public void fileExit(ActionEvent actionEvent) {
+        group.setUpdatedNeeded (false);
+        Node n = (Node) actionEvent.getSource();
+        Stage stage = (Stage) n.getScene().getWindow();
+        stage.close();
     }
 
     public void editEditNote() {

@@ -35,7 +35,8 @@ CREATE TABLE IF NOT EXISTS "notes" (
 	"description"	TEXT,
 	"noteColor"	TEXT,
 	"image"	BLOB,
+	"dateCreated"	TEXT,
+	"dateUpdated"	TEXT,
 	PRIMARY KEY("id")
 );
-INSERT INTO "notes" VALUES (1,1,'title','neki opis','BLUE',NULL);
 COMMIT;

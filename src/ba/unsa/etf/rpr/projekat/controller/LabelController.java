@@ -167,7 +167,7 @@ public class LabelController {
         if(file == null) return;
         try {
             FileWriter fileWriter = new FileWriter(file.getAbsolutePath());
-            fileWriter.write(label.writeInFile(notes));
+            fileWriter.write(label.writeInFile(notes, resourceBundle));
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -183,8 +183,11 @@ public class LabelController {
 
     }
 
-    public void fileExit() {
-
+    public void fileExit(ActionEvent actionEvent) {
+        label.setUpdateNeeded (false);
+        Node n = (Node) actionEvent.getSource();
+        Stage stage = (Stage) n.getScene().getWindow();
+        stage.close();
     }
 
     public void editEditNote() {

@@ -35,6 +35,8 @@ public class SortModel {
     public void fill() {
         sorting.add (resourceBundle.getString ("LastAdded"));
         sorting.add (resourceBundle.getString ("FirstAdded"));
+        sorting.add (resourceBundle.getString ("LastUpdated"));
+        sorting.add (resourceBundle.getString ("FirstUpdated"));
         sorting.add (resourceBundle.getString ("ByNameAsc"));
         sorting.add (resourceBundle.getString ("ByNameDesc"));
         sorting.add (resourceBundle.getString ("ByDescriptionAsc"));

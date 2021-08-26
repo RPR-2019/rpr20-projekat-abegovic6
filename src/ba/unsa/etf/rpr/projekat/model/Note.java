@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class Note {
     private int id;
@@ -119,9 +120,11 @@ public class Note {
         return Objects.hash(id);
     }
 
-    public String writeInFile () {
-        String string = "Note id: " + id + "\nGroup id: " + groupId + "\nNote title: " + noteTitle + "\nNote text: " + description
-                + "\n----------\nNote labels: \n \n";
+    public String writeInFile (ResourceBundle resourceBundle) {
+        String string = resourceBundle.getString ("NoteId") + id + "\n" + resourceBundle.getString ("GroupId")
+                + groupId + "\n" + resourceBundle.getString ("NoteTitle")+ noteTitle + "\n" +
+                resourceBundle.getString ("NoteText") + description
+                + "\n----------\n" + resourceBundle.getString ("NoteLabels") + "\n \n";
         for(Label label : labels) {
             string += label.getLabelName () + "\n";
         }

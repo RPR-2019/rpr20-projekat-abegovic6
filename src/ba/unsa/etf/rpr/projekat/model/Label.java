@@ -3,6 +3,7 @@ package ba.unsa.etf.rpr.projekat.model;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 public class Label {
     private int id;
@@ -83,11 +84,12 @@ public class Label {
         this.labelColor.set(labelColor);
     }
 
-    public String writeInFile (List<Note> notes) {
-        String string = "Label id: " + id + "\nLabel name: " + labelName.get () + "\nLabel description: " + description.get ()
-                + "\n----------\nNotes: \n\n";
+    public String writeInFile (List<Note> notes, ResourceBundle resourceBundle) {
+        String string = resourceBundle.getString ("LabelId") + id + "\n" + resourceBundle.getString ("LabelName") +
+                labelName.get () + "\n" + resourceBundle.getString ("LabelDescription") + description.get ()
+                + "\n----------\n" + resourceBundle.getString ("UserNotes") + "\n\n";
         for (Note note : notes) {
-            string += note.writeInFile ();
+            string += note.writeInFile(resourceBundle);
         }
 
         return string;

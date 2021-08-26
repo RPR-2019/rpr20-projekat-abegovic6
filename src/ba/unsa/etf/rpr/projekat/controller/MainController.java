@@ -5,6 +5,7 @@ import ba.unsa.etf.rpr.projekat.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -18,10 +19,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class MainController {
@@ -142,6 +145,7 @@ public class MainController {
             }
         });
 
+        sortGroupLabelsModel.getSorting ().remove (2, 2);
         sortGroupLabelsChoiceBox.setItems (sortGroupLabelsModel.getSorting ());
         sortGroupLabelsModel.currentSortingProperty ().addListener ((obs, oldSort, newSort) -> {
             if(newSort != null) {
@@ -215,6 +219,22 @@ public class MainController {
             list = new ArrayList<> (flowPaneForNotes.getChildren ().sorted (Comparator.comparing (Node::getId).reversed ()));
         } else if (sort.equals (resourceBundle.getString ("FirstAdded"))) {
             list= new ArrayList<> (flowPaneForNotes.getChildren ().sorted (Comparator.comparing (Node::getId)));
+        } else if(sort.equals (resourceBundle.getString ("LastUpdated"))) {
+            list = new ArrayList<> (flowPaneForNotes.getChildren ().sorted ((i1, i2) -> {
+                Optional<Note> n1 = noteObservableList.stream().filter (n -> i1.getId ().equals ("id" + n.getId ())).findFirst ();
+                Optional<Note> n2 = noteObservableList.stream().filter (n -> i2.getId ().equals ("id" + n.getId ())).findFirst ();
+                if(n1.isPresent () && n2.isPresent ())
+                    return n2.get ().getDateUpdated ().compareTo (n1.get ().getDateUpdated ());
+                return 0;
+            }));
+        } else if (sort.equals (resourceBundle.getString ("FirstUpdated"))) {
+            list = new ArrayList<> (flowPaneForNotes.getChildren ().sorted ((i1, i2) -> {
+                Optional<Note> n1 = noteObservableList.stream().filter (n -> i1.getId ().equals ("id" + n.getId ())).findFirst ();
+                Optional<Note> n2 = noteObservableList.stream().filter (n -> i2.getId ().equals ("id" + n.getId ())).findFirst ();
+                if(n1.isPresent () && n2.isPresent ())
+                    return n1.get ().getDateUpdated ().compareTo (n2.get ().getDateUpdated ());
+                return 0;
+            }));
         } else if (sort.equals (resourceBundle.getString ("ByNameAsc"))) {
             list = new ArrayList<> (flowPaneForNotes.getChildren ()
                     .sorted ((Comparator.comparing (node -> ((Label)((GridPane)node).getChildren ().get (0)).getText ()))));
@@ -509,7 +529,7 @@ public class MainController {
                 newStage.show ();
 
                 newStage.setOnHiding (windowEvent -> {
-                    if (note.getId () == -1 && projectDAO.createNote (note) && !noteModel.getNotes ().isEmpty ()) {
+                    if (note.getId () == -1 && projectDAO.createNote (note)) {
                         nodes.add (getNoteBlock (note));
                         noteObservableList.add (note);
                         if(groupListView.getSelectionModel ().selectedItemProperty ().get () != null &&
@@ -533,7 +553,42 @@ public class MainController {
 
     }
 
+    private String writeInFile() {
+        String string = resourceBundle.getString ("UserInformation") + "\n\n" + resourceBundle.getString ("UserId")
+                + user.getId () + "\n" + resourceBundle.getString ("FirstName") + user.getFirstName () +
+                "\n" + resourceBundle.getString ("LastName") + user.getLastName () + "\n" +
+                resourceBundle.getString ("Username") + user.getUserName () + "\n" + resourceBundle.getString ("EmailAdress")
+                + user.getEmailAdress () + "\n\n**********\n";
+        string += resourceBundle.getString ("UserGroups") + "\n\n";
+        for(Group group : groupsObservableList) {
+            string += group.writeInFile (getNotesForGroup (group.getId ()), resourceBundle);
+        }
+
+        string +=  "\n**********\n\n" + resourceBundle.getString ("UserLabels") + "\n\n";
+        for(ba.unsa.etf.rpr.projekat.model.Label label : labelObservableList) {
+            string += label.writeInFile (getNotesForLabel (label.getId ()), resourceBundle);
+        }
+
+        return string;
+
+    }
+
     public void fileSave() {
+        FileChooser izbornik = new FileChooser();
+        izbornik.setTitle(resourceBundle.getString ("ChooseFile"));
+        izbornik.getExtensionFilters().add(new FileChooser.ExtensionFilter(resourceBundle.getString ("TextFile"), "*.txt"));
+        File file = izbornik.showSaveDialog(flowPaneForNotes.getScene().getWindow());
+
+        if(file == null) return;
+        try {
+            FileWriter fileWriter = new FileWriter(file.getAbsolutePath());
+            fileWriter.write(writeInFile());
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
 
     }
 
@@ -545,13 +600,12 @@ public class MainController {
 
     }
 
-    public void fileExit() {
-
+    public void fileExit(ActionEvent actionEvent) {
+        Node n = (Node) actionEvent.getSource();
+        Stage stage = (Stage) n.getScene().getWindow();
+        stage.close();
     }
 
-    public void editEditNote() {
-
-    }
 
     public void editDelete() {
 
@@ -563,5 +617,28 @@ public class MainController {
 
     public void helpAbout() {
 
+    }
+
+    public void logout(ActionEvent actionEvent) {
+        try {
+            Node source = (Node)  actionEvent.getSource();
+            Stage oldStage  = (Stage) source.getScene().getWindow();
+            Stage newStage = new Stage();
+
+            LoginController loginController = new LoginController(projectDAO, user, resourceBundle);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"), resourceBundle);
+            loader.setController(loginController);
+
+            newStage.setTitle(resourceBundle.getString("LogInTitle"));
+            newStage.setScene(new Scene(loader.load(), 1100, 600));
+            newStage.setMinHeight(600);
+            newStage.setMinWidth(1100);
+
+            oldStage.close();
+            newStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

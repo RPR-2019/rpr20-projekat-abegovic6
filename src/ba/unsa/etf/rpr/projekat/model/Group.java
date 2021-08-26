@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class Group {
     private int id;
@@ -104,11 +105,12 @@ public class Group {
         return groupName.get();
     }
 
-    public String writeInFile (List<Note> notes) {
-        String string = "Group id: " + id + "\nGroup name: " + groupName.get () + "\nGroup description: " + description.get ()
-                + "\n----------\nNotes: \n\n";
+    public String writeInFile (List<Note> notes, ResourceBundle resourceBundle) {
+        String string = resourceBundle.getString ("GroupId")  + id + "\n" + resourceBundle.getString ("GroupName")
+                + groupName.get () + "\n" + resourceBundle.getString ("GroupDescription") + description.get ()
+                + "\n----------\n" + resourceBundle.getString ("UserNotes") + "\n\n";
         for (Note note : notes) {
-            string += note.writeInFile ();
+            string += note.writeInFile (resourceBundle);
         }
 
         return string;

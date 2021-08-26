@@ -109,7 +109,7 @@ public class MainController {
 
         groupListView = new ListView<> ();
         groupListView.setItems (groupsObservableList);
-        groupListView.setCellFactory (listView -> new GroupListCellController (groupsObservableList, projectDAO, resourceBundle));
+        groupListView.setCellFactory (listView -> new GroupListCellController (groupsObservableList, projectDAO, noteObservableList, resourceBundle));
         groupListView.getSelectionModel ().selectedItemProperty().addListener((obs, oldGroup, newGroup) -> {
             if(newGroup != null) {
                 noteModel.getNotes ().clear ();
@@ -122,7 +122,7 @@ public class MainController {
 
         labelListView = new ListView<>();
         labelListView.setItems(labelObservableList);
-        labelListView.setCellFactory(listView -> new LabelListCellController (labelObservableList, projectDAO, resourceBundle));
+        labelListView.setCellFactory(listView -> new LabelListCellController (labelObservableList, projectDAO, noteObservableList, resourceBundle));
         labelListView.getSelectionModel ().selectedItemProperty ().addListener ((obs, oldLabel, newLabel) -> {
             if(newLabel != null) {
                 noteModel.getNotes ().clear ();
@@ -415,7 +415,9 @@ public class MainController {
             group.setId(-2);
             group.setAccountId(user.getId());
 
-            GroupController groupController = new GroupController(group, groupsObservableList, user, resourceBundle);
+
+
+            GroupController groupController = new GroupController(group, groupsObservableList, new ArrayList<> (), resourceBundle);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/group.fxml"), resourceBundle);
             loader.setController(groupController);
@@ -450,7 +452,7 @@ public class MainController {
             label.setId(-2);
             label.setAccountId(user.getId());
 
-            LabelController labelController = new LabelController(label, labelObservableList, user, resourceBundle);
+            LabelController labelController = new LabelController(label, labelObservableList, new ArrayList<> (), resourceBundle);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/label.fxml"), resourceBundle);
             loader.setController(labelController);

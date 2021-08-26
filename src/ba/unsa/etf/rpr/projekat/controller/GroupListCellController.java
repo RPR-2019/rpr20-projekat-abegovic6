@@ -4,6 +4,7 @@ import ba.unsa.etf.rpr.projekat.controller.GroupController;
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.Group;
 import ba.unsa.etf.rpr.projekat.model.GroupColor;
+import ba.unsa.etf.rpr.projekat.model.Note;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,11 +17,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class GroupListCellController extends ListCell<Group> {
     private final List<Group> groups;
     private final ResourceBundle resourceBundle;
     private final ProjectDAO projectDAO;
+    private final List<Note> notes;
     @FXML
     public Label groupItemDescriptionLabel;
     @FXML
@@ -32,10 +35,11 @@ public class GroupListCellController extends ListCell<Group> {
 
     private FXMLLoader mLLoader;
 
-    public GroupListCellController (List<Group> groups, ProjectDAO projectDAO, ResourceBundle resourceBundle) {
+    public GroupListCellController (List<Group> groups, ProjectDAO projectDAO, List<Note> notes, ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
         this.projectDAO = projectDAO;
         this.groups = groups;
+        this.notes = notes;
     }
 
     @Override
@@ -43,13 +47,10 @@ public class GroupListCellController extends ListCell<Group> {
         super.updateItem(group, empty);
 
         this.group = group;
-
-
         if(empty || group == null) {
 
             setText(null);
             setGraphic(null);
-
 
         } else {
             if (mLLoader == null) {
@@ -93,10 +94,6 @@ public class GroupListCellController extends ListCell<Group> {
 
 
             });
-            //groupItemDescriptionLabel.setText(String.valueOf(group.getDescription()));
-            //groupItemVbox.setStyle("-fx-background-color: " + group.getGroupColor().getHexCode());
-
-
 
             setText(null);
             setGraphic(groupItemVbox);
@@ -110,7 +107,9 @@ public class GroupListCellController extends ListCell<Group> {
 
             group.setUpdatedNeeded(false);
 
-            GroupController groupController = new GroupController(group, groups, null, resourceBundle);
+            List<Note> notesForGroup = notes.stream().filter (note -> note.getGroupId () == group.getId ()).collect(Collectors.toList ());
+
+            GroupController groupController = new GroupController(group, groups, notesForGroup, resourceBundle);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/group.fxml"), resourceBundle);
             loader.setController(groupController);
@@ -124,6 +123,7 @@ public class GroupListCellController extends ListCell<Group> {
 
             newStage.setOnHiding(windowEvent -> {
                 if(group.isUpdatedNeeded()) {
+                    System.out.println ("udje??");
                     projectDAO.updateGroup(group);
                 }
             });

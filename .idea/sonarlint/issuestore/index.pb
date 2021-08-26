@@ -75,14 +75,8 @@ f
 6out/production/rpr20-projekat-abegovic6/fxml/main.fxml,a\2\a2f62219d02e021adfafc91cb4653f38a7491af7
 t
 Dsrc/ba/unsa/etf/rpr/projekat/controller/LabelListCellController.java,4\5\45a314569167f0561f8bababe478dd99193cba1f
-o
-?src/ba/unsa/etf/rpr/projekat/controller/NoteCardController.java,3\8\38c3ef1e1cff74ba26c47476a9cffaf5acf822f0
 t
 Dsrc/ba/unsa/etf/rpr/projekat/controller/GroupListCellController.java,3\a\3a02bb0f41a99aa6ff6c23324473dff979a46b4d
-j
-:out/production/rpr20-projekat-abegovic6/fxml/notecard.fxml,1\d\1dc215b1bae338a5e4e95d1a565ee7db88c56525
-L
-resources/fxml/notecard.fxml,c\5\c59e861a8f712cd1fa553f936b9e65f0674b7044
 g
 7src/ba/unsa/etf/rpr/projekat/model/GroupColorModel.java,4\3\435699a0128a561af34e5a86546abd45c37f1834
 b

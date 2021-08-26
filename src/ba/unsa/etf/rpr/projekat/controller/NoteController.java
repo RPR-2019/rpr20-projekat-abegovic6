@@ -32,6 +32,8 @@ public class NoteController {
     private GroupModel groupModel;
 
     @FXML
+    public MenuBar notesMenuBar;
+    @FXML
     public FlowPane noteFlowPane;
     @FXML
     public ChoiceBox<String> noteColorChoiceBox;
@@ -72,6 +74,7 @@ public class NoteController {
             checkBox.setStyle("-fx-background-color: " + label.getLabelColor().getHexCode());
             checkBox.getStyleClass().add("checkbox");
             checkBox.setCursor(Cursor.HAND);
+            checkBox.setId ("labelId" + label.getId ());
             noteFlowPane.getChildren().add(checkBox);
         }
 
@@ -102,6 +105,7 @@ public class NoteController {
             noteTitleLabel.setText(resourceBundle.getString("CreateANewNote"));
             noteColorChoiceBox.getSelectionModel().selectFirst();
             noteGroupChoiceBox.getSelectionModel().selectFirst();
+            notesMenuBar.setVisible (false);
 
         } else {
             noteTitleLabel.setText(resourceBundle.getString("NoteInformation"));
@@ -109,10 +113,15 @@ public class NoteController {
             noteDescriptionTextArea.setText(note.getDescription());
             noteColorChoiceBox.getSelectionModel().select(note.getNoteColor().name());
             noteGroupChoiceBox.getSelectionModel().select(groupModel.getNameFromId(note.getGroupId ()));
-
+            for(Label label : note.getLabels ()) {
+                var node = noteFlowPane.getChildren ().stream ().filter (n -> n.getId ().equals ("labelId" + label.getId ())).findAny ();
+                node.ifPresent (value -> ((CheckBox) value).setSelected (true));
+            }
         }
 
     }
+
+
 
     public void getPictureForNote(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
@@ -254,6 +263,19 @@ public class NoteController {
     }
 
     public void fileSave() {
+        FileChooser izbornik = new FileChooser();
+        izbornik.setTitle(resourceBundle.getString ("ChooseFile"));
+        izbornik.getExtensionFilters().add(new FileChooser.ExtensionFilter(resourceBundle.getString ("TextFile"), "*.txt"));
+        File file = izbornik.showSaveDialog(noteFlowPane.getScene().getWindow());
+
+        if(file == null) return;
+        try {
+            FileWriter fileWriter = new FileWriter(file.getAbsolutePath());
+            fileWriter.write(note.writeInFile());
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

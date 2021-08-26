@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.projekat.model;
 
 import javafx.beans.property.SimpleStringProperty;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Group {
@@ -101,5 +102,15 @@ public class Group {
     @Override
     public String toString() {
         return groupName.get();
+    }
+
+    public String writeInFile (List<Note> notes) {
+        String string = "Group id: " + id + "\nGroup name: " + groupName.get () + "\nGroup description: " + description.get ()
+                + "\n----------\nNotes: \n\n";
+        for (Note note : notes) {
+            string += note.writeInFile ();
+        }
+
+        return string;
     }
 }

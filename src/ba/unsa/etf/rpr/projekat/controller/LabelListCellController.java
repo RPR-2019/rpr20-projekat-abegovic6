@@ -3,6 +3,7 @@ package ba.unsa.etf.rpr.projekat.controller;
 import ba.unsa.etf.rpr.projekat.controller.LabelController;
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.LabelColor;
+import ba.unsa.etf.rpr.projekat.model.Note;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,11 +16,13 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.model.Label> {
     private final ResourceBundle resourceBundle;
     private final ProjectDAO projectDAO;
     private final List<ba.unsa.etf.rpr.projekat.model.Label> labels;
+    private final List<Note> notes;
     @FXML
     public Label groupItemDescriptionLabel;
     @FXML
@@ -31,10 +34,12 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.m
 
     private FXMLLoader mLLoader;
 
-    public LabelListCellController (List<ba.unsa.etf.rpr.projekat.model.Label> labels, ProjectDAO projectDAO, ResourceBundle resourceBundle) {
+    public LabelListCellController (List<ba.unsa.etf.rpr.projekat.model.Label> labels,  ProjectDAO projectDAO, List<Note> notes,
+                                    ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
         this.projectDAO = projectDAO;
         this.labels = labels;
+        this.notes = notes;
     }
 
     @Override
@@ -104,7 +109,11 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.m
 
             label.setUpdateNeeded(false);
 
-            LabelController labelController = new LabelController(label, labels, null, resourceBundle);
+            List<Note> notesForLabel = notes.stream().filter (note -> note.getLabels ().stream ()
+                    .anyMatch (l -> l.getId () == label.getId ()))
+                    .collect(Collectors.toList ());
+
+            LabelController labelController = new LabelController(label, labels, notesForLabel, resourceBundle);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/label.fxml"), resourceBundle);
             loader.setController(labelController);

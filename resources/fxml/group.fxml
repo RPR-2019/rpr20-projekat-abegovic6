@@ -29,7 +29,7 @@
       <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-       <MenuBar style="-fx-background-color: #FFFFFF;" GridPane.columnSpan="2147483647">
+       <MenuBar fx:id="groupMenuBar" style="-fx-background-color: #FFFFFF;" GridPane.columnSpan="2147483647">
            <menus>
                <Menu text="%File">
                    <items>

@@ -2,6 +2,8 @@ package ba.unsa.etf.rpr.projekat.model;
 
 import javafx.beans.property.SimpleStringProperty;
 
+import java.util.List;
+
 public class Label {
     private int id;
     private int accountId;
@@ -80,4 +82,16 @@ public class Label {
     public void setLabelColor(String labelColor) {
         this.labelColor.set(labelColor);
     }
+
+    public String writeInFile (List<Note> notes) {
+        String string = "Label id: " + id + "\nLabel name: " + labelName.get () + "\nLabel description: " + description.get ()
+                + "\n----------\nNotes: \n\n";
+        for (Note note : notes) {
+            string += note.writeInFile ();
+        }
+
+        return string;
+    }
+
+
 }

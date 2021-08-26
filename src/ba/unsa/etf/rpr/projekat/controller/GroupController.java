@@ -1,26 +1,28 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
-import ba.unsa.etf.rpr.projekat.model.GroupColorModel;
-import ba.unsa.etf.rpr.projekat.model.Account;
-import ba.unsa.etf.rpr.projekat.model.Group;
-import ba.unsa.etf.rpr.projekat.model.GroupColor;
+import ba.unsa.etf.rpr.projekat.model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class GroupController {
 
 
+    private final List<Note> notes;
     private Group group;
     private final List<Group> groups;
     private final ResourceBundle resourceBundle;
-    private final Account user;
     private GroupColorModel groupColorModel;
     private String color = null;
 
@@ -42,11 +44,13 @@ public class GroupController {
     public Button groupCancelButton;
     @FXML
     public Button groupOkButton;
+    @FXML
+    public MenuBar groupMenuBar;
 
-    public GroupController(Group group, List<Group> groups, Account user, ResourceBundle resourceBundle) {
+    public GroupController(Group group, List<Group> groups, List<Note> notes, ResourceBundle resourceBundle) {
         this.group = group;
         this.groups = groups;
-        this.user = user;
+        this.notes = notes;
         this.resourceBundle = resourceBundle;
 
     }
@@ -65,12 +69,14 @@ public class GroupController {
         if(group.getId() == -2) {
             groupsTitleLabel.setText(resourceBundle.getString("CreateANewGroup"));
             groupColorChoiceBox.getSelectionModel().selectFirst();
+            groupMenuBar.setVisible (false);
         } else {
-            groupsTitleLabel.setText(resourceBundle.getString("GroupInformation"));
             groupNameTextField.setText(group.getGroupName());
             groupDescriptionTextField.setText(group.getDescription());
             groupColorModel.setCurrentColor(group.getGroupColor().toString());
             groupColorChoiceBox.getSelectionModel().select(group.getGroupColor().toString());
+
+            setEditFalse ();
         }
 
     }
@@ -109,7 +115,8 @@ public class GroupController {
             groupNameErrorLabel.setText(resourceBundle.getString("ThisCantBeEmpty"));
             groupNameErrorLabel.getStyleClass().add("errorLabel");
             groupNameTextField.getStyleClass().add("turnRed");
-        } else if(groups.stream().anyMatch(g -> g.getGroupName().equals(groupName))) {
+        } else if(groups.stream().anyMatch(g -> g.getGroupName().equals(groupName) && group.getId () != g.getId ())) {
+            isAlertNeeded = true;
             groupNameErrorLabel.setText(resourceBundle.getString("NewGroupNameError"));
             groupNameErrorLabel.getStyleClass().add("errorLabel");
             groupNameTextField.getStyleClass().add("turnRed");
@@ -123,26 +130,35 @@ public class GroupController {
 
         if(isAlertNeeded) {
             openAlertMessage();
-        } else if(group.getId() == -2){
-            group.setId(-1);
-            group.setGroupName(groupName);
-            group.setDescription(groupDescriptionTextField.getText());
-            group.setGroupColor(GroupColor.valueOf(color));
-
-
-            Node n = (Node) actionEvent.getSource();
-            Stage stage = (Stage) n.getScene().getWindow();
-            stage.close();
         } else {
-            group.setGroupName(groupName);
-            group.setDescription(groupDescriptionTextField.getText());
-            group.setGroupColor(GroupColor.valueOf(color));
-            group.setUpdatedNeeded(true);
-            Node n = (Node) actionEvent.getSource();
-            Stage stage = (Stage) n.getScene().getWindow();
-            stage.close();
+            if(group.getId() == -2){
+                group.setId(-1);
+                group.setGroupName(groupName);
+                group.setDescription(groupDescriptionTextField.getText());
+                group.setGroupColor(GroupColor.valueOf(color));
 
+
+                Node n = (Node) actionEvent.getSource();
+                Stage stage = (Stage) n.getScene().getWindow();
+                stage.close();
+            } else {
+                group.setGroupName(groupName);
+                group.setDescription(groupDescriptionTextField.getText());
+                group.setGroupColor(GroupColor.valueOf(color));
+                group.setUpdatedNeeded(true);
+
+                setEditFalse ();
+            }
         }
+    }
+
+    private void setEditFalse() {
+        groupsTitleLabel.setText(resourceBundle.getString("LabelInformation"));
+        groupOkButton.setVisible (false);
+        groupOkButton.setDisable (true);
+        groupColorChoiceBox.setDisable (true);
+        groupDescriptionTextField.setDisable (true);
+        groupNameTextField.setDisable (true);
     }
 
     private void openAlertMessage() {
@@ -156,7 +172,19 @@ public class GroupController {
     }
 
     public void fileSave() {
+        FileChooser izbornik = new FileChooser();
+        izbornik.setTitle(resourceBundle.getString ("ChooseFile"));
+        izbornik.getExtensionFilters().add(new FileChooser.ExtensionFilter(resourceBundle.getString ("TextFile"), "*.txt"));
+        File file = izbornik.showSaveDialog(groupColorChoiceBox.getScene().getWindow());
 
+        if(file == null) return;
+        try {
+            FileWriter fileWriter = new FileWriter(file.getAbsolutePath());
+            fileWriter.write(group.writeInFile(notes));
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void filePrint() {
@@ -172,6 +200,12 @@ public class GroupController {
     }
 
     public void editEditNote() {
+        groupsTitleLabel.setText(resourceBundle.getString("UpdateGroup"));
+        groupOkButton.setVisible (true);
+        groupOkButton.setDisable (false);
+        groupColorChoiceBox.setDisable (false);
+        groupDescriptionTextField.setDisable (false);
+        groupNameTextField.setDisable (false);
 
     }
 

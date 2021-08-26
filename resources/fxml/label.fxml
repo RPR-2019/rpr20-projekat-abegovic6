@@ -12,6 +12,7 @@
     <stylesheets>
         <URL value="@../css/menu.css" />
         <URL value="@../css/style.css" />
+        <URL value="@../css/validations.css" />
     </stylesheets>
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -28,9 +29,9 @@
         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-        <MenuBar style="-fx-background-color: #FFFFFF;" GridPane.columnSpan="2147483647">
+        <MenuBar fx:id="labelMenuBar" style="-fx-background-color: #FFFFFF;" GridPane.columnSpan="2147483647">
             <menus>
-                <Menu text="%_File">
+                <Menu text="%File">
                     <items>
                         <MenuItem id="menuItemSave" onAction="#fileSave" styleClass="menuItemSave" text="%Save">
                             <accelerator>
@@ -99,14 +100,14 @@
                 <Cursor fx:constant="HAND" />
             </cursor>
         </ChoiceBox>
-        <ButtonBar GridPane.columnIndex="1" GridPane.rowIndex="7">
+        <ButtonBar buttonMinWidth="90.0" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS">
             <buttons>
-                <Button defaultButton="true" mnemonicParsing="false" onAction="#confirmLabelChanges" styleClass="buttonframe" text="%OK">
+                <Button fx:id="labelOkButton" defaultButton="true" mnemonicParsing="false" onAction="#confirmLabelChanges" styleClass="buttonframe" text="%OK">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>
                 </Button>
-                <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelLabelChanges" styleClass="buttonframe" text="%Cancel">
+                <Button fx:id="labelCancelButton" cancelButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelLabelChanges" styleClass="buttonframe" text="%Cancel">
                     <cursor>
                         <Cursor fx:constant="HAND" />
                     </cursor>

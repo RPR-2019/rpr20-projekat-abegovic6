@@ -29,15 +29,10 @@ public class Note {
 
     private boolean isUpdateNeeded = false;
 
-
-
-
     public Note() {
         labels = new ArrayList<>();
 
     }
-
-
 
     public NoteColor getNoteColor() {
         return noteColor;
@@ -122,5 +117,15 @@ public class Note {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public String writeInFile () {
+        String string = "Note id: " + id + "\nGroup id: " + groupId + "\nNote title: " + noteTitle + "\nNote text: " + description
+                + "\n----------\nNote labels: \n \n";
+        for(Label label : labels) {
+            string += label.getLabelName () + "\n";
+        }
+        string += "----------\n \n";
+        return string;
     }
 }

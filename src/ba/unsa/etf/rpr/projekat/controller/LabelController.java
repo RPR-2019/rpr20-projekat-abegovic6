@@ -3,25 +3,31 @@ package ba.unsa.etf.rpr.projekat.controller;
 import ba.unsa.etf.rpr.projekat.model.LabelColorModel;
 import ba.unsa.etf.rpr.projekat.model.Account;
 import ba.unsa.etf.rpr.projekat.model.LabelColor;
+import ba.unsa.etf.rpr.projekat.model.Note;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class LabelController {
 
+    private final List<Note> notes;
     private ba.unsa.etf.rpr.projekat.model.Label label;
     private final List<ba.unsa.etf.rpr.projekat.model.Label> labels;
     private final ResourceBundle resourceBundle;
-    private final Account user;
     private LabelColorModel labelColorModel;
     private String color = null;
-
+    @FXML
+    public MenuBar labelMenuBar;
     @FXML
     public Label labelTitleLabel;
     @FXML
@@ -36,11 +42,15 @@ public class LabelController {
     public Label labelNameErrorLabel;
     @FXML
     public Label labelColorErrorLabel;
+    @FXML
+    public Button labelOkButton;
+    @FXML
+    public Button labelCancelButton;
 
-    public LabelController(ba.unsa.etf.rpr.projekat.model.Label label, List<ba.unsa.etf.rpr.projekat.model.Label> labels, Account user, ResourceBundle resourceBundle) {
+    public LabelController(ba.unsa.etf.rpr.projekat.model.Label label, List<ba.unsa.etf.rpr.projekat.model.Label> labels, List<Note> notes, ResourceBundle resourceBundle) {
         this.label = label;
         this.labels = labels;
-        this.user = user;
+        this.notes = notes;
         this.resourceBundle = resourceBundle;
 
     }
@@ -52,21 +62,37 @@ public class LabelController {
 
         labelColorModel.currentColorProperty().addListener((obp, oldColor, newColor) -> {
             String hex = LabelColor.valueOf(newColor).getHexCode();
-            labelGridPane.setStyle("-fx-background-color: " + hex);
+            changeColor (hex);
             color = newColor;
         });
 
         if(label.getId() == -2) {
             labelTitleLabel.setText(resourceBundle.getString("CreateANewLabel"));
+            labelColorChoiceBox.getSelectionModel ().selectFirst ();
+            labelMenuBar.setVisible (false);
         } else {
-            labelTitleLabel.setText(resourceBundle.getString("LabelInformation"));
             labelNameTextField.setText(label.getLabelName());
             labelDescriptionTextField.setText(label.getDescription());
             labelColorModel.setCurrentColor(label.getLabelColor().toString());
+            labelColorChoiceBox.getSelectionModel ().select (label.getLabelColor ().name ());
+            setEditFalse ();
         }
+    }
 
+    private void changeColor(String hex) {
+        labelTitleLabel.setStyle("-fx-text-fill: " + hex);
+        labelColorChoiceBox.setStyle("-fx-background-color: "+ hex);
+        labelOkButton.setStyle("-fx-border-color: " + hex);
+        labelCancelButton.setStyle("-fx-border-color: " + hex);
+    }
 
-
+    private void setEditFalse() {
+        labelTitleLabel.setText(resourceBundle.getString("LabelInformation"));
+        labelOkButton.setVisible (false);
+        labelOkButton.setDisable (true);
+        labelColorChoiceBox.setDisable (true);
+        labelDescriptionTextField.setDisable (true);
+        labelNameTextField.setDisable (true);
     }
 
     public void changeCurrentColor() {
@@ -95,7 +121,7 @@ public class LabelController {
             labelNameErrorLabel.setText(resourceBundle.getString("ThisCantBeEmpty"));
             labelNameErrorLabel.getStyleClass().add("errorLabel");
             labelNameTextField.getStyleClass().add("turnRed");
-        } else if(labels.stream().anyMatch(g -> g.getLabelName().equals(groupName))) {
+        } else if(labels.stream().anyMatch(g -> g.getLabelName().equals(groupName) && g.getId () != label.getId ())) {
             isAlertNeeded = true;
             labelNameErrorLabel.setText(resourceBundle.getString("NewLabelNameError"));
             labelNameErrorLabel.getStyleClass().add("errorLabel");
@@ -117,9 +143,7 @@ public class LabelController {
             label.setLabelColor(LabelColor.valueOf(color));
 
 
-            Node n = (Node) actionEvent.getSource();
-            Stage stage = (Stage) n.getScene().getWindow();
-            stage.close();
+            setEditFalse ();
         }
     }
 
@@ -134,6 +158,19 @@ public class LabelController {
     }
 
     public void fileSave() {
+        FileChooser izbornik = new FileChooser();
+        izbornik.setTitle(resourceBundle.getString ("ChooseFile"));
+        izbornik.getExtensionFilters().add(new FileChooser.ExtensionFilter(resourceBundle.getString ("TextFile"), "*.txt"));
+        File file = izbornik.showSaveDialog(labelColorChoiceBox.getScene().getWindow());
+
+        if(file == null) return;
+        try {
+            FileWriter fileWriter = new FileWriter(file.getAbsolutePath());
+            fileWriter.write(label.writeInFile(notes));
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -150,6 +187,12 @@ public class LabelController {
     }
 
     public void editEditNote() {
+        labelTitleLabel.setText(resourceBundle.getString("UpdateLabel"));
+        labelOkButton.setVisible (true);
+        labelOkButton.setDisable (false);
+        labelColorChoiceBox.setDisable (false);
+        labelDescriptionTextField.setDisable (false);
+        labelNameTextField.setDisable (false);
 
     }
 

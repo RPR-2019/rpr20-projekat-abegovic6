@@ -1,10 +1,28 @@
 
-R
-java:S1066‹"/Merge this if statement with the enclosing one.(´›ëÿÿÿÿÿ8ûùõ–·/
-u
-java:S3776™"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(³Ø†¼ûÿÿÿÿ8ûùõ–·/
+¤
+java:S1186–"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(æš¡¹ÿÿÿÿÿ8¤¹½ù·/
+¤
+java:S1186¢"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(õÂÌıÿÿÿÿ8¤¹½ù·/
 t
 java:S3776O"RRefactor this method to reduce its Cognitive Complexity from 33 to the 15 allowed.(·òşÿÿÿÿ8ŸÏïû¶/
+¤
+java:S1186¦"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(èŸ¿±üÿÿÿÿ8¤¹½ù·/
 J	java:S108\")Either remove or fill this block of code.(ûï›±úÿÿÿÿ8ºûâ’·/
+u
+java:S3776á"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(³Ø†¼ûÿÿÿÿ8Úœÿğ·/
+
+java:S1186®"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(µƒ½"8¤¹½ù·/
+R
+java:S1066Ó"/Merge this if statement with the enclosing one.(´›ëÿÿÿÿÿ8Úœÿğ·/
+¤
+java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(°«••üÿÿÿÿ8¤¹½ù·/
+¤
+java:S1186š"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¬ë°¯üÿÿÿÿ8¤¹½ù·/
+J
+java:S1602²",Remove useless curly braces around statement(Ñ³¢ê8Úœÿğ·/
 M
-java:S1066è"/Merge this if statement with the enclosing one.(’èÔ8ûùõ–·/
+java:S1066°"/Merge this if statement with the enclosing one.(’èÔ8Úœÿğ·/
+
+java:S1186ª"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(äûÕc8¤¹½ù·/
+¤
+java:S1186²"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ú¬À¯øÿÿÿÿ8¤¹½ù·/

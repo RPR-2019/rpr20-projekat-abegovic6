@@ -15,6 +15,16 @@
     -fx-margin: 0 0 72px;
     -fx-text-align: center;
 }
+
+.subheading2 {
+    -fx-text-fill: #F2F4F3;
+    -fx-font-size: 25px;
+    -fx-font-weight: 300;
+    -fx-line-height: 32px;
+    -fx-margin: 0 0 72px;
+    -fx-text-align: center;
+}
+
 .paragraph {
     -fx-text-fill: #F2F4F3;
     -fx-font-family: 'Helvetica Neue', sans-serif;

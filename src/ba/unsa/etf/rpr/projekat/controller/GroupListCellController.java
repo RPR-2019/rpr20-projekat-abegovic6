@@ -5,6 +5,7 @@ import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.Group;
 import ba.unsa.etf.rpr.projekat.model.GroupColor;
 import ba.unsa.etf.rpr.projekat.model.Note;
+import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,6 +26,7 @@ public class GroupListCellController extends ListCell<Group> {
     private final ResourceBundle resourceBundle;
     private final ProjectDAO projectDAO;
     private final List<Note> notes;
+    private final HostServices hostServices;
     @FXML
     public Label groupItemDescriptionLabel;
     @FXML
@@ -36,11 +38,13 @@ public class GroupListCellController extends ListCell<Group> {
 
     private FXMLLoader mLLoader;
 
-    public GroupListCellController (List<Group> groups, ProjectDAO projectDAO, List<Note> notes, ResourceBundle resourceBundle) {
+    public GroupListCellController (List<Group> groups, ProjectDAO projectDAO, List<Note> notes, ResourceBundle resourceBundle,
+                                    HostServices hostServices) {
         this.resourceBundle = resourceBundle;
         this.projectDAO = projectDAO;
         this.groups = groups;
         this.notes = notes;
+        this.hostServices = hostServices;
     }
 
     @Override
@@ -110,7 +114,7 @@ public class GroupListCellController extends ListCell<Group> {
 
             List<Note> notesForGroup = notes.stream().filter (note -> note.getGroupId () == group.getId ()).collect(Collectors.toList ());
 
-            GroupController groupController = new GroupController(group, groups, notesForGroup, resourceBundle);
+            GroupController groupController = new GroupController(group, groups, notesForGroup, resourceBundle, hostServices);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/group.fxml"), resourceBundle);
             loader.setController(groupController);

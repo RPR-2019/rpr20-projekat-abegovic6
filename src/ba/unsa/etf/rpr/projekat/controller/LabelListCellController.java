@@ -4,6 +4,7 @@ import ba.unsa.etf.rpr.projekat.controller.LabelController;
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.LabelColor;
 import ba.unsa.etf.rpr.projekat.model.Note;
+import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +24,7 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.m
     private final ProjectDAO projectDAO;
     private final List<ba.unsa.etf.rpr.projekat.model.Label> labels;
     private final List<Note> notes;
+    private final HostServices hostServices;
     @FXML
     public Label groupItemDescriptionLabel;
     @FXML
@@ -34,12 +36,13 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.m
 
     private FXMLLoader mLLoader;
 
-    public LabelListCellController (List<ba.unsa.etf.rpr.projekat.model.Label> labels,  ProjectDAO projectDAO, List<Note> notes,
-                                    ResourceBundle resourceBundle) {
+    public LabelListCellController (List<ba.unsa.etf.rpr.projekat.model.Label> labels, ProjectDAO projectDAO, List<Note> notes,
+                                    ResourceBundle resourceBundle, HostServices hostServices) {
         this.resourceBundle = resourceBundle;
         this.projectDAO = projectDAO;
         this.labels = labels;
         this.notes = notes;
+        this.hostServices = hostServices;
     }
 
     @Override
@@ -113,7 +116,7 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.m
                     .anyMatch (l -> l.getId () == label.getId ()))
                     .collect(Collectors.toList ());
 
-            LabelController labelController = new LabelController(label, labels, notesForLabel, resourceBundle);
+            LabelController labelController = new LabelController(label, labels, notesForLabel, resourceBundle, hostServices);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/label.fxml"), resourceBundle);
             loader.setController(labelController);

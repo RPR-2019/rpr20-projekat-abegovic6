@@ -21,7 +21,7 @@ public class Main extends Application {
         ResourceBundle resourceBundle = ResourceBundle.getBundle("Translation", currentLocale);
 
         ProjectDAO projectDAO = ProjectDAO.getInstance();
-        LoginController loginController = new LoginController(projectDAO, user, resourceBundle);
+        LoginController loginController = new LoginController(projectDAO, user, resourceBundle, getHostServices ());
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"), resourceBundle);
         loader.setController(loginController);
         Parent root = loader.load();

@@ -41,7 +41,7 @@
 }
 
 #menuItemUserGuide > .label{
-    -fx-graphic: url("/images/deleteIcon.png");
+    -fx-graphic: url("/images/userGuideIcon.png");
 }
 #menuItemUserGuide .accelerator-text{
     -fx-graphic: none;

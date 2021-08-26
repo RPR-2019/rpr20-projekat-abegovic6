@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.*;
+import javafx.application.HostServices;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -40,6 +41,8 @@ public class MainController {
     private NoteModel noteModel;
     private SortModel sortNotesModel;
     private SortModel sortGroupLabelsModel;
+    private HostServices hostServices;
+
 
     @FXML
     public ListView<Group> groupListView;
@@ -64,10 +67,11 @@ public class MainController {
 
 
 
-    public MainController(ProjectDAO projectDAO, Account user, ResourceBundle resourceBundle) {
+    public MainController(ProjectDAO projectDAO, Account user, ResourceBundle resourceBundle, HostServices hostServices) {
         this.projectDAO = projectDAO;
         this.user = user;
         this.resourceBundle = resourceBundle;
+        this.hostServices = hostServices;
 
         this.groupsObservableList = FXCollections.observableArrayList();
         this.labelObservableList = FXCollections.observableArrayList();
@@ -112,7 +116,7 @@ public class MainController {
 
         groupListView = new ListView<> ();
         groupListView.setItems (groupsObservableList);
-        groupListView.setCellFactory (listView -> new GroupListCellController (groupsObservableList, projectDAO, noteObservableList, resourceBundle));
+        groupListView.setCellFactory (listView -> new GroupListCellController (groupsObservableList, projectDAO, noteObservableList, resourceBundle, hostServices));
         groupListView.getSelectionModel ().selectedItemProperty().addListener((obs, oldGroup, newGroup) -> {
             if(newGroup != null) {
                 noteModel.getNotes ().clear ();
@@ -125,7 +129,7 @@ public class MainController {
 
         labelListView = new ListView<>();
         labelListView.setItems(labelObservableList);
-        labelListView.setCellFactory(listView -> new LabelListCellController (labelObservableList, projectDAO, noteObservableList, resourceBundle));
+        labelListView.setCellFactory(listView -> new LabelListCellController (labelObservableList, projectDAO, noteObservableList, resourceBundle, hostServices));
         labelListView.getSelectionModel ().selectedItemProperty ().addListener ((obs, oldLabel, newLabel) -> {
             if(newLabel != null) {
                 noteModel.getNotes ().clear ();
@@ -155,6 +159,7 @@ public class MainController {
         });
 
     }
+
 
 
     public void changeCurrentNoteSort() {
@@ -338,7 +343,7 @@ public class MainController {
 
             note.setUpdateNeeded (true);
 
-            NoteController noteController = new NoteController (note, labelObservableList, groupsObservableList, resourceBundle);
+            NoteController noteController = new NoteController (note, labelObservableList, groupsObservableList, resourceBundle, hostServices);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/note.fxml"), resourceBundle);
             loader.setController(noteController);
@@ -437,7 +442,8 @@ public class MainController {
 
 
 
-            GroupController groupController = new GroupController(group, groupsObservableList, new ArrayList<> (), resourceBundle);
+            GroupController groupController = new GroupController(group, groupsObservableList, new ArrayList<> (),
+                    resourceBundle, hostServices);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/group.fxml"), resourceBundle);
             loader.setController(groupController);
@@ -472,7 +478,7 @@ public class MainController {
             label.setId(-2);
             label.setAccountId(user.getId());
 
-            LabelController labelController = new LabelController(label, labelObservableList, new ArrayList<> (), resourceBundle);
+            LabelController labelController = new LabelController(label, labelObservableList, new ArrayList<> (), resourceBundle, hostServices);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/label.fxml"), resourceBundle);
             loader.setController(labelController);
@@ -516,7 +522,7 @@ public class MainController {
                 Note note = new Note ();
                 note.setId (-2);
 
-                NoteController noteController = new NoteController (note, labelObservableList, groupsObservableList, resourceBundle);
+                NoteController noteController = new NoteController (note, labelObservableList, groupsObservableList, resourceBundle, hostServices);
 
                 FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/note.fxml"), resourceBundle);
                 loader.setController (noteController);
@@ -616,6 +622,25 @@ public class MainController {
     }
 
     public void helpAbout() {
+        try {
+            Stage newStage = new Stage();
+
+            AboutController aboutController = new AboutController ();
+
+            aboutController.setHostServices (hostServices);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/about.fxml"), resourceBundle);
+            loader.setController(aboutController);
+
+            newStage.setTitle(resourceBundle.getString("about"));
+            newStage.setScene(new Scene(loader.load(), 700, 500));
+            newStage.setMinHeight(500);
+            newStage.setMinWidth(700);
+
+            newStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -625,7 +650,7 @@ public class MainController {
             Stage oldStage  = (Stage) source.getScene().getWindow();
             Stage newStage = new Stage();
 
-            LoginController loginController = new LoginController(projectDAO, user, resourceBundle);
+            LoginController loginController = new LoginController(projectDAO, user, resourceBundle, hostServices);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"), resourceBundle);
             loader.setController(loginController);

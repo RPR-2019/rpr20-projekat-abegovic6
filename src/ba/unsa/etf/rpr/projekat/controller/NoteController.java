@@ -4,10 +4,13 @@ import ba.unsa.etf.rpr.projekat.model.GroupModel;
 import ba.unsa.etf.rpr.projekat.model.NoteColorModel;
 import ba.unsa.etf.rpr.projekat.model.*;
 import ba.unsa.etf.rpr.projekat.model.Label;
+import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -25,6 +28,7 @@ public class NoteController {
     private final List<Label> labels;
     private final List<Group> groups;
     private final ResourceBundle resourceBundle;
+    private final HostServices hostServices;
     private NoteColorModel noteColorModel;
     private String color = null;
     private String groupName = null;
@@ -60,11 +64,12 @@ public class NoteController {
     @FXML
     public Button imageButton;
 
-    public NoteController(Note note, List<Label> labels, List<Group> groups, ResourceBundle resourceBundle) {
+    public NoteController(Note note, List<Label> labels, List<Group> groups, ResourceBundle resourceBundle, HostServices hostServices) {
         this.note = note;
         this.labels = labels;
         this.groups = groups;
         this.resourceBundle = resourceBundle;
+        this.hostServices = hostServices;
     }
 
     @FXML
@@ -332,6 +337,25 @@ public class NoteController {
     }
 
     public void helpAbout() {
+        try {
+            Stage newStage = new Stage();
+
+            AboutController aboutController = new AboutController ();
+
+            aboutController.setHostServices (hostServices);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/about.fxml"), resourceBundle);
+            loader.setController(aboutController);
+
+            newStage.setTitle(resourceBundle.getString("about"));
+            newStage.setScene(new Scene (loader.load(), 700, 500));
+            newStage.setMinHeight(500);
+            newStage.setMinWidth(700);
+
+            newStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

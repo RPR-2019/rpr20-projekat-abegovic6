@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.Account;
+import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +19,7 @@ import java.util.ResourceBundle;
 
 
 public class LoginController {
+    private final HostServices hostServices;
     @FXML
     public PasswordField passwordLoginPasswordField;
     @FXML
@@ -28,9 +30,10 @@ public class LoginController {
     private final ResourceBundle resourceBundle;
 
 
-    public LoginController(ProjectDAO projectDAO, Account user, ResourceBundle resourceBundle) {
+    public LoginController(ProjectDAO projectDAO, Account user, ResourceBundle resourceBundle, HostServices hostServices) {
         this.projectDAO = projectDAO;
         this.user = user;
+        this.hostServices = hostServices;
         this.resourceBundle = resourceBundle;
     }
 
@@ -99,7 +102,7 @@ public class LoginController {
             Stage oldStage  = (Stage) source.getScene().getWindow();
             Stage newStage = new Stage();
 
-            MainController mainController = new MainController(projectDAO, user, resourceBundle);
+            MainController mainController = new MainController(projectDAO, user, resourceBundle, hostServices);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"), resourceBundle);
             loader.setController(mainController);
@@ -124,7 +127,7 @@ public class LoginController {
             Stage oldStage  = (Stage) source.getScene().getWindow();
             Stage newStage = new Stage();
 
-            SignupController signupController = new SignupController(projectDAO, user, resourceBundle);
+            SignupController signupController = new SignupController(projectDAO, user, resourceBundle, hostServices);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/signup.fxml"), resourceBundle);
             loader.setController(signupController);

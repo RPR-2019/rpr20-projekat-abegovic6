@@ -4,9 +4,12 @@ import ba.unsa.etf.rpr.projekat.model.LabelColorModel;
 import ba.unsa.etf.rpr.projekat.model.Account;
 import ba.unsa.etf.rpr.projekat.model.LabelColor;
 import ba.unsa.etf.rpr.projekat.model.Note;
+import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
@@ -21,6 +24,7 @@ import java.util.ResourceBundle;
 public class LabelController {
 
     private final List<Note> notes;
+    private final HostServices hostServices;
     private ba.unsa.etf.rpr.projekat.model.Label label;
     private final List<ba.unsa.etf.rpr.projekat.model.Label> labels;
     private final ResourceBundle resourceBundle;
@@ -47,11 +51,13 @@ public class LabelController {
     @FXML
     public Button labelCancelButton;
 
-    public LabelController(ba.unsa.etf.rpr.projekat.model.Label label, List<ba.unsa.etf.rpr.projekat.model.Label> labels, List<Note> notes, ResourceBundle resourceBundle) {
+    public LabelController(ba.unsa.etf.rpr.projekat.model.Label label, List<ba.unsa.etf.rpr.projekat.model.Label> labels,
+                           List<Note> notes, ResourceBundle resourceBundle, HostServices hostServices) {
         this.label = label;
         this.labels = labels;
         this.notes = notes;
         this.resourceBundle = resourceBundle;
+        this.hostServices = hostServices;
 
     }
 
@@ -209,6 +215,25 @@ public class LabelController {
     }
 
     public void helpAbout() {
+        try {
+            Stage newStage = new Stage();
+
+            AboutController aboutController = new AboutController ();
+
+            aboutController.setHostServices (hostServices);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/about.fxml"), resourceBundle);
+            loader.setController(aboutController);
+
+            newStage.setTitle(resourceBundle.getString("about"));
+            newStage.setScene(new Scene (loader.load(), 700, 500));
+            newStage.setMinHeight(500);
+            newStage.setMinWidth(700);
+
+            newStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 }

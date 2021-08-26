@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.Account;
+import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +21,7 @@ public class SignupController {
     private final Account user;
     private final ResourceBundle resourceBundle;
     private final ProjectDAO projectDAO;
+    private final HostServices hostServices;
 
     private boolean isAlertNeeded;
 
@@ -45,10 +47,11 @@ public class SignupController {
     public Label repeatPasswordErrorLabel;
 
 
-    public SignupController(ProjectDAO projectDAO, Account user, ResourceBundle resourceBundle) {
+    public SignupController(ProjectDAO projectDAO, Account user, ResourceBundle resourceBundle, HostServices hostServices) {
         this.projectDAO = projectDAO;
         this.user = user;
         this.resourceBundle = resourceBundle;
+        this.hostServices = hostServices;
     }
 
     @FXML
@@ -101,7 +104,7 @@ public class SignupController {
                 Stage oldStage  = (Stage) source.getScene().getWindow();
                 Stage newStage = new Stage();
 
-                MainController mainController = new MainController(projectDAO, user, resourceBundle);
+                MainController mainController = new MainController(projectDAO, user, resourceBundle, hostServices);
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"), resourceBundle);
                 loader.setController(mainController);
@@ -194,7 +197,7 @@ public class SignupController {
             Stage oldStage  = (Stage) source.getScene().getWindow();
             Stage newStage = new Stage();
 
-            LoginController loginController = new LoginController(projectDAO, user, resourceBundle);
+            LoginController loginController = new LoginController(projectDAO, user, resourceBundle, hostServices);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"), resourceBundle);
             loader.setController(loginController);

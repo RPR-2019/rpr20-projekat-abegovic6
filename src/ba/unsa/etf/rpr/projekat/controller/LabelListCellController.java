@@ -121,7 +121,7 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.m
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/label.fxml"), resourceBundle);
             loader.setController(labelController);
 
-            newStage.setTitle(resourceBundle.getString("LabelInformation"));
+            newStage.setTitle(resourceBundle.getString("LabelInformations"));
             newStage.setScene(new Scene(loader.load(), 700, 500));
             newStage.setMinHeight(500);
             newStage.setMinWidth(700);

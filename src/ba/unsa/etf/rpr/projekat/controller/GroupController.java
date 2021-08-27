@@ -224,6 +224,24 @@ public class GroupController {
     }
 
     public void helpUserGuide() {
+        try {
+            Stage newUserGuideStage = new Stage();
+
+            HelpController helpController = new HelpController (resourceBundle);
+
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/help.fxml"), resourceBundle);
+            loader.setController(helpController);
+
+            newUserGuideStage.setTitle(resourceBundle.getString("UserGuideTitle"));
+            newUserGuideStage.setScene(new Scene(loader.load(), 700, 500));
+            newUserGuideStage.setMinHeight(500);
+            newUserGuideStage.setMinWidth(700);
+
+            newUserGuideStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

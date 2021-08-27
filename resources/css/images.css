@@ -46,3 +46,11 @@
 #menuItemUserGuide .accelerator-text{
     -fx-graphic: none;
 }
+#next {
+    -fx-graphic: url("/images/next.png");
+    -fx-background-color: Transparent;
+}
+#back {
+    -fx-graphic: url("/images/back.png");
+    -fx-background-color: Transparent;
+}

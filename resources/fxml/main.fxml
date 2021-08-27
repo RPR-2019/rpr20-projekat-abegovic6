@@ -10,7 +10,7 @@
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #1A1A1C;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <stylesheets>
-      <URL value="@../css/menu.css" />
+      <URL value="@../css/images.css" />
       <URL value="@../css/style.css" />
    </stylesheets>
    <columnConstraints>

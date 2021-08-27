@@ -119,7 +119,7 @@ public class GroupListCellController extends ListCell<Group> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/group.fxml"), resourceBundle);
             loader.setController(groupController);
 
-            newStage.setTitle(resourceBundle.getString("GroupInformation"));
+            newStage.setTitle(resourceBundle.getString("GroupInformations"));
             newStage.setScene(new Scene(loader.load(), 700, 500));
             newStage.setMinHeight(500);
             newStage.setMinWidth(700);

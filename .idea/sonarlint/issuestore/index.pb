@@ -89,3 +89,13 @@ a
 1src/ba/unsa/etf/rpr/projekat/model/NoteModel.java,8\b\8b9047c1e36ceac80e6cbd42e5283201d7a74c87
 a
 1src/ba/unsa/etf/rpr/projekat/model/SortModel.java,4\9\4925a4b4914c1470f7fdd0df2dea27405962c4ec
+I
+resources/fxml/group.fxml,a\3\a3c2e1aa41ba72f9b4247f25c56b4095f38ae2f0
+I
+resources/fxml/label.fxml,d\d\dda1ea7deebaa2b192b69125fb770986016937f5
+d
+4out/production/rpr20-projekat-abegovic6/css/menu.css,0\a\0a53c0c60d5703ed7f53a396f02e6bd74f7053ec
+H
+resources/fxml/note.fxml,3\0\308988374b9bb7b799170653d58cef377f780557
+l
+<src/ba/unsa/etf/rpr/projekat/controller/AboutController.java,e\1\e194920218099ee576a575709f785151355b594a

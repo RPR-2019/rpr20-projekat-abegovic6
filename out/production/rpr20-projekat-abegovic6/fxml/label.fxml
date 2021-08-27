@@ -10,7 +10,7 @@
 
 <GridPane fx:id="labelGridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
-        <URL value="@../css/menu.css" />
+        <URL value="@../css/images.css" />
         <URL value="@../css/style.css" />
         <URL value="@../css/validations.css" />
     </stylesheets>

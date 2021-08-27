@@ -114,8 +114,24 @@ public class SignupController {
                 newStage.setMinHeight(600);
                 newStage.setMinWidth(1100);
 
+                Stage newUserGuideStage = new Stage();
+
+                HelpController helpController = new HelpController (resourceBundle);
+
+
+                FXMLLoader userGuideLoader = new FXMLLoader(getClass().getResource("/fxml/help.fxml"), resourceBundle);
+                userGuideLoader.setController(helpController);
+
+                newUserGuideStage.setTitle(resourceBundle.getString("UserGuideTitle"));
+                newUserGuideStage.setScene(new Scene(userGuideLoader.load(), 700, 500));
+                newUserGuideStage.setMinHeight(500);
+                newUserGuideStage.setMinWidth(700);
+
+
+
                 oldStage.close();
                 newStage.show();
+                newUserGuideStage.show();
             } catch (IOException e) {
                 e.printStackTrace();
             }

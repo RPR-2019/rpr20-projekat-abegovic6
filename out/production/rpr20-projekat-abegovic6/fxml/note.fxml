@@ -11,7 +11,7 @@
 
 <GridPane alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #1A1A1C;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
-        <URL value="@../css/menu.css" />
+        <URL value="@../css/images.css" />
         <URL value="@../css/style.css" />
         <URL value="@../css/validations.css" />
     </stylesheets>

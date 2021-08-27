@@ -1,28 +1,30 @@
 
-¤
-java:S1186–"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(æš¡¹ÿÿÿÿÿ8¤¹½ù·/
-¤
-java:S1186¢"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(õÂÌıÿÿÿÿ8¤¹½ù·/
-t
-java:S3776O"RRefactor this method to reduce its Cognitive Complexity from 33 to the 15 allowed.(·òşÿÿÿÿ8ŸÏïû¶/
-¤
-java:S1186¦"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(èŸ¿±üÿÿÿÿ8¤¹½ù·/
-J	java:S108\")Either remove or fill this block of code.(ûï›±úÿÿÿÿ8ºûâ’·/
-u
-java:S3776á"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(³Ø†¼ûÿÿÿÿ8Úœÿğ·/
-
-java:S1186®"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(µƒ½"8¤¹½ù·/
+?
+java:S1643º"Use a StringBuilder instead.(àèŠæùÿÿÿÿ8óœâŸ¸/
 R
-java:S1066Ó"/Merge this if statement with the enclosing one.(´›ëÿÿÿÿÿ8Úœÿğ·/
+java:S1066ï"/Merge this if statement with the enclosing one.(´›ëÿÿÿÿÿ8óœâŸ¸/
+k
+java:S2095Î"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8óœâŸ¸/
 ¤
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(°«••üÿÿÿÿ8¤¹½ù·/
+java:S1186İ"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(°«••üÿÿÿÿ8óœâŸ¸/
 ¤
-java:S1186š"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¬ë°¯üÿÿÿÿ8¤¹½ù·/
+java:S1186Ù"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¬ë°¯üÿÿÿÿ8óœâŸ¸/
 J
-java:S1602²",Remove useless curly braces around statement(Ñ³¢ê8Úœÿğ·/
-M
-java:S1066°"/Merge this if statement with the enclosing one.(’èÔ8Úœÿğ·/
+java:S1602Ë",Remove useless curly braces around statement(Ñ³¢ê8óœâŸ¸/
+p
+java:S3776İ"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(šªó³8Æ½ä ¸/
+J	java:S108c")Either remove or fill this block of code.(ûï›±úÿÿÿÿ8ºûâ’·/
+t
+java:S3776V"RRefactor this method to reduce its Cognitive Complexity from 33 to the 15 allowed.(·òşÿÿÿÿ8ŸÏïû¶/
 
-java:S1186ª"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(äûÕc8¤¹½ù·/
-¤
-java:S1186²"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(Ú¬À¯øÿÿÿÿ8¤¹½ù·/
+java:S1186è"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(äûÕc8óœâŸ¸/
+M
+java:S1066Ì"/Merge this if statement with the enclosing one.(’èÔ8óœâŸ¸/
+?
+java:S1643¿"Use a StringBuilder instead.(Ñşœáûÿÿÿÿ8óœâŸ¸/
+V
+java:S1128"9Remove this unused import 'java.util.function.Predicate'.(ïÍ–¶8ÇßêŸ¸/
+u
+java:S3776ı"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(³Ø†¼ûÿÿÿÿ8óœâŸ¸/
+
+java:S1186ì"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(µƒ½"8óœâŸ¸/

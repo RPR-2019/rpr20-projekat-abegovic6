@@ -1,98 +1,94 @@
 
-^	java:S125ù"<This block of commented-out lines of code should be removed.(¾ó¹øÿÿÿÿ8ñ™ûµ/
-Z
-java:S1659("8Declare "updateGroupIdNoteStatement" on a separate line.(ö¼ßûÿÿÿÿ8”ü’°/
-V
-java:S1659%"4Declare "deleteLabelIdStatement" on a separate line.(É³şéúÿÿÿÿ8İğØ°/
-U
-java:S1144Ç"7Remove this unused private "groupColorToString" method.(áññ8ñ™ûµ/
-S
-java:S1659)"1Declare "deleteNoteStatement" on a separate line.(„úŠŞüÿÿÿÿ8–ÀŒŒ°/
-\
-java:S1659(":Declare "getAllNotesForLabelStatement" on a separate line.(ö¼ßûÿÿÿÿ8Îöü¶/
-I
-java:S1168î"+Return an empty collection instead of null.(¥¹ï8ñ™ûµ/
-R
-java:S1659!"5Declare "getLabelFromIdStatement" on a separate line.(·´åÉ8 ¥”°/
-D
-java:S1172"&Remove these unused method parameters.(òÌû«8¡‹­ûµ/
+O
+java:S1659"2Declare "updateGroupStatement" on a separate line.(”·±8²˜›ûµ/
 Q
-java:S1659"4Declare "updateAccountStatement" on a separate line.(şĞ»‹8û‚“ûµ/
-W
-java:S1659"5Declare "usernameUniqueStatement" on a separate line.(…¾Œÿÿÿÿÿ8Ü¯õå°/
-T
-java:S1659"2Declare "deleteGroupStatement" on a separate line.(ÈÔ¢¿üÿÿÿÿ8’í…Œ°/
-U
-java:S1659)"3Declare "getNewIdNoteStatement" on a separate line.(„úŠŞüÿÿÿÿ8×¹º°/
-\
-java:S1659)":Declare "deleteNotesForGroupStatement" on a separate line.(„úŠŞüÿÿÿÿ8íóÚ°/
-S
-java:S1659("1Declare "createNoteStatement" on a separate line.(ö¼ßûÿÿÿÿ8©÷‹Œ°/
-_
-java:S1659"=Declare "deleteGroupsForAccountStatement" on a separate line.(™ìûøüÿÿÿÿ8ü›Õ°/
-9
-java:S3626•"Remove this redundant jump.(ûÁİ…8ñ™ûµ/
-T
-java:S1659"2Declare "deleteLabelStatement" on a separate line.(§“¦üÿÿÿÿ8ôÂ†Œ°/
-D
-java:S30102"'Remove this assignment of "connection".(ì„«8ÁÿŞ‰°/
-I
-java:S1168‰"+Return an empty collection instead of null.(¥¹ï8ñ™ûµ/
-X
-java:S2209¶"5Change this instance-reference to a static reference.(‹¿õ±øÿÿÿÿ8ñ™ûµ/
-V
-java:S1128
-"4Remove this unused import 'java.time.LocalDateTime'.(æÃ§ƒüÿÿÿÿ8ÚâÆó¶/
-T
-java:S1659 "2Declare "updateLabelStatement" on a separate line.(å‡ç¿ıÿÿÿÿ8œÍ¡ûµ/
-\
-java:S1659%":Declare "removeLAbelFromNoteStatement" on a separate line.(É³şéúÿÿÿÿ8ôË°/
-U
-java:S1659%"3Declare "deleteNoteIdStatement" on a separate line.(É³şéúÿÿÿÿ8İğØ°/
-_
-java:S1659"=Declare "getAllLabelsForAccountStatement" on a separate line.(§“¦üÿÿÿÿ8­‡Œ°/
-^
-java:S1659)"<Declare "getAllNotesForAccountStatement" on a separate line.(„úŠŞüÿÿÿÿ8û¨¡’·/
-Z
-java:S1659"8Declare "emailAdressUniqueStatement" on a separate line.(…¾Œÿÿÿÿÿ8Ü¯õå°/
+java:S1659 "4Declare "getNewIdLabelStatement" on a separate line.(·´åÉ8ÜÆ¸°/
 j
-java:S2095Ñ"GUse try-with-resources or close this "Statement" in a "finally" clause.(õ½ÛØşÿÿÿÿ8ñ™ûµ/
-V
-java:S1659$"9Declare "addNewLabelForNoteStatement" on a separate line.(Û´ØÂ8Øµü°/
+java:S2095¾"GUse try-with-resources or close this "Statement" in a "finally" clause.(õ½ÛØşÿÿÿÿ8ñ™ûµ/
+T
+java:S1659"2Declare "deleteGroupStatement" on a separate line.(ÈÔ¢¿üÿÿÿÿ8’í…Œ°/
+T
+java:S1659'"2Declare "updateNotesStatement" on a separate line.(ö¼ßûÿÿÿÿ8â‡Àó¶/
 \
-java:S1144">Remove this unused private "deleteNotesFromIntertable" method.(òÌû«8¶½Şü¶/
+java:S1659$":Declare "removeLAbelFromNoteStatement" on a separate line.(É³şéúÿÿÿÿ8ôË°/
 Z
-java:S1659!"=Declare "deleteLabelsForAccountStatement" on a separate line.(·´åÉ8£œ×°/
-I
-java:S1172¼"&Remove these unused method parameters.(´„ı×ùÿÿÿÿ8ñ™ûµ/
+java:S1659 "=Declare "deleteLabelsForAccountStatement" on a separate line.(·´åÉ8£œ×°/
+V
+java:S1659"4Declare "deleteAccountStatement" on a separate line.(½ÅÇ¼ÿÿÿÿÿ8µ¼Œ°/
 Q
-java:S1659!"4Declare "getNewIdLabelStatement" on a separate line.(·´åÉ8ÜÆ¸°/
-I
-java:S1168Ç"+Return an empty collection instead of null.(¥¹ï8¡‹­ûµ/
+java:S1659"4Declare "getNewIdGroupStatement" on a separate line.(”·±8˜Ï·°/
+[	java:S106‘"9Replace this use of System.out or System.err by a logger.(æÚ¤üÿÿÿÿ8ì‰¬¸/
+V
+java:S1659#"9Declare "addNewLabelForNoteStatement" on a separate line.(Û´ØÂ8Øµü°/
+S
+java:S1659'"1Declare "createNoteStatement" on a separate line.(ö¼ßûÿÿÿÿ8©÷‹Œ°/
 X
-java:S1141Ğ"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8ñ™ûµ/
+java:S1659#";Declare "getAllNotesIdForNoteStatement" on a separate line.(Û´ØÂ8Øµü°/
+U
+java:S1659$"3Declare "deleteNoteIdStatement" on a separate line.(É³şéúÿÿÿÿ8İğØ°/
+T
+java:S1659"2Declare "updateLabelStatement" on a separate line.(å‡ç¿ıÿÿÿÿ8œÍ¡ûµ/
+Z
+java:S1659"8Declare "emailAdressUniqueStatement" on a separate line.(…¾Œÿÿÿÿÿ8Ü¯õå°/
+I
+java:S1172»"&Remove these unused method parameters.(´„ı×ùÿÿÿÿ8ñ™ûµ/
+W
+java:S1659"5Declare "usernameUniqueStatement" on a separate line.(…¾Œÿÿÿÿÿ8Ü¯õå°/
+X
+java:S1659"6Declare "getNewIdAccountStatement" on a separate line.(½ÅÇ¼ÿÿÿÿÿ8¯–·°/
+^
+java:S1659("<Declare "getAllNotesForAccountStatement" on a separate line.(„úŠŞüÿÿÿÿ8û¨¡’·/
+\
+java:S1659'":Declare "getAllNotesForLabelStatement" on a separate line.(ö¼ßûÿÿÿÿ8Îöü¶/
+V	java:S106Ú"9Replace this use of System.out or System.err by a logger.(Ç¿ÀÛ8ñ™ûµ/
+\
+java:S1144€">Remove this unused private "deleteNotesFromIntertable" method.(òÌû«8¶½Şü¶/
+X
+java:S1141Ï"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8ñ™ûµ/
+S
+java:S1659("1Declare "deleteNoteStatement" on a separate line.(„úŠŞüÿÿÿÿ8–ÀŒŒ°/
+X
+java:S2209µ"5Change this instance-reference to a static reference.(‹¿õ±øÿÿÿÿ8ñ™ûµ/
+I
+java:S1168Æ"+Return an empty collection instead of null.(¥¹ï8¡‹­ûµ/
+9
+java:S3626”"Remove this redundant jump.(ûÁİ…8ñ™ûµ/
+R
+java:S1659 "5Declare "getLabelFromIdStatement" on a separate line.(·´åÉ8 ¥”°/
+T
+java:S1659"2Declare "deleteLabelStatement" on a separate line.(§“¦üÿÿÿÿ8ôÂ†Œ°/
+Z
+java:S1659'"8Declare "updateGroupIdNoteStatement" on a separate line.(ö¼ßûÿÿÿÿ8”ü’°/
+^	java:S125ø"<This block of commented-out lines of code should be removed.(¾ó¹øÿÿÿÿ8ñ™ûµ/
+j
+java:S2095Ğ"GUse try-with-resources or close this "Statement" in a "finally" clause.(õ½ÛØşÿÿÿÿ8ñ™ûµ/
+U
+java:S1659("3Declare "getNewIdNoteStatement" on a separate line.(„úŠŞüÿÿÿÿ8×¹º°/
+_
+java:S1659"=Declare "getAllGroupsForAccountStatement" on a separate line.(ÈÔ¢¿üÿÿÿÿ8İâŒ°/
+U
+java:S1144Æ"7Remove this unused private "groupColorToString" method.(áññ8ñ™ûµ/
+\
+java:S1659(":Declare "deleteNotesForGroupStatement" on a separate line.(„úŠŞüÿÿÿÿ8íóÚ°/
+I
+java:S1168í"+Return an empty collection instead of null.(¥¹ï8ñ™ûµ/
+_
+java:S1659"=Declare "getAllLabelsForAccountStatement" on a separate line.(§“¦üÿÿÿÿ8­‡Œ°/
+9
+java:S1643Í"Use a StringBuilder instead.(¯¤8ñ™ûµ/
+D
+java:S30101"'Remove this assignment of "connection".(ì„«8ÁÿŞ‰°/
+R
+java:S1659"5Declare "getAllAccountsStatement" on a separate line.(şĞ»‹8ô‡…Œ°/
+_
+java:S1659"=Declare "deleteGroupsForAccountStatement" on a separate line.(™ìûøüÿÿÿÿ8ü›Õ°/
+Q
+java:S1659"4Declare "updateAccountStatement" on a separate line.(şĞ»‹8û‚“ûµ/
+V
+java:S1659$"4Declare "deleteLabelIdStatement" on a separate line.(É³şéúÿÿÿÿ8İğØ°/
+I
+java:S1168ˆ"+Return an empty collection instead of null.(¥¹ï8ñ™ûµ/
 R
 java:S1128"0Remove this unused import 'java.io.IOException'.(ªº»Úıÿÿÿÿ8¦òúö¶/
-X
-java:S1659$";Declare "getAllNotesIdForNoteStatement" on a separate line.(Û´ØÂ8Øµü°/
-X
-java:S1659"6Declare "getNewIdAccountStatement" on a separate line.(½ÅÇ¼ÿÿÿÿÿ8¯–·°/
-\
-java:S1128"?Remove this unused import 'java.time.format.DateTimeFormatter'.(‰÷÷ª8ÚâÆó¶/
-R
-java:S1659"5Declare "getAllAccountsStatement" on a separate line.(şĞ»‹8ô‡…Œ°/
-T
-java:S1659("2Declare "updateNotesStatement" on a separate line.(ö¼ßûÿÿÿÿ8â‡Àó¶/
-9
-java:S1643Î"Use a StringBuilder instead.(¯¤8ñ™ûµ/
-j
-java:S2095¿"GUse try-with-resources or close this "Statement" in a "finally" clause.(õ½ÛØşÿÿÿÿ8ñ™ûµ/
-V	java:S106Û"9Replace this use of System.out or System.err by a logger.(Ç¿ÀÛ8ñ™ûµ/
-_
-java:S1659"=Declare "getAllGroupsForAccountStatement" on a separate line.(ÈÔ¢¿üÿÿÿÿ8İâŒ°/
-Q
-java:S1659"4Declare "getNewIdGroupStatement" on a separate line.(”·±8˜Ï·°/
-V
-java:S1659"4Declare "deleteAccountStatement" on a separate line.(½ÅÇ¼ÿÿÿÿÿ8µ¼Œ°/
-O
-java:S1659"2Declare "updateGroupStatement" on a separate line.(”·±8²˜›ûµ/
+D
+java:S1172€"&Remove these unused method parameters.(òÌû«8¡‹­ûµ/

@@ -211,6 +211,24 @@ public class LabelController {
     }
 
     public void helpUserGuide() {
+        try {
+            Stage newStage = new Stage();
+
+            HelpController helpController = new HelpController (resourceBundle);
+
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/help.fxml"), resourceBundle);
+            loader.setController(helpController);
+
+            newStage.setTitle(resourceBundle.getString("UserGuideTitle"));
+            newStage.setScene(new Scene(loader.load(), 700, 500));
+            newStage.setMinHeight(500);
+            newStage.setMinWidth(700);
+
+            newStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

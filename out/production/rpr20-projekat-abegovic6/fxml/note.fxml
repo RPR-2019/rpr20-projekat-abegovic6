@@ -42,8 +42,6 @@
                      </accelerator></MenuItem>
                   <MenuItem id="menuItemPrint" onAction="#filePrint" text="%Print" />
                   <SeparatorMenuItem mnemonicParsing="false" />
-                  <MenuItem id="menuItemSettings" onAction="#fileSettings" text="%Settings" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem onAction="#fileExit" styleClass="menuItem" text="%Exit" />
                     </items>
                 </Menu>

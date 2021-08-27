@@ -95,8 +95,6 @@ H
 resources/fxml/help.fxml,2\5\2506e73683bc9d31a8253eee6a579c5b117a18c9
 j
 :out/production/rpr20-projekat-abegovic6/fxml/settings.fxml,6\1\615c87b731deba7521a91d0cd05b46fb28c8335c
-G
-resources/css/style.css,2\3\23b7aaa8d4bd205dc0d36aa96b40f98f2be926d7
 k
 ;src/ba/unsa/etf/rpr/projekat/controller/HelpController.java,7\5\75ee980f1bfc7c62594766fd34ee213858cad15e
 o

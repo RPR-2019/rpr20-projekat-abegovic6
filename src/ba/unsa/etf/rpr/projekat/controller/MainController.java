@@ -18,9 +18,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -635,7 +637,11 @@ public class MainController {
 
     }
 
-    public void fileSettings(ActionEvent actionEvent) {
+    public void openSettings() {
+        fileSettings ();
+    }
+
+    public void fileSettings() {
         try {
             Node source = (Node)  flowPaneForNotes;
             Stage oldStage  = (Stage) source.getScene().getWindow();
@@ -666,6 +672,18 @@ public class MainController {
 
 
     public void editDelete() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initOwner(searchNotesField.getContextMenu ());
+        alert.initModality(Modality.WINDOW_MODAL);
+        alert.setTitle(resourceBundle.getString ("DeleteThis"));
+        alert.setHeaderText(resourceBundle.getString ("DeleteAccount"));
+        alert.setContentText(resourceBundle.getString ("AreYouSure"));
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+            projectDAO.deleteAccount (user);
+        }
+        logout ();
 
     }
 
@@ -714,9 +732,9 @@ public class MainController {
 
     }
 
-    public void logout(ActionEvent actionEvent) {
+    public void logout() {
         try {
-            Node source = (Node)  actionEvent.getSource();
+            Node source = (Node)  flowPaneForNotes;
             Stage oldStage  = (Stage) source.getScene().getWindow();
             Stage newStage = new Stage();
 

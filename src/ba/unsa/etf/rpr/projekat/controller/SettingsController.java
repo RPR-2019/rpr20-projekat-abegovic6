@@ -10,17 +10,19 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class SettingsController {
 
-    public final Account user;
+    public Account user;
     public final ProjectDAO projectDAO;
     private final HostServices hostServices;
     public ResourceBundle resourceBundle;
@@ -76,6 +78,44 @@ public class SettingsController {
         usernameSignUpTextField.setText (user.getUserName ());
         passwordSignUpPasswordField.setText (user.getPassword ());
         repeatPasswordSignUpPasswordField.setText (user.getPassword ());
+
+    }
+
+    public void deleteUser(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initOwner(firstNameSignUpTextField.getContextMenu ());
+        alert.initModality(Modality.WINDOW_MODAL);
+        alert.setTitle(resourceBundle.getString ("DeleteThis"));
+        alert.setHeaderText(resourceBundle.getString ("DeleteAccount"));
+        alert.setContentText(resourceBundle.getString ("AreYouSure"));
+
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+            projectDAO.deleteAccount (user);
+        }
+
+        try {
+            Node n = (Node) actionEvent.getSource();
+            Stage oldStage = (Stage) n.getScene().getWindow();
+            user = new Account ();
+            LoginController loginController = new LoginController (projectDAO, user, resourceBundle, hostServices);
+
+            Stage stage = new Stage ();
+            FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/login.fxml"), resourceBundle);
+            loader.setController(loginController);
+            stage.setTitle(resourceBundle.getString("LogInTitle"));
+            stage.setScene(new Scene(loader.load(), 1100, 600));
+            stage.setMinHeight(600);
+            stage.setMinWidth(1100);
+
+            stage.show ();
+            oldStage.close ();
+
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
+
 
     }
 

@@ -137,6 +137,16 @@
                         <Font size="1.0" />
                      </font>
                   </Label>
+                   <Label fx:id="firstNameErrorLabel" minHeight="0.0" GridPane.columnIndex="1">
+                       <font>
+                           <Font size="1.0" />
+                       </font>
+                   </Label>
+                   <Label fx:id="lastNameErrorLabel" minHeight="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                       <font>
+                           <Font size="1.0" />
+                       </font>
+                   </Label>
                   <ButtonBar focusTraversable="false" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="10">
                     <buttons>
                         <Label alignment="CENTER" focusTraversable="false" styleClass="paragraph" text="%SignupHaveAccount">

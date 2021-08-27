@@ -7,24 +7,25 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class SignupController {
-    private final Account user;
-    private final ResourceBundle resourceBundle;
-    private final ProjectDAO projectDAO;
+import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
+
+public class SettingsController {
+
+    public final Account user;
+    public final ProjectDAO projectDAO;
     private final HostServices hostServices;
+    public ResourceBundle resourceBundle;
 
     private boolean isAlertNeeded;
-
 
     @FXML
     public TextField firstNameSignUpTextField;
@@ -50,22 +51,92 @@ public class SignupController {
     public Label firstNameErrorLabel;
     @FXML
     public Label lastNameErrorLabel;
+    @FXML
+    public RadioButton english;
+    @FXML
+    public RadioButton bosnian;
 
-
-    public SignupController(ProjectDAO projectDAO, Account user, ResourceBundle resourceBundle, HostServices hostServices) {
-        this.projectDAO = projectDAO;
+    public SettingsController (Account user, ProjectDAO projectDAO, ResourceBundle resourceBundle, HostServices hostServices) {
         this.user = user;
+        this.projectDAO = projectDAO;
         this.resourceBundle = resourceBundle;
         this.hostServices = hostServices;
     }
 
     @FXML
-    public void initialize () {
+    public void initialize() {
+
+        if(Locale.getDefault ().getLanguage ().equals ("en"))
+            english.setSelected (true);
+        else bosnian.setSelected (true);
+
+        firstNameSignUpTextField.setText (user.getFirstName ());
+        lastNameSignUpTextField.setText (user.getLastName ());
+        emailAdressSignUpTextField.setText (user.getEmailAdress ());
+        usernameSignUpTextField.setText (user.getUserName ());
+        passwordSignUpPasswordField.setText (user.getPassword ());
+        repeatPasswordSignUpPasswordField.setText (user.getPassword ());
+
+    }
+
+    public void toEnglish() {
+        try {
+            Locale.setDefault(new Locale("en", "US"));
+            resourceBundle = ResourceBundle.getBundle("Translation", Locale.getDefault ());
+            Stage stage = (Stage) emailAdressSignUpTextField.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/settings.fxml"), resourceBundle);
+            loader.setController(new SettingsController (user, projectDAO, resourceBundle, hostServices));
+            Parent root = loader.load();
+            stage.setTitle("Korisnici");
+            stage.setScene(new Scene (root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void toBosnian() {
+        try {
+            Locale.setDefault(new Locale("bs", "BA"));
+            resourceBundle = ResourceBundle.getBundle("Translation", Locale.getDefault ());
+            Stage stage = (Stage) emailAdressSignUpTextField.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/settings.fxml"), resourceBundle);
+            loader.setController(new SettingsController (user, projectDAO, resourceBundle, hostServices));
+            Parent root = loader.load();
+            stage.setTitle("Korisnici");
+            stage.setScene(new Scene (root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void cancelSettings(ActionEvent actionEvent) {
+        try {
+
+            Node n = (Node) actionEvent.getSource();
+            Stage oldStage = (Stage) n.getScene().getWindow();
+            MainController mainController = new MainController(projectDAO, user, resourceBundle, hostServices);
+
+            Stage stage = new Stage ();
+            FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/main.fxml"), resourceBundle);
+            loader.setController(mainController);
+            stage.setTitle(resourceBundle.getString("NotesTitle"));
+            stage.setScene(new Scene(loader.load(), 1100, 600));
+            stage.setMinHeight(600);
+            stage.setMinWidth(1100);
+
+            stage.show ();
+            oldStage.close ();
+
+        } catch (IOException e) {
+            e.printStackTrace ();
+        }
 
 
     }
 
-    public void signUp(ActionEvent actionEvent) {
+    public void changeSettings(ActionEvent actionEvent) {
         usernameSignUpTextField.getStyleClass().remove("turnRed");
         emailAdressSignUpTextField.getStyleClass().remove("turnRed");
         passwordSignUpPasswordField.getStyleClass().remove("turnRed");
@@ -97,10 +168,31 @@ public class SignupController {
         checkRepeatPassword();
 
         if(isAlertNeeded) openAlertMessage();
-        else createANewUser(actionEvent);
+        else updateUser(actionEvent);
 
 
         isAlertNeeded = false;
+    }
+
+    private void updateUser (ActionEvent actionEvent) {
+        user.setFirstName(firstNameSignUpTextField.getText());
+        user.setLastName(lastNameSignUpTextField.getText());
+        user.setUserName(usernameSignUpTextField.getText());
+        user.setEmailAdress(emailAdressSignUpTextField.getText());
+        user.setPassword(passwordSignUpPasswordField.getText());
+
+        projectDAO.updateUser(user);
+
+        cancelSettings (actionEvent);
+    }
+
+    private void openAlertMessage() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(resourceBundle.getString("Error"));
+        alert.setHeaderText(resourceBundle.getString("ProblemPreformingTheAction"));
+        alert.setContentText(resourceBundle.getString("PleaseTryAgain"));
+
+        alert.showAndWait();
 
     }
 
@@ -122,70 +214,11 @@ public class SignupController {
         }
     }
 
-    private void createANewUser(ActionEvent actionEvent) {
-        user.setFirstName(firstNameSignUpTextField.getText());
-        user.setLastName(lastNameSignUpTextField.getText());
-        user.setUserName(usernameSignUpTextField.getText());
-        user.setEmailAdress(emailAdressSignUpTextField.getText());
-        user.setPassword(passwordSignUpPasswordField.getText());
-
-        if(projectDAO.createAccount(user)) {
-            try {
-                Node source = (Node)  actionEvent.getSource();
-                Stage oldStage  = (Stage) source.getScene().getWindow();
-                Stage newStage = new Stage();
-
-                MainController mainController = new MainController(projectDAO, user, resourceBundle, hostServices);
-
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"), resourceBundle);
-                loader.setController(mainController);
-
-                newStage.setTitle(resourceBundle.getString("NotesTitle"));
-                newStage.setScene(new Scene(loader.load(), 1100, 600));
-                newStage.setMinHeight(600);
-                newStage.setMinWidth(1100);
-
-                Stage newUserGuideStage = new Stage();
-
-                HelpController helpController = new HelpController (resourceBundle);
-
-
-                FXMLLoader userGuideLoader = new FXMLLoader(getClass().getResource("/fxml/help.fxml"), resourceBundle);
-                userGuideLoader.setController(helpController);
-
-                newUserGuideStage.setTitle(resourceBundle.getString("UserGuideTitle"));
-                newUserGuideStage.setScene(new Scene(userGuideLoader.load(), 700, 500));
-                newUserGuideStage.setMinHeight(500);
-                newUserGuideStage.setMinWidth(700);
-
-
-
-                oldStage.close();
-                newStage.show();
-                newUserGuideStage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-
-
-    }
-
-    private void openAlertMessage() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(resourceBundle.getString("Error"));
-        alert.setHeaderText(resourceBundle.getString("ProblemPreformingTheAction"));
-        alert.setContentText(resourceBundle.getString("PleaseTryAgain"));
-
-        alert.showAndWait();
-
-    }
-
     private void checkEmail() {
         try {
             user.setEmailAdress(emailAdressSignUpTextField.getText());
-            projectDAO.isEmailUnique(emailAdressSignUpTextField.getText());
+            if(!emailAdressSignUpTextField.getText ().equals (user.getEmailAdress ()))
+                projectDAO.isEmailUnique(emailAdressSignUpTextField.getText());
 
         } catch (IllegalArgumentException exception) {
             isAlertNeeded = true;
@@ -201,7 +234,8 @@ public class SignupController {
     private void checkUsername() {
         try {
             user.setUserName(usernameSignUpTextField.getText());
-            projectDAO.isUsernameUnique(usernameSignUpTextField.getText());
+            if(!usernameSignUpTextField.getText ().equals (user.getUserName ()))
+                projectDAO.isUsernameUnique(usernameSignUpTextField.getText());
 
         } catch (IllegalArgumentException exception) {
             isAlertNeeded = true;
@@ -236,30 +270,6 @@ public class SignupController {
             passwordSignUpPasswordField.setText("");
 
         }
-    }
-
-    public void opetLogInPage(ActionEvent actionEvent) {
-        try {
-            Node source = (Node)  actionEvent.getSource();
-            Stage oldStage  = (Stage) source.getScene().getWindow();
-            Stage newStage = new Stage();
-
-            LoginController loginController = new LoginController(projectDAO, user, resourceBundle, hostServices);
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"), resourceBundle);
-            loader.setController(loginController);
-
-            newStage.setTitle(resourceBundle.getString("LogInTitle"));
-            newStage.setScene(new Scene(loader.load(), 1100, 600));
-            newStage.setMinHeight(600);
-            newStage.setMinWidth(1100);
-
-            oldStage.close();
-            newStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
 

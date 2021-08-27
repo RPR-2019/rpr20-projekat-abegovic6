@@ -17,6 +17,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Account user = new Account();
+        Locale.setDefault (new Locale ("bs"));
         Locale currentLocale = Locale.getDefault();
         ResourceBundle resourceBundle = ResourceBundle.getBundle("Translation", currentLocale);
 
@@ -25,7 +26,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"), resourceBundle);
         loader.setController(loginController);
         Parent root = loader.load();
-        primaryStage.setTitle("NOTA");
+        primaryStage.setTitle(resourceBundle.getString ("LogInTitle"));
         primaryStage.setScene(new Scene(root, 1100, 600));
         primaryStage.setMinHeight(600);
         primaryStage.setMinWidth(1100);

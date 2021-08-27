@@ -312,7 +312,40 @@ public class ProjectDAO {
         return true;
     }
 
-    public boolean deleteAccount(ResultSet resultSet, Account account) {
+    public boolean updateUser (Account user) {
+        try {
+            updateAccountStatement.setInt(6, user.getId());
+            updateAccountStatement.setString(1, user.getFirstName ());
+            updateAccountStatement.setString(2, user.getLastName ());
+            updateAccountStatement.setString(3, user.getUserName ());
+            updateAccountStatement.setString(4, user.getEmailAdress ());
+            updateAccountStatement.setString(5, user.getPassword ());
+            updateAccountStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return  false;
+        }
+
+
+        return  true;
+    }
+
+    public boolean deleteAccount(Account account) {
+        List<Group> groups = getAllGroupsForAccount (account);
+        List<Label> labels = getAllLabelsForAccount (account);
+
+        for (Group group : groups)
+            deleteGroup (group.getId ());
+        for(Label label : labels)
+            deleteLabel (label.getId ());
+
+        try {
+            deleteAccountStatement.setInt (1, account.getId ());
+            deleteAccountStatement.executeUpdate ();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace ();
+        }
+
         return true;
     }
 
@@ -405,6 +438,21 @@ public class ProjectDAO {
 
 
         return  true;
+    }
+
+    public boolean deleteGroup(int id) {
+        try {
+            List<Note> notes = getAllNotesForGroup (id);
+            for(Note note : notes)
+                deleteNote (note.getId ());
+            deleteGroupStatement.setInt (1, id);
+            deleteGroupStatement.executeUpdate ();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace ();
+            return false;
+        }
+        return true;
+
     }
 
     // ------------------------------------------------------------------------------- //
@@ -504,6 +552,20 @@ public class ProjectDAO {
             return  false;
         }
         return true;
+    }
+
+    public boolean deleteLabel(int id) {
+        try {
+            deleteLabelStatement.setInt (1, id);
+            deleteNoteStatement.executeUpdate ();
+            deleteLabelIdStatement.setInt (1, id);
+            deleteLabelIdStatement.executeUpdate ();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace ();
+            return false;
+        }
+        return true;
+
     }
 
     // ------------------------------------------------------------------------------- //
@@ -669,4 +731,20 @@ public class ProjectDAO {
         }
         return true;
     }
+
+    public boolean deleteNote(int id) {
+        try {
+            deleteNoteStatement.setInt (1, id);
+            deleteNoteStatement.executeUpdate ();
+            deleteNoteIdStatement.setInt (1, id);
+            deleteNoteIdStatement.executeUpdate ();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace ();
+            return false;
+        }
+        return true;
+
+    }
+
+
 }

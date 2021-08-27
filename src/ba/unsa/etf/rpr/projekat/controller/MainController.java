@@ -25,8 +25,10 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.*;
-import java.util.function.Predicate;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
+
+import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class MainController {
     private final Account user;
@@ -602,7 +604,26 @@ public class MainController {
 
     }
 
-    public void fileSettings() {
+    public void fileSettings(ActionEvent actionEvent) {
+        try {
+            Node source = (Node)  flowPaneForNotes;
+            Stage oldStage  = (Stage) source.getScene().getWindow();
+            Stage newStage = new Stage();
+
+            SettingsController settingsController = new SettingsController (user, projectDAO, resourceBundle, hostServices);
+
+            FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/settings.fxml"), resourceBundle);
+            loader.setController(settingsController);
+
+            newStage.setTitle(resourceBundle.getString("SettingsTitle"));
+            newStage.setScene(new Scene(loader.load(),  USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            newStage.setResizable (false);
+
+            oldStage.close();
+            newStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

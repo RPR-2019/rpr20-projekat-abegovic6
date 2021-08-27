@@ -1,19 +1,17 @@
 
-I
-java:S1602b",Remove useless curly braces around statement(ıœĞ…8±¬¢¸/
-¤
-java:S1186³"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(°«••üÿÿÿÿ8±¬¢¸/
-…
-java:S4144·"bUpdate this method so that its implementation is not identical to "cancelNoteChanges" on line 279.(µ¶Íòûÿÿÿÿ8±¬¢¸/
-k
-java:S2095¦"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8±¬¢¸/
-
-java:S1186Ï"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(µƒ½"8±¬¢¸/
-¤
-java:S1186¯"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¬ë°¯üÿÿÿÿ8±¬¢¸/
 k
 java:S2095"MUse try-with-resources or close this "FileInputStream" in a "finally" clause.(†š­î8±¬¢¸/
-U
-java:S1172’"2Remove this unused method parameter "actionEvent".(É·û¥ùÿÿÿÿ8±¬¢¸/
+…
+java:S4144·"bUpdate this method so that its implementation is not identical to "cancelNoteChanges" on line 279.(µ¶Íòûÿÿÿÿ8±¬¢¸/
+I
+java:S1602b",Remove useless curly braces around statement(ıœĞ…8±¬¢¸/
 
 java:S1186Ë"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(äûÕc8±¬¢¸/
+k
+java:S2095¦"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8±¬¢¸/
+¤
+java:S1186¯"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¬ë°¯üÿÿÿÿ8±¬¢¸/
+¤
+java:S1186³"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(°«••üÿÿÿÿ8±¬¢¸/
+U
+java:S1172’"2Remove this unused method parameter "actionEvent".(É·û¥ùÿÿÿÿ8±¬¢¸/

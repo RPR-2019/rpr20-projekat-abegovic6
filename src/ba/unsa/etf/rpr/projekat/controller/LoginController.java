@@ -139,6 +139,7 @@ public class LoginController {
 
             oldStage.close();
             newStage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

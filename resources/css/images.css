@@ -54,3 +54,8 @@
     -fx-graphic: url("/images/back.png");
     -fx-background-color: Transparent;
 }
+
+#deleteAccountButton {
+    -fx-graphic: url("/images/deleteIcon.png");
+    -fx-background-color: Transparent;
+}

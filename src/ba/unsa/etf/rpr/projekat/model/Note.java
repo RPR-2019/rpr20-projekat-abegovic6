@@ -18,6 +18,16 @@ public class Note {
     private LocalDateTime dateUpdated;
     private NoteColor noteColor;
 
+    private boolean delete = false;
+
+    public boolean isDelete () {
+        return delete;
+    }
+
+    public void setDelete (boolean delete) {
+        this.delete = delete;
+    }
+
     private byte[] image;
 
     public byte[] getImage () {

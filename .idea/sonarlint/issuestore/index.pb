@@ -85,12 +85,6 @@ a
 1src/ba/unsa/etf/rpr/projekat/model/NoteModel.java,8\b\8b9047c1e36ceac80e6cbd42e5283201d7a74c87
 a
 1src/ba/unsa/etf/rpr/projekat/model/SortModel.java,4\9\4925a4b4914c1470f7fdd0df2dea27405962c4ec
-I
-resources/fxml/group.fxml,a\3\a3c2e1aa41ba72f9b4247f25c56b4095f38ae2f0
-I
-resources/fxml/label.fxml,d\d\dda1ea7deebaa2b192b69125fb770986016937f5
-H
-resources/fxml/note.fxml,3\0\308988374b9bb7b799170653d58cef377f780557
 l
 <src/ba/unsa/etf/rpr/projekat/controller/AboutController.java,e\1\e194920218099ee576a575709f785151355b594a
 g
@@ -99,8 +93,6 @@ f
 6out/production/rpr20-projekat-abegovic6/fxml/help.fxml,4\5\455cb42690bfac796e0879a61b77e045790533fc
 H
 resources/fxml/help.fxml,2\5\2506e73683bc9d31a8253eee6a579c5b117a18c9
-H
-resources/fxml/main.fxml,1\7\1717211d21a149ed417a055ba59f01ec1c546de5
 j
 :out/production/rpr20-projekat-abegovic6/fxml/settings.fxml,6\1\615c87b731deba7521a91d0cd05b46fb28c8335c
 G

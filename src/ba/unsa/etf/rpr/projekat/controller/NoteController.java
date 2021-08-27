@@ -16,12 +16,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 public class NoteController {
     private final Note note;
@@ -64,7 +67,8 @@ public class NoteController {
     @FXML
     public Button imageButton;
 
-    public NoteController(Note note, List<Label> labels, List<Group> groups, ResourceBundle resourceBundle, HostServices hostServices) {
+    public NoteController(Note note, List<Label> labels, List<Group> groups, ResourceBundle resourceBundle,
+                          HostServices hostServices) {
         this.note = note;
         this.labels = labels;
         this.groups = groups;
@@ -130,7 +134,7 @@ public class NoteController {
     }
 
     private void setEditFalse() {
-        noteTitleLabel.setText(resourceBundle.getString("NoteInformations"));
+        noteTitleLabel.setText(resourceBundle.getString("NoteInformation"));
         noteOkButton.setVisible (false);
         noteOkButton.setDisable (true);
         imageButton.setDisable (true);
@@ -304,19 +308,17 @@ public class NoteController {
 
     }
 
-    public void fileSettings() {
 
-    }
 
     public void fileExit(ActionEvent actionEvent) {
         note.setUpdateNeeded (false);
-        Node n = (Node) actionEvent.getSource();
+        Node n = (Node) noteTitleLabel;
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
     }
 
     public void editEditNote() {
-        noteTitleLabel.setText(resourceBundle.getString("NoteInformations"));
+        noteTitleLabel.setText(resourceBundle.getString("UpdateNote"));
         noteOkButton.setVisible (true);
         noteOkButton.setDisable (false);
         imageButton.setDisable (false);
@@ -329,6 +331,22 @@ public class NoteController {
     }
 
     public void editDelete() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initOwner(noteTitleLabel.getContextMenu ());
+        alert.initModality(Modality.WINDOW_MODAL);
+        alert.setTitle(resourceBundle.getString ("DeleteThis"));
+        alert.setHeaderText(resourceBundle.getString ("DeleteThis"));
+        alert.setContentText(resourceBundle.getString ("AreYouSure"));
+
+        note.setDelete (false);
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+            note.setDelete (true);
+        }
+
+        Node n = (Node) noteTitleLabel;
+        Stage stage = (Stage) n.getScene().getWindow();
+        stage.close();
 
     }
 

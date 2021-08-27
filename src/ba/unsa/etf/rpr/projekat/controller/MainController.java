@@ -118,7 +118,8 @@ public class MainController {
 
         groupListView = new ListView<> ();
         groupListView.setItems (groupsObservableList);
-        groupListView.setCellFactory (listView -> new GroupListCellController (groupsObservableList, projectDAO, noteObservableList, resourceBundle, hostServices));
+        groupListView.setCellFactory (listView -> new GroupListCellController (groupsObservableList, projectDAO,
+                noteObservableList, resourceBundle, hostServices, noteModel));
         groupListView.getSelectionModel ().selectedItemProperty().addListener((obs, oldGroup, newGroup) -> {
             if(newGroup != null) {
                 noteModel.getNotes ().clear ();
@@ -131,7 +132,8 @@ public class MainController {
 
         labelListView = new ListView<>();
         labelListView.setItems(labelObservableList);
-        labelListView.setCellFactory(listView -> new LabelListCellController (labelObservableList, projectDAO, noteObservableList, resourceBundle, hostServices));
+        labelListView.setCellFactory(listView -> new LabelListCellController (labelObservableList, projectDAO,
+                noteObservableList, resourceBundle, hostServices, noteModel));
         labelListView.getSelectionModel ().selectedItemProperty ().addListener ((obs, oldLabel, newLabel) -> {
             if(newLabel != null) {
                 noteModel.getNotes ().clear ();
@@ -345,7 +347,8 @@ public class MainController {
 
             note.setUpdateNeeded (true);
 
-            NoteController noteController = new NoteController (note, labelObservableList, groupsObservableList, resourceBundle, hostServices);
+            NoteController noteController = new NoteController (note, labelObservableList, groupsObservableList,
+                    resourceBundle, hostServices);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/note.fxml"), resourceBundle);
             loader.setController(noteController);
@@ -362,9 +365,33 @@ public class MainController {
                     projectDAO.updateNote(note);
                     updateNode(note);
                 }
+                if(note.isDelete ()) {
+                    projectDAO.deleteNote (note.getId ());
+                    noteObservableList.remove (note);
+                    if(noteModel.getNotes ().contains (note))
+                        noteModel.getNotes ().remove (note);
+                }
             });
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void removeNotesForGroup (int id) {
+        List<Note> notes = getNotesForGroup (id);
+        for(Note note : notes) {
+            noteObservableList.remove (note);
+            if(noteModel.getNotes ().contains (note))
+                noteModel.getNotes ().remove (note);
+        }
+    }
+
+    public void removeNotesForLabel (int id) {
+        List<Note> notes = getNotesForLabel (id);
+        for(Note note : notes) {
+            noteObservableList.remove (note);
+            if(noteModel.getNotes ().contains (note))
+                noteModel.getNotes ().remove (note);
         }
     }
 
@@ -480,7 +507,8 @@ public class MainController {
             label.setId(-2);
             label.setAccountId(user.getId());
 
-            LabelController labelController = new LabelController(label, labelObservableList, new ArrayList<> (), resourceBundle, hostServices);
+            LabelController labelController = new LabelController(label, labelObservableList,
+                    new ArrayList<> (), resourceBundle, hostServices);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/label.fxml"), resourceBundle);
             loader.setController(labelController);
@@ -524,7 +552,8 @@ public class MainController {
                 Note note = new Note ();
                 note.setId (-2);
 
-                NoteController noteController = new NoteController (note, labelObservableList, groupsObservableList, resourceBundle, hostServices);
+                NoteController noteController = new NoteController (note, labelObservableList,
+                        groupsObservableList, resourceBundle, hostServices);
 
                 FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/note.fxml"), resourceBundle);
                 loader.setController (noteController);
@@ -549,6 +578,8 @@ public class MainController {
                                         .selectedItemProperty ().get ().getId () == l.getId ())
                                 .collect (Collectors.toList ()).isEmpty ())
                             noteModel.getNotes ().add (note);
+
+
 
 
                     }
@@ -628,7 +659,7 @@ public class MainController {
     }
 
     public void fileExit(ActionEvent actionEvent) {
-        Node n = (Node) actionEvent.getSource();
+        Node n = (Node) flowPaneForNotes;
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
     }

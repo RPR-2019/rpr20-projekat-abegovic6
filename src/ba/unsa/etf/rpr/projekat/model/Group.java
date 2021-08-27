@@ -14,6 +14,7 @@ public class Group {
     private final SimpleStringProperty groupColor;
 
     private boolean isUpdatedNeeded;
+    private boolean delete;
 
     public Group() {
         groupName = new SimpleStringProperty();
@@ -27,6 +28,14 @@ public class Group {
 
     public void setUpdatedNeeded(boolean updatedNeeded) {
         isUpdatedNeeded = updatedNeeded;
+    }
+
+    public boolean isDelete () {
+        return delete;
+    }
+
+    public void setDelete (boolean delete) {
+        this.delete = delete;
     }
 
     public int getId() {

@@ -11,13 +11,16 @@ import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 public class GroupController {
 
@@ -51,13 +54,13 @@ public class GroupController {
     @FXML
     public MenuBar groupMenuBar;
 
-    public GroupController(Group group, List<Group> groups, List<Note> notes, ResourceBundle resourceBundle, HostServices hostServices) {
+    public GroupController(Group group, List<Group> groups, List<Note> notes, ResourceBundle resourceBundle,
+                           HostServices hostServices) {
         this.group = group;
         this.groups = groups;
         this.notes = notes;
         this.resourceBundle = resourceBundle;
         this.hostServices = hostServices;
-
     }
 
     @FXML
@@ -204,7 +207,7 @@ public class GroupController {
 
     public void fileExit(ActionEvent actionEvent) {
         group.setUpdatedNeeded (false);
-        Node n = (Node) actionEvent.getSource();
+        Node n = (Node) groupNameTextField;
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
     }
@@ -219,7 +222,23 @@ public class GroupController {
 
     }
 
-    public void editDelete() {
+    public void editDelete(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initOwner(groupNameTextField.getContextMenu ());
+        alert.initModality(Modality.WINDOW_MODAL);
+        alert.setTitle(resourceBundle.getString ("DeleteThis"));
+        alert.setHeaderText(resourceBundle.getString ("DeleteThis"));
+        alert.setContentText(resourceBundle.getString ("AreYouSure"));
+
+        group.setDelete (false);
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+            group.setDelete (true);
+        }
+
+        Node n = (Node) groupNameTextField;
+        Stage stage = (Stage) n.getScene().getWindow();
+        stage.close();
 
     }
 

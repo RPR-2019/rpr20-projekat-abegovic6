@@ -13,13 +13,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Predicate;
 
 public class LabelController {
 
@@ -191,7 +194,7 @@ public class LabelController {
 
     public void fileExit(ActionEvent actionEvent) {
         label.setUpdateNeeded (false);
-        Node n = (Node) actionEvent.getSource();
+        Node n = (Node) labelOkButton;
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
     }
@@ -206,8 +209,23 @@ public class LabelController {
 
     }
 
-    public void editDelete() {
+    public void editDelete(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.initOwner(labelOkButton.getContextMenu ());
+        alert.initModality(Modality.WINDOW_MODAL);
+        alert.setTitle(resourceBundle.getString ("DeleteThis"));
+        alert.setHeaderText(resourceBundle.getString ("DeleteThis"));
+        alert.setContentText(resourceBundle.getString ("AreYouSure"));
 
+        label.setDelete (false);
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK) {
+            label.setDelete (true);
+        }
+
+        Node n = (Node) labelOkButton;
+        Stage stage = (Stage) n.getScene().getWindow();
+        stage.close();
     }
 
     public void helpUserGuide() {

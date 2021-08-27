@@ -13,11 +13,20 @@ public class Label {
     private final SimpleStringProperty labelColor;
 
     private boolean isUpdateNeeded;
+    private boolean delete;
 
     public Label() {
         labelName = new SimpleStringProperty();
         labelColor = new SimpleStringProperty();
         description = new SimpleStringProperty();
+    }
+
+    public boolean isDelete () {
+        return delete;
+    }
+
+    public void setDelete (boolean delete) {
+        this.delete = delete;
     }
 
     public boolean isUpdateNeeded() {

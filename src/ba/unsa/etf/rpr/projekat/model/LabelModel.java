@@ -1,8 +1,13 @@
-package ba.unsa.etf.rpr.projekat.dao;
+package ba.unsa.etf.rpr.projekat.model;
 
-import ba.unsa.etf.rpr.projekat.model.Account;
-import ba.unsa.etf.rpr.projekat.model.Label;
-import ba.unsa.etf.rpr.projekat.model.LabelColor;
+import ba.unsa.etf.rpr.projekat.MyResourceBundle;
+import ba.unsa.etf.rpr.projekat.ProjectDAO;
+import ba.unsa.etf.rpr.projekat.javabean.Account;
+import ba.unsa.etf.rpr.projekat.javabean.Label;
+import ba.unsa.etf.rpr.projekat.javabean.LabelColor;
+import ba.unsa.etf.rpr.projekat.javabean.Note;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,8 +15,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class LabelDAO {
-    private static LabelDAO instance;
+public class LabelModel {
+    private static LabelModel instance;
 
     private final PreparedStatement createLabelStatement;
     private final PreparedStatement getAllLabelsForAccountStatement;
@@ -19,12 +24,13 @@ public class LabelDAO {
     private final PreparedStatement updateLabelStatement;
     private final PreparedStatement getNewIdLabelStatement;
     private final PreparedStatement getLabelFromIdStatement;
-
     private final PreparedStatement getAllLabelsIdForNoteStatement;
     private final PreparedStatement deleteLabelIdStatement;
 
+    private ObservableList<Label> allLabels;
 
-    private LabelDAO (Connection conn) throws SQLException {
+    private LabelModel (Connection conn) throws SQLException {
+        allLabels = FXCollections.observableArrayList ();
 
         createLabelStatement = conn.prepareStatement("INSERT INTO label (id, accountId, labelName, " +
                 "description, labelColor) VALUES (?, ?, ?, ?, ?)");
@@ -39,8 +45,8 @@ public class LabelDAO {
         deleteLabelIdStatement = conn.prepareStatement("DELETE FROM intertable WHERE labelId = ?");
     }
 
-    public static LabelDAO getInstance(Connection conn) throws SQLException {
-        if(instance == null) instance = new LabelDAO (conn);
+    public static LabelModel getInstance(Connection conn) throws SQLException {
+        if(instance == null) instance = new LabelModel (conn);
         return instance;
     }
 
@@ -134,6 +140,8 @@ public class LabelDAO {
 
             createLabelStatement.executeUpdate();
 
+            allLabels.add (label);
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return false;
@@ -161,11 +169,39 @@ public class LabelDAO {
             deleteLabelStatement.executeUpdate ();
             deleteLabelIdStatement.setInt (1, id);
             deleteLabelIdStatement.executeUpdate ();
+
+            Optional<Label> label = allLabels.stream ().filter (l -> l.getId () == id).findFirst ();
+            if(label.isPresent ()) {
+                allLabels.remove (label.get ());
+                NoteModel noteModel = ProjectDAO.getInstance ().getNoteModel ();
+                for(Note note : noteModel.getNotesForLabel (id)) {
+                    noteModel.getCurrentNotes ().remove (note);
+                }
+            }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace ();
         }
 
     }
 
+    public ObservableList<Label> getAllLabels () {
+        return allLabels;
+    }
 
+    public void sortLabels(String sort) {
+        if(sort.equals (MyResourceBundle.getString ("LastAdded"))) {
+            allLabels.sort (Comparator.comparingInt (Label::getId).reversed ());
+        } else if (sort.equals (MyResourceBundle.getString ("FirstAdded"))) {
+            allLabels.sort (Comparator.comparingInt (Label::getId));
+        } else if (sort.equals (MyResourceBundle.getString ("ByNameAsc"))) {
+            allLabels.sort (Comparator.comparing(Label::getLabelName));
+        } else if (sort.equals (MyResourceBundle.getString ("ByNameDesc"))) {
+            allLabels.sort (Comparator.comparing(Label::getLabelName).reversed ());
+        } else if (sort.equals (MyResourceBundle.getString ("ByDescriptionAsc"))) {
+            allLabels.sort (Comparator.comparing(Label::getDescription));
+        } else  {
+            allLabels.sort (Comparator.comparing(Label::getDescription).reversed ());
+        }
+    }
 }

@@ -1,10 +1,11 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
+import ba.unsa.etf.rpr.projekat.model.LabelModel;
+import ba.unsa.etf.rpr.projekat.model.NoteModel;
+import ba.unsa.etf.rpr.projekat.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.LabelColorModel;
-import ba.unsa.etf.rpr.projekat.model.LabelColor;
-import ba.unsa.etf.rpr.projekat.model.Note;
-import javafx.application.HostServices;
+import ba.unsa.etf.rpr.projekat.javabean.LabelColor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,16 +20,15 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 public class LabelController {
 
-    private final List<Note> notes;
-    private final HostServices hostServices;
-    private ba.unsa.etf.rpr.projekat.model.Label label;
-    private final List<ba.unsa.etf.rpr.projekat.model.Label> labels;
+    private final ProjectDAO projectDAO;
+    private final NoteModel noteModel;
+    private final LabelModel labelModel;
+    private final ba.unsa.etf.rpr.projekat.javabean.Label label;
+
     private LabelColorModel labelColorModel;
     private String color = null;
     @FXML
@@ -52,12 +52,11 @@ public class LabelController {
     @FXML
     public Button labelCancelButton;
 
-    public LabelController(ba.unsa.etf.rpr.projekat.model.Label label, List<ba.unsa.etf.rpr.projekat.model.Label> labels,
-                           List<Note> notes, HostServices hostServices) {
+    public LabelController(ba.unsa.etf.rpr.projekat.javabean.Label label) {
         this.label = label;
-        this.labels = labels;
-        this.notes = notes;
-        this.hostServices = hostServices;
+        this.projectDAO = ProjectDAO.getInstance ();
+        this.noteModel = projectDAO.getNoteModel ();
+        this.labelModel = projectDAO.getLabelModel ();
 
     }
 
@@ -127,7 +126,8 @@ public class LabelController {
             labelNameErrorLabel.setText(MyResourceBundle.getString("ThisCantBeEmpty"));
             labelNameErrorLabel.getStyleClass().add("errorLabel");
             labelNameTextField.getStyleClass().add("turnRed");
-        } else if(labels.stream().anyMatch(g -> g.getLabelName().equals(groupName) && g.getId () != label.getId ())) {
+        } else if(labelModel.getAllLabels ().stream()
+                .anyMatch(g -> g.getLabelName().equals(groupName) && g.getId () != label.getId ())) {
             isAlertNeeded = true;
             labelNameErrorLabel.setText(MyResourceBundle.getString("NewLabelNameError"));
             labelNameErrorLabel.getStyleClass().add("errorLabel");
@@ -173,7 +173,7 @@ public class LabelController {
         if(file == null) return;
         try {
             FileWriter fileWriter = new FileWriter(file.getAbsolutePath());
-            fileWriter.write(label.writeInFile(notes));
+            fileWriter.write(label.writeInFile(noteModel.getNotesForLabel (label.getId ())));
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -254,7 +254,6 @@ public class LabelController {
 
             AboutController aboutController = new AboutController ();
 
-            aboutController.setHostServices (hostServices);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/about.fxml"),
                     MyResourceBundle.getResourceBundle ());

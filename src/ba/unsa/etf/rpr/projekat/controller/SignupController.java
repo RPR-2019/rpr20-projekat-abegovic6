@@ -1,9 +1,8 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.model.Account;
-import javafx.application.HostServices;
+import ba.unsa.etf.rpr.projekat.ProjectDAO;
+import ba.unsa.etf.rpr.projekat.model.AccountModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,12 +15,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ResourceBundle;
 
 public class SignupController {
-    private final Account user;
     private final ProjectDAO projectDAO;
-    private final HostServices hostServices;
 
     private boolean isAlertNeeded;
 
@@ -52,10 +48,8 @@ public class SignupController {
     public Label lastNameErrorLabel;
 
 
-    public SignupController(ProjectDAO projectDAO, Account user, HostServices hostServices) {
-        this.projectDAO = projectDAO;
-        this.user = user;
-        this.hostServices = hostServices;
+    public SignupController() {
+        this.projectDAO = ProjectDAO.getInstance ();
     }
 
     @FXML
@@ -122,19 +116,19 @@ public class SignupController {
     }
 
     private void createANewUser(ActionEvent actionEvent) {
-        user.setFirstName(firstNameSignUpTextField.getText());
-        user.setLastName(lastNameSignUpTextField.getText());
-        user.setUserName(usernameSignUpTextField.getText());
-        user.setEmailAdress(emailAdressSignUpTextField.getText());
-        user.setPassword(passwordSignUpPasswordField.getText());
+        AccountModel.getCurrentUser ().setFirstName(firstNameSignUpTextField.getText());
+        AccountModel.getCurrentUser ().setLastName(lastNameSignUpTextField.getText());
+        AccountModel.getCurrentUser ().setUserName(usernameSignUpTextField.getText());
+        AccountModel.getCurrentUser ().setEmailAdress(emailAdressSignUpTextField.getText());
+        AccountModel.getCurrentUser ().setPassword(passwordSignUpPasswordField.getText());
 
-        if(projectDAO.createAccount(user)) {
+        if(projectDAO.createAccount(AccountModel.getCurrentUser ())) {
             try {
                 Node source = (Node)  actionEvent.getSource();
                 Stage oldStage  = (Stage) source.getScene().getWindow();
                 Stage newStage = new Stage();
 
-                MainController mainController = new MainController(projectDAO, user, hostServices);
+                MainController mainController = new MainController();
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"),
                         MyResourceBundle.getResourceBundle ());
@@ -185,7 +179,7 @@ public class SignupController {
 
     private void checkEmail() {
         try {
-            user.setEmailAdress(emailAdressSignUpTextField.getText());
+            AccountModel.getCurrentUser ().setEmailAdress(emailAdressSignUpTextField.getText());
             projectDAO.isEmailUnique(emailAdressSignUpTextField.getText());
 
         } catch (IllegalArgumentException exception) {
@@ -201,7 +195,7 @@ public class SignupController {
 
     private void checkUsername() {
         try {
-            user.setUserName(usernameSignUpTextField.getText());
+            AccountModel.getCurrentUser ().setUserName(usernameSignUpTextField.getText());
             projectDAO.isUsernameUnique(usernameSignUpTextField.getText());
 
         } catch (IllegalArgumentException exception) {
@@ -215,7 +209,7 @@ public class SignupController {
 
     private void checkPassword() {
         try {
-            user.setPassword(passwordSignUpPasswordField.getText());
+            AccountModel.getCurrentUser ().setPassword(passwordSignUpPasswordField.getText());
 
         } catch (IllegalArgumentException exception) {
             isAlertNeeded = true;
@@ -245,7 +239,7 @@ public class SignupController {
             Stage oldStage  = (Stage) source.getScene().getWindow();
             Stage newStage = new Stage();
 
-            LoginController loginController = new LoginController(projectDAO, user, hostServices);
+            LoginController loginController = new LoginController();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"),
                     MyResourceBundle.getResourceBundle ());

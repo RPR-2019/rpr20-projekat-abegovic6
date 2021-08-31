@@ -1,9 +1,9 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.model.Account;
-import javafx.application.HostServices;
+import ba.unsa.etf.rpr.projekat.ProjectDAO;
+import ba.unsa.etf.rpr.projekat.javabean.Account;
+import ba.unsa.etf.rpr.projekat.model.AccountModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,9 +22,7 @@ import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class SettingsController {
 
-    public Account user;
-    public final ProjectDAO projectDAO;
-    private final HostServices hostServices;
+    private final ProjectDAO projectDAO;
 
     private boolean isAlertNeeded;
 
@@ -57,10 +55,8 @@ public class SettingsController {
     @FXML
     public RadioButton bosnian;
 
-    public SettingsController (Account user, ProjectDAO projectDAO, HostServices hostServices) {
-        this.user = user;
-        this.projectDAO = projectDAO;
-        this.hostServices = hostServices;
+    public SettingsController () {
+        this.projectDAO = ProjectDAO.getInstance ();
     }
 
     @FXML
@@ -70,12 +66,12 @@ public class SettingsController {
             english.setSelected (true);
         else bosnian.setSelected (true);
 
-        firstNameSignUpTextField.setText (user.getFirstName ());
-        lastNameSignUpTextField.setText (user.getLastName ());
-        emailAdressSignUpTextField.setText (user.getEmailAdress ());
-        usernameSignUpTextField.setText (user.getUserName ());
-        passwordSignUpPasswordField.setText (user.getPassword ());
-        repeatPasswordSignUpPasswordField.setText (user.getPassword ());
+        firstNameSignUpTextField.setText (AccountModel.getCurrentUser ().getFirstName ());
+        lastNameSignUpTextField.setText (AccountModel.getCurrentUser ().getLastName ());
+        emailAdressSignUpTextField.setText (AccountModel.getCurrentUser ().getEmailAdress ());
+        usernameSignUpTextField.setText (AccountModel.getCurrentUser ().getUserName ());
+        passwordSignUpPasswordField.setText (AccountModel.getCurrentUser ().getPassword ());
+        repeatPasswordSignUpPasswordField.setText (AccountModel.getCurrentUser ().getPassword ());
 
     }
 
@@ -90,14 +86,14 @@ public class SettingsController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if(result.isPresent() && result.get() == ButtonType.OK) {
-            projectDAO.deleteAccount (user);
+            projectDAO.deleteAccount (AccountModel.getCurrentUser ());
         }
 
         try {
             Node n = (Node) actionEvent.getSource();
             Stage oldStage = (Stage) n.getScene().getWindow();
-            user = new Account ();
-            LoginController loginController = new LoginController (projectDAO, user, hostServices);
+            AccountModel.setCurrentUser (new Account ());
+            LoginController loginController = new LoginController ();
 
             Stage stage = new Stage ();
             FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/login.fxml"),
@@ -125,7 +121,7 @@ public class SettingsController {
             Stage stage = (Stage) emailAdressSignUpTextField.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/settings.fxml"),
                     MyResourceBundle.getResourceBundle ());
-            loader.setController(new SettingsController (user, projectDAO, hostServices));
+            loader.setController(new SettingsController ());
             Parent root = loader.load();
             stage.setTitle("Korisnici");
             stage.setScene(new Scene (root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
@@ -142,7 +138,7 @@ public class SettingsController {
             Stage stage = (Stage) emailAdressSignUpTextField.getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/settings.fxml"),
                     MyResourceBundle.getResourceBundle ());
-            loader.setController(new SettingsController (user, projectDAO, hostServices));
+            loader.setController(new SettingsController ());
             Parent root = loader.load();
             stage.setTitle("Korisnici");
             stage.setScene(new Scene (root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
@@ -157,7 +153,7 @@ public class SettingsController {
 
             Node n = (Node) actionEvent.getSource();
             Stage oldStage = (Stage) n.getScene().getWindow();
-            MainController mainController = new MainController(projectDAO, user, hostServices);
+            MainController mainController = new MainController();
 
             Stage stage = new Stage ();
             FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/main.fxml"),
@@ -174,7 +170,6 @@ public class SettingsController {
         } catch (IOException e) {
             e.printStackTrace ();
         }
-
 
     }
 
@@ -217,13 +212,13 @@ public class SettingsController {
     }
 
     private void updateUser (ActionEvent actionEvent) {
-        user.setFirstName(firstNameSignUpTextField.getText());
-        user.setLastName(lastNameSignUpTextField.getText());
-        user.setUserName(usernameSignUpTextField.getText());
-        user.setEmailAdress(emailAdressSignUpTextField.getText());
-        user.setPassword(passwordSignUpPasswordField.getText());
+        AccountModel.getCurrentUser ().setFirstName(firstNameSignUpTextField.getText());
+        AccountModel.getCurrentUser ().setLastName(lastNameSignUpTextField.getText());
+        AccountModel.getCurrentUser ().setUserName(usernameSignUpTextField.getText());
+        AccountModel.getCurrentUser ().setEmailAdress(emailAdressSignUpTextField.getText());
+        AccountModel.getCurrentUser ().setPassword(passwordSignUpPasswordField.getText());
 
-        projectDAO.updateUser(user);
+        projectDAO.updateUser(AccountModel.getCurrentUser ());
 
         cancelSettings (actionEvent);
     }
@@ -258,8 +253,8 @@ public class SettingsController {
 
     private void checkEmail() {
         try {
-            user.setEmailAdress(emailAdressSignUpTextField.getText());
-            if(!emailAdressSignUpTextField.getText ().equals (user.getEmailAdress ()))
+            AccountModel.getCurrentUser ().setEmailAdress(emailAdressSignUpTextField.getText());
+            if(!emailAdressSignUpTextField.getText ().equals (AccountModel.getCurrentUser ().getEmailAdress ()))
                 projectDAO.isEmailUnique(emailAdressSignUpTextField.getText());
 
         } catch (IllegalArgumentException exception) {
@@ -275,8 +270,8 @@ public class SettingsController {
 
     private void checkUsername() {
         try {
-            user.setUserName(usernameSignUpTextField.getText());
-            if(!usernameSignUpTextField.getText ().equals (user.getUserName ()))
+            AccountModel.getCurrentUser ().setUserName(usernameSignUpTextField.getText());
+            if(!usernameSignUpTextField.getText ().equals (AccountModel.getCurrentUser ().getUserName ()))
                 projectDAO.isUsernameUnique(usernameSignUpTextField.getText());
 
         } catch (IllegalArgumentException exception) {
@@ -290,7 +285,7 @@ public class SettingsController {
 
     private void checkPassword() {
         try {
-            user.setPassword(passwordSignUpPasswordField.getText());
+            AccountModel.getCurrentUser ().setPassword(passwordSignUpPasswordField.getText());
 
         } catch (IllegalArgumentException exception) {
             isAlertNeeded = true;

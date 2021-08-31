@@ -1,11 +1,10 @@
-package ba.unsa.etf.rpr.projekat.model;
+package ba.unsa.etf.rpr.projekat.javabean;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 public class Group {
     private int id;

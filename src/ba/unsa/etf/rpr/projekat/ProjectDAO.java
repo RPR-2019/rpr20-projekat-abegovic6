@@ -1,6 +1,11 @@
-package ba.unsa.etf.rpr.projekat.dao;
+package ba.unsa.etf.rpr.projekat;
 
-import ba.unsa.etf.rpr.projekat.model.*;
+import ba.unsa.etf.rpr.projekat.javabean.*;
+import ba.unsa.etf.rpr.projekat.model.AccountModel;
+import ba.unsa.etf.rpr.projekat.model.GroupModel;
+import ba.unsa.etf.rpr.projekat.model.LabelModel;
+import ba.unsa.etf.rpr.projekat.model.NoteModel;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.*;
@@ -10,9 +15,10 @@ public class ProjectDAO {
     private static ProjectDAO instance = null;
     private Connection connection;
 
-    private AccountDAO accountDAO = null;
+
+    private AccountModel accountModel = null;
     private GroupModel groupModel = null;
-    private LabelDAO labelDAO = null;
+    private LabelModel labelModel = null;
     private NoteModel noteModel = null;
 
 
@@ -24,23 +30,24 @@ public class ProjectDAO {
         }
 
         try {
-            accountDAO = AccountDAO.getInstance (connection);
+            accountModel = AccountModel.getInstance (connection);
             groupModel = GroupModel.getInstance (connection);
-            labelDAO = LabelDAO.getInstance (connection);
+            labelModel = LabelModel.getInstance (connection);
             noteModel = NoteModel.getInstance (connection);
 
         } catch (SQLException throwables) {
             createDatabase();
             try {
-                accountDAO = AccountDAO.getInstance (connection);
+                accountModel = AccountModel.getInstance (connection);
                 groupModel = GroupModel.getInstance (connection);
-                labelDAO = LabelDAO.getInstance (connection);
+                labelModel = LabelModel.getInstance (connection);
                 noteModel = NoteModel.getInstance (connection);
 
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
+
     }
 
     // METHODS FOR DATABASE
@@ -88,28 +95,28 @@ public class ProjectDAO {
 
     // ACCOUNT
     public void isEmailUnique (String emailAdress) {
-        accountDAO.isEmailUnique (emailAdress);
+        accountModel.isEmailUnique (emailAdress);
     }
 
     public void isUsernameUnique (String username) {
-        accountDAO.isUsernameUnique (username);
+        accountModel.isUsernameUnique (username);
     }
 
     public boolean createAccount(Account user) {
-        return accountDAO.createAccount (user);
+        return accountModel.createAccount (user);
     }
 
     public List<Account> getAllAccounts() {
-        return accountDAO.getAllAccounts ();
+        return accountModel.getAllAccounts ();
     }
 
     public void updateUser (Account user) {
-        accountDAO.updateUser (user);
+        accountModel.updateUser (user);
     }
 
     public void deleteAccount(Account user) {
         List<Group> groups = groupModel.getAllGroupsForAccount (user);
-        List<Label> labels = labelDAO.getAllLabelsForAccount (user);
+        List<Label> labels = labelModel.getAllLabelsForAccount (user);
 
         for(Group group : groups) {
             deleteGroup (group.getId ());
@@ -118,7 +125,7 @@ public class ProjectDAO {
             deleteLabel (label.getId ());
         }
 
-        accountDAO.deleteAccount (user);
+        accountModel.deleteAccount (user);
     }
 
     // ------------------------------------------------------------------------------- //
@@ -143,7 +150,7 @@ public class ProjectDAO {
         groupModel.deleteGroup (id);
     }
 
-    public GroupModel getGroupDAO () {
+    public GroupModel getGroupModel () {
         return groupModel;
     }
 
@@ -152,19 +159,23 @@ public class ProjectDAO {
     // LABEL
 
     public List<Label> getAllLabelsForAccount(Account account) {
-        return labelDAO.getAllLabelsForAccount (account);
+        return labelModel.getAllLabelsForAccount (account);
     }
 
     public boolean createLabel(Label label) {
-        return labelDAO.createLabel (label);
+        return labelModel.createLabel (label);
     }
 
     public void updateLabel(Label label) {
-        labelDAO.updateLabel (label);
+        labelModel.updateLabel (label);
     }
 
     public void deleteLabel(int id) {
-        labelDAO.deleteLabel (id);
+        labelModel.deleteLabel (id);
+    }
+
+    public LabelModel getLabelModel () {
+        return labelModel;
     }
 
     // ------------------------------------------------------------------------------- //
@@ -172,11 +183,11 @@ public class ProjectDAO {
 
     // NOTE
     public List<Note> getAllNotesForUser(Account user) {
-        return noteModel.getAllNotesForUser (user, labelDAO);
+        return noteModel.getAllNotesForUser (user, labelModel);
     }
 
     public List<Note> getAllNotesForGroup (int groupId) {
-        return noteModel.getAllNotesForGroup (groupId, labelDAO);
+        return noteModel.getAllNotesForGroup (groupId, labelModel);
     }
 
     public boolean createNote (Note note) {

@@ -1,7 +1,6 @@
 package ba.unsa.etf.rpr.projekat.model;
 
-import ba.unsa.etf.rpr.projekat.model.GroupColor;
-import ba.unsa.etf.rpr.projekat.model.LabelColor;
+import ba.unsa.etf.rpr.projekat.javabean.LabelColor;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -1,10 +1,8 @@
-package ba.unsa.etf.rpr.projekat.model;
+package ba.unsa.etf.rpr.projekat.javabean;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 
-import java.util.Locale;
 import java.util.Objects;
-import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

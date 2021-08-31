@@ -5,8 +5,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ResourceBundle;
-
 public class SortModel {
 
     ObservableList<String> sorting;

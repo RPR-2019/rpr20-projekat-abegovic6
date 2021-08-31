@@ -1,9 +1,9 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.model.Account;
-import javafx.application.HostServices;
+import ba.unsa.etf.rpr.projekat.model.AccountModel;
+import ba.unsa.etf.rpr.projekat.ProjectDAO;
+import ba.unsa.etf.rpr.projekat.javabean.Account;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,13 +16,11 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.ResourceBundle;
 
 
 public class LoginController {
-    private final HostServices hostServices;
     private final ProjectDAO projectDAO;
-    private final Account user;
+    private static Account user;
 
     @FXML
     public PasswordField passwordLoginPasswordField;
@@ -30,10 +28,9 @@ public class LoginController {
     public TextField usernameLoginTextField;
 
 
-    public LoginController(ProjectDAO projectDAO, Account user, HostServices hostServices) {
-        this.projectDAO = projectDAO;
-        this.user = user;
-        this.hostServices = hostServices;
+    public LoginController() {
+        this.projectDAO = ProjectDAO.getInstance ();
+        this.user = AccountModel.getCurrentUser ();
     }
 
     @FXML
@@ -105,7 +102,7 @@ public class LoginController {
             Stage oldStage  = (Stage) source.getScene().getWindow();
             Stage newStage = new Stage();
 
-            MainController mainController = new MainController(projectDAO, user, hostServices);
+            MainController mainController = new MainController();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"),
                     MyResourceBundle.getResourceBundle ());
@@ -131,7 +128,7 @@ public class LoginController {
             Stage oldStage  = (Stage) source.getScene().getWindow();
             Stage newStage = new Stage();
 
-            SignupController signupController = new SignupController(projectDAO, user, hostServices);
+            SignupController signupController = new SignupController();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/signup.fxml"),
                     MyResourceBundle.getResourceBundle ());

@@ -1,11 +1,11 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.dao.NoteModel;
-import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.model.LabelColor;
-import ba.unsa.etf.rpr.projekat.model.Note;
-import javafx.application.HostServices;
+import ba.unsa.etf.rpr.projekat.model.LabelModel;
+import ba.unsa.etf.rpr.projekat.model.NoteModel;
+import ba.unsa.etf.rpr.projekat.ProjectDAO;
+import ba.unsa.etf.rpr.projekat.javabean.LabelColor;
+import ba.unsa.etf.rpr.projekat.javabean.Note;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,11 +18,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 
-public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.model.Label> {
+public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.javabean.Label> {
 
     private final ProjectDAO projectDAO;
-    private final List<ba.unsa.etf.rpr.projekat.model.Label> labels;
-    private final HostServices hostServices;
+    private final LabelModel labelModel;
     private final NoteModel noteModel;
     @FXML
     public Label groupItemDescriptionLabel;
@@ -31,20 +30,18 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.m
     @FXML
     public VBox groupItemVbox;
 
-    ba.unsa.etf.rpr.projekat.model.Label label;
+    ba.unsa.etf.rpr.projekat.javabean.Label label;
 
     private FXMLLoader mLLoader;
 
-    public LabelListCellController (List<ba.unsa.etf.rpr.projekat.model.Label> labels, ProjectDAO projectDAO,
-                                    HostServices hostServices) {
-        this.projectDAO = projectDAO;
-        this.labels = labels;
-        this.hostServices = hostServices;
+    public LabelListCellController () {
+        this.projectDAO = ProjectDAO.getInstance ();
+        this.labelModel = projectDAO.getLabelModel ();
         this.noteModel = projectDAO.getNoteModel ();
     }
 
     @Override
-    protected void updateItem(ba.unsa.etf.rpr.projekat.model.Label label, boolean empty) {
+    protected void updateItem(ba.unsa.etf.rpr.projekat.javabean.Label label, boolean empty) {
         super.updateItem(label, empty);
 
         this.label = label;
@@ -104,16 +101,13 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.m
 
     }
 
-    public void openInformation(ActionEvent actionEvent) {
+    public void openInformation() {
         try {
             Stage newStage = new Stage();
 
             label.setUpdateNeeded(false);
 
-            List<Note> notesForLabel = noteModel.getNotesForLabel (label.getId ());
-
-            LabelController labelController = new LabelController(label, labels, notesForLabel,
-                    hostServices);
+            LabelController labelController = new LabelController(label);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/label.fxml"),
                     MyResourceBundle.getResourceBundle ());
@@ -127,20 +121,16 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.m
             newStage.show();
 
             newStage.setOnHiding(windowEvent -> {
-                if(label.isUpdateNeeded()) {
-                    projectDAO.updateLabel(label);
+                if(label.isUpdateNeeded ()) {
+                    projectDAO.updateLabel (label);
                 }
                 if(label.isDelete ()) {
                     projectDAO.deleteLabel (label.getId ());
-                    for(Note note : notesForLabel) {
-                        noteModel.getAllNotes ().remove (note);
-                        if(noteModel.getCurrentNotes ().contains (note)) {
-                            noteModel.getCurrentNotes ().remove (note);
-                        }
-                    }
-                    labels.remove (label);
                 }
+
             });
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }

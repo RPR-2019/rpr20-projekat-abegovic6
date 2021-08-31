@@ -1,10 +1,10 @@
-package ba.unsa.etf.rpr.projekat.dao;
+package ba.unsa.etf.rpr.projekat.model;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.model.Account;
-import ba.unsa.etf.rpr.projekat.model.Label;
-import ba.unsa.etf.rpr.projekat.model.Note;
-import ba.unsa.etf.rpr.projekat.model.NoteColor;
+import ba.unsa.etf.rpr.projekat.javabean.Account;
+import ba.unsa.etf.rpr.projekat.javabean.Label;
+import ba.unsa.etf.rpr.projekat.javabean.Note;
+import ba.unsa.etf.rpr.projekat.javabean.NoteColor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -14,10 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class NoteModel {
@@ -71,7 +68,7 @@ public class NoteModel {
         return LocalDateTime.parse(date, formatter);
     }
 
-    private Note getNoteFromResultSet (ResultSet resultSetNotes, LabelDAO labelDAO) {
+    private Note getNoteFromResultSet (ResultSet resultSetNotes, LabelModel labelModel) {
         try {
             Note note = new Note();
             note.setId(resultSetNotes.getInt(1));
@@ -81,7 +78,7 @@ public class NoteModel {
             note.setNoteColor(stringToNoteColor(resultSetNotes.getString(5)));
             note.setDateCreated (stringToLocalDateTime (resultSetNotes.getString (7)));
             note.setDateUpdated (stringToLocalDateTime (resultSetNotes.getString (8)));
-            note.setLabels (labelDAO.getLabelListForNote (note.getId ()));
+            note.setLabels (labelModel.getLabelListForNote (note.getId ()));
             note.setImage (null);
 
 
@@ -93,11 +90,11 @@ public class NoteModel {
         return null;
     }
 
-    private List<Note> getNoteListFromResultSet(ResultSet resultSetNotes, LabelDAO labelDAO) {
+    private List<Note> getNoteListFromResultSet(ResultSet resultSetNotes, LabelModel labelModel) {
         try {
             List<Note> notes = new ArrayList<> ();
             while(resultSetNotes.next()) {
-                notes.add(getNoteFromResultSet(resultSetNotes, labelDAO));
+                notes.add(getNoteFromResultSet(resultSetNotes, labelModel));
             }
             return notes;
         } catch (SQLException throwables) {
@@ -106,10 +103,10 @@ public class NoteModel {
         return Collections.emptyList();
     }
 
-    public List<Note> getAllNotesForUser(Account user, LabelDAO labelDAO) {
+    public List<Note> getAllNotesForUser(Account user, LabelModel labelModel) {
         try {
             getAllNotesForAccountStatement.setInt (1, user.getId ());
-            return getNoteListFromResultSet(getAllNotesForAccountStatement.executeQuery(), labelDAO);
+            return getNoteListFromResultSet(getAllNotesForAccountStatement.executeQuery(), labelModel);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -117,10 +114,10 @@ public class NoteModel {
 
     }
 
-    public List<Note> getAllNotesForGroup(int groupId, LabelDAO labelDAO) {
+    public List<Note> getAllNotesForGroup(int groupId, LabelModel labelModel) {
         try {
             getAllNotesForGroupStatement.setInt(1, groupId);
-            return getNoteListFromResultSet(getAllNotesForGroupStatement.executeQuery(), labelDAO);
+            return getNoteListFromResultSet(getAllNotesForGroupStatement.executeQuery(), labelModel);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -147,6 +144,8 @@ public class NoteModel {
             setLabelListForNote (note.getId (), note.getLabels ());
 
             createNoteStatement.executeUpdate();
+
+            allNotes.add (note);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
             return false;
@@ -183,6 +182,12 @@ public class NoteModel {
             deleteNoteStatement.executeUpdate ();
             deleteNoteIdStatement.setInt (1, id);
             deleteNoteIdStatement.executeUpdate ();
+
+            Optional<Note> note = allNotes.stream ().filter (note1 -> note1.getId () == id).findAny ();
+            note.ifPresent (value -> allNotes.remove (value));
+            note = currentNotes.stream ().filter (note1 -> note1.getId () == id).findAny ();
+            note.ifPresent (value -> currentNotes.remove (value));
+
         } catch (SQLException throwables) {
             throwables.printStackTrace ();
         }

@@ -1,8 +1,11 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.model.*;
-import javafx.application.HostServices;
+import ba.unsa.etf.rpr.projekat.model.GroupColorModel;
+import ba.unsa.etf.rpr.projekat.model.GroupModel;
+import ba.unsa.etf.rpr.projekat.model.NoteModel;
+import ba.unsa.etf.rpr.projekat.ProjectDAO;
+import ba.unsa.etf.rpr.projekat.javabean.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,17 +21,16 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class GroupController {
 
 
-    private final List<Note> notes;
-    private final HostServices hostServices;
+    private final ProjectDAO projectDAO;
+    private final NoteModel noteModel;
+    private final GroupModel groupModel;
     private final Group group;
-    private final List<Group> groups;
     private GroupColorModel groupColorModel;
     private String color = null;
 
@@ -53,11 +55,12 @@ public class GroupController {
     @FXML
     public MenuBar groupMenuBar;
 
-    public GroupController(Group group, List<Group> groups, List<Note> notes, HostServices hostServices) {
+    public GroupController(Group group) {
         this.group = group;
-        this.groups = groups;
-        this.notes = notes;
-        this.hostServices = hostServices;
+
+        this.projectDAO = ProjectDAO.getInstance ();
+        this.noteModel = projectDAO.getNoteModel ();
+        this.groupModel = projectDAO.getGroupModel ();
     }
 
     @FXML
@@ -120,7 +123,8 @@ public class GroupController {
             groupNameErrorLabel.setText(MyResourceBundle.getString("ThisCantBeEmpty"));
             groupNameErrorLabel.getStyleClass().add("errorLabel");
             groupNameTextField.getStyleClass().add("turnRed");
-        } else if(groups.stream().anyMatch(g -> g.getGroupName().equals(groupName) && group.getId () != g.getId ())) {
+        } else if(groupModel.getAllGroups ().stream()
+                .anyMatch(g -> g.getGroupName().equals(groupName) && group.getId () != g.getId ())) {
             isAlertNeeded = true;
             groupNameErrorLabel.setText(MyResourceBundle.getString("NewGroupNameError"));
             groupNameErrorLabel.getStyleClass().add("errorLabel");
@@ -187,7 +191,7 @@ public class GroupController {
         if(file == null) return;
         try {
             FileWriter fileWriter = new FileWriter(file.getAbsolutePath());
-            fileWriter.write(group.writeInFile(notes));
+            fileWriter.write(group.writeInFile(noteModel.getNotesForGroup (group.getId ())));
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -267,8 +271,6 @@ public class GroupController {
             Stage newStage = new Stage();
 
             AboutController aboutController = new AboutController ();
-
-            aboutController.setHostServices (hostServices);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/about.fxml"),
                     ResourceBundle.getBundle ("Translation", MyResourceBundle.getLocale ()));

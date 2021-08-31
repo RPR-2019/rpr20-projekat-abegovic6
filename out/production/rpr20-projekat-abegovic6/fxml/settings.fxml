@@ -182,7 +182,7 @@
                            <cursor>
                                <Cursor fx:constant="HAND" />
                            </cursor></Button>
-                       <Button cancelButton="true" defaultButton="true" mnemonicParsing="false" onAction="#cancelSettings" styleClass="buttonframesmaller" text="%Cancel">
+                       <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelSettings" styleClass="buttonframesmaller" text="%Cancel">
                            <cursor>
                                <Cursor fx:constant="HAND" />
                            </cursor></Button>

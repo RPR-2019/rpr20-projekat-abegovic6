@@ -1,7 +1,7 @@
-package ba.unsa.etf.rpr.projekat.dao;
+package ba.unsa.etf.rpr.projekat.model;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.model.Account;
+import ba.unsa.etf.rpr.projekat.javabean.Account;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,8 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class AccountDAO {
-    private static AccountDAO instance = null;
+public class AccountModel {
+    private static AccountModel instance = null;
 
     private final PreparedStatement createAccountStatement;
     private final PreparedStatement getAllAccountsStatement;
@@ -20,8 +20,9 @@ public class AccountDAO {
     private final PreparedStatement emailAdressUniqueStatement;
     private final PreparedStatement usernameUniqueStatement;
 
-    private AccountDAO (Connection conn) throws SQLException {
+    private static Account currentUser;
 
+    private AccountModel (Connection conn) throws SQLException {
         getAllAccountsStatement = conn.prepareStatement("SELECT * FROM account");
         createAccountStatement = conn.prepareStatement("INSERT INTO account (id, firstName, lastName," +
                 " userName, emailAdress, password) VALUES (?,?,?,?,?,?)");
@@ -33,9 +34,17 @@ public class AccountDAO {
         emailAdressUniqueStatement = conn.prepareStatement("SELECT COUNT(id) FROM account WHERE emailAdress = ?");
     }
 
-    public static AccountDAO getInstance (Connection conn)
+    public static Account getCurrentUser () {
+        return currentUser;
+    }
+
+    public static void setCurrentUser (Account currentUser) {
+        AccountModel.currentUser = currentUser;
+    }
+
+    public static AccountModel getInstance (Connection conn)
             throws SQLException {
-        if(instance == null) instance = new AccountDAO (conn);
+        if(instance == null) instance = new AccountModel (conn);
         return instance;
     }
 

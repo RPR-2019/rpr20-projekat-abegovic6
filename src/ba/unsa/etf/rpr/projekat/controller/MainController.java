@@ -1,14 +1,10 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.dao.GroupModel;
-import ba.unsa.etf.rpr.projekat.dao.NoteModel;
-import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
+import ba.unsa.etf.rpr.projekat.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.*;
-import javafx.application.HostServices;
-import javafx.collections.FXCollections;
+import ba.unsa.etf.rpr.projekat.javabean.*;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,28 +27,25 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
-
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class MainController {
-    private final Account user;
     private final ProjectDAO projectDAO;
 
-    private final ObservableList<ba.unsa.etf.rpr.projekat.model.Label> labelObservableList;
     private List<Node> nodes;
 
-    private NoteModel noteModel;
-    private GroupModel groupModel;
+    private final NoteModel noteModel;
+    private final GroupModel groupModel;
+    private final LabelModel labelModel;
 
     private SortModel sortNotesModel;
     private SortModel sortGroupLabelsModel;
-    private HostServices hostServices;
 
 
     @FXML
     public ListView<Group> groupListView;
     @FXML
-    public ListView<ba.unsa.etf.rpr.projekat.model.Label> labelListView;
+    public ListView<ba.unsa.etf.rpr.projekat.javabean.Label> labelListView;
     @FXML
     public Label userEmailLabel;
     @FXML
@@ -72,32 +65,34 @@ public class MainController {
 
 
 
-    public MainController(ProjectDAO projectDAO, Account user, HostServices hostServices) {
-        this.projectDAO = projectDAO;
-        this.user = user;
-        this.hostServices = hostServices;
-
-
-
-        this.labelObservableList = FXCollections.observableArrayList();
-        this.labelObservableList.addAll(this.projectDAO.getAllLabelsForAccount(this.user));
-
+    public MainController() {
+        this.projectDAO = ProjectDAO.getInstance ();
 
         this.noteModel = projectDAO.getNoteModel ();
-        this.noteModel.getAllNotes().addAll (this.projectDAO.getAllNotesForUser (user));
+        this.noteModel.getAllNotes ().clear ();
+        this.noteModel.getAllNotes().addAll (this.projectDAO.getAllNotesForUser (AccountModel.getCurrentUser ()));
 
-        this.groupModel = projectDAO.getGroupDAO ();
-        this.groupModel.getAllGroups ().addAll (this.projectDAO.getAllGroupsForAccount (user));
+        this.groupModel = projectDAO.getGroupModel ();
+        this.groupModel.getAllGroups ().clear ();
+        this.groupModel.getGroups ().clear ();
+        this.groupModel.getAllGroups ().addAll (this.projectDAO.getAllGroupsForAccount (AccountModel.getCurrentUser ()));
         for(Group group : this.groupModel.getAllGroups ()) {
             this.groupModel.getGroups ().add (group.getGroupName ());
         }
+
+        this.labelModel = projectDAO.getLabelModel ();
+        this.labelModel.getAllLabels ().clear ();
+        this.labelModel.getAllLabels ().addAll (this.projectDAO.getAllLabelsForAccount (AccountModel.getCurrentUser ()));
+
+        this.nodes = new ArrayList<> ();
     }
 
     @FXML
     public void initialize () {
-        userEmailLabel.setText (MyResourceBundle.getString ("EmailAdress") + " " + user.getEmailAdress ());
-        userNameLabel.setText (MyResourceBundle.getString ("Name") + " " + user.getFirstName () + " " + user.getLastName ());
-        userUsernameLabel.setText (MyResourceBundle.getString ("Username") + " " + user.getUserName ());
+        userEmailLabel.setText (MyResourceBundle.getString ("EmailAdress") + " " + AccountModel.getCurrentUser ().getEmailAdress ());
+        userNameLabel.setText (MyResourceBundle.getString ("Name") + " " + AccountModel.getCurrentUser ().getFirstName ()
+                + " " + AccountModel.getCurrentUser ().getLastName ());
+        userUsernameLabel.setText (MyResourceBundle.getString ("Username") + " " + AccountModel.getCurrentUser ().getUserName ());
 
         noteModel.getCurrentNotes ().addListener ((ListChangeListener<Note>) c -> {
             while (c.next()) {
@@ -118,18 +113,17 @@ public class MainController {
             }
         });
 
-        nodes = new ArrayList<> ();
         setUpTheFlowPane ();
-
 
         groupListView = new ListView<> ();
         groupListView.setItems (groupModel.getAllGroups ());
-        groupListView.setCellFactory (listView -> new GroupListCellController (projectDAO,
-                hostServices));
+        groupListView.setCellFactory (listView -> new GroupListCellController ());
         groupListView.getSelectionModel ().selectedItemProperty().addListener((obs, oldGroup, newGroup) -> {
             if(newGroup != null) {
                 noteModel.getCurrentNotes ().clear ();
                 noteModel.getCurrentNotes ().addAll (noteModel.getNotesForGroup (newGroup.getId ()));
+                System.out.println (noteModel.getAllNotes ().size ());
+                System.out.println (noteModel.getCurrentNotes ().size ());
                 var selected = sortNotesChoiceBox.getSelectionModel ().selectedItemProperty ().get ();
                 if (selected != null) noteModel.sortNotes (selected);
             }
@@ -137,9 +131,8 @@ public class MainController {
         vboxForListview.getChildren ().add (2, groupListView);
 
         labelListView = new ListView<>();
-        labelListView.setItems(labelObservableList);
-        labelListView.setCellFactory(listView -> new LabelListCellController (labelObservableList, projectDAO,
-                hostServices));
+        labelListView.setItems(labelModel.getAllLabels ());
+        labelListView.setCellFactory(listView -> new LabelListCellController ());
         labelListView.getSelectionModel ().selectedItemProperty ().addListener ((obs, oldLabel, newLabel) -> {
             if(newLabel != null) {
                 noteModel.getCurrentNotes ().clear ();
@@ -149,9 +142,8 @@ public class MainController {
             }
         });
 
-        sortNotesModel = new SortModel ();
-        sortGroupLabelsModel = new SortModel ();
 
+        sortNotesModel = new SortModel ();
         sortNotesChoiceBox.setItems (sortNotesModel.getSorting ());
         sortNotesModel.currentSortingProperty ().addListener ((obs, oldSort, newSort) -> {
             if(newSort != null) {
@@ -159,6 +151,7 @@ public class MainController {
             }
         });
 
+        sortGroupLabelsModel = new SortModel ();
         sortGroupLabelsModel.getSorting ().remove (2, 2);
         sortGroupLabelsChoiceBox.setItems (sortGroupLabelsModel.getSorting ());
         sortGroupLabelsModel.currentSortingProperty ().addListener ((obs, oldSort, newSort) -> {
@@ -171,7 +164,6 @@ public class MainController {
     }
 
 
-
     public void changeCurrentNoteSort() {
         sortNotesModel.setCurrentSorting (sortNotesChoiceBox.getValue());
     }
@@ -180,33 +172,26 @@ public class MainController {
         sortGroupLabelsModel.setCurrentSorting (sortGroupLabelsChoiceBox.getValue ());
     }
 
+    public void changeToGroups() {
+        vboxForListview.getChildren().remove(2);
+        vboxForListview.getChildren().add(2, groupListView);
+        groupListView.getSelectionModel ().clearSelection ();
+    }
+
+    public void changeToLabels() {
+        vboxForListview.getChildren().remove(2);
+        vboxForListview.getChildren().add(2, labelListView);
+        labelListView.getSelectionModel ().clearSelection ();
+    }
+
     private void sortGroups (String sort) {
         groupModel.sortGroups (sort);
         groupListView.refresh ();
     }
 
     private void sortLabels (String sort) {
-        if(sort.equals (MyResourceBundle.getString ("LastAdded"))) {
-            labelListView.getItems ()
-                    .sort (Comparator.comparingInt (ba.unsa.etf.rpr.projekat.model.Label::getId).reversed ());
-        } else if (sort.equals (MyResourceBundle.getString ("FirstAdded"))) {
-            labelListView.getItems ()
-                    .sort (Comparator.comparingInt (ba.unsa.etf.rpr.projekat.model.Label::getId));
-        } else if (sort.equals (MyResourceBundle.getString ("ByNameAsc"))) {
-            labelListView.getItems ()
-                    .sort (Comparator.comparing(ba.unsa.etf.rpr.projekat.model.Label::getLabelName));
-        } else if (sort.equals (MyResourceBundle.getString ("ByNameDesc"))) {
-            labelListView.getItems ()
-                    .sort (Comparator.comparing(ba.unsa.etf.rpr.projekat.model.Label::getLabelName).reversed ());
-        } else if (sort.equals (MyResourceBundle.getString ("ByDescriptionAsc"))) {
-            labelListView.getItems ()
-                    .sort (Comparator.comparing(ba.unsa.etf.rpr.projekat.model.Label::getDescription));
-        } else  {
-            labelListView.getItems ()
-                    .sort (Comparator.comparing(ba.unsa.etf.rpr.projekat.model.Label::getDescription).reversed ());
-        }
+        labelModel.sortLabels (sort);
         labelListView.refresh ();
-
     }
 
     private void showTheNode(Note note) {
@@ -249,10 +234,18 @@ public class MainController {
         gridPane.getRowConstraints ().addAll (rowConstraint1, rowConstraint2);
 
         Label noteTitle = new Label (note.getNoteTitle ());
+        note.noteTitleProperty ().addListener ((obp, oldTitle, newTitle) -> {
+            if(newTitle != null)
+                noteTitle.setText (newTitle);
+        });
         noteTitle.getStyleClass ().add ("paragraph");
         noteTitle.setMaxWidth (gridPane.getMaxWidth ());
 
         Label noteDescription = new Label (note.getDescription ());
+        note.descriptionProperty ().addListener ((obp, oldDes, newDes) -> {
+            if(newDes != null)
+                noteDescription.setText (newDes);
+        });
         noteDescription.getStyleClass ().add ("paragraphsmaller");
         noteDescription.setMaxWidth (gridPane.getMaxWidth ());
 
@@ -281,9 +274,10 @@ public class MainController {
         try {
             Stage newStage = new Stage();
 
-            note.setUpdateNeeded (true);
+            note.setUpdateNeeded (false);
+            note.setDelete (false);
 
-            NoteController noteController = new NoteController (note, labelObservableList, groupModel.getAllGroups (), hostServices);
+            NoteController noteController = new NoteController (note);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/note.fxml"),
                     MyResourceBundle.getResourceBundle ());
@@ -299,13 +293,9 @@ public class MainController {
             newStage.setOnHiding(windowEvent -> {
                 if(note.isUpdateNeeded ()) {
                     projectDAO.updateNote(note);
-                    updateNode(note);
                 }
                 if(note.isDelete ()) {
                     projectDAO.deleteNote (note.getId ());
-                    noteModel.getAllNotes ().remove (note);
-                    if(noteModel.getCurrentNotes ().contains (note))
-                        noteModel.getCurrentNotes ().remove (note);
                 }
             });
         } catch (IOException e) {
@@ -313,56 +303,6 @@ public class MainController {
         }
     }
 
-
-    private void updateNode (Note note) {
-        Node newNode = getNoteBlock (note);
-
-        Node oldNode = null;
-        int position = -1;
-        for(int i = 0; i < nodes.size (); i++) {
-            if(nodes.get (i).getId ().equals ("id" + note.getId ())) {
-                oldNode = nodes.get (i);
-                position = i;
-            }
-        }
-
-        if(oldNode != null) {
-            nodes.remove (position);
-            nodes.add (position, newNode);
-        }
-
-        oldNode = null;
-        position = -1;
-
-        for(int i = 0; i < flowPaneForNotes.getChildren ().size (); i++) {
-            if(flowPaneForNotes.getChildren ().get (i).getId ().equals ("id" + note.getId ())) {
-                oldNode = flowPaneForNotes.getChildren ().get (i);
-                position = i;
-            }
-        }
-
-        if(oldNode != null) {
-            flowPaneForNotes.getChildren ().remove (position);
-            flowPaneForNotes.getChildren ().add (position, newNode);
-        }
-
-
-
-
-
-    }
-
-    public void changeToGroups() {
-        vboxForListview.getChildren().remove(2);
-        vboxForListview.getChildren().add(2, groupListView);
-        groupListView.getSelectionModel ().clearSelection ();
-    }
-
-    public void changeToLabels() {
-        vboxForListview.getChildren().remove(2);
-        vboxForListview.getChildren().add(2, labelListView);
-        labelListView.getSelectionModel ().clearSelection ();
-    }
 
     public void searchNotesAction() {
         noteModel.searchNotes (searchNotesField.getText ());
@@ -381,12 +321,11 @@ public class MainController {
 
             Group group = new Group();
             group.setId(-2);
-            group.setAccountId(user.getId());
+            group.setAccountId(AccountModel.getCurrentUser ().getId());
 
 
 
-            GroupController groupController = new GroupController(group, groupModel.getAllGroups (), new ArrayList<> (),
-                    hostServices);
+            GroupController groupController = new GroupController(group);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/group.fxml"),
                     MyResourceBundle.getResourceBundle ());
@@ -401,13 +340,10 @@ public class MainController {
 
             newStage.setOnHiding(windowEvent -> {
                 if(group.getId() == -1) {
-                    if(projectDAO.createGroup(group)) {
-                        groupModel.getAllGroups ().add(group);
-                    }
-
-
+                    projectDAO.createGroup (group);
                 }
             });
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -418,12 +354,11 @@ public class MainController {
         try {
             Stage newStage = new Stage();
 
-            ba.unsa.etf.rpr.projekat.model.Label label = new ba.unsa.etf.rpr.projekat.model.Label();
+            ba.unsa.etf.rpr.projekat.javabean.Label label = new ba.unsa.etf.rpr.projekat.javabean.Label();
             label.setId(-2);
-            label.setAccountId(user.getId());
+            label.setAccountId(AccountModel.getCurrentUser ().getId());
 
-            LabelController labelController = new LabelController(label, labelObservableList,
-                    new ArrayList<> (), hostServices);
+            LabelController labelController = new LabelController(label);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/label.fxml"),
                     MyResourceBundle.getResourceBundle ());
@@ -438,11 +373,7 @@ public class MainController {
 
             newStage.setOnHiding(windowEvent -> {
                 if(label.getId() == -1) {
-                    if(projectDAO.createLabel(label)) {
-                        labelObservableList.add(label);
-                    }
-
-
+                    projectDAO.createLabel (label);
                 }
             });
         } catch (IOException e) {
@@ -462,14 +393,11 @@ public class MainController {
             alert.showAndWait();
         } else {
             try {
-
-
                 Stage newStage = new Stage ();
                 Note note = new Note ();
                 note.setId (-2);
 
-                NoteController noteController = new NoteController (note, labelObservableList,
-                        groupModel.getAllGroups (), hostServices);
+                NoteController noteController = new NoteController (note);
 
                 FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/note.fxml"),
                         MyResourceBundle.getResourceBundle ());
@@ -483,21 +411,17 @@ public class MainController {
                 newStage.show ();
 
                 newStage.setOnHiding (windowEvent -> {
-                    if (note.getId () == -1 && projectDAO.createNote (note)) {
+                    if (note.getId () == -1) {
                         nodes.add (getNoteBlock (note));
-                        noteModel.getAllNotes ().add (note);
+                        projectDAO.createNote (note);
                         if(groupListView.getSelectionModel ().selectedItemProperty ().get () != null &&
                                 groupListView.getSelectionModel ().selectedItemProperty ().get ().getId () == note.getGroupId ())
                             noteModel.getCurrentNotes ().add (note);
                         if(labelListView.getSelectionModel ()
-                                .selectedItemProperty ().get () != null && !note.getLabels ().stream().
-                                filter (l -> labelListView.getSelectionModel ()
-                                        .selectedItemProperty ().get ().getId () == l.getId ())
-                                .collect (Collectors.toList ()).isEmpty ())
+                                .selectedItemProperty ().get () != null &&
+                                note.getLabels ().stream ().anyMatch (l -> labelListView.getSelectionModel ()
+                                .selectedItemProperty ().get ().getId () == l.getId ()))
                             noteModel.getCurrentNotes ().add (note);
-
-
-
 
                     }
                 });
@@ -511,17 +435,19 @@ public class MainController {
 
     private String writeInFile() {
         String string = MyResourceBundle.getString ("UserInformation") + "\n\n" + MyResourceBundle.getString ("UserId")
-                + user.getId () + "\n" + MyResourceBundle.getString ("FirstName") + user.getFirstName () +
-                "\n" + MyResourceBundle.getString ("LastName") + user.getLastName () + "\n" +
-                MyResourceBundle.getString ("Username") + user.getUserName () + "\n" + MyResourceBundle.getString ("EmailAdress")
-                + user.getEmailAdress () + "\n\n**********\n";
+                + AccountModel.getCurrentUser ().getId () + "\n" + MyResourceBundle.getString ("FirstName") +
+                AccountModel.getCurrentUser ().getFirstName () +
+                "\n" + MyResourceBundle.getString ("LastName") + AccountModel.getCurrentUser ().getLastName () + "\n" +
+                MyResourceBundle.getString ("Username") + AccountModel.getCurrentUser ().getUserName () + "\n" +
+                MyResourceBundle.getString ("EmailAdress")
+                + AccountModel.getCurrentUser ().getEmailAdress () + "\n\n**********\n";
         string += MyResourceBundle.getString ("UserGroups") + "\n\n";
         for(Group group : groupModel.getAllGroups ()) {
             string += group.writeInFile (noteModel.getNotesForGroup (group.getId ()));
         }
 
         string +=  "\n**********\n\n" + MyResourceBundle.getString ("UserLabels") + "\n\n";
-        for(ba.unsa.etf.rpr.projekat.model.Label label : labelObservableList) {
+        for(ba.unsa.etf.rpr.projekat.javabean.Label label : labelModel.getAllLabels ()) {
             string += label.writeInFile (noteModel.getNotesForLabel (label.getId ()));
         }
 
@@ -562,7 +488,7 @@ public class MainController {
             Stage oldStage  = (Stage) source.getScene().getWindow();
             Stage newStage = new Stage();
 
-            SettingsController settingsController = new SettingsController (user, projectDAO, hostServices);
+            SettingsController settingsController = new SettingsController ();
 
             FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/settings.fxml"),
                     MyResourceBundle.getResourceBundle ());
@@ -597,7 +523,7 @@ public class MainController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if(result.isPresent() && result.get() == ButtonType.OK) {
-            projectDAO.deleteAccount (user);
+            projectDAO.deleteAccount (AccountModel.getCurrentUser ());
         }
         logout ();
 
@@ -632,8 +558,6 @@ public class MainController {
 
             AboutController aboutController = new AboutController ();
 
-            aboutController.setHostServices (hostServices);
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/about.fxml"),
                     MyResourceBundle.getResourceBundle ());
             loader.setController(aboutController);
@@ -656,7 +580,7 @@ public class MainController {
             Stage oldStage  = (Stage) source.getScene().getWindow();
             Stage newStage = new Stage();
 
-            LoginController loginController = new LoginController(projectDAO, user, hostServices);
+            LoginController loginController = new LoginController();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"),
                     MyResourceBundle.getResourceBundle ());

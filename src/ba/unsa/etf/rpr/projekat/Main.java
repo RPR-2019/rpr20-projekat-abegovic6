@@ -1,8 +1,8 @@
 package ba.unsa.etf.rpr.projekat;
 
 import ba.unsa.etf.rpr.projekat.controller.LoginController;
-import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.model.Account;
+import ba.unsa.etf.rpr.projekat.model.AccountModel;
+import ba.unsa.etf.rpr.projekat.javabean.Account;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,20 +10,19 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Account user = new Account();
         Locale.setDefault (new Locale ("bs"));
         Locale currentLocale = Locale.getDefault();
 
         MyResourceBundle.setLocale (currentLocale);
+        MyHostServices.setHostServices (getHostServices ());
+        AccountModel.setCurrentUser (new Account ());
 
-        ProjectDAO projectDAO = ProjectDAO.getInstance();
-        LoginController loginController = new LoginController(projectDAO, user, getHostServices ());
+        LoginController loginController = new LoginController();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"), MyResourceBundle.getResourceBundle ());
         loader.setController(loginController);
         Parent root = loader.load();
@@ -32,7 +31,6 @@ public class Main extends Application {
         primaryStage.setMinHeight(600);
         primaryStage.setMinWidth(1100);
         primaryStage.show();
-        //ProjectDAO.removeInstance();
     }
 
 

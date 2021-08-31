@@ -1,12 +1,12 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.dao.GroupModel;
-import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
+import ba.unsa.etf.rpr.projekat.model.GroupModel;
+import ba.unsa.etf.rpr.projekat.model.LabelModel;
+import ba.unsa.etf.rpr.projekat.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.NoteColorModel;
-import ba.unsa.etf.rpr.projekat.model.*;
-import ba.unsa.etf.rpr.projekat.model.Label;
-import javafx.application.HostServices;
+import ba.unsa.etf.rpr.projekat.javabean.*;
+import ba.unsa.etf.rpr.projekat.javabean.Label;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,14 +28,13 @@ import java.util.Optional;
 
 public class NoteController {
     private final Note note;
-    private final List<Label> labels;
-    private final List<Group> groups;
-    private final HostServices hostServices;
+    private final LabelModel labelModel;
+    private final GroupModel groupModel;
+    private final ProjectDAO projectDAO;
+
     private NoteColorModel noteColorModel;
     private String color = null;
     private String groupName = null;
-
-    private GroupModel groupModel;
 
     @FXML
     public MenuBar notesMenuBar;
@@ -66,21 +65,17 @@ public class NoteController {
     @FXML
     public Button imageButton;
 
-    public NoteController(Note note, List<Label> labels, List<Group> groups,
-                          HostServices hostServices) {
+    public NoteController(Note note) {
+        this.projectDAO = ProjectDAO.getInstance ();
         this.note = note;
-        this.labels = labels;
-        this.groups = groups;
-        this.hostServices = hostServices;
-
-        ProjectDAO projectDAO = ProjectDAO.getInstance ();
-        this.groupModel = projectDAO.getGroupDAO ();
+        this.labelModel = projectDAO.getLabelModel ();
+        this.groupModel = projectDAO.getGroupModel ();
     }
 
     @FXML
     public void initialize () {
 
-        for(Label label : labels) {
+        for(Label label : labelModel.getAllLabels ()) {
             CheckBox checkBox = new CheckBox();
             checkBox.setText(label.getLabelName());
             checkBox.setStyle("-fx-background-color: " + label.getLabelColor().getHexCode());
@@ -90,7 +85,7 @@ public class NoteController {
             noteFlowPane.getChildren().add(checkBox);
         }
 
-        if(labels.isEmpty ()) {
+        if(labelModel.getAllLabels ().isEmpty ()) {
             javafx.scene.control.Label label = new javafx.scene.control.Label ();
             label.setText (MyResourceBundle.getString ("DontHaveAnyLabels"));
             label.getStyleClass ().add ("paragraph");
@@ -118,14 +113,14 @@ public class NoteController {
             noteColorChoiceBox.getSelectionModel().selectFirst();
             noteGroupChoiceBox.getSelectionModel().selectFirst();
             notesMenuBar.setVisible (false);
-
         } else {
             noteNameTextField.setText(note.getNoteTitle());
             noteDescriptionTextArea.setText(note.getDescription());
             noteColorChoiceBox.getSelectionModel().select(note.getNoteColor().name());
             noteGroupChoiceBox.getSelectionModel().select(groupModel.getNameFromId(note.getGroupId ()));
             for(Label label : note.getLabels ()) {
-                var node = noteFlowPane.getChildren ().stream ().filter (n -> n.getId ().equals ("labelId" + label.getId ())).findAny ();
+                var node = noteFlowPane.getChildren ().stream ().filter
+                        (n -> n.getId ().equals ("labelId" + label.getId ())).findAny ();
                 node.ifPresent (value -> ((CheckBox) value).setSelected (true));
             }
 
@@ -212,7 +207,7 @@ public class NoteController {
             noteNameErrorLabel.setText(MyResourceBundle.getString("ThisCantBeEmpty"));
             noteNameErrorLabel.getStyleClass().add("errorLabel");
             noteNameTextField.getStyleClass().add("turnRed");
-        } else if(groups.stream().anyMatch(g -> g.getGroupName().equals(noteName))) {
+        } else if(groupModel.getAllGroups ().stream().anyMatch(g -> g.getGroupName().equals(noteName))) {
             noteNameErrorLabel.setText(MyResourceBundle.getString("NewGroupNameError"));
             noteNameErrorLabel.getStyleClass().add("errorLabel");
             noteNameTextField.getStyleClass().add("turnRed");
@@ -260,11 +255,12 @@ public class NoteController {
         note.setGroupId (groupModel.getIdFromName (groupName));
 
         List<Label> labelsList = new ArrayList<> ();
-        if(!labels.isEmpty ())
+        if(!labelModel.getAllLabels ().isEmpty ())
             for(Node node : noteFlowPane.getChildren ()){
                 CheckBox checkBox = (CheckBox) node;
                 if(checkBox.isSelected ()) {
-                    labelsList.add (labels.stream().filter(l -> l.getLabelName().equals (checkBox.getText())).findFirst().get());
+                    labelsList.add (labelModel.getAllLabels ().stream()
+                            .filter(l -> l.getLabelName().equals (checkBox.getText())).findFirst().get());
                 }
             }
 
@@ -379,8 +375,6 @@ public class NoteController {
             Stage newStage = new Stage();
 
             AboutController aboutController = new AboutController ();
-
-            aboutController.setHostServices (hostServices);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/about.fxml"),
                     MyResourceBundle.getResourceBundle ());

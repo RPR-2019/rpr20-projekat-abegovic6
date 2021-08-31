@@ -1,26 +1,35 @@
-package ba.unsa.etf.rpr.projekat.model;
+package ba.unsa.etf.rpr.projekat.javabean;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
 
-import java.io.File;
-import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 public class Note {
     private int id;
     private int groupId;
     private List<Label> labels;
-    private String noteTitle;
-    private String description;
+    private SimpleStringProperty noteTitle;
+    private SimpleStringProperty description;
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
     private NoteColor noteColor;
-
     private boolean delete = false;
+    private byte[] image;
+
+
+    public Note() {
+        labels = new ArrayList<>();
+        dateUpdated = LocalDateTime.now ();
+        dateCreated = LocalDateTime.now ();
+
+        noteTitle = new SimpleStringProperty ();
+        description = new SimpleStringProperty ();
+    }
+
 
     public boolean isDelete () {
         return delete;
@@ -29,8 +38,6 @@ public class Note {
     public void setDelete (boolean delete) {
         this.delete = delete;
     }
-
-    private byte[] image;
 
     public byte[] getImage () {
         return image;
@@ -42,12 +49,7 @@ public class Note {
 
     private boolean isUpdateNeeded = false;
 
-    public Note() {
-        labels = new ArrayList<>();
-        dateUpdated = LocalDateTime.now ();
-        dateCreated = LocalDateTime.now ();
 
-    }
 
     public NoteColor getNoteColor() {
         return noteColor;
@@ -74,19 +76,27 @@ public class Note {
     }
 
     public String getNoteTitle() {
-        return noteTitle;
+        return noteTitle.get ();
     }
 
     public void setNoteTitle(String noteTitle) {
-        this.noteTitle = noteTitle.substring(0, 1).toUpperCase() + noteTitle.substring(1);
+        this.noteTitle.set (noteTitle.substring(0, 1).toUpperCase() + noteTitle.substring(1));
+    }
+
+    public SimpleStringProperty noteTitleProperty () {
+        return noteTitle;
     }
 
     public String getDescription() {
-        return description;
+        return description.get ();
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description.set (description);
+    }
+
+    public SimpleStringProperty descriptionProperty () {
+        return description;
     }
 
     public LocalDateTime getDateCreated() {

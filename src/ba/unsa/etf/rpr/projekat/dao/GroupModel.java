@@ -1,8 +1,12 @@
 package ba.unsa.etf.rpr.projekat.dao;
 
+import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.model.Account;
 import ba.unsa.etf.rpr.projekat.model.Group;
 import ba.unsa.etf.rpr.projekat.model.GroupColor;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,9 +14,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class GroupDAO {
+public class GroupModel {
 
-    private static GroupDAO instance = null;
+    private static GroupModel instance = null;
 
     private final PreparedStatement createGroupStatement;
     private final PreparedStatement getAllGroupsForAccountStatement;
@@ -20,7 +24,11 @@ public class GroupDAO {
     private final PreparedStatement updateGroupStatement;
     private final PreparedStatement getNewIdGroupStatement;
 
-    private GroupDAO (Connection conn) throws SQLException {
+    private ObservableList<Group> allGroups;
+    private ObservableList<String> stringGroups;
+    private SimpleStringProperty currentGroup;
+
+    private GroupModel (Connection conn) throws SQLException {
         createGroupStatement = conn.prepareStatement("INSERT INTO groups (id, accountId, groupName, " +
                 "description, groupColor) VALUES (?, ?, ?, ?, ?)");
         getAllGroupsForAccountStatement = conn.prepareStatement("SELECT * FROM groups WHERE accountId = ?");
@@ -28,10 +36,14 @@ public class GroupDAO {
                 "= (?,?,?) WHERE id = ?");
         deleteGroupStatement = conn.prepareStatement("DELETE FROM groups WHERE id = ?");
         getNewIdGroupStatement = conn.prepareStatement("SELECT MAX(id) + 1 FROM groups");
+
+        this.stringGroups = FXCollections.observableArrayList();
+        this.allGroups = FXCollections.observableArrayList ();
+        this.currentGroup = new SimpleStringProperty();
     }
 
-    public static GroupDAO getInstance(Connection conn) throws SQLException {
-        if(instance == null) instance = new GroupDAO (conn);
+    public static GroupModel getInstance(Connection conn) throws SQLException {
+        if(instance == null) instance = new GroupModel (conn);
         return instance;
     }
 
@@ -131,6 +143,46 @@ public class GroupDAO {
         }
         return true;
 
+    }
+
+    public SimpleStringProperty currentGroupProperty() {
+        return currentGroup;
+    }
+
+    public void setCurrentGroup(String group) {
+        this.currentGroup.set(group);
+    }
+
+    public ObservableList<String> getGroups() {
+        return stringGroups;
+    }
+
+    public String getNameFromId(int id) {
+        return allGroups.stream().filter(g -> g.getId() == id).findFirst().get().getGroupName();
+    }
+
+    public int getIdFromName(String name) {
+        return allGroups.stream().filter(g -> g.getGroupName().equals(name)).findFirst().get().getId();
+    }
+
+    public ObservableList<Group> getAllGroups () {
+        return allGroups;
+    }
+
+    public void sortGroups (String sort) {
+        if(sort.equals (MyResourceBundle.getString ("LastAdded"))) {
+            allGroups.sort (Comparator.comparingInt (Group::getId).reversed ());
+        } else if (sort.equals (MyResourceBundle.getString ("FirstAdded"))) {
+            allGroups.sort (Comparator.comparingInt (Group::getId));
+        } else if (sort.equals (MyResourceBundle.getString ("ByNameAsc"))) {
+            allGroups.sort (Comparator.comparing(Group::getGroupName));
+        } else if (sort.equals (MyResourceBundle.getString ("ByNameDesc"))) {
+            allGroups.sort (Comparator.comparing(Group::getGroupName).reversed ());
+        } else if (sort.equals (MyResourceBundle.getString ("ByDescriptionAsc"))) {
+            allGroups.sort (Comparator.comparing(Group::getDescription));
+        } else  {
+            allGroups.sort (Comparator.comparing(Group::getDescription).reversed ());
+        }
     }
 
 }

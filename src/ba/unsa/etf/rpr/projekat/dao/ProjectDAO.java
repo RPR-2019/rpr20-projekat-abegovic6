@@ -11,9 +11,9 @@ public class ProjectDAO {
     private Connection connection;
 
     private AccountDAO accountDAO = null;
-    private GroupDAO groupDAO = null;
+    private GroupModel groupModel = null;
     private LabelDAO labelDAO = null;
-    private NoteDAO noteDAO = null;
+    private NoteModel noteModel = null;
 
 
     private ProjectDAO() {
@@ -25,17 +25,17 @@ public class ProjectDAO {
 
         try {
             accountDAO = AccountDAO.getInstance (connection);
-            groupDAO = GroupDAO.getInstance (connection);
+            groupModel = GroupModel.getInstance (connection);
             labelDAO = LabelDAO.getInstance (connection);
-            noteDAO = NoteDAO.getInstance (connection);
+            noteModel = NoteModel.getInstance (connection);
 
         } catch (SQLException throwables) {
             createDatabase();
             try {
                 accountDAO = AccountDAO.getInstance (connection);
-                groupDAO = GroupDAO.getInstance (connection);
+                groupModel = GroupModel.getInstance (connection);
                 labelDAO = LabelDAO.getInstance (connection);
-                noteDAO = NoteDAO.getInstance (connection);
+                noteModel = NoteModel.getInstance (connection);
 
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -108,7 +108,7 @@ public class ProjectDAO {
     }
 
     public void deleteAccount(Account user) {
-        List<Group> groups = groupDAO.getAllGroupsForAccount (user);
+        List<Group> groups = groupModel.getAllGroupsForAccount (user);
         List<Label> labels = labelDAO.getAllLabelsForAccount (user);
 
         for(Group group : groups) {
@@ -125,22 +125,26 @@ public class ProjectDAO {
 
     // GROUP
     public List<Group> getAllGroupsForAccount(Account user) {
-        return groupDAO.getAllGroupsForAccount (user);
+        return groupModel.getAllGroupsForAccount (user);
     }
 
     public boolean createGroup(Group group) {
-        return groupDAO.createGroup (group);
+        return groupModel.createGroup (group);
     }
 
     public void updateGroup(Group group) {
-        groupDAO.updateGroup (group);
+        groupModel.updateGroup (group);
     }
 
     public void deleteGroup(int id) {
         for(Note note : getAllNotesForGroup (id)) {
-            noteDAO.deleteNote (note.getId ());
+            noteModel.deleteNote (note.getId ());
         }
-        groupDAO.deleteGroup (id);
+        groupModel.deleteGroup (id);
+    }
+
+    public GroupModel getGroupDAO () {
+        return groupModel;
     }
 
     // ------------------------------------------------------------------------------- //
@@ -168,24 +172,26 @@ public class ProjectDAO {
 
     // NOTE
     public List<Note> getAllNotesForUser(Account user) {
-        return noteDAO.getAllNotesForUser (user, labelDAO);
+        return noteModel.getAllNotesForUser (user, labelDAO);
     }
 
     public List<Note> getAllNotesForGroup (int groupId) {
-        return noteDAO.getAllNotesForGroup (groupId, labelDAO);
+        return noteModel.getAllNotesForGroup (groupId, labelDAO);
     }
 
     public boolean createNote (Note note) {
-        return noteDAO.createNote (note);
+        return noteModel.createNote (note);
     }
 
     public void updateNote (Note note) {
-        noteDAO.updateNote (note);
+        noteModel.updateNote (note);
     }
 
     public void deleteNote(int id) {
-        noteDAO.deleteNote (id);
+        noteModel.deleteNote (id);
     }
 
-
+    public NoteModel getNoteModel () {
+        return noteModel;
+    }
 }

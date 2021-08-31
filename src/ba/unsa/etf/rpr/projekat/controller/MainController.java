@@ -1,6 +1,8 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
+import ba.unsa.etf.rpr.projekat.dao.GroupModel;
+import ba.unsa.etf.rpr.projekat.dao.NoteModel;
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.*;
 import javafx.application.HostServices;
@@ -36,12 +38,12 @@ public class MainController {
     private final Account user;
     private final ProjectDAO projectDAO;
 
-    private final ObservableList<Group> groupsObservableList;
     private final ObservableList<ba.unsa.etf.rpr.projekat.model.Label> labelObservableList;
-    private final ObservableList<Note> noteObservableList;
     private List<Node> nodes;
 
     private NoteModel noteModel;
+    private GroupModel groupModel;
+
     private SortModel sortNotesModel;
     private SortModel sortGroupLabelsModel;
     private HostServices hostServices;
@@ -75,13 +77,20 @@ public class MainController {
         this.user = user;
         this.hostServices = hostServices;
 
-        this.groupsObservableList = FXCollections.observableArrayList();
-        this.labelObservableList = FXCollections.observableArrayList();
-        this.noteObservableList = FXCollections.observableArrayList();
 
-        this.groupsObservableList.addAll(this.projectDAO.getAllGroupsForAccount(this.user));
+
+        this.labelObservableList = FXCollections.observableArrayList();
         this.labelObservableList.addAll(this.projectDAO.getAllLabelsForAccount(this.user));
-        this.noteObservableList.addAll (this.projectDAO.getAllNotesForUser (this.user));
+
+
+        this.noteModel = projectDAO.getNoteModel ();
+        this.noteModel.getAllNotes().addAll (this.projectDAO.getAllNotesForUser (user));
+
+        this.groupModel = projectDAO.getGroupDAO ();
+        this.groupModel.getAllGroups ().addAll (this.projectDAO.getAllGroupsForAccount (user));
+        for(Group group : this.groupModel.getAllGroups ()) {
+            this.groupModel.getGroups ().add (group.getGroupName ());
+        }
     }
 
     @FXML
@@ -89,8 +98,6 @@ public class MainController {
         userEmailLabel.setText (MyResourceBundle.getString ("EmailAdress") + " " + user.getEmailAdress ());
         userNameLabel.setText (MyResourceBundle.getString ("Name") + " " + user.getFirstName () + " " + user.getLastName ());
         userUsernameLabel.setText (MyResourceBundle.getString ("Username") + " " + user.getUserName ());
-
-        noteModel = new NoteModel ();
 
         noteModel.getCurrentNotes ().addListener ((ListChangeListener<Note>) c -> {
             while (c.next()) {
@@ -112,18 +119,17 @@ public class MainController {
         });
 
         nodes = new ArrayList<> ();
-
         setUpTheFlowPane ();
 
 
         groupListView = new ListView<> ();
-        groupListView.setItems (groupsObservableList);
-        groupListView.setCellFactory (listView -> new GroupListCellController (groupsObservableList, projectDAO,
-                noteObservableList, hostServices, noteModel));
+        groupListView.setItems (groupModel.getAllGroups ());
+        groupListView.setCellFactory (listView -> new GroupListCellController (projectDAO,
+                hostServices));
         groupListView.getSelectionModel ().selectedItemProperty().addListener((obs, oldGroup, newGroup) -> {
             if(newGroup != null) {
                 noteModel.getCurrentNotes ().clear ();
-                noteModel.getCurrentNotes ().addAll (getNotesForGroup (newGroup.getId ()));
+                noteModel.getCurrentNotes ().addAll (noteModel.getNotesForGroup (newGroup.getId ()));
                 var selected = sortNotesChoiceBox.getSelectionModel ().selectedItemProperty ().get ();
                 if (selected != null) noteModel.sortNotes (selected);
             }
@@ -133,11 +139,11 @@ public class MainController {
         labelListView = new ListView<>();
         labelListView.setItems(labelObservableList);
         labelListView.setCellFactory(listView -> new LabelListCellController (labelObservableList, projectDAO,
-                noteObservableList, hostServices, noteModel));
+                hostServices));
         labelListView.getSelectionModel ().selectedItemProperty ().addListener ((obs, oldLabel, newLabel) -> {
             if(newLabel != null) {
                 noteModel.getCurrentNotes ().clear ();
-                noteModel.getCurrentNotes ().addAll (getNotesForLabel (newLabel.getId ()));
+                noteModel.getCurrentNotes ().addAll (noteModel.getNotesForLabel (newLabel.getId ()));
                 var selected = sortNotesChoiceBox.getSelectionModel ().selectedItemProperty ().get ();
                 if (selected != null) noteModel.sortNotes (selected);
             }
@@ -175,27 +181,8 @@ public class MainController {
     }
 
     private void sortGroups (String sort) {
-        if(sort.equals (MyResourceBundle.getString ("LastAdded"))) {
-            groupListView.getItems ()
-                    .sort (Comparator.comparingInt (Group::getId).reversed ());
-        } else if (sort.equals (MyResourceBundle.getString ("FirstAdded"))) {
-            groupListView.getItems ()
-                    .sort (Comparator.comparingInt (Group::getId));
-        } else if (sort.equals (MyResourceBundle.getString ("ByNameAsc"))) {
-            groupListView.getItems ()
-                    .sort (Comparator.comparing(Group::getGroupName));
-        } else if (sort.equals (MyResourceBundle.getString ("ByNameDesc"))) {
-            groupListView.getItems ()
-                    .sort (Comparator.comparing(Group::getGroupName).reversed ());
-        } else if (sort.equals (MyResourceBundle.getString ("ByDescriptionAsc"))) {
-            groupListView.getItems ()
-                    .sort (Comparator.comparing(Group::getDescription));
-        } else  {
-            groupListView.getItems ()
-                    .sort (Comparator.comparing(Group::getDescription).reversed ());
-        }
+        groupModel.sortGroups (sort);
         groupListView.refresh ();
-
     }
 
     private void sortLabels (String sort) {
@@ -222,16 +209,6 @@ public class MainController {
 
     }
 
-
-    private List<Note> getNotesForGroup(int groupId) {
-        return noteObservableList.stream ().filter (n -> n.getGroupId () == groupId).collect (Collectors.toList ());
-    }
-
-    private List<Note> getNotesForLabel(int labelId) {
-        return noteObservableList.stream ().filter (n -> n.getLabels ().stream ().anyMatch (l -> l.getId () == labelId))
-                .collect (Collectors.toList ());
-    }
-
     private void showTheNode(Note note) {
         Optional<Node> node = nodes.stream ().filter (n -> n.getId ().equals ("id" + note.getId ())).findFirst ();
         node.ifPresent (value -> flowPaneForNotes.getChildren ().add (node.get ()));
@@ -243,7 +220,7 @@ public class MainController {
     }
 
     private void setUpTheFlowPane() {
-        for (Note note : noteObservableList) {
+        for (Note note : noteModel.getAllNotes ()) {
             flowPaneForNotes.getChildren ().add (getNoteBlock (note));
         }
         nodes = new ArrayList<> (flowPaneForNotes.getChildren ());
@@ -306,7 +283,7 @@ public class MainController {
 
             note.setUpdateNeeded (true);
 
-            NoteController noteController = new NoteController (note, labelObservableList, groupsObservableList, hostServices);
+            NoteController noteController = new NoteController (note, labelObservableList, groupModel.getAllGroups (), hostServices);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/note.fxml"),
                     MyResourceBundle.getResourceBundle ());
@@ -326,7 +303,7 @@ public class MainController {
                 }
                 if(note.isDelete ()) {
                     projectDAO.deleteNote (note.getId ());
-                    noteObservableList.remove (note);
+                    noteModel.getAllNotes ().remove (note);
                     if(noteModel.getCurrentNotes ().contains (note))
                         noteModel.getCurrentNotes ().remove (note);
                 }
@@ -336,23 +313,6 @@ public class MainController {
         }
     }
 
-    public void removeNotesForGroup (int id) {
-        List<Note> notes = getNotesForGroup (id);
-        for(Note note : notes) {
-            noteObservableList.remove (note);
-            if(noteModel.getCurrentNotes ().contains (note))
-                noteModel.getCurrentNotes ().remove (note);
-        }
-    }
-
-    public void removeNotesForLabel (int id) {
-        List<Note> notes = getNotesForLabel (id);
-        for(Note note : notes) {
-            noteObservableList.remove (note);
-            if(noteModel.getCurrentNotes ().contains (note))
-                noteModel.getCurrentNotes ().remove (note);
-        }
-    }
 
     private void updateNode (Note note) {
         Node newNode = getNoteBlock (note);
@@ -425,7 +385,7 @@ public class MainController {
 
 
 
-            GroupController groupController = new GroupController(group, groupsObservableList, new ArrayList<> (),
+            GroupController groupController = new GroupController(group, groupModel.getAllGroups (), new ArrayList<> (),
                     hostServices);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/group.fxml"),
@@ -442,7 +402,7 @@ public class MainController {
             newStage.setOnHiding(windowEvent -> {
                 if(group.getId() == -1) {
                     if(projectDAO.createGroup(group)) {
-                        groupsObservableList.add(group);
+                        groupModel.getAllGroups ().add(group);
                     }
 
 
@@ -493,7 +453,7 @@ public class MainController {
     }
 
     public void createNewNote() {
-        if(groupsObservableList.isEmpty ()) {
+        if(groupModel.getAllGroups ().isEmpty ()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(MyResourceBundle.getString("Error"));
             alert.setHeaderText(MyResourceBundle.getString("NeedAGroupAction"));
@@ -509,7 +469,7 @@ public class MainController {
                 note.setId (-2);
 
                 NoteController noteController = new NoteController (note, labelObservableList,
-                        groupsObservableList, hostServices);
+                        groupModel.getAllGroups (), hostServices);
 
                 FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/note.fxml"),
                         MyResourceBundle.getResourceBundle ());
@@ -525,7 +485,7 @@ public class MainController {
                 newStage.setOnHiding (windowEvent -> {
                     if (note.getId () == -1 && projectDAO.createNote (note)) {
                         nodes.add (getNoteBlock (note));
-                        noteObservableList.add (note);
+                        noteModel.getAllNotes ().add (note);
                         if(groupListView.getSelectionModel ().selectedItemProperty ().get () != null &&
                                 groupListView.getSelectionModel ().selectedItemProperty ().get ().getId () == note.getGroupId ())
                             noteModel.getCurrentNotes ().add (note);
@@ -556,13 +516,13 @@ public class MainController {
                 MyResourceBundle.getString ("Username") + user.getUserName () + "\n" + MyResourceBundle.getString ("EmailAdress")
                 + user.getEmailAdress () + "\n\n**********\n";
         string += MyResourceBundle.getString ("UserGroups") + "\n\n";
-        for(Group group : groupsObservableList) {
-            string += group.writeInFile (getNotesForGroup (group.getId ()));
+        for(Group group : groupModel.getAllGroups ()) {
+            string += group.writeInFile (noteModel.getNotesForGroup (group.getId ()));
         }
 
         string +=  "\n**********\n\n" + MyResourceBundle.getString ("UserLabels") + "\n\n";
         for(ba.unsa.etf.rpr.projekat.model.Label label : labelObservableList) {
-            string += label.writeInFile (getNotesForLabel (label.getId ()));
+            string += label.writeInFile (noteModel.getNotesForLabel (label.getId ()));
         }
 
         return string;
@@ -692,7 +652,7 @@ public class MainController {
 
     public void logout() {
         try {
-            Node source = (Node)  flowPaneForNotes;
+            Node source = flowPaneForNotes;
             Stage oldStage  = (Stage) source.getScene().getWindow();
             Stage newStage = new Stage();
 

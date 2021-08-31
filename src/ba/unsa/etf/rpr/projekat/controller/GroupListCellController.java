@@ -1,11 +1,12 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
+import ba.unsa.etf.rpr.projekat.dao.GroupModel;
+import ba.unsa.etf.rpr.projekat.dao.NoteModel;
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.Group;
 import ba.unsa.etf.rpr.projekat.model.GroupColor;
 import ba.unsa.etf.rpr.projekat.model.Note;
-import ba.unsa.etf.rpr.projekat.model.NoteModel;
 import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,15 +18,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class GroupListCellController extends ListCell<Group> {
-    private final List<Group> groups;
     private final ProjectDAO projectDAO;
-    private final List<Note> notes;
     private final HostServices hostServices;
     private final NoteModel noteModel;
+    private final GroupModel groupModel;
+
     @FXML
     public Label groupItemDescriptionLabel;
     @FXML
@@ -33,17 +32,15 @@ public class GroupListCellController extends ListCell<Group> {
     @FXML
     public VBox groupItemVbox;
 
-    Group group;
-
+    private Group group;
     private FXMLLoader mLLoader;
 
-    public GroupListCellController (List<Group> groups, ProjectDAO projectDAO, List<Note> notes,
-                                    HostServices hostServices, NoteModel noteModel) {
+    public GroupListCellController (ProjectDAO projectDAO,
+                                    HostServices hostServices) {
         this.projectDAO = projectDAO;
-        this.groups = groups;
-        this.notes = notes;
+        this.noteModel = this.projectDAO.getNoteModel ();
+        this.groupModel = this.projectDAO.getGroupDAO ();
         this.hostServices = hostServices;
-        this.noteModel = noteModel;
     }
 
     @Override
@@ -111,10 +108,9 @@ public class GroupListCellController extends ListCell<Group> {
 
             group.setUpdatedNeeded(false);
 
-            List<Note> notesForGroup = notes.stream().filter (note -> note.getGroupId () == group.getId ()).collect(Collectors.toList ());
+            var notesForGroup = noteModel.getNotesForGroup (group.getId ());
 
-            GroupController groupController = new GroupController(group, groups, notesForGroup,
-                    hostServices);
+            GroupController groupController = new GroupController(group, groupModel.getAllGroups (), notesForGroup, hostServices);
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/group.fxml"),
                     MyResourceBundle.getResourceBundle ());
@@ -134,12 +130,12 @@ public class GroupListCellController extends ListCell<Group> {
                 if(group.isDelete ()) {
                     projectDAO.deleteGroup (group.getId ());
                     for(Note note : notesForGroup) {
-                        notes.remove (note);
+                        noteModel.getAllNotes ().remove (note);
                         if(noteModel.getCurrentNotes ().contains (note)) {
                             noteModel.getCurrentNotes ().remove (note);
                         }
                     }
-                    groups.remove (group);
+                    noteModel.getAllNotes ().remove (group);
                 }
             });
         } catch (IOException e) {

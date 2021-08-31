@@ -1,7 +1,8 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.model.GroupModel;
+import ba.unsa.etf.rpr.projekat.dao.GroupModel;
+import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.NoteColorModel;
 import ba.unsa.etf.rpr.projekat.model.*;
 import ba.unsa.etf.rpr.projekat.model.Label;
@@ -71,6 +72,9 @@ public class NoteController {
         this.labels = labels;
         this.groups = groups;
         this.hostServices = hostServices;
+
+        ProjectDAO projectDAO = ProjectDAO.getInstance ();
+        this.groupModel = projectDAO.getGroupDAO ();
     }
 
     @FXML
@@ -93,7 +97,7 @@ public class NoteController {
             noteFlowPane.getChildren ().add (label);
         }
 
-        groupModel = new GroupModel(groups);
+
         noteGroupChoiceBox.setItems(groupModel.getGroups());
 
         groupModel.currentGroupProperty().addListener((obp, oldName, newName) -> {

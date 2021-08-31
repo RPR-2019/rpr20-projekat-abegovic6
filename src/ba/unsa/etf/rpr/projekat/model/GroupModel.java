@@ -8,21 +8,13 @@ import java.util.List;
 
 public class GroupModel {
 
-    private final List<Group> listGroups;
+    private List<Group> listGroups;
     ObservableList<String> groups;
     SimpleStringProperty currentGroup;
 
-    public GroupModel(List<Group> groups) {
+    public GroupModel() {
         this.groups = FXCollections.observableArrayList();
         currentGroup = new SimpleStringProperty();
-        this.listGroups = groups;
-        for (Group group : groups) {
-            this.groups.add(group.getGroupName());
-        }
-    }
-
-    public String getCurrentGroup() {
-        return currentGroup.get();
     }
 
     public SimpleStringProperty currentGroupProperty() {

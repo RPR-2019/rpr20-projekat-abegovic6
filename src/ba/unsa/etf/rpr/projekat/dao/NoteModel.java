@@ -1,9 +1,12 @@
 package ba.unsa.etf.rpr.projekat.dao;
 
+import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.model.Account;
 import ba.unsa.etf.rpr.projekat.model.Label;
 import ba.unsa.etf.rpr.projekat.model.Note;
 import ba.unsa.etf.rpr.projekat.model.NoteColor;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,10 +16,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class NoteDAO {
-    private static NoteDAO instance;
+public class NoteModel {
+    private static NoteModel instance;
 
     private final PreparedStatement getAllNotesForGroupStatement;
     private final PreparedStatement createNoteStatement;
@@ -24,12 +29,16 @@ public class NoteDAO {
     private final PreparedStatement deleteNoteStatement;
     private final PreparedStatement getNewIdNoteStatement;
     private final PreparedStatement getAllNotesForAccountStatement;
-
     private final PreparedStatement addNewLabelForNoteStatement;
     private final PreparedStatement removeLabelsFromNote;
     private final PreparedStatement deleteNoteIdStatement;
 
-    private NoteDAO (Connection conn) throws SQLException {
+    ObservableList<Note> allNotes;
+    ObservableList<Note> currentNotes;
+
+    private NoteModel (Connection conn) throws SQLException {
+        this.currentNotes = FXCollections.observableArrayList();
+        this.allNotes = FXCollections.observableArrayList ();
 
         createNoteStatement = conn.prepareStatement("INSERT INTO notes (id, groupId, noteTitle, description, noteColor, image, dateCreated, dateUpdated) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         updateNotesStatement = conn.prepareStatement("UPDATE notes SET (noteTitle, description, noteColor, image, dateUpdated) " + "= (?,?,?,?,?) WHERE id = ?");
@@ -43,8 +52,8 @@ public class NoteDAO {
         deleteNoteIdStatement = conn.prepareStatement("DELETE FROM intertable WHERE noteId = ?");
     }
 
-    public static NoteDAO getInstance(Connection conn) throws SQLException {
-        if(instance == null) instance = new NoteDAO (conn);
+    public static NoteModel getInstance(Connection conn) throws SQLException {
+        if(instance == null) instance = new NoteModel (conn);
         return instance;
     }
 
@@ -200,4 +209,61 @@ public class NoteDAO {
             throwables.printStackTrace ();
         }
     }
+
+
+    public ObservableList<Note> getCurrentNotes () {
+        return currentNotes;
+    }
+
+    public ObservableList<Note> getAllNotes () {
+        return allNotes;
+    }
+
+    public void setAllNotes (ObservableList<Note> allNotes) {
+        this.allNotes = allNotes;
+    }
+
+    public void sortNotes(String sort) {
+        ArrayList<Note> list;
+        if(sort.equals (MyResourceBundle.getString ("LastAdded"))) {
+            list = new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getId).reversed ()));
+        } else if (sort.equals (MyResourceBundle.getString ("FirstAdded"))) {
+            list= new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getId)));
+        } else if(sort.equals (MyResourceBundle.getString ("LastUpdated"))) {
+            list = new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getDateUpdated).reversed ()));
+        } else if (sort.equals (MyResourceBundle.getString ("FirstUpdated"))) {
+            list = new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getDateUpdated)));
+        } else if (sort.equals (MyResourceBundle.getString ("ByNameAsc"))) {
+            list = new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getNoteTitle)));
+        } else if (sort.equals (MyResourceBundle.getString ("ByNameDesc"))) {
+            list = new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getNoteTitle).reversed ()));
+        } else if (sort.equals (MyResourceBundle.getString ("ByDescriptionAsc"))) {
+            list = new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getDescription)));
+        } else  {
+            list = new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getDescription).reversed ()));
+        }
+
+        currentNotes.clear ();
+        currentNotes.addAll (list);
+    }
+
+    public void searchNotes(String text) {
+        List<Note> list = allNotes.stream ().filter (note -> note.getNoteTitle ().toLowerCase ().contains (text.toLowerCase ()) ||
+                note.getDescription ().toLowerCase ().contains (text.toLowerCase ())).collect(Collectors.toList ());
+
+        currentNotes.clear ();
+        currentNotes.addAll (list);
+    }
+
+    public List<Note> getNotesForGroup(int id) {
+        return allNotes.stream ().filter (note -> note.getGroupId () == id).collect (Collectors.toList ());
+    }
+
+    public List<Note> getNotesForLabel(int id) {
+        return allNotes.stream().filter (note -> note.getLabels ().stream ()
+                .anyMatch (l -> l.getId () == id))
+                .collect(Collectors.toList ());
+    }
+
+
 }

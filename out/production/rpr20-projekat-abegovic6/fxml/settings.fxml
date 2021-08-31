@@ -195,11 +195,17 @@
                <font>
                   <Font size="1.0" />
                </font>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
             </Label>
             <Label fx:id="lastNameErrorLabel" minHeight="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <font>
                   <Font size="1.0" />
                </font>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
             </Label>
            </children>
        </GridPane>

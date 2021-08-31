@@ -1,30 +1,32 @@
 
-J	java:S108e")Either remove or fill this block of code.(ûï›±úÿÿÿÿ8ºûâ’·/
-E
-java:S1905á"'Remove this unnecessary cast to "Node".(£ß»š8µÜìÅ¸/
-U
-java:S1172ß"2Remove this unused method parameter "actionEvent".(İ˜Ëƒùÿÿÿÿ8àšëÅ¸/
-R
-java:S1066ñ"/Merge this if statement with the enclosing one.(´›ëÿÿÿÿÿ8óœâŸ¸/
+J	java:S108g")Either remove or fill this block of code.(ûï›±úÿÿÿÿ8„ÎË¸/
 ?
-java:S1643Á"Use a StringBuilder instead.(Ñşœáûÿÿÿÿ8óœâŸ¸/
-e
-java:S1128"HRemove this unused import 'java.util.concurrent.atomic.AtomicReference'.(×‡µó8›ş³Æ¸/
-¤
-java:S1186Û"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¬ë°¯üÿÿÿÿ8óœâŸ¸/
-t
-java:S3776X"RRefactor this method to reduce its Cognitive Complexity from 33 to the 15 allowed.(·òşÿÿÿÿ8ŸÏïû¶/
-M
-java:S1066Î"/Merge this if statement with the enclosing one.(’èÔ8óœâŸ¸/
-u
-java:S3776ÿ"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(³Ø†¼ûÿÿÿÿ8óœâŸ¸/
-k
-java:S2095Ğ"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8óœâŸ¸/
-?
-java:S1643¼"Use a StringBuilder instead.(àèŠæùÿÿÿÿ8óœâŸ¸/
-
-java:S1186ı"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(äûÕc8–Ç³Æ¸/
+java:S1643İ"Use a StringBuilder instead.(àèŠæùÿÿÿÿ8„ÎË¸/
 p
-java:S3776ß"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(šªó³8Æ½ä ¸/
+java:S3776ã"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(šªó³8„ÎË¸/
 J
-java:S1602Í",Remove useless curly braces around statement(Ñ³¢ê8óœâŸ¸/
+java:S1602Ñ",Remove useless curly braces around statement(Ñ³¢ê8„ÎË¸/
+t
+java:S3776Z"RRefactor this method to reduce its Cognitive Complexity from 33 to the 15 allowed.(·òşÿÿÿÿ8„ÎË¸/
+D
+java:S1905œ"'Remove this unnecessary cast to "Node".(É·¢y8„ÎË¸/
+k
+java:S2095ñ"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8„ÎË¸/
+E
+java:S1905†"'Remove this unnecessary cast to "Node".(£ß»š8„ÎË¸/
+u
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(³Ø†¼ûÿÿÿÿ8„ÎË¸/
+¤
+java:S1186ü"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¬ë°¯üÿÿÿÿ8„ÎË¸/
+e
+java:S1128"HRemove this unused import 'java.util.concurrent.atomic.AtomicReference'.(×‡µó8„ÎË¸/
+E
+java:S1905á"'Remove this unnecessary cast to "Node".(£ß»š8„ÎË¸/
+R
+java:S1066"/Merge this if statement with the enclosing one.(´›ëÿÿÿÿÿ8„ÎË¸/
+M
+java:S1066ë"/Merge this if statement with the enclosing one.(’èÔ8„ÎË¸/
+?
+java:S1643â"Use a StringBuilder instead.(Ñşœáûÿÿÿÿ8„ÎË¸/
+U
+java:S1172›"2Remove this unused method parameter "actionEvent".(µ¶Íòûÿÿÿÿ8„ÎË¸/

@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
+import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.Account;
 import javafx.application.HostServices;
@@ -19,7 +20,6 @@ import java.util.ResourceBundle;
 
 public class SignupController {
     private final Account user;
-    private final ResourceBundle resourceBundle;
     private final ProjectDAO projectDAO;
     private final HostServices hostServices;
 
@@ -52,10 +52,9 @@ public class SignupController {
     public Label lastNameErrorLabel;
 
 
-    public SignupController(ProjectDAO projectDAO, Account user, ResourceBundle resourceBundle, HostServices hostServices) {
+    public SignupController(ProjectDAO projectDAO, Account user, HostServices hostServices) {
         this.projectDAO = projectDAO;
         this.user = user;
-        this.resourceBundle = resourceBundle;
         this.hostServices = hostServices;
     }
 
@@ -107,7 +106,7 @@ public class SignupController {
     private void checkFirstName() {
         if(firstNameSignUpTextField.getText ().equals ("")) {
             isAlertNeeded = true;
-            firstNameErrorLabel.setText (resourceBundle.getString ("ThisCantBeEmpty"));
+            firstNameErrorLabel.setText ("*" + MyResourceBundle.getString ("ThisCantBeEmpty"));
             firstNameErrorLabel.getStyleClass ().add ("errorLabel");
             firstNameSignUpTextField.getStyleClass ().add ("turnRed");
         }
@@ -116,7 +115,7 @@ public class SignupController {
     private void checkLastName() {
         if(lastNameSignUpTextField.getText ().equals ("")) {
             isAlertNeeded = true;
-            lastNameErrorLabel.setText (resourceBundle.getString ("ThisCantBeEmpty"));
+            lastNameErrorLabel.setText ("*" + MyResourceBundle.getString ("ThisCantBeEmpty"));
             lastNameErrorLabel.getStyleClass ().add ("errorLabel");
             lastNameSignUpTextField.getStyleClass ().add ("turnRed");
         }
@@ -135,25 +134,27 @@ public class SignupController {
                 Stage oldStage  = (Stage) source.getScene().getWindow();
                 Stage newStage = new Stage();
 
-                MainController mainController = new MainController(projectDAO, user, resourceBundle, hostServices);
+                MainController mainController = new MainController(projectDAO, user, hostServices);
 
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"), resourceBundle);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"),
+                        MyResourceBundle.getResourceBundle ());
                 loader.setController(mainController);
 
-                newStage.setTitle(resourceBundle.getString("NotesTitle"));
+                newStage.setTitle(MyResourceBundle.getString("NotesTitle"));
                 newStage.setScene(new Scene(loader.load(), 1100, 600));
                 newStage.setMinHeight(600);
                 newStage.setMinWidth(1100);
 
                 Stage newUserGuideStage = new Stage();
 
-                HelpController helpController = new HelpController (resourceBundle);
+                HelpController helpController = new HelpController ();
 
 
-                FXMLLoader userGuideLoader = new FXMLLoader(getClass().getResource("/fxml/help.fxml"), resourceBundle);
+                FXMLLoader userGuideLoader = new FXMLLoader(getClass().getResource("/fxml/help.fxml"),
+                        MyResourceBundle.getResourceBundle ());
                 userGuideLoader.setController(helpController);
 
-                newUserGuideStage.setTitle(resourceBundle.getString("UserGuideTitle"));
+                newUserGuideStage.setTitle(MyResourceBundle.getString("UserGuideTitle"));
                 newUserGuideStage.setScene(new Scene(userGuideLoader.load(), 700, 500));
                 newUserGuideStage.setMinHeight(500);
                 newUserGuideStage.setMinWidth(700);
@@ -174,9 +175,9 @@ public class SignupController {
 
     private void openAlertMessage() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(resourceBundle.getString("Error"));
-        alert.setHeaderText(resourceBundle.getString("ProblemPreformingTheAction"));
-        alert.setContentText(resourceBundle.getString("PleaseTryAgain"));
+        alert.setTitle(MyResourceBundle.getString("Error"));
+        alert.setHeaderText(MyResourceBundle.getString("ProblemPreformingTheAction"));
+        alert.setContentText(MyResourceBundle.getString("PleaseTryAgain"));
 
         alert.showAndWait();
 
@@ -231,7 +232,7 @@ public class SignupController {
             isAlertNeeded = true;
             repeatPasswordSignUpPasswordField.getStyleClass().add("turnRed");
             repeatPasswordErrorLabel.getStyleClass().add("errorLabel");
-            repeatPasswordErrorLabel.setText("*" + resourceBundle.getString("PasswordsDontMatchHeaderError"));
+            repeatPasswordErrorLabel.setText("*" + MyResourceBundle.getString("PasswordsDontMatchHeaderError"));
             repeatPasswordSignUpPasswordField.setText("");
             passwordSignUpPasswordField.setText("");
 
@@ -244,12 +245,13 @@ public class SignupController {
             Stage oldStage  = (Stage) source.getScene().getWindow();
             Stage newStage = new Stage();
 
-            LoginController loginController = new LoginController(projectDAO, user, resourceBundle, hostServices);
+            LoginController loginController = new LoginController(projectDAO, user, hostServices);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"), resourceBundle);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"),
+                    MyResourceBundle.getResourceBundle ());
             loader.setController(loginController);
 
-            newStage.setTitle(resourceBundle.getString("LogInTitle"));
+            newStage.setTitle(MyResourceBundle.getString("LogInTitle"));
             newStage.setScene(new Scene(loader.load(), 1100, 600));
             newStage.setMinHeight(600);
             newStage.setMinWidth(1100);

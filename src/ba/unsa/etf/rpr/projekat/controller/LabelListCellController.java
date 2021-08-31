@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
-import ba.unsa.etf.rpr.projekat.controller.LabelController;
+import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.LabelColor;
 import ba.unsa.etf.rpr.projekat.model.Note;
@@ -17,12 +17,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.ResourceBundle;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.model.Label> {
-    private final ResourceBundle resourceBundle;
+
     private final ProjectDAO projectDAO;
     private final List<ba.unsa.etf.rpr.projekat.model.Label> labels;
     private final List<Note> notes;
@@ -40,8 +38,7 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.m
     private FXMLLoader mLLoader;
 
     public LabelListCellController (List<ba.unsa.etf.rpr.projekat.model.Label> labels, ProjectDAO projectDAO, List<Note> notes,
-                                    ResourceBundle resourceBundle, HostServices hostServices, NoteModel noteModel) {
-        this.resourceBundle = resourceBundle;
+                                    HostServices hostServices, NoteModel noteModel) {
         this.projectDAO = projectDAO;
         this.labels = labels;
         this.notes = notes;
@@ -120,13 +117,14 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.m
                     .anyMatch (l -> l.getId () == label.getId ()))
                     .collect(Collectors.toList ());
 
-            LabelController labelController = new LabelController(label, labels, notesForLabel, resourceBundle,
+            LabelController labelController = new LabelController(label, labels, notesForLabel,
                     hostServices);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/label.fxml"), resourceBundle);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/label.fxml"),
+                    MyResourceBundle.getResourceBundle ());
             loader.setController(labelController);
 
-            newStage.setTitle(resourceBundle.getString("LabelInformations"));
+            newStage.setTitle(MyResourceBundle.getString("LabelInformations"));
             newStage.setScene(new Scene(loader.load(), 700, 500));
             newStage.setMinHeight(500);
             newStage.setMinWidth(700);
@@ -141,8 +139,8 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.m
                     projectDAO.deleteLabel (label.getId ());
                     for(Note note : notesForLabel) {
                         notes.remove (note);
-                        if(noteModel.getNotes ().contains (note)) {
-                            noteModel.getNotes ().remove (note);
+                        if(noteModel.getCurrentNotes ().contains (note)) {
+                            noteModel.getCurrentNotes ().remove (note);
                         }
                     }
                     labels.remove (label);

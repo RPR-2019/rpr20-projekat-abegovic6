@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
+import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.model.*;
 import javafx.application.HostServices;
 import javafx.event.ActionEvent;
@@ -20,16 +21,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
 
 public class GroupController {
 
 
     private final List<Note> notes;
     private final HostServices hostServices;
-    private Group group;
+    private final Group group;
     private final List<Group> groups;
-    private final ResourceBundle resourceBundle;
     private GroupColorModel groupColorModel;
     private String color = null;
 
@@ -54,12 +53,10 @@ public class GroupController {
     @FXML
     public MenuBar groupMenuBar;
 
-    public GroupController(Group group, List<Group> groups, List<Note> notes, ResourceBundle resourceBundle,
-                           HostServices hostServices) {
+    public GroupController(Group group, List<Group> groups, List<Note> notes, HostServices hostServices) {
         this.group = group;
         this.groups = groups;
         this.notes = notes;
-        this.resourceBundle = resourceBundle;
         this.hostServices = hostServices;
     }
 
@@ -75,7 +72,7 @@ public class GroupController {
         });
 
         if(group.getId() == -2) {
-            groupsTitleLabel.setText(resourceBundle.getString("CreateANewGroup"));
+            groupsTitleLabel.setText(MyResourceBundle.getString("CreateANewGroup"));
             groupColorChoiceBox.getSelectionModel().selectFirst();
             groupMenuBar.setVisible (false);
         } else {
@@ -120,12 +117,12 @@ public class GroupController {
         String groupName = groupNameTextField.getText();
         if(groupName.length() == 0) {
             isAlertNeeded = true;
-            groupNameErrorLabel.setText(resourceBundle.getString("ThisCantBeEmpty"));
+            groupNameErrorLabel.setText(MyResourceBundle.getString("ThisCantBeEmpty"));
             groupNameErrorLabel.getStyleClass().add("errorLabel");
             groupNameTextField.getStyleClass().add("turnRed");
         } else if(groups.stream().anyMatch(g -> g.getGroupName().equals(groupName) && group.getId () != g.getId ())) {
             isAlertNeeded = true;
-            groupNameErrorLabel.setText(resourceBundle.getString("NewGroupNameError"));
+            groupNameErrorLabel.setText(MyResourceBundle.getString("NewGroupNameError"));
             groupNameErrorLabel.getStyleClass().add("errorLabel");
             groupNameTextField.getStyleClass().add("turnRed");
         }
@@ -133,7 +130,7 @@ public class GroupController {
         if(color == null) {
             isAlertNeeded = true;
             groupColorErrorLabel.getStyleClass().add("errorLabel");
-            groupColorErrorLabel.setText(resourceBundle.getString("GroupColorNotChosen"));
+            groupColorErrorLabel.setText(MyResourceBundle.getString("GroupColorNotChosen"));
         }
 
         if(isAlertNeeded) {
@@ -163,7 +160,7 @@ public class GroupController {
     }
 
     private void setEditFalse() {
-        groupsTitleLabel.setText(resourceBundle.getString("GroupInformation"));
+        groupsTitleLabel.setText(MyResourceBundle.getString("GroupInformation"));
         groupOkButton.setVisible (false);
         groupOkButton.setDisable (true);
         groupColorChoiceBox.setDisable (true);
@@ -173,9 +170,9 @@ public class GroupController {
 
     private void openAlertMessage() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(resourceBundle.getString("Error"));
-        alert.setHeaderText(resourceBundle.getString("ProblemPreformingTheAction"));
-        alert.setContentText(resourceBundle.getString("PleaseTryAgain"));
+        alert.setTitle(MyResourceBundle.getString("Error"));
+        alert.setHeaderText(MyResourceBundle.getString("ProblemPreformingTheAction"));
+        alert.setContentText(MyResourceBundle.getString("PleaseTryAgain"));
 
         alert.showAndWait();
 
@@ -183,14 +180,14 @@ public class GroupController {
 
     public void fileSave() {
         FileChooser izbornik = new FileChooser();
-        izbornik.setTitle(resourceBundle.getString ("ChooseFile"));
-        izbornik.getExtensionFilters().add(new FileChooser.ExtensionFilter(resourceBundle.getString ("TextFile"), "*.txt"));
+        izbornik.setTitle(MyResourceBundle.getString ("ChooseFile"));
+        izbornik.getExtensionFilters().add(new FileChooser.ExtensionFilter(MyResourceBundle.getString ("TextFile"), "*.txt"));
         File file = izbornik.showSaveDialog(groupColorChoiceBox.getScene().getWindow());
 
         if(file == null) return;
         try {
             FileWriter fileWriter = new FileWriter(file.getAbsolutePath());
-            fileWriter.write(group.writeInFile(notes, resourceBundle));
+            fileWriter.write(group.writeInFile(notes));
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -213,7 +210,7 @@ public class GroupController {
     }
 
     public void editEditNote() {
-        groupsTitleLabel.setText(resourceBundle.getString("UpdateGroup"));
+        groupsTitleLabel.setText(MyResourceBundle.getString("UpdateGroup"));
         groupOkButton.setVisible (true);
         groupOkButton.setDisable (false);
         groupColorChoiceBox.setDisable (false);
@@ -226,9 +223,9 @@ public class GroupController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initOwner(groupNameTextField.getContextMenu ());
         alert.initModality(Modality.WINDOW_MODAL);
-        alert.setTitle(resourceBundle.getString ("DeleteThis"));
-        alert.setHeaderText(resourceBundle.getString ("DeleteThis"));
-        alert.setContentText(resourceBundle.getString ("AreYouSure"));
+        alert.setTitle(MyResourceBundle.getString ("DeleteThis"));
+        alert.setHeaderText(MyResourceBundle.getString ("DeleteThis"));
+        alert.setContentText(MyResourceBundle.getString ("AreYouSure"));
 
         group.setDelete (false);
         Optional<ButtonType> result = alert.showAndWait();
@@ -246,13 +243,14 @@ public class GroupController {
         try {
             Stage newUserGuideStage = new Stage();
 
-            HelpController helpController = new HelpController (resourceBundle);
+            HelpController helpController = new HelpController ();
 
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/help.fxml"), resourceBundle);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/help.fxml"),
+                    ResourceBundle.getBundle ("Translation", MyResourceBundle.getLocale ()));
             loader.setController(helpController);
 
-            newUserGuideStage.setTitle(resourceBundle.getString("UserGuideTitle"));
+            newUserGuideStage.setTitle(MyResourceBundle.getString("UserGuideTitle"));
             newUserGuideStage.setScene(new Scene(loader.load(), 700, 500));
             newUserGuideStage.setMinHeight(500);
             newUserGuideStage.setMinWidth(700);
@@ -272,10 +270,11 @@ public class GroupController {
 
             aboutController.setHostServices (hostServices);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/about.fxml"), resourceBundle);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/about.fxml"),
+                    ResourceBundle.getBundle ("Translation", MyResourceBundle.getLocale ()));
             loader.setController(aboutController);
 
-            newStage.setTitle(resourceBundle.getString("about"));
+            newStage.setTitle(MyResourceBundle.getString("about"));
             newStage.setScene(new Scene (loader.load(), 700, 500));
             newStage.setMinHeight(500);
             newStage.setMinWidth(700);

@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.projekat.model;
 
+import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.util.List;
@@ -70,7 +71,6 @@ public class Group {
         this.groupName.set(groupName.substring(0, 1).toUpperCase() + groupName.substring(1));
     }
 
-
     public String getDescription() {
         return description.get();
     }
@@ -114,12 +114,12 @@ public class Group {
         return groupName.get();
     }
 
-    public String writeInFile (List<Note> notes, ResourceBundle resourceBundle) {
-        String string = resourceBundle.getString ("GroupId")  + id + "\n" + resourceBundle.getString ("GroupName")
-                + groupName.get () + "\n" + resourceBundle.getString ("GroupDescription") + description.get ()
-                + "\n----------\n" + resourceBundle.getString ("UserNotes") + "\n\n";
+    public String writeInFile (List<Note> notes) {
+        String string = MyResourceBundle.getString ("GroupId")  + id + "\n" + MyResourceBundle.getString ("GroupName")
+                + groupName.get () + "\n" + MyResourceBundle.getString ("GroupDescription") + description.get ()
+                + "\n----------\n" + MyResourceBundle.getString ("UserNotes") + "\n\n";
         for (Note note : notes) {
-            string += note.writeInFile (resourceBundle);
+            string += note.writeInFile ();
         }
 
         return string;

@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.projekat.model;
 
+import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.util.List;
@@ -11,7 +12,6 @@ public class Label {
     private final SimpleStringProperty labelName;
     private final SimpleStringProperty description;
     private final SimpleStringProperty labelColor;
-
     private boolean isUpdateNeeded;
     private boolean delete;
 
@@ -93,12 +93,12 @@ public class Label {
         this.labelColor.set(labelColor);
     }
 
-    public String writeInFile (List<Note> notes, ResourceBundle resourceBundle) {
-        String string = resourceBundle.getString ("LabelId") + id + "\n" + resourceBundle.getString ("LabelName") +
-                labelName.get () + "\n" + resourceBundle.getString ("LabelDescription") + description.get ()
-                + "\n----------\n" + resourceBundle.getString ("UserNotes") + "\n\n";
+    public String writeInFile (List<Note> notes) {
+        String string = MyResourceBundle.getString ("LabelId") + id + "\n" + MyResourceBundle.getString ("LabelName") +
+                labelName.get () + "\n" + MyResourceBundle.getString ("LabelDescription") + description.get ()
+                + "\n----------\n" + MyResourceBundle.getString ("UserNotes") + "\n\n";
         for (Note note : notes) {
-            string += note.writeInFile(resourceBundle);
+            string += note.writeInFile();
         }
 
         return string;

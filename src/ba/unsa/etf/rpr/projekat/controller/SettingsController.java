@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
+import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.Account;
 import javafx.application.HostServices;
@@ -16,7 +17,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.ResourceBundle;
 
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
@@ -25,7 +25,6 @@ public class SettingsController {
     public Account user;
     public final ProjectDAO projectDAO;
     private final HostServices hostServices;
-    public ResourceBundle resourceBundle;
 
     private boolean isAlertNeeded;
 
@@ -58,10 +57,9 @@ public class SettingsController {
     @FXML
     public RadioButton bosnian;
 
-    public SettingsController (Account user, ProjectDAO projectDAO, ResourceBundle resourceBundle, HostServices hostServices) {
+    public SettingsController (Account user, ProjectDAO projectDAO, HostServices hostServices) {
         this.user = user;
         this.projectDAO = projectDAO;
-        this.resourceBundle = resourceBundle;
         this.hostServices = hostServices;
     }
 
@@ -85,9 +83,9 @@ public class SettingsController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initOwner(firstNameSignUpTextField.getContextMenu ());
         alert.initModality(Modality.WINDOW_MODAL);
-        alert.setTitle(resourceBundle.getString ("DeleteThis"));
-        alert.setHeaderText(resourceBundle.getString ("DeleteAccount"));
-        alert.setContentText(resourceBundle.getString ("AreYouSure"));
+        alert.setTitle(MyResourceBundle.getString ("DeleteThis"));
+        alert.setHeaderText(MyResourceBundle.getString ("DeleteAccount"));
+        alert.setContentText(MyResourceBundle.getString ("AreYouSure"));
 
 
         Optional<ButtonType> result = alert.showAndWait();
@@ -99,12 +97,13 @@ public class SettingsController {
             Node n = (Node) actionEvent.getSource();
             Stage oldStage = (Stage) n.getScene().getWindow();
             user = new Account ();
-            LoginController loginController = new LoginController (projectDAO, user, resourceBundle, hostServices);
+            LoginController loginController = new LoginController (projectDAO, user, hostServices);
 
             Stage stage = new Stage ();
-            FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/login.fxml"), resourceBundle);
+            FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/login.fxml"),
+                    MyResourceBundle.getResourceBundle ());
             loader.setController(loginController);
-            stage.setTitle(resourceBundle.getString("LogInTitle"));
+            stage.setTitle(MyResourceBundle.getString("LogInTitle"));
             stage.setScene(new Scene(loader.load(), 1100, 600));
             stage.setMinHeight(600);
             stage.setMinWidth(1100);
@@ -122,10 +121,11 @@ public class SettingsController {
     public void toEnglish() {
         try {
             Locale.setDefault(new Locale("en", "US"));
-            resourceBundle = ResourceBundle.getBundle("Translation", Locale.getDefault ());
+            MyResourceBundle.setLocale (Locale.getDefault ());
             Stage stage = (Stage) emailAdressSignUpTextField.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/settings.fxml"), resourceBundle);
-            loader.setController(new SettingsController (user, projectDAO, resourceBundle, hostServices));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/settings.fxml"),
+                    MyResourceBundle.getResourceBundle ());
+            loader.setController(new SettingsController (user, projectDAO, hostServices));
             Parent root = loader.load();
             stage.setTitle("Korisnici");
             stage.setScene(new Scene (root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
@@ -138,10 +138,11 @@ public class SettingsController {
     public void toBosnian() {
         try {
             Locale.setDefault(new Locale("bs", "BA"));
-            resourceBundle = ResourceBundle.getBundle("Translation", Locale.getDefault ());
+            MyResourceBundle.setLocale (Locale.getDefault ());
             Stage stage = (Stage) emailAdressSignUpTextField.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/settings.fxml"), resourceBundle);
-            loader.setController(new SettingsController (user, projectDAO, resourceBundle, hostServices));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/settings.fxml"),
+                    MyResourceBundle.getResourceBundle ());
+            loader.setController(new SettingsController (user, projectDAO, hostServices));
             Parent root = loader.load();
             stage.setTitle("Korisnici");
             stage.setScene(new Scene (root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
@@ -156,12 +157,13 @@ public class SettingsController {
 
             Node n = (Node) actionEvent.getSource();
             Stage oldStage = (Stage) n.getScene().getWindow();
-            MainController mainController = new MainController(projectDAO, user, resourceBundle, hostServices);
+            MainController mainController = new MainController(projectDAO, user, hostServices);
 
             Stage stage = new Stage ();
-            FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/main.fxml"), resourceBundle);
+            FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/main.fxml"),
+                    MyResourceBundle.getResourceBundle ());
             loader.setController(mainController);
-            stage.setTitle(resourceBundle.getString("NotesTitle"));
+            stage.setTitle(MyResourceBundle.getString("NotesTitle"));
             stage.setScene(new Scene(loader.load(), 1100, 600));
             stage.setMinHeight(600);
             stage.setMinWidth(1100);
@@ -228,9 +230,9 @@ public class SettingsController {
 
     private void openAlertMessage() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(resourceBundle.getString("Error"));
-        alert.setHeaderText(resourceBundle.getString("ProblemPreformingTheAction"));
-        alert.setContentText(resourceBundle.getString("PleaseTryAgain"));
+        alert.setTitle(MyResourceBundle.getString("Error"));
+        alert.setHeaderText(MyResourceBundle.getString("ProblemPreformingTheAction"));
+        alert.setContentText(MyResourceBundle.getString("PleaseTryAgain"));
 
         alert.showAndWait();
 
@@ -239,7 +241,7 @@ public class SettingsController {
     private void checkFirstName() {
         if(firstNameSignUpTextField.getText ().equals ("")) {
             isAlertNeeded = true;
-            firstNameErrorLabel.setText (resourceBundle.getString ("ThisCantBeEmpty"));
+            firstNameErrorLabel.setText ("*" + MyResourceBundle.getString ("ThisCantBeEmpty"));
             firstNameErrorLabel.getStyleClass ().add ("errorLabel");
             firstNameSignUpTextField.getStyleClass ().add ("turnRed");
         }
@@ -248,7 +250,7 @@ public class SettingsController {
     private void checkLastName() {
         if(lastNameSignUpTextField.getText ().equals ("")) {
             isAlertNeeded = true;
-            lastNameErrorLabel.setText (resourceBundle.getString ("ThisCantBeEmpty"));
+            lastNameErrorLabel.setText ("*" + MyResourceBundle.getString ("ThisCantBeEmpty"));
             lastNameErrorLabel.getStyleClass ().add ("errorLabel");
             lastNameSignUpTextField.getStyleClass ().add ("turnRed");
         }
@@ -305,7 +307,7 @@ public class SettingsController {
             isAlertNeeded = true;
             repeatPasswordSignUpPasswordField.getStyleClass().add("turnRed");
             repeatPasswordErrorLabel.getStyleClass().add("errorLabel");
-            repeatPasswordErrorLabel.setText("*" + resourceBundle.getString("PasswordsDontMatchHeaderError"));
+            repeatPasswordErrorLabel.setText("*" + MyResourceBundle.getString("PasswordsDontMatchHeaderError"));
             repeatPasswordSignUpPasswordField.setText("");
             passwordSignUpPasswordField.setText("");
 

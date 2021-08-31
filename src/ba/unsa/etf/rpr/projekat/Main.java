@@ -19,14 +19,15 @@ public class Main extends Application {
         Account user = new Account();
         Locale.setDefault (new Locale ("bs"));
         Locale currentLocale = Locale.getDefault();
-        ResourceBundle resourceBundle = ResourceBundle.getBundle("Translation", currentLocale);
+
+        MyResourceBundle.setLocale (currentLocale);
 
         ProjectDAO projectDAO = ProjectDAO.getInstance();
-        LoginController loginController = new LoginController(projectDAO, user, resourceBundle, getHostServices ());
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"), resourceBundle);
+        LoginController loginController = new LoginController(projectDAO, user, getHostServices ());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"), MyResourceBundle.getResourceBundle ());
         loader.setController(loginController);
         Parent root = loader.load();
-        primaryStage.setTitle(resourceBundle.getString ("LogInTitle"));
+        primaryStage.setTitle(MyResourceBundle.getString ("LogInTitle"));
         primaryStage.setScene(new Scene(root, 1100, 600));
         primaryStage.setMinHeight(600);
         primaryStage.setMinWidth(1100);

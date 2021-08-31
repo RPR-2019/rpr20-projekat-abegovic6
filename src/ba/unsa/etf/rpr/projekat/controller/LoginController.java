@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
+import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.Account;
 import javafx.application.HostServices;
@@ -20,21 +21,19 @@ import java.util.ResourceBundle;
 
 public class LoginController {
     private final HostServices hostServices;
+    private final ProjectDAO projectDAO;
+    private final Account user;
+
     @FXML
     public PasswordField passwordLoginPasswordField;
     @FXML
     public TextField usernameLoginTextField;
 
-    private final ProjectDAO projectDAO;
-    private final Account user;
-    private final ResourceBundle resourceBundle;
 
-
-    public LoginController(ProjectDAO projectDAO, Account user, ResourceBundle resourceBundle, HostServices hostServices) {
+    public LoginController(ProjectDAO projectDAO, Account user, HostServices hostServices) {
         this.projectDAO = projectDAO;
         this.user = user;
         this.hostServices = hostServices;
-        this.resourceBundle = resourceBundle;
     }
 
     @FXML
@@ -74,18 +73,22 @@ public class LoginController {
 
         if(isUsernameCorrect && !isPasswordCorrect) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(resourceBundle.getString("PasswordError"));
-            alert.setHeaderText(resourceBundle.getString("PasswordNotCorrectHeaderError"));
-            alert.setContentText(resourceBundle.getString("PleaseTryAgain"));
+            alert.setTitle(MyResourceBundle.getString("PasswordError"));
+            alert.setHeaderText(MyResourceBundle.getString("PasswordNotCorrectHeaderError"));
+            alert.setContentText(MyResourceBundle.getString("PleaseTryAgain"));
+
+            passwordLoginPasswordField.setText ("");
 
             alert.showAndWait();
         }
 
         if(!isUsernameCorrect) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(resourceBundle.getString("UssernameError"));
-            alert.setHeaderText(resourceBundle.getString("UssernameDoesntExistHeaderError"));
-            alert.setContentText(resourceBundle.getString("UssernameDoesntExistContentError"));
+            alert.setTitle(MyResourceBundle.getString("UssernameError"));
+            alert.setHeaderText(MyResourceBundle.getString("UssernameDoesntExistHeaderError"));
+            alert.setContentText(MyResourceBundle.getString("UssernameDoesntExistContentError"));
+
+            passwordLoginPasswordField.setText ("");
 
             alert.showAndWait();
         }
@@ -102,12 +105,13 @@ public class LoginController {
             Stage oldStage  = (Stage) source.getScene().getWindow();
             Stage newStage = new Stage();
 
-            MainController mainController = new MainController(projectDAO, user, resourceBundle, hostServices);
+            MainController mainController = new MainController(projectDAO, user, hostServices);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"), resourceBundle);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main.fxml"),
+                    MyResourceBundle.getResourceBundle ());
             loader.setController(mainController);
 
-            newStage.setTitle(resourceBundle.getString("NotesTitle"));
+            newStage.setTitle(MyResourceBundle.getString("NotesTitle"));
             newStage.setScene(new Scene(loader.load(), 1100, 600));
             newStage.setMinHeight(600);
             newStage.setMinWidth(1100);
@@ -127,12 +131,13 @@ public class LoginController {
             Stage oldStage  = (Stage) source.getScene().getWindow();
             Stage newStage = new Stage();
 
-            SignupController signupController = new SignupController(projectDAO, user, resourceBundle, hostServices);
+            SignupController signupController = new SignupController(projectDAO, user, hostServices);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/signup.fxml"), resourceBundle);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/signup.fxml"),
+                    MyResourceBundle.getResourceBundle ());
             loader.setController(signupController);
 
-            newStage.setTitle(resourceBundle.getString("SignUpTitle"));
+            newStage.setTitle(MyResourceBundle.getString("SignUpTitle"));
             newStage.setScene(new Scene(loader.load(), 1100, 600));
             newStage.setMinHeight(600);
             newStage.setMinWidth(1100);

@@ -32,7 +32,9 @@
                 <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="224.19997558593752" />
               </columnConstraints>
               <rowConstraints>
+                  <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
                   <RowConstraints fillHeight="false" minHeight="0.0" valignment="CENTER" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
@@ -45,67 +47,67 @@
                   <RowConstraints minHeight="10.0" valignment="BASELINE" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TextField fx:id="firstNameSignUpTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                  <TextField fx:id="firstNameSignUpTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                      <GridPane.margin>
                         <Insets bottom="11.0" left="10.0" right="10.0" top="10.0" />
                      </GridPane.margin>
                   </TextField>
-                  <TextField fx:id="lastNameSignUpTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                  <TextField fx:id="lastNameSignUpTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                      <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </GridPane.margin>
                   </TextField>
-                  <TextField fx:id="usernameSignUpTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                  <TextField fx:id="usernameSignUpTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                      <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </GridPane.margin>
                   </TextField>
-                  <TextField fx:id="emailAdressSignUpTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                  <TextField fx:id="emailAdressSignUpTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                      <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </GridPane.margin>
                   </TextField>
-                  <PasswordField fx:id="passwordSignUpPasswordField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                  <PasswordField fx:id="passwordSignUpPasswordField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                      <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </GridPane.margin>
                   </PasswordField>
-                  <PasswordField fx:id="repeatPasswordSignUpPasswordField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                  <PasswordField fx:id="repeatPasswordSignUpPasswordField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="11" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
                      <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </GridPane.margin>
                   </PasswordField>
-                  <Label focusTraversable="false" styleClass="paragraph" text="%FirstName">
+                  <Label focusTraversable="false" styleClass="paragraph" text="%FirstName" GridPane.rowIndex="1">
                      <padding>
                         <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <Label focusTraversable="false" styleClass="paragraph" text="%LastName" GridPane.rowIndex="1">
+                  <Label focusTraversable="false" styleClass="paragraph" text="%LastName" GridPane.rowIndex="3">
                      <padding>
                         <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <Label focusTraversable="false" styleClass="paragraph" text="%Username" GridPane.rowIndex="3">
+                  <Label focusTraversable="false" styleClass="paragraph" text="%Username" GridPane.rowIndex="5">
                      <padding>
                         <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <Label focusTraversable="false" styleClass="paragraph" text="%EmailAdress" GridPane.rowIndex="5">
+                  <Label focusTraversable="false" styleClass="paragraph" text="%EmailAdress" GridPane.rowIndex="7">
                      <padding>
                         <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <Label focusTraversable="false" styleClass="paragraph" text="%Password" GridPane.rowIndex="7">
+                  <Label focusTraversable="false" styleClass="paragraph" text="%Password" GridPane.rowIndex="9">
                      <padding>
                         <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <Label focusTraversable="false" styleClass="paragraph" text="%RepeatPassword" GridPane.rowIndex="9">
+                  <Label focusTraversable="false" styleClass="paragraph" text="%RepeatPassword" GridPane.rowIndex="11">
                      <padding>
                         <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="usernameErrorLabel" minHeight="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <Label fx:id="usernameErrorLabel" minHeight="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <GridPane.margin>
                         <Insets left="10.0" />
                      </GridPane.margin>
@@ -113,7 +115,7 @@
                         <Font size="1.0" />
                      </font>
                   </Label>
-                  <Label fx:id="emailErrorLabel" minHeight="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <Label fx:id="emailErrorLabel" minHeight="0.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                      <GridPane.margin>
                         <Insets left="10.0" />
                      </GridPane.margin>
@@ -121,7 +123,7 @@
                         <Font size="1.0" />
                      </font>
                   </Label>
-                  <Label fx:id="passwordErrorLabel" minHeight="0.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                  <Label fx:id="passwordErrorLabel" minHeight="0.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                      <GridPane.margin>
                         <Insets left="10.0" />
                      </GridPane.margin>
@@ -129,7 +131,7 @@
                         <Font size="1.0" />
                      </font>
                   </Label>
-                  <Label fx:id="repeatPasswordErrorLabel" minHeight="0.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                  <Label fx:id="repeatPasswordErrorLabel" minHeight="0.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
                      <GridPane.margin>
                         <Insets left="10.0" />
                      </GridPane.margin>
@@ -141,13 +143,19 @@
                        <font>
                            <Font size="1.0" />
                        </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                    </Label>
                    <Label fx:id="lastNameErrorLabel" minHeight="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                        <font>
                            <Font size="1.0" />
                        </font>
+                     <GridPane.margin>
+                        <Insets left="10.0" />
+                     </GridPane.margin>
                    </Label>
-                  <ButtonBar focusTraversable="false" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="10">
+                  <ButtonBar focusTraversable="false" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="12">
                     <buttons>
                         <Label alignment="CENTER" focusTraversable="false" styleClass="paragraph" text="%SignupHaveAccount">
                            <padding>

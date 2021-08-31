@@ -1,11 +1,19 @@
 
-¤
-java:S1186¼"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(°«••üÿÿÿÿ8ÿ½ù·/
+U
+java:S1172Ô"2Remove this unused method parameter "actionEvent".(ÉçÅñøÿÿÿÿ8ÇÕİÉ¸/
 k
-java:S2095¯"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8˜Ó“›¸/
-
-java:S1186Ñ"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(äûÕc8ÿ½ù·/
+java:S2095²"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8˜Ó“›¸/
+V
+java:S1128"9Remove this unused import 'java.util.function.Predicate'.(ïÍ–¶8éµéÉ¸/
+E
+java:S1905Å"'Remove this unnecessary cast to "Node".(…ÃÚ„8î‚ÂÊ¸/
 ¤
-java:S1186¸"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¬ë°¯üÿÿÿÿ8ÿ½ù·/
+java:S1186¿"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(°«••üÿÿÿÿ8ÿ½ù·/
+U
+java:S1172Ã"2Remove this unused method parameter "actionEvent".(µ¶Íòûÿÿÿÿ8‹İÁÊ¸/
+¤
+java:S1186»"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¬ë°¯üÿÿÿÿ8ÿ½ù·/
+E
+java:S1905â"'Remove this unnecessary cast to "Node".(…ÃÚ„8îŞÉ¸/
 e
 java:S1128"CRemove this unused import 'ba.unsa.etf.rpr.projekat.model.Account'.(¥ıí¥ÿÿÿÿÿ8ö…›¸/

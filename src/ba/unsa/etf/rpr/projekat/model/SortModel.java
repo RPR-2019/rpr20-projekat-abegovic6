@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.projekat.model;
 
+import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,15 +9,13 @@ import java.util.ResourceBundle;
 
 public class SortModel {
 
-    private final ResourceBundle resourceBundle;
     ObservableList<String> sorting;
     SimpleStringProperty currentSorting;
 
 
-    public SortModel(ResourceBundle resourceBundle) {
+    public SortModel() {
         this.sorting = FXCollections.observableArrayList();
         currentSorting = new SimpleStringProperty();
-        this.resourceBundle = resourceBundle;
         fill();
     }
 
@@ -33,14 +32,14 @@ public class SortModel {
     }
 
     public void fill() {
-        sorting.add (resourceBundle.getString ("LastAdded"));
-        sorting.add (resourceBundle.getString ("FirstAdded"));
-        sorting.add (resourceBundle.getString ("LastUpdated"));
-        sorting.add (resourceBundle.getString ("FirstUpdated"));
-        sorting.add (resourceBundle.getString ("ByNameAsc"));
-        sorting.add (resourceBundle.getString ("ByNameDesc"));
-        sorting.add (resourceBundle.getString ("ByDescriptionAsc"));
-        sorting.add (resourceBundle.getString ("ByDescriptionDesc"));
+        sorting.add (MyResourceBundle.getString ("LastAdded"));
+        sorting.add (MyResourceBundle.getString ("FirstAdded"));
+        sorting.add (MyResourceBundle.getString ("LastUpdated"));
+        sorting.add (MyResourceBundle.getString ("FirstUpdated"));
+        sorting.add (MyResourceBundle.getString ("ByNameAsc"));
+        sorting.add (MyResourceBundle.getString ("ByNameDesc"));
+        sorting.add (MyResourceBundle.getString ("ByDescriptionAsc"));
+        sorting.add (MyResourceBundle.getString ("ByDescriptionDesc"));
 
     }
 

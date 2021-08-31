@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
+import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.model.GroupModel;
 import ba.unsa.etf.rpr.projekat.model.NoteColorModel;
 import ba.unsa.etf.rpr.projekat.model.*;
@@ -23,14 +24,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.function.Predicate;
 
 public class NoteController {
     private final Note note;
     private final List<Label> labels;
     private final List<Group> groups;
-    private final ResourceBundle resourceBundle;
     private final HostServices hostServices;
     private NoteColorModel noteColorModel;
     private String color = null;
@@ -67,12 +65,11 @@ public class NoteController {
     @FXML
     public Button imageButton;
 
-    public NoteController(Note note, List<Label> labels, List<Group> groups, ResourceBundle resourceBundle,
+    public NoteController(Note note, List<Label> labels, List<Group> groups,
                           HostServices hostServices) {
         this.note = note;
         this.labels = labels;
         this.groups = groups;
-        this.resourceBundle = resourceBundle;
         this.hostServices = hostServices;
     }
 
@@ -91,7 +88,7 @@ public class NoteController {
 
         if(labels.isEmpty ()) {
             javafx.scene.control.Label label = new javafx.scene.control.Label ();
-            label.setText (resourceBundle.getString ("DontHaveAnyLabels"));
+            label.setText (MyResourceBundle.getString ("DontHaveAnyLabels"));
             label.getStyleClass ().add ("paragraph");
             noteFlowPane.getChildren ().add (label);
         }
@@ -113,7 +110,7 @@ public class NoteController {
         });
 
         if(note.getId() == -2) {
-            noteTitleLabel.setText(resourceBundle.getString("CreateANewNote"));
+            noteTitleLabel.setText(MyResourceBundle.getString("CreateANewNote"));
             noteColorChoiceBox.getSelectionModel().selectFirst();
             noteGroupChoiceBox.getSelectionModel().selectFirst();
             notesMenuBar.setVisible (false);
@@ -134,7 +131,7 @@ public class NoteController {
     }
 
     private void setEditFalse() {
-        noteTitleLabel.setText(resourceBundle.getString("NoteInformation"));
+        noteTitleLabel.setText(MyResourceBundle.getString("NoteInformation"));
         noteOkButton.setVisible (false);
         noteOkButton.setDisable (true);
         imageButton.setDisable (true);
@@ -149,7 +146,7 @@ public class NoteController {
 
     public void getPictureForNote(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle(resourceBundle.getString ("GetImage"));
+        fileChooser.setTitle(MyResourceBundle.getString ("GetImage"));
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("JPG", "*.jpg"),
                 new FileChooser.ExtensionFilter("PNG", "*.png")
@@ -208,11 +205,11 @@ public class NoteController {
         String noteName = noteNameTextField.getText();
         if(noteName.length() == 0) {
             isAlertNeeded = true;
-            noteNameErrorLabel.setText(resourceBundle.getString("ThisCantBeEmpty"));
+            noteNameErrorLabel.setText(MyResourceBundle.getString("ThisCantBeEmpty"));
             noteNameErrorLabel.getStyleClass().add("errorLabel");
             noteNameTextField.getStyleClass().add("turnRed");
         } else if(groups.stream().anyMatch(g -> g.getGroupName().equals(noteName))) {
-            noteNameErrorLabel.setText(resourceBundle.getString("NewGroupNameError"));
+            noteNameErrorLabel.setText(MyResourceBundle.getString("NewGroupNameError"));
             noteNameErrorLabel.getStyleClass().add("errorLabel");
             noteNameTextField.getStyleClass().add("turnRed");
         }
@@ -220,13 +217,13 @@ public class NoteController {
         if(color == null) {
             isAlertNeeded = true;
             noteColorErrorLabel.getStyleClass().add("errorLabel");
-            noteColorErrorLabel.setText(resourceBundle.getString("NoteColorNotChosen"));
+            noteColorErrorLabel.setText(MyResourceBundle.getString("NoteColorNotChosen"));
         }
 
         if(groupName == null) {
             isAlertNeeded = true;
             noteGroupErrorLabel.getStyleClass().add("errorLabel");
-            noteGroupErrorLabel.setText(resourceBundle.getString("NoteGroupNotChosen"));
+            noteGroupErrorLabel.setText(MyResourceBundle.getString("NoteGroupNotChosen"));
         }
 
         if(isAlertNeeded) {
@@ -273,9 +270,9 @@ public class NoteController {
 
     private void openAlertMessage () {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(resourceBundle.getString("Error"));
-        alert.setHeaderText(resourceBundle.getString("ProblemPreformingTheAction"));
-        alert.setContentText(resourceBundle.getString("PleaseTryAgain"));
+        alert.setTitle(MyResourceBundle.getString("Error"));
+        alert.setHeaderText(MyResourceBundle.getString("ProblemPreformingTheAction"));
+        alert.setContentText(MyResourceBundle.getString("PleaseTryAgain"));
 
         alert.showAndWait();
     }
@@ -289,14 +286,14 @@ public class NoteController {
 
     public void fileSave() {
         FileChooser izbornik = new FileChooser();
-        izbornik.setTitle(resourceBundle.getString ("ChooseFile"));
-        izbornik.getExtensionFilters().add(new FileChooser.ExtensionFilter(resourceBundle.getString ("TextFile"), "*.txt"));
+        izbornik.setTitle(MyResourceBundle.getString ("ChooseFile"));
+        izbornik.getExtensionFilters().add(new FileChooser.ExtensionFilter(MyResourceBundle.getString ("TextFile"), "*.txt"));
         File file = izbornik.showSaveDialog(noteFlowPane.getScene().getWindow());
 
         if(file == null) return;
         try {
             FileWriter fileWriter = new FileWriter(file.getAbsolutePath());
-            fileWriter.write(note.writeInFile(resourceBundle));
+            fileWriter.write(note.writeInFile());
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -318,7 +315,7 @@ public class NoteController {
     }
 
     public void editEditNote() {
-        noteTitleLabel.setText(resourceBundle.getString("UpdateNote"));
+        noteTitleLabel.setText(MyResourceBundle.getString("UpdateNote"));
         noteOkButton.setVisible (true);
         noteOkButton.setDisable (false);
         imageButton.setDisable (false);
@@ -334,9 +331,9 @@ public class NoteController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initOwner(noteTitleLabel.getContextMenu ());
         alert.initModality(Modality.WINDOW_MODAL);
-        alert.setTitle(resourceBundle.getString ("DeleteThis"));
-        alert.setHeaderText(resourceBundle.getString ("DeleteThis"));
-        alert.setContentText(resourceBundle.getString ("AreYouSure"));
+        alert.setTitle(MyResourceBundle.getString ("DeleteThis"));
+        alert.setHeaderText(MyResourceBundle.getString ("DeleteThis"));
+        alert.setContentText(MyResourceBundle.getString ("AreYouSure"));
 
         note.setDelete (false);
         Optional<ButtonType> result = alert.showAndWait();
@@ -354,13 +351,14 @@ public class NoteController {
         try {
             Stage newStage = new Stage();
 
-            HelpController helpController = new HelpController (resourceBundle);
+            HelpController helpController = new HelpController ();
 
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/help.fxml"), resourceBundle);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/help.fxml"),
+                    MyResourceBundle.getResourceBundle ());
             loader.setController(helpController);
 
-            newStage.setTitle(resourceBundle.getString("UserGuideTitle"));
+            newStage.setTitle(MyResourceBundle.getString("UserGuideTitle"));
             newStage.setScene(new Scene(loader.load(), 700, 500));
             newStage.setMinHeight(500);
             newStage.setMinWidth(700);
@@ -380,10 +378,11 @@ public class NoteController {
 
             aboutController.setHostServices (hostServices);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/about.fxml"), resourceBundle);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/about.fxml"),
+                    MyResourceBundle.getResourceBundle ());
             loader.setController(aboutController);
 
-            newStage.setTitle(resourceBundle.getString("about"));
+            newStage.setTitle(MyResourceBundle.getString("about"));
             newStage.setScene(new Scene (loader.load(), 700, 500));
             newStage.setMinHeight(500);
             newStage.setMinWidth(700);

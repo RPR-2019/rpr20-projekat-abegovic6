@@ -1,64 +1,62 @@
 package ba.unsa.etf.rpr.projekat.model;
 
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class NoteModel {
-    ObservableList<Note> notes;
-    SimpleObjectProperty<Note> currentNote;
-
-    SimpleObjectProperty<List<Note>> simpleListObjectProperty;
+    ObservableList<Note> allNotes;
+    ObservableList<Note> currentNotes;
 
     public NoteModel() {
-        this.notes = FXCollections.observableArrayList();
-        currentNote = new SimpleObjectProperty<> ();
-        simpleListObjectProperty = new SimpleObjectProperty<> ();
+        this.currentNotes = FXCollections.observableArrayList();
+        this.allNotes = FXCollections.observableArrayList ();
     }
 
-    public List<Note> getSimpleListObjectProperty () {
-        return simpleListObjectProperty.get ();
+    public ObservableList<Note> getCurrentNotes () {
+        return currentNotes;
     }
 
-    public SimpleObjectProperty<List<Note>> simpleListObjectPropertyProperty () {
-        return simpleListObjectProperty;
+    public void setCurrentNotes (ObservableList<Note> currentNotes) {
+        this.currentNotes = currentNotes;
     }
 
-    public void setSimpleListObjectProperty (List<Note> simpleListObjectProperty) {
-        this.simpleListObjectProperty.set (simpleListObjectProperty);
+    public void sortNotes(String sort) {
+        ArrayList<Note> list;
+        if(sort.equals (MyResourceBundle.getString ("LastAdded"))) {
+            list = new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getId).reversed ()));
+        } else if (sort.equals (MyResourceBundle.getString ("FirstAdded"))) {
+            list= new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getId)));
+        } else if(sort.equals (MyResourceBundle.getString ("LastUpdated"))) {
+            list = new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getDateUpdated).reversed ()));
+        } else if (sort.equals (MyResourceBundle.getString ("FirstUpdated"))) {
+            list = new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getDateUpdated)));
+        } else if (sort.equals (MyResourceBundle.getString ("ByNameAsc"))) {
+            list = new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getNoteTitle)));
+        } else if (sort.equals (MyResourceBundle.getString ("ByNameDesc"))) {
+            list = new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getNoteTitle).reversed ()));
+        } else if (sort.equals (MyResourceBundle.getString ("ByDescriptionAsc"))) {
+            list = new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getDescription)));
+        } else  {
+            list = new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getDescription).reversed ()));
+        }
+
+        currentNotes.clear ();
+        currentNotes.addAll (list);
     }
 
-    public Note getCurrentNote () {
-        return currentNote.get();
+    public void searchNotes(String text) {
+        List<Note> list = allNotes.stream ().filter (note -> note.getNoteTitle ().toLowerCase ().contains (text.toLowerCase ()) ||
+                note.getDescription ().toLowerCase ().contains (text.toLowerCase ())).collect(Collectors.toList ());
+
+        currentNotes.clear ();
+        currentNotes.addAll (list);
     }
-
-    public SimpleObjectProperty<Note> currentNoteProperty () {
-        return currentNote;
-    }
-
-    public void setCurrentNote (Note note) {
-        this.currentNote.set(note);
-    }
-
-
-    public ObservableList<Note> getNotes () {
-        return notes;
-    }
-
-    public void setNotes (ObservableList<Note> notes) {
-        this.notes = notes;
-    }
-
-    //    public String getNameFromId(int id) {
-//        return noteList.stream().filter(g -> g.getId() == id).findFirst().get().getGroupName();
-//    }
-//
-//    public int getIdFromName(String name) {
-//        return noteList.stream().filter(g -> g.getGroupName().equals(name)).findFirst().get().getId();
-//    }
 
 
 }

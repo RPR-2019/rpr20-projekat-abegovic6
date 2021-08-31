@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
-import ba.unsa.etf.rpr.projekat.controller.GroupController;
+import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.dao.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.Group;
 import ba.unsa.etf.rpr.projekat.model.GroupColor;
@@ -18,14 +18,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.ResourceBundle;
-import java.util.function.Consumer;
-import java.util.function.ToDoubleBiFunction;
 import java.util.stream.Collectors;
 
 public class GroupListCellController extends ListCell<Group> {
     private final List<Group> groups;
-    private final ResourceBundle resourceBundle;
     private final ProjectDAO projectDAO;
     private final List<Note> notes;
     private final HostServices hostServices;
@@ -41,9 +37,8 @@ public class GroupListCellController extends ListCell<Group> {
 
     private FXMLLoader mLLoader;
 
-    public GroupListCellController (List<Group> groups, ProjectDAO projectDAO, List<Note> notes, ResourceBundle resourceBundle,
+    public GroupListCellController (List<Group> groups, ProjectDAO projectDAO, List<Note> notes,
                                     HostServices hostServices, NoteModel noteModel) {
-        this.resourceBundle = resourceBundle;
         this.projectDAO = projectDAO;
         this.groups = groups;
         this.notes = notes;
@@ -118,13 +113,14 @@ public class GroupListCellController extends ListCell<Group> {
 
             List<Note> notesForGroup = notes.stream().filter (note -> note.getGroupId () == group.getId ()).collect(Collectors.toList ());
 
-            GroupController groupController = new GroupController(group, groups, notesForGroup, resourceBundle,
+            GroupController groupController = new GroupController(group, groups, notesForGroup,
                     hostServices);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/group.fxml"), resourceBundle);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/group.fxml"),
+                    MyResourceBundle.getResourceBundle ());
             loader.setController(groupController);
 
-            newStage.setTitle(resourceBundle.getString("GroupInformations"));
+            newStage.setTitle(MyResourceBundle.getString("GroupInformations"));
             newStage.setScene(new Scene(loader.load(), 700, 500));
             newStage.setMinHeight(500);
             newStage.setMinWidth(700);
@@ -139,8 +135,8 @@ public class GroupListCellController extends ListCell<Group> {
                     projectDAO.deleteGroup (group.getId ());
                     for(Note note : notesForGroup) {
                         notes.remove (note);
-                        if(noteModel.getNotes ().contains (note)) {
-                            noteModel.getNotes ().remove (note);
+                        if(noteModel.getCurrentNotes ().contains (note)) {
+                            noteModel.getCurrentNotes ().remove (note);
                         }
                     }
                     groups.remove (group);

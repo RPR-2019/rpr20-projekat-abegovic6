@@ -7,14 +7,12 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class HelpController {
 
-    private final ResourceBundle resourceBundle;
     private List<Image> images;
     private SimpleObjectProperty<Integer> currentImageId;
 
@@ -27,8 +25,7 @@ public class HelpController {
     @FXML
     public Label helpLabel;
 
-    public HelpController (ResourceBundle resourceBundle) {
-        this.resourceBundle = resourceBundle;
+    public HelpController () {
     }
 
     @FXML

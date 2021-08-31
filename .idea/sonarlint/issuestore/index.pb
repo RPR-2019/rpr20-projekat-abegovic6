@@ -55,8 +55,6 @@ g
 7out/production/rpr20-projekat-abegovic6/fxml/label.fxml,c\4\c48423c17aaa110e6fab38ea319f390c7d862d65
 l
 <src/ba/unsa/etf/rpr/projekat/controller/LabelController.java,4\9\49dc681ab3b6f077feb331156d6db47c04a25443
-I
-resources/fxml/login.fxml,8\2\82c591fb13b8d561beda7548c6e5f0df218b604c
 n
 >out/production/rpr20-projekat-abegovic6/fxml/listviewitem.fxml,7\9\793d5c2f819d6b9c4a9c2ba6affdf46bc0ea6294
 `
@@ -99,3 +97,15 @@ k
 ;src/ba/unsa/etf/rpr/projekat/controller/HelpController.java,7\5\75ee980f1bfc7c62594766fd34ee213858cad15e
 o
 ?src/ba/unsa/etf/rpr/projekat/controller/SettingsController.java,3\d\3d4ed35e5d55052fcacce70a939c910f2323d4d0
+V
+&resources/Translation_en_US.properties,a\6\a6142ffa65b83fb245a9695029380a844a46d322
+I
+resources/fxml/group.fxml,a\3\a3c2e1aa41ba72f9b4247f25c56b4095f38ae2f0
+I
+resources/fxml/label.fxml,d\d\dda1ea7deebaa2b192b69125fb770986016937f5
+H
+resources/fxml/note.fxml,3\0\308988374b9bb7b799170653d58cef377f780557
+f
+6out/production/rpr20-projekat-abegovic6/css/images.css,3\f\3fad232f120c546d0a272f7ed2f28a924504906e
+H
+resources/css/images.css,d\1\d12ea8bb723d817bec4d8a303d13c98ae74d0fb7

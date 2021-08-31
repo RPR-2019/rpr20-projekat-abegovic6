@@ -1,5 +1,7 @@
 package ba.unsa.etf.rpr.projekat.model;
 
+import ba.unsa.etf.rpr.projekat.MyResourceBundle;
+
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -14,46 +16,43 @@ public class Account {
     private String userName;
     private String emailAdress;
     private String password;
-    private final ResourceBundle resourceBundle;
 
     public Account () {
-        Locale currentLocale = Locale.getDefault ();
-        resourceBundle = ResourceBundle.getBundle ("Translation", currentLocale);
     }
 
     private void validateEmailAddress (String emailAddress) {
         Pattern regexPattern = Pattern.compile ("^[(a-zA-Z-0-9-\\_\\+\\.)]+@[(a-z-A-z)]+\\.[(a-zA-z)]{2,3}$");
         Matcher regMatcher = regexPattern.matcher (emailAddress);
         if (!regMatcher.matches ())
-            throw new IllegalArgumentException (resourceBundle.getString ("InvalidEmailAddress"));
+            throw new IllegalArgumentException (MyResourceBundle.getString ("InvalidEmailAddress"));
     }
 
     private void validateUserName (String userName) {
         if (userName.length () < 5)
-            throw new IllegalArgumentException (resourceBundle.getString ("UssernameLenghtError"));
+            throw new IllegalArgumentException (MyResourceBundle.getString ("UssernameLenghtError"));
 
     }
 
 
     private void validatePassword (String password) {
         if (password.length () > 25 || password.length () < 8) {
-            throw new IllegalArgumentException (resourceBundle.getString ("PasswordLengthError"));
+            throw new IllegalArgumentException (MyResourceBundle.getString ("PasswordLengthError"));
         }
         String upperCaseChars = "(.*[A-Z].*)";
         if (!password.matches (upperCaseChars)) {
-            throw new IllegalArgumentException (resourceBundle.getString ("PasswordUppercaseError"));
+            throw new IllegalArgumentException (MyResourceBundle.getString ("PasswordUppercaseError"));
         }
         String lowerCaseChars = "(.*[a-z].*)";
         if (!password.matches (lowerCaseChars)) {
-            throw new IllegalArgumentException (resourceBundle.getString ("PasswordLowercaseError"));
+            throw new IllegalArgumentException (MyResourceBundle.getString ("PasswordLowercaseError"));
         }
         String numbers = "(.*[0-9].*)";
         if (!password.matches (numbers)) {
-            throw new IllegalArgumentException (resourceBundle.getString ("PasswordNumberError"));
+            throw new IllegalArgumentException (MyResourceBundle.getString ("PasswordNumberError"));
         }
         String specialChars = "(.*[@,#,$,%].*$)";
         if (!password.matches (specialChars)) {
-            throw new IllegalArgumentException (resourceBundle.getString ("PasswordSpecialCharacterError"));
+            throw new IllegalArgumentException (MyResourceBundle.getString ("PasswordSpecialCharacterError"));
         }
     }
 

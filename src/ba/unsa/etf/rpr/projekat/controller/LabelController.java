@@ -1,7 +1,7 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
+import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.model.LabelColorModel;
-import ba.unsa.etf.rpr.projekat.model.Account;
 import ba.unsa.etf.rpr.projekat.model.LabelColor;
 import ba.unsa.etf.rpr.projekat.model.Note;
 import javafx.application.HostServices;
@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.function.Predicate;
 
 public class LabelController {
 
@@ -30,7 +29,6 @@ public class LabelController {
     private final HostServices hostServices;
     private ba.unsa.etf.rpr.projekat.model.Label label;
     private final List<ba.unsa.etf.rpr.projekat.model.Label> labels;
-    private final ResourceBundle resourceBundle;
     private LabelColorModel labelColorModel;
     private String color = null;
     @FXML
@@ -55,11 +53,10 @@ public class LabelController {
     public Button labelCancelButton;
 
     public LabelController(ba.unsa.etf.rpr.projekat.model.Label label, List<ba.unsa.etf.rpr.projekat.model.Label> labels,
-                           List<Note> notes, ResourceBundle resourceBundle, HostServices hostServices) {
+                           List<Note> notes, HostServices hostServices) {
         this.label = label;
         this.labels = labels;
         this.notes = notes;
-        this.resourceBundle = resourceBundle;
         this.hostServices = hostServices;
 
     }
@@ -76,7 +73,7 @@ public class LabelController {
         });
 
         if(label.getId() == -2) {
-            labelTitleLabel.setText(resourceBundle.getString("CreateANewLabel"));
+            labelTitleLabel.setText(MyResourceBundle.getString("CreateANewLabel"));
             labelColorChoiceBox.getSelectionModel ().selectFirst ();
             labelMenuBar.setVisible (false);
         } else {
@@ -96,7 +93,7 @@ public class LabelController {
     }
 
     private void setEditFalse() {
-        labelTitleLabel.setText(resourceBundle.getString("LabelInformation"));
+        labelTitleLabel.setText(MyResourceBundle.getString("LabelInformation"));
         labelOkButton.setVisible (false);
         labelOkButton.setDisable (true);
         labelColorChoiceBox.setDisable (true);
@@ -127,12 +124,12 @@ public class LabelController {
         String groupName = labelNameTextField.getText();
         if(groupName.length() == 0) {
             isAlertNeeded = true;
-            labelNameErrorLabel.setText(resourceBundle.getString("ThisCantBeEmpty"));
+            labelNameErrorLabel.setText(MyResourceBundle.getString("ThisCantBeEmpty"));
             labelNameErrorLabel.getStyleClass().add("errorLabel");
             labelNameTextField.getStyleClass().add("turnRed");
         } else if(labels.stream().anyMatch(g -> g.getLabelName().equals(groupName) && g.getId () != label.getId ())) {
             isAlertNeeded = true;
-            labelNameErrorLabel.setText(resourceBundle.getString("NewLabelNameError"));
+            labelNameErrorLabel.setText(MyResourceBundle.getString("NewLabelNameError"));
             labelNameErrorLabel.getStyleClass().add("errorLabel");
             labelNameTextField.getStyleClass().add("turnRed");
         }
@@ -140,7 +137,7 @@ public class LabelController {
         if(color == null) {
             isAlertNeeded = true;
             labelColorErrorLabel.getStyleClass().add("errorLabel");
-            labelColorErrorLabel.setText(resourceBundle.getString("LabelColorNotChosen"));
+            labelColorErrorLabel.setText(MyResourceBundle.getString("LabelColorNotChosen"));
         }
 
         if(isAlertNeeded) {
@@ -159,9 +156,9 @@ public class LabelController {
 
     private void openAlertMessage() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(resourceBundle.getString("Error"));
-        alert.setHeaderText(resourceBundle.getString("ProblemPreformingTheAction"));
-        alert.setContentText(resourceBundle.getString("PleaseTryAgain"));
+        alert.setTitle(MyResourceBundle.getString("Error"));
+        alert.setHeaderText(MyResourceBundle.getString("ProblemPreformingTheAction"));
+        alert.setContentText(MyResourceBundle.getString("PleaseTryAgain"));
 
         alert.showAndWait();
 
@@ -169,14 +166,14 @@ public class LabelController {
 
     public void fileSave() {
         FileChooser izbornik = new FileChooser();
-        izbornik.setTitle(resourceBundle.getString ("ChooseFile"));
-        izbornik.getExtensionFilters().add(new FileChooser.ExtensionFilter(resourceBundle.getString ("TextFile"), "*.txt"));
+        izbornik.setTitle(MyResourceBundle.getString ("ChooseFile"));
+        izbornik.getExtensionFilters().add(new FileChooser.ExtensionFilter(MyResourceBundle.getString ("TextFile"), "*.txt"));
         File file = izbornik.showSaveDialog(labelColorChoiceBox.getScene().getWindow());
 
         if(file == null) return;
         try {
             FileWriter fileWriter = new FileWriter(file.getAbsolutePath());
-            fileWriter.write(label.writeInFile(notes, resourceBundle));
+            fileWriter.write(label.writeInFile(notes));
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -200,7 +197,7 @@ public class LabelController {
     }
 
     public void editEditNote() {
-        labelTitleLabel.setText(resourceBundle.getString("UpdateLabel"));
+        labelTitleLabel.setText(MyResourceBundle.getString("UpdateLabel"));
         labelOkButton.setVisible (true);
         labelOkButton.setDisable (false);
         labelColorChoiceBox.setDisable (false);
@@ -213,9 +210,9 @@ public class LabelController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initOwner(labelOkButton.getContextMenu ());
         alert.initModality(Modality.WINDOW_MODAL);
-        alert.setTitle(resourceBundle.getString ("DeleteThis"));
-        alert.setHeaderText(resourceBundle.getString ("DeleteThis"));
-        alert.setContentText(resourceBundle.getString ("AreYouSure"));
+        alert.setTitle(MyResourceBundle.getString ("DeleteThis"));
+        alert.setHeaderText(MyResourceBundle.getString ("DeleteThis"));
+        alert.setContentText(MyResourceBundle.getString ("AreYouSure"));
 
         label.setDelete (false);
         Optional<ButtonType> result = alert.showAndWait();
@@ -232,13 +229,14 @@ public class LabelController {
         try {
             Stage newStage = new Stage();
 
-            HelpController helpController = new HelpController (resourceBundle);
+            HelpController helpController = new HelpController ();
 
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/help.fxml"), resourceBundle);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/help.fxml"),
+                    MyResourceBundle.getResourceBundle ());
             loader.setController(helpController);
 
-            newStage.setTitle(resourceBundle.getString("UserGuideTitle"));
+            newStage.setTitle(MyResourceBundle.getString("UserGuideTitle"));
             newStage.setScene(new Scene(loader.load(), 700, 500));
             newStage.setMinHeight(500);
             newStage.setMinWidth(700);
@@ -258,10 +256,11 @@ public class LabelController {
 
             aboutController.setHostServices (hostServices);
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/about.fxml"), resourceBundle);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/about.fxml"),
+                    MyResourceBundle.getResourceBundle ());
             loader.setController(aboutController);
 
-            newStage.setTitle(resourceBundle.getString("about"));
+            newStage.setTitle(MyResourceBundle.getString("about"));
             newStage.setScene(new Scene (loader.load(), 700, 500));
             newStage.setMinHeight(500);
             newStage.setMinWidth(700);

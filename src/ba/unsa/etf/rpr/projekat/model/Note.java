@@ -1,5 +1,7 @@
 package ba.unsa.etf.rpr.projekat.model;
 
+import ba.unsa.etf.rpr.projekat.MyResourceBundle;
+
 import java.io.File;
 import java.io.InputStream;
 import java.time.LocalDateTime;
@@ -42,6 +44,8 @@ public class Note {
 
     public Note() {
         labels = new ArrayList<>();
+        dateUpdated = LocalDateTime.now ();
+        dateCreated = LocalDateTime.now ();
 
     }
 
@@ -130,11 +134,11 @@ public class Note {
         return Objects.hash(id);
     }
 
-    public String writeInFile (ResourceBundle resourceBundle) {
-        String string = resourceBundle.getString ("NoteId") + id + "\n" + resourceBundle.getString ("GroupId")
-                + groupId + "\n" + resourceBundle.getString ("NoteTitle")+ noteTitle + "\n" +
-                resourceBundle.getString ("NoteText") + description
-                + "\n----------\n" + resourceBundle.getString ("NoteLabels") + "\n \n";
+    public String writeInFile () {
+        String string = MyResourceBundle.getString ("NoteId") + id + "\n" + MyResourceBundle.getString ("GroupId")
+                + groupId + "\n" + MyResourceBundle.getString ("NoteTitle")+ noteTitle + "\n" +
+                MyResourceBundle.getString ("NoteText") + description
+                + "\n----------\n" + MyResourceBundle.getString ("NoteLabels") + "\n \n";
         for(Label label : labels) {
             string += label.getLabelName () + "\n";
         }

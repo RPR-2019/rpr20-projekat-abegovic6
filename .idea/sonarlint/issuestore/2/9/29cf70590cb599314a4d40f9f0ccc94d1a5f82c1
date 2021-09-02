@@ -1,32 +1,26 @@
 
-J	java:S108g")Either remove or fill this block of code.(ûï›±úÿÿÿÿ8„ÎË¸/
-?
-java:S1643İ"Use a StringBuilder instead.(àèŠæùÿÿÿÿ8„ÎË¸/
-p
-java:S3776ã"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(šªó³8„ÎË¸/
-J
-java:S1602Ñ",Remove useless curly braces around statement(Ñ³¢ê8„ÎË¸/
+E
+java:S1905ç"'Remove this unnecessary cast to "Node".(£ß»š8Ã…í¹/
 t
-java:S3776Z"RRefactor this method to reduce its Cognitive Complexity from 33 to the 15 allowed.(·òşÿÿÿÿ8„ÎË¸/
-D
-java:S1905œ"'Remove this unnecessary cast to "Node".(É·¢y8„ÎË¸/
-k
-java:S2095ñ"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8„ÎË¸/
-E
-java:S1905†"'Remove this unnecessary cast to "Node".(£ß»š8„ÎË¸/
-u
-java:S3776"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(³Ø†¼ûÿÿÿÿ8„ÎË¸/
-¤
-java:S1186ü"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¬ë°¯üÿÿÿÿ8„ÎË¸/
-e
-java:S1128"HRemove this unused import 'java.util.concurrent.atomic.AtomicReference'.(×‡µó8„ÎË¸/
-E
-java:S1905á"'Remove this unnecessary cast to "Node".(£ß»š8„ÎË¸/
-R
-java:S1066"/Merge this if statement with the enclosing one.(´›ëÿÿÿÿÿ8„ÎË¸/
-M
-java:S1066ë"/Merge this if statement with the enclosing one.(’èÔ8„ÎË¸/
+java:S3776["RRefactor this method to reduce its Cognitive Complexity from 33 to the 15 allowed.(·òşÿÿÿÿ8·Ò«ë¹/
+J
+java:S1602ˆ",Remove useless curly braces around statement(Ñ³¢ê8·Ò«ë¹/
 ?
-java:S1643â"Use a StringBuilder instead.(Ñşœáûÿÿÿÿ8„ÎË¸/
+java:S1643Ã"Use a StringBuilder instead.(æÏÜÅùÿÿÿÿ8Ã…í¹/
+Z
+java:S1128"8Remove this unused import 'java.util.stream.Collectors'.(Óóº´úÿÿÿÿ8Æ´í¹/
+Z	java:S106}"9Replace this use of System.out or System.err by a logger.(İšÃËÿÿÿÿÿ8Ğªéí¹/
+¤
+java:S1186İ"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¬ë°¯üÿÿÿÿ8Ã…í¹/
+U	java:S106~"9Replace this use of System.out or System.err by a logger.(­¬éß8ÊÒéí¹/
+k
+java:S2095Ò"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8Ã…í¹/
+:
+java:S1643¾"Use a StringBuilder instead.(Úİ™‡8Ã…í¹/
+J	java:S108g")Either remove or fill this block of code.(ûï›±úÿÿÿÿ8·Ò«ë¹/
+u
+java:S3776‚"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(³Ø†¼ûÿÿÿÿ8Á¤¢í¹/
+D
+java:S1905ş"'Remove this unnecessary cast to "Node".(É·¢y8Ã…í¹/
 U
-java:S1172›"2Remove this unused method parameter "actionEvent".(µ¶Íòûÿÿÿÿ8„ÎË¸/
+java:S1172ı"2Remove this unused method parameter "actionEvent".(µ¶Íòûÿÿÿÿ8Ã…í¹/

@@ -150,15 +150,7 @@ public class GroupModel {
         try {
             deleteGroupStatement.setInt (1, id);
             deleteGroupStatement.executeUpdate ();
-
-            allGroups.remove (getGroupFromAllGroups (id));
             stringGroups.remove (getGroupFromStringGroups (id));
-
-            NoteModel noteModel = ProjectDAO.getInstance ().getNoteModel ();
-            List<Note> notes = noteModel.getNotesForGroup (id);
-            for(Note note : notes) {
-                noteModel.deleteNote (note.getId ());
-            }
         } catch (SQLException throwables) {
             throwables.printStackTrace ();
             return false;

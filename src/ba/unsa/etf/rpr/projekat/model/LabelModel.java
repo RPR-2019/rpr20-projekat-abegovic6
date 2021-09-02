@@ -169,16 +169,6 @@ public class LabelModel {
             deleteLabelStatement.executeUpdate ();
             deleteLabelIdStatement.setInt (1, id);
             deleteLabelIdStatement.executeUpdate ();
-
-            Optional<Label> label = allLabels.stream ().filter (l -> l.getId () == id).findFirst ();
-            if(label.isPresent ()) {
-                allLabels.remove (label.get ());
-                NoteModel noteModel = ProjectDAO.getInstance ().getNoteModel ();
-                for(Note note : noteModel.getNotesForLabel (id)) {
-                    noteModel.getCurrentNotes ().remove (note);
-                }
-            }
-
         } catch (SQLException throwables) {
             throwables.printStackTrace ();
         }

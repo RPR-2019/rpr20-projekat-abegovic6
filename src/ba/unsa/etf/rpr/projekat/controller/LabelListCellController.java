@@ -23,6 +23,7 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.j
     private final ProjectDAO projectDAO;
     private final LabelModel labelModel;
     private final NoteModel noteModel;
+    private final List<ba.unsa.etf.rpr.projekat.javabean.Label> labels;
     @FXML
     public Label groupItemDescriptionLabel;
     @FXML
@@ -34,10 +35,11 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.j
 
     private FXMLLoader mLLoader;
 
-    public LabelListCellController () {
+    public LabelListCellController (List<ba.unsa.etf.rpr.projekat.javabean.Label> labels) {
         this.projectDAO = ProjectDAO.getInstance ();
         this.labelModel = projectDAO.getLabelModel ();
         this.noteModel = projectDAO.getNoteModel ();
+        this.labels = labels;
     }
 
     @Override
@@ -126,6 +128,10 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.j
                 }
                 if(label.isDelete ()) {
                     projectDAO.deleteLabel (label.getId ());
+                    for(Note note : noteModel.getNotesForLabel (label.getId ())) {
+                        noteModel.getCurrentNotes ().remove (note);
+                    }
+                    labels.remove (label);
                 }
 
             });

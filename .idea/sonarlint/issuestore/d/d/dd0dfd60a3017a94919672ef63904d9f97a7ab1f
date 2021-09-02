@@ -1,19 +1,17 @@
 
-k
-java:S2095¢"MUse try-with-resources or close this "FileInputStream" in a "finally" clause.(†š­î8±¬¢¸/
 U
-java:S1172¹"2Remove this unused method parameter "actionEvent".(µ¶Íòûÿÿÿÿ8ĞŞÂÊ¸/
-k
-java:S2095ª"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8±¬¢¸/
+java:S1172¶"2Remove this unused method parameter "actionEvent".(µ¶Íòûÿÿÿÿ8ôìÔë¹/
 D
-java:S1905Û"'Remove this unnecessary cast to "Node".(“ğ‹88…‡ÚÉ¸/
+java:S1905Ø"'Remove this unnecessary cast to "Node".(“ğ‹88ôìÔë¹/
+k
+java:S2095"MUse try-with-resources or close this "FileInputStream" in a "finally" clause.(†š­î8ôìÔë¹/
+k
+java:S2095§"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8ôìÔë¹/
+D
+java:S1905¸"'Remove this unnecessary cast to "Node".(“ğ‹88ôìÔë¹/
 I
-java:S1602f",Remove useless curly braces around statement(ıœĞ…8±¬¢¸/
+java:S1602b",Remove useless curly braces around statement(ıœĞ…8ôìÔë¹/
 ¤
-java:S1186³"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¬ë°¯üÿÿÿÿ8±¬¢¸/
+java:S1186°"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¬ë°¯üÿÿÿÿ8ôìÔë¹/
 U
-java:S1172–"2Remove this unused method parameter "actionEvent".(É·û¥ùÿÿÿÿ8±¬¢¸/
-D
-java:S1905»"'Remove this unnecessary cast to "Node".(“ğ‹88¼úÂÊ¸/
-V
-java:S1128"9Remove this unused import 'java.util.function.Predicate'.(ïÍ–¶8ô¨ÁÉ¸/
+java:S1172’"2Remove this unused method parameter "actionEvent".(É·û¥ùÿÿÿÿ8ôìÔë¹/

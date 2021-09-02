@@ -43,4 +43,7 @@
          </VBox.margin>
       </Label>
    </children>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
 </VBox>

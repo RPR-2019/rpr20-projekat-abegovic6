@@ -1,12 +1,12 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
+import ba.unsa.etf.rpr.projekat.javabean.Note;
 import ba.unsa.etf.rpr.projekat.model.GroupModel;
 import ba.unsa.etf.rpr.projekat.model.NoteModel;
 import ba.unsa.etf.rpr.projekat.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.javabean.Group;
 import ba.unsa.etf.rpr.projekat.javabean.GroupColor;
-import ba.unsa.etf.rpr.projekat.javabean.Note;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,11 +17,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 public class GroupListCellController extends ListCell<Group> {
     private final ProjectDAO projectDAO;
+    private final List<Group> groups;
     private final NoteModel noteModel;
-    private final GroupModel groupModel;
 
     @FXML
     public Label groupItemDescriptionLabel;
@@ -33,10 +34,10 @@ public class GroupListCellController extends ListCell<Group> {
     private Group group;
     private FXMLLoader mLLoader;
 
-    public GroupListCellController () {
+    public GroupListCellController (List<Group> groups) {
         this.projectDAO = ProjectDAO.getInstance ();
-        this.noteModel = this.projectDAO.getNoteModel ();
-        this.groupModel = this.projectDAO.getGroupModel ();
+        this.noteModel = projectDAO.getNoteModel ();
+        this.groups = groups;
     }
 
     @Override
@@ -123,6 +124,10 @@ public class GroupListCellController extends ListCell<Group> {
                 }
                 if(group.isDelete ()) {
                     projectDAO.deleteGroup (group.getId ());
+                    for(Note note : projectDAO.getAllNotesForGroup (group.getId ())) {
+                        noteModel.deleteNote (note.getId ());
+                    }
+                    groups.remove (group);
                 }
 
             });

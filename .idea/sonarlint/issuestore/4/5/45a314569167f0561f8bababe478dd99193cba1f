@@ -1,10 +1,10 @@
 
-Z
-java:S1128"8Remove this unused import 'java.util.function.Consumer'.(Ì†ƒÔùÿÿÿÿ8º³©Ê¸/
-V	java:S110"<This class has 9 parents which is greater than 5 authorized.(¸„æÊüÿÿÿÿ
+Q	java:S110"<This class has 9 parents which is greater than 5 authorized.(¹ë™ø
 o
-java:S37765"RRefactor this method to reduce its Cognitive Complexity from 26 to the 15 allowed.(»ËŸñ8º³©Ê¸/
-o
-java:S1128"TRemove this unnecessary import: same package classes are always implicitly imported.(¹×ë®ûÿÿÿÿ
-O
-java:S1172q"2Remove this unused method parameter "actionEvent".(ñœÂ8º³©Ê¸/
+java:S3776,"RRefactor this method to reduce its Cognitive Complexity from 26 to the 15 allowed.(æ¬çÚ8º³©Ê¸/
+M
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8¿í¹/
+`
+java:S1128"CRemove this unused import 'ba.unsa.etf.rpr.projekat.javabean.Note'.(éÂÜö8¿í¹/
+W
+java:S1128	"5Remove this unused import 'javafx.event.ActionEvent'.(î•¯¼ıÿÿÿÿ8³Å¿í¹/

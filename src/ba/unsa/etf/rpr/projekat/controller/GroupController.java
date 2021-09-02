@@ -223,7 +223,7 @@ public class GroupController {
 
     }
 
-    public void editDelete(ActionEvent actionEvent) {
+    public void editDelete() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initOwner(groupNameTextField.getContextMenu ());
         alert.initModality(Modality.WINDOW_MODAL);
@@ -237,7 +237,7 @@ public class GroupController {
             group.setDelete (true);
         }
 
-        Node n = (Node) groupNameTextField;
+        Node n = groupNameTextField;
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
 

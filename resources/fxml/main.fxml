@@ -56,6 +56,9 @@
                </items>
             </Menu>
          </menus>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </MenuBar>
       <VBox GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.rowSpan="2147483647" GridPane.vgrow="ALWAYS">
          <children>
@@ -145,11 +148,17 @@
                      <toggleGroup>
                         <ToggleGroup fx:id="groupOrLabel" />
                      </toggleGroup>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </RadioButton>
                   <RadioButton fx:id="labelRadioButton" mnemonicParsing="false" onAction="#changeToLabels" styleClass="paragraph" text="%Label" toggleGroup="$groupOrLabel" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </RadioButton>
                </children>
             </HBox>

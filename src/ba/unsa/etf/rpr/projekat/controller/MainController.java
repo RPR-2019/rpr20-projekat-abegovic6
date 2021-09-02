@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -104,9 +105,11 @@ public class MainController {
 
                 } else {
                     for (Note remitem : c.getRemoved()) {
+                        System.out.println ("udje?");
                         hideTheNode (remitem);
                     }
                     for (Note additem : c.getAddedSubList()) {
+                        System.out.println ("udje ovdje?");
                         showTheNode (additem);
                     }
                 }
@@ -117,13 +120,11 @@ public class MainController {
 
         groupListView = new ListView<> ();
         groupListView.setItems (groupModel.getAllGroups ());
-        groupListView.setCellFactory (listView -> new GroupListCellController ());
+        groupListView.setCellFactory (listView -> new GroupListCellController (groupModel.getAllGroups ()));
         groupListView.getSelectionModel ().selectedItemProperty().addListener((obs, oldGroup, newGroup) -> {
             if(newGroup != null) {
                 noteModel.getCurrentNotes ().clear ();
                 noteModel.getCurrentNotes ().addAll (noteModel.getNotesForGroup (newGroup.getId ()));
-                System.out.println (noteModel.getAllNotes ().size ());
-                System.out.println (noteModel.getCurrentNotes ().size ());
                 var selected = sortNotesChoiceBox.getSelectionModel ().selectedItemProperty ().get ();
                 if (selected != null) noteModel.sortNotes (selected);
             }
@@ -132,7 +133,7 @@ public class MainController {
 
         labelListView = new ListView<>();
         labelListView.setItems(labelModel.getAllLabels ());
-        labelListView.setCellFactory(listView -> new LabelListCellController ());
+        labelListView.setCellFactory(listView -> new LabelListCellController (labelModel.getAllLabels ()));
         labelListView.getSelectionModel ().selectedItemProperty ().addListener ((obs, oldLabel, newLabel) -> {
             if(newLabel != null) {
                 noteModel.getCurrentNotes ().clear ();
@@ -260,6 +261,8 @@ public class MainController {
         gridPane.add (noteId, 0, 2);
 
         gridPane.setId ("id" + note.getId ());
+
+        gridPane.setCursor (Cursor.HAND);
 
         gridPane.setOnMouseClicked (mouseEvent -> {
             opetNoteDetails (note);
@@ -394,9 +397,9 @@ public class MainController {
         } else {
             try {
                 Stage newStage = new Stage ();
+
                 Note note = new Note ();
                 note.setId (-2);
-
                 NoteController noteController = new NoteController (note);
 
                 FXMLLoader loader = new FXMLLoader (getClass ().getResource ("/fxml/note.fxml"),
@@ -412,8 +415,8 @@ public class MainController {
 
                 newStage.setOnHiding (windowEvent -> {
                     if (note.getId () == -1) {
-                        nodes.add (getNoteBlock (note));
                         projectDAO.createNote (note);
+                        nodes.add (getNoteBlock (note));
                         if(groupListView.getSelectionModel ().selectedItemProperty ().get () != null &&
                                 groupListView.getSelectionModel ().selectedItemProperty ().get ().getId () == note.getGroupId ())
                             noteModel.getCurrentNotes ().add (note);

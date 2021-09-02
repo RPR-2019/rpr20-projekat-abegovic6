@@ -140,10 +140,9 @@ public class NoteModel {
             createNoteStatement.setBytes (6, note.getImage ());
             createNoteStatement.setString (7, localeDateTimeToString (LocalDateTime.now ()));
             createNoteStatement.setString (8, localeDateTimeToString (LocalDateTime.now ()));
+            createNoteStatement.executeUpdate();
 
             setLabelListForNote (note.getId (), note.getLabels ());
-
-            createNoteStatement.executeUpdate();
 
             allNotes.add (note);
         } catch (SQLException throwables) {

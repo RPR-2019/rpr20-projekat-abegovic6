@@ -1,12 +1,8 @@
 
-]	java:S110"<This class has 9 parents which is greater than 5 authorized.(›şÒ´ÿÿÿÿÿ8æêöµ/
-v
-java:S1128"TRemove this unnecessary import: same package classes are always implicitly imported.(İ­µÿÿÿÿÿ8¸Ìöœ¸/
-d
-java:S1128"BRemove this unused import 'java.util.function.ToDoubleBiFunction'.(¿äû€ùÿÿÿÿ8’¾ˆ¸/
-t
-java:S37767"RRefactor this method to reduce its Cognitive Complexity from 26 to the 15 allowed.(öÍÃàıÿÿÿÿ8î¢¸/
-Z
-java:S1128"8Remove this unused import 'java.util.function.Consumer'.(Ì†ƒÔùÿÿÿÿ8¿®Ê¸/
 O
-java:S1172q"2Remove this unused method parameter "actionEvent".(ñœÂ8î¢¸/
+java:S1172e"2Remove this unused method parameter "actionEvent".(ñœÂ8·µ‚é¹/
+t
+java:S3776+"RRefactor this method to reduce its Cognitive Complexity from 26 to the 15 allowed.(öÍÃàıÿÿÿÿ8·µ‚é¹/
+]	java:S110"<This class has 9 parents which is greater than 5 authorized.(›şÒ´ÿÿÿÿÿ8·µ‚é¹/
+`
+java:S1128	"CRemove this unused import 'ba.unsa.etf.rpr.projekat.javabean.Note'.(éÂÜö8œúøì¹/

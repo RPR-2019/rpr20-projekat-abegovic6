@@ -30,7 +30,6 @@ public class NoteController {
     private final Note note;
     private final LabelModel labelModel;
     private final GroupModel groupModel;
-    private final ProjectDAO projectDAO;
 
     private NoteColorModel noteColorModel;
     private String color = null;
@@ -66,7 +65,7 @@ public class NoteController {
     public Button imageButton;
 
     public NoteController(Note note) {
-        this.projectDAO = ProjectDAO.getInstance ();
+        ProjectDAO projectDAO = ProjectDAO.getInstance ();
         this.note = note;
         this.labelModel = projectDAO.getLabelModel ();
         this.groupModel = projectDAO.getGroupModel ();
@@ -74,7 +73,6 @@ public class NoteController {
 
     @FXML
     public void initialize () {
-
         for(Label label : labelModel.getAllLabels ()) {
             CheckBox checkBox = new CheckBox();
             checkBox.setText(label.getLabelName());
@@ -92,7 +90,6 @@ public class NoteController {
             noteFlowPane.getChildren ().add (label);
         }
 
-
         noteGroupChoiceBox.setItems(groupModel.getGroups());
 
         groupModel.currentGroupProperty().addListener((obp, oldName, newName) -> {
@@ -101,7 +98,6 @@ public class NoteController {
 
         noteColorModel = new NoteColorModel();
         noteColorChoiceBox.setItems(noteColorModel.getColors());
-
         noteColorModel.currentColorProperty().addListener((obp, oldColor, newColor) -> {
             String hex = NoteColor.valueOf(newColor).getHexCode();
             changeColor(hex);
@@ -123,7 +119,6 @@ public class NoteController {
                         (n -> n.getId ().equals ("labelId" + label.getId ())).findAny ();
                 node.ifPresent (value -> ((CheckBox) value).setSelected (true));
             }
-
             setEditFalse ();
         }
 
@@ -208,6 +203,7 @@ public class NoteController {
             noteNameErrorLabel.getStyleClass().add("errorLabel");
             noteNameTextField.getStyleClass().add("turnRed");
         } else if(groupModel.getAllGroups ().stream().anyMatch(g -> g.getGroupName().equals(noteName))) {
+            isAlertNeeded = true;
             noteNameErrorLabel.setText(MyResourceBundle.getString("NewGroupNameError"));
             noteNameErrorLabel.getStyleClass().add("errorLabel");
             noteNameTextField.getStyleClass().add("turnRed");
@@ -228,11 +224,9 @@ public class NoteController {
         if(isAlertNeeded) {
             openAlertMessage();
         } else if(note.getId() == -2){
-
-            setTheNoteatributes (noteName);
             note.setId(-1);
             note.setUpdateNeeded(false);
-
+            setTheNoteatributes (noteName);
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();

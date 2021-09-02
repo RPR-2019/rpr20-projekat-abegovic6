@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
+import ba.unsa.etf.rpr.projekat.PrintReport;
 import ba.unsa.etf.rpr.projekat.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.model.*;
 import ba.unsa.etf.rpr.projekat.javabean.*;
@@ -24,6 +25,7 @@ import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import net.sf.jasperreports.engine.JRException;
 
 import java.io.*;
 import java.util.*;
@@ -477,7 +479,28 @@ public class MainController {
 
     }
 
-    public void filePrint() {
+    public void printNotes() {
+        try {
+            new PrintReport ().showReport(projectDAO.getConnection (), "note");
+        } catch (JRException e1) {
+            e1.printStackTrace();
+        }
+
+    }
+    public void printLabels() {
+        try {
+            new PrintReport ().showReport(projectDAO.getConnection (), "label");
+        } catch (JRException e1) {
+            e1.printStackTrace();
+        }
+
+    }
+    public void printGroups() {
+        try {
+            new PrintReport ().showReport(projectDAO.getConnection (), "group");
+        } catch (JRException e1) {
+            e1.printStackTrace();
+        }
 
     }
 

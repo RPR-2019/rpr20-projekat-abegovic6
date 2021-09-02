@@ -37,7 +37,6 @@
                            <accelerator>
                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator></MenuItem>
-                       <MenuItem id="menuItemPrint" onAction="#filePrint" text="%Print" />
                        <SeparatorMenuItem mnemonicParsing="false" />
                        <MenuItem onAction="#fileExit" styleClass="menuItem" text="%Exit" />
                    </items>
@@ -60,6 +59,9 @@
                    </items>
                </Menu>
            </menus>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
        </MenuBar>
       <Label fx:id="groupsTitleLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="heading" text="%CreateANewGroup" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <GridPane.margin>

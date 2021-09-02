@@ -91,6 +91,10 @@ public class ProjectDAO {
 
     }
 
+    public Connection getConnection () {
+        return connection;
+    }
+
     // ------------------------------------------------------------------------------- //
 
     // ACCOUNT

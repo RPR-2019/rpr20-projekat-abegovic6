@@ -8,33 +8,43 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
+
 
 
 public class LoginController {
     private final ProjectDAO projectDAO;
-    private static Account user;
+
 
     @FXML
     public PasswordField passwordLoginPasswordField;
     @FXML
     public TextField usernameLoginTextField;
+    @FXML
+    public RadioButton english;
+    @FXML
+    public RadioButton bosnian;
 
 
     public LoginController() {
         this.projectDAO = ProjectDAO.getInstance ();
-        this.user = AccountModel.getCurrentUser ();
     }
 
     @FXML
     public void initialize () {
+        if(Locale.getDefault ().getLanguage ().equals ("en"))
+            english.setSelected (true);
+        else bosnian.setSelected (true);
 
 
     }
@@ -44,7 +54,7 @@ public class LoginController {
         boolean isPasswordCorrect = false;
         boolean isUsernameCorrect = false;
 
-        user.setId(-1);
+        AccountModel.getCurrentUser ().setId(-1);
 
         if(accounts != null) {
             for (Account account : accounts) {
@@ -53,12 +63,12 @@ public class LoginController {
                     isUsernameCorrect = true;
                     isPasswordCorrect = true;
 
-                    user.setId(account.getId());
-                    user.setFirstName(account.getFirstName());
-                    user.setLastName(account.getLastName());
-                    user.setEmailAdress(account.getEmailAdress());
-                    user.setUserName(account.getUserName());
-                    user.setPassword(account.getPassword());
+                    AccountModel.getCurrentUser ().setId(account.getId());
+                    AccountModel.getCurrentUser ().setFirstName(account.getFirstName());
+                    AccountModel.getCurrentUser ().setLastName(account.getLastName());
+                    AccountModel.getCurrentUser ().setEmailAdress(account.getEmailAdress());
+                    AccountModel.getCurrentUser ().setUserName(account.getUserName());
+                    AccountModel.getCurrentUser ().setPassword(account.getPassword());
                     break;
                 }
                 if(account.getUserName().equals(usernameLoginTextField.getText())) {
@@ -90,7 +100,7 @@ public class LoginController {
             alert.showAndWait();
         }
 
-        if (user.getId() != -1) {
+        if (AccountModel.getCurrentUser ().getId() != -1) {
             opetNotesPage(actionEvent);
         }
 
@@ -146,6 +156,45 @@ public class LoginController {
             e.printStackTrace();
         }
 
+    }
+
+    public void toEnglish() {
+        try {
+            Locale.setDefault(new Locale("en", "US"));
+            MyResourceBundle.setLocale (Locale.getDefault ());
+            Stage stage = (Stage) usernameLoginTextField.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"),
+                    MyResourceBundle.getResourceBundle ());
+            loader.setController(new LoginController ());
+            Parent root = loader.load();
+            stage.setTitle(MyResourceBundle.getString ("LogInTitle"));
+            stage.setScene(new Scene(root, 1100, 600));
+            stage.setMinHeight(600);
+            stage.setMinWidth(1100);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void toBosnian() {
+        try {
+            Locale.setDefault(new Locale("bs", "BA"));
+            MyResourceBundle.setLocale (Locale.getDefault ());
+            Stage stage = (Stage) usernameLoginTextField.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"),
+                    MyResourceBundle.getResourceBundle ());
+            loader.setController(new LoginController ());
+            Parent root = loader.load();
+            stage.setTitle(MyResourceBundle.getString ("LogInTitle"));
+            stage.setScene(new Scene(root, 1100, 600));
+            stage.setMinHeight(600);
+            stage.setMinWidth(1100);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

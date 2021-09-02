@@ -32,7 +32,13 @@
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
-                  <MenuItem id="menuItemPrint" onAction="#filePrint" text="%Print" />
+                  <Menu id="menuItemPrint" text="%Print">
+                    <items>
+                      <MenuItem id="menuItemPrint" onAction="#printNotes" text="%PrintNotes" />
+                        <MenuItem id="menuItemPrint" onAction="#printGroups" text="%PrintGroups" />
+                        <MenuItem id="menuItemPrint" onAction="#printLabels" text="%PrintLabels" />
+                    </items>
+                  </Menu>
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem id="menuItemSettings" onAction="#fileSettings" text="%Settings" />
                   <SeparatorMenuItem mnemonicParsing="false" />
@@ -57,7 +63,7 @@
             </Menu>
          </menus>
          <cursor>
-            <Cursor fx:constant="HAND" />
+            <Cursor fx:constant="DEFAULT" />
          </cursor>
       </MenuBar>
       <VBox GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.rowSpan="2147483647" GridPane.vgrow="ALWAYS">

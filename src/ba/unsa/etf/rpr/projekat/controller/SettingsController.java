@@ -123,7 +123,7 @@ public class SettingsController {
                     MyResourceBundle.getResourceBundle ());
             loader.setController(new SettingsController ());
             Parent root = loader.load();
-            stage.setTitle("Korisnici");
+            stage.setTitle(MyResourceBundle.getString ("SettingsTitle"));
             stage.setScene(new Scene (root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             stage.show();
         } catch (IOException e) {
@@ -140,7 +140,7 @@ public class SettingsController {
                     MyResourceBundle.getResourceBundle ());
             loader.setController(new SettingsController ());
             Parent root = loader.load();
-            stage.setTitle("Korisnici");
+            stage.setTitle(MyResourceBundle.getString ("SettingsTitle"));
             stage.setScene(new Scene (root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             stage.show();
         } catch (IOException e) {

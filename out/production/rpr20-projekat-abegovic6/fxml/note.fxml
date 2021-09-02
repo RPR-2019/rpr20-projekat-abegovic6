@@ -40,7 +40,6 @@
                      <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator></MenuItem>
-                  <MenuItem id="menuItemPrint" onAction="#filePrint" text="%Print" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem onAction="#fileExit" styleClass="menuItem" text="%Exit" />
                     </items>
@@ -63,6 +62,9 @@
                     </items>
                 </Menu>
             </menus>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
         </MenuBar>
         <TextArea fx:id="noteDescriptionTextArea" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="8" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
             <GridPane.margin>

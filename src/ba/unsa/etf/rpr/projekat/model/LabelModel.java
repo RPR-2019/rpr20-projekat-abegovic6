@@ -151,7 +151,6 @@ public class LabelModel {
     }
 
     public void updateLabel(Label label) {
-
         try {
             updateLabelStatement.setInt(4, label.getId());
             updateLabelStatement.setString(1, label.getLabelName());

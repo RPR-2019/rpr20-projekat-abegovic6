@@ -85,8 +85,6 @@ V
 &resources/Translation_en_US.properties,a\6\a6142ffa65b83fb245a9695029380a844a46d322
 f
 6out/production/rpr20-projekat-abegovic6/css/images.css,3\f\3fad232f120c546d0a272f7ed2f28a924504906e
-H
-resources/css/images.css,d\1\d12ea8bb723d817bec4d8a303d13c98ae74d0fb7
 b
 2src/ba/unsa/etf/rpr/projekat/MyResourceBundle.java,c\2\c295a8b3ad73d72b08126e8df331ea79efb6c69d
 b

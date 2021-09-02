@@ -142,7 +142,7 @@ public class LabelController {
 
         if(isAlertNeeded) {
             openAlertMessage();
-        } else {
+        } else if(label.getId () == -2){
             label.setId(-1);
             label.setLabelName(groupName);
             label.setDescription(labelDescriptionTextField.getText());
@@ -151,6 +151,16 @@ public class LabelController {
             Node n = (Node) actionEvent.getSource();
             Stage stage = (Stage) n.getScene().getWindow();
             stage.close();
+        } else {
+            label.setUpdateNeeded (true);
+            label.setLabelName(groupName);
+            label.setDescription(labelDescriptionTextField.getText());
+            label.setLabelColor(LabelColor.valueOf(color));
+
+            Node n = (Node) actionEvent.getSource();
+            Stage stage = (Stage) n.getScene().getWindow();
+            stage.close();
+
         }
     }
 

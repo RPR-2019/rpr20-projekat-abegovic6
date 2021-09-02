@@ -7,14 +7,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Locale;
+
+import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class SignupController {
     private final ProjectDAO projectDAO;
@@ -46,6 +47,10 @@ public class SignupController {
     public Label firstNameErrorLabel;
     @FXML
     public Label lastNameErrorLabel;
+    @FXML
+    public RadioButton english;
+    @FXML
+    public RadioButton bosnian;
 
 
     public SignupController() {
@@ -54,8 +59,9 @@ public class SignupController {
 
     @FXML
     public void initialize () {
-
-
+        if(Locale.getDefault ().getLanguage ().equals ("en"))
+            english.setSelected (true);
+        else bosnian.setSelected (true);
     }
 
     public void signUp(ActionEvent actionEvent) {
@@ -256,6 +262,45 @@ public class SignupController {
             e.printStackTrace();
         }
 
+    }
+
+    public void toEnglish() {
+        try {
+            Locale.setDefault(new Locale("en", "US"));
+            MyResourceBundle.setLocale (Locale.getDefault ());
+            Stage stage = (Stage) usernameErrorLabel.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/signup.fxml"),
+                    MyResourceBundle.getResourceBundle ());
+            loader.setController(new SignupController ());
+            Parent root = loader.load();
+            stage.setTitle(MyResourceBundle.getString ("SignUpTitle"));
+            stage.setScene(new Scene(root, 1100, 600));
+            stage.setMinHeight(600);
+            stage.setMinWidth(1100);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void toBosnian() {
+        try {
+            Locale.setDefault(new Locale("bs", "BA"));
+            MyResourceBundle.setLocale (Locale.getDefault ());
+            Stage stage = (Stage) usernameErrorLabel.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/signup.fxml"),
+                    MyResourceBundle.getResourceBundle ());
+            loader.setController(new SignupController ());
+            Parent root = loader.load();
+            stage.setTitle(MyResourceBundle.getString ("SignUpTitle"));
+            stage.setScene(new Scene(root, 1100, 600));
+            stage.setMinHeight(600);
+            stage.setMinWidth(1100);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

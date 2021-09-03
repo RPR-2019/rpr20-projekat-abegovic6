@@ -22,6 +22,17 @@ public class Group {
         groupColor = new SimpleStringProperty();
     }
 
+    public Group (int id, int accountId, String groupName, String description, String groupColor) {
+        this.id = id;
+        this.accountId = accountId;
+        this.groupName = new SimpleStringProperty();
+        this.description = new SimpleStringProperty();
+        this.groupColor = new SimpleStringProperty();
+        setGroupName (groupName);
+        this.description.set (description);
+        this.groupColor.set (groupColor);
+    }
+
     public boolean isUpdatedNeeded() {
         return isUpdatedNeeded;
     }
@@ -55,6 +66,7 @@ public class Group {
     }
 
     public GroupColor getGroupColor() {
+        if(this.groupColor.get () == null) return null;
         return GroupColor.valueOf(groupColor.get());
     }
 

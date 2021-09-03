@@ -107,11 +107,9 @@ public class MainController {
 
                 } else {
                     for (Note remitem : c.getRemoved()) {
-                        System.out.println ("udje?");
                         hideTheNode (remitem);
                     }
                     for (Note additem : c.getAddedSubList()) {
-                        System.out.println ("udje ovdje?");
                         showTheNode (additem);
                     }
                 }
@@ -222,6 +220,12 @@ public class MainController {
         gridPane.setMaxHeight (150);
         gridPane.setMaxWidth (200);
         gridPane.setStyle ("-fx-background-color: " + note.getNoteColor ().getHexCode ());
+        note.noteColorProperty ().addListener ((obp, oldColor, newColor) -> {
+            if(newColor != null) {
+                gridPane.setStyle ("-fx-background-color: " + NoteColor.valueOf (newColor).getHexCode ());
+            }
+        });
+
         gridPane.setPadding(new Insets(10, 10, 10, 10));
         gridPane.setVgap(5);
         gridPane.setHgap(5);

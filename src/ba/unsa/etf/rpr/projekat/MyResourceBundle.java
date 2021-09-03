@@ -6,6 +6,9 @@ import java.util.ResourceBundle;
 public class MyResourceBundle {
     private static Locale locale;
 
+    private MyResourceBundle () {
+    }
+
     public static Locale getLocale () {
         return locale;
     }

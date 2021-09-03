@@ -20,6 +20,17 @@ public class Label {
         description = new SimpleStringProperty();
     }
 
+    public Label (int id, int accountId, String labelName, String description, String labelColor) {
+        this.id = id;
+        this.accountId = accountId;
+        this.labelName = new SimpleStringProperty();
+        this.labelColor = new SimpleStringProperty();
+        this.description = new SimpleStringProperty();
+        setLabelName (labelName);
+        this.description.set (description);
+        this.labelColor.set (labelColor);
+    }
+
     public boolean isDelete () {
         return delete;
     }
@@ -69,6 +80,7 @@ public class Label {
     }
 
     public LabelColor getLabelColor() {
+        if(labelColor.get () == null) return null;
         return LabelColor.valueOf(labelColor.get());
     }
 

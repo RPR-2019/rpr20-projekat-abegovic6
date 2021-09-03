@@ -132,6 +132,10 @@ public class ProjectDAO {
         accountModel.deleteAccount (user);
     }
 
+    public AccountModel getAccountModel () {
+        return accountModel;
+    }
+
     // ------------------------------------------------------------------------------- //
 
     // GROUP

@@ -160,7 +160,7 @@ public class NoteModel {
 
     public void updateNote (Note note) {
         try {
-            updateNotesStatement.setInt(5, note.getId());
+            updateNotesStatement.setInt(6, note.getId());
             updateNotesStatement.setString(1, note.getNoteTitle ());
             updateNotesStatement.setString(2, note.getDescription());
             updateNotesStatement.setString(3, note.getNoteColor ().name ());

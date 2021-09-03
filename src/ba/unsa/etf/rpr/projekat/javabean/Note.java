@@ -16,7 +16,7 @@ public class Note {
     private SimpleStringProperty description;
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
-    private NoteColor noteColor;
+    private SimpleStringProperty noteColor;
     private boolean delete = false;
     private byte[] image;
 
@@ -28,8 +28,22 @@ public class Note {
 
         noteTitle = new SimpleStringProperty ();
         description = new SimpleStringProperty ();
+        noteColor = new SimpleStringProperty ();
     }
 
+    public Note (int id, int groupId, String noteTitle, String description, String noteColor) {
+        this.id = id;
+        this.groupId = groupId;
+        this.noteTitle = new SimpleStringProperty ();
+        this.description = new SimpleStringProperty ();
+        this.noteColor = new SimpleStringProperty ();
+        setNoteTitle (noteTitle);
+        this.description.set (description);
+        this.noteColor.set (noteColor);
+        labels = new ArrayList<>();
+        dateUpdated = LocalDateTime.now ();
+        dateCreated = LocalDateTime.now ();
+    }
 
     public boolean isDelete () {
         return delete;
@@ -52,11 +66,16 @@ public class Note {
 
 
     public NoteColor getNoteColor() {
-        return noteColor;
+        if(noteColor.get () == null) return null;
+        return NoteColor.valueOf (noteColor.get ());
     }
 
     public void setNoteColor(NoteColor groupColor) {
-        this.noteColor = groupColor;
+        this.noteColor.set (groupColor.name ());
+    }
+
+    public SimpleStringProperty noteColorProperty () {
+        return noteColor;
     }
 
     public int getGroupId() {

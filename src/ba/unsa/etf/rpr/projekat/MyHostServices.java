@@ -5,6 +5,9 @@ import javafx.application.HostServices;
 public class MyHostServices {
     private static HostServices hostServices;
 
+    private MyHostServices () {
+    }
+
     public static HostServices getHostServices () {
         return hostServices;
     }

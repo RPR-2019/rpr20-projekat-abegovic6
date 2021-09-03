@@ -1,15 +1,11 @@
 
-J
-java:S1905ğ"'Remove this unnecessary cast to "Node".(•«ˆşÿÿÿÿ8“‘İÉ¸/
-J
-java:S1905Ó"'Remove this unnecessary cast to "Node".(•«ˆşÿÿÿÿ8ÅôÀÊ¸/
-U
-java:S1172â"2Remove this unused method parameter "actionEvent".(ÉçÅñøÿÿÿÿ8ÆåÜÉ¸/
 U
 java:S1172Ñ"2Remove this unused method parameter "actionEvent".(µ¶Íòûÿÿÿÿ8ËÊÀÊ¸/
-¤
-java:S1186É"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¬ë°¯üÿÿÿÿ8ò ¯ù·/
 k
 java:S2095Á"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8çŒÅš¸/
+J
+java:S1905Ó"'Remove this unnecessary cast to "Node".(•«ˆşÿÿÿÿ8ÅôÀÊ¸/
+¤
+java:S1186É"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(¬ë°¯üÿÿÿÿ8ò ¯ù·/
 ¤
 java:S1186Í"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(°«••üÿÿÿÿ8ò ¯ù·/

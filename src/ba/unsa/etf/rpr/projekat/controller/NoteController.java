@@ -96,6 +96,8 @@ public class NoteController {
             groupName = newName;
         });
 
+        groupName = groupModel.getGroups ().get (0);
+
         noteColorModel = new NoteColorModel();
         noteColorChoiceBox.setItems(noteColorModel.getColors());
         noteColorModel.currentColorProperty().addListener((obp, oldColor, newColor) -> {
@@ -114,6 +116,7 @@ public class NoteController {
             noteDescriptionTextArea.setText(note.getDescription());
             noteColorChoiceBox.getSelectionModel().select(note.getNoteColor().name());
             noteGroupChoiceBox.getSelectionModel().select(groupModel.getNameFromId(note.getGroupId ()));
+            groupName = groupModel.getNameFromId(note.getGroupId ());
             for(Label label : note.getLabels ()) {
                 var node = noteFlowPane.getChildren ().stream ().filter
                         (n -> n.getId ().equals ("labelId" + label.getId ())).findAny ();

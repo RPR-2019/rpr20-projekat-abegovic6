@@ -44,6 +44,8 @@ public class GroupModel {
         this.currentGroup = new SimpleStringProperty();
     }
 
+
+
     public static GroupModel getInstance(Connection conn) throws SQLException {
         if(instance == null) instance = new GroupModel (conn);
         return instance;
@@ -119,7 +121,7 @@ public class GroupModel {
             createGroupStatement.executeUpdate();
 
             allGroups.add (group);
-            stringGroups.remove (group.getGroupName ());
+            stringGroups.add (group.getGroupName ());
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();

@@ -91,6 +91,31 @@ public class ProjectDAO {
 
     }
 
+    public void vratiNaDefault() {
+        Statement stmt = null;
+        try {
+            stmt = connection.createStatement();
+            stmt.executeUpdate("DELETE FROM account");
+            stmt.executeUpdate("DELETE FROM groups");
+            stmt.executeUpdate("DELETE FROM label");
+            stmt.executeUpdate("DELETE FROM intertable");
+            stmt.executeUpdate("DELETE FROM notes");
+            deleteAllData ();
+            createDatabase ();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    private void deleteAllData() {
+        accountModel.getAllAccounts ().clear ();
+        groupModel.getAllGroups ().clear ();
+        groupModel.getGroups ().clear ();
+        labelModel.getAllLabels ().clear ();
+        noteModel.getAllNotes ().clear ();
+        noteModel.getCurrentNotes ().clear ();
+    }
+
     public Connection getConnection () {
         return connection;
     }

@@ -20,7 +20,7 @@ public class AccountModel {
     private final PreparedStatement emailAdressUniqueStatement;
     private final PreparedStatement usernameUniqueStatement;
 
-    private static Account currentUser;
+    private static Account currentUser = new Account ();
 
     private AccountModel (Connection conn) throws SQLException {
         getAllAccountsStatement = conn.prepareStatement("SELECT * FROM account");

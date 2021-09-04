@@ -177,12 +177,14 @@ public class MainController {
         vboxForListview.getChildren().remove(2);
         vboxForListview.getChildren().add(2, groupListView);
         groupListView.getSelectionModel ().clearSelection ();
+        noteModel.getCurrentNotes ().clear ();
     }
 
     public void changeToLabels() {
         vboxForListview.getChildren().remove(2);
         vboxForListview.getChildren().add(2, labelListView);
         labelListView.getSelectionModel ().clearSelection ();
+        noteModel.getCurrentNotes ().clear ();
     }
 
     private void sortGroups (String sort) {
@@ -306,6 +308,8 @@ public class MainController {
                 if(note.isDelete ()) {
                     projectDAO.deleteNote (note.getId ());
                 }
+                var selected = sortNotesChoiceBox.getSelectionModel ().selectedItemProperty ().get ();
+                if (selected != null) noteModel.sortNotes (selected);
             });
         } catch (IOException e) {
             e.printStackTrace();
@@ -433,6 +437,8 @@ public class MainController {
                             noteModel.getCurrentNotes ().add (note);
 
                     }
+                    var selected = sortNotesChoiceBox.getSelectionModel ().selectedItemProperty ().get ();
+                    if (selected != null) noteModel.sortNotes (selected);
                 });
             } catch (IOException e) {
                 e.printStackTrace ();

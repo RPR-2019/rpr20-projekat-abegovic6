@@ -34,5 +34,6 @@
     <orderEntry type="library" name="javafx" level="project" />
     <orderEntry type="library" name="javafx" level="project" />
     <orderEntry type="library" name="org.testfx:testfx-junit5:4.0.15-alpha" level="project" />
+    <orderEntry type="library" name="javafx" level="project" />
   </component>
 </module>

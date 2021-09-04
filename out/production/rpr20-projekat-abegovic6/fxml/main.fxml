@@ -112,7 +112,7 @@
             </HBox>
             <ScrollPane hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
                <content>
-                  <FlowPane fx:id="flowPaneForNotes" columnHalignment="CENTER" hgap="5.0" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefWrapLength="470.0" vgap="5.0" />
+                  <FlowPane fx:id="flowPaneForNotes" columnHalignment="CENTER" focusTraversable="true" hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefWrapLength="475.0" vgap="5.0" />
                </content>
                <VBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="15.0" />

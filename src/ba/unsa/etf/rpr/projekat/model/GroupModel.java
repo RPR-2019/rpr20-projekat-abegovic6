@@ -1,11 +1,9 @@
 package ba.unsa.etf.rpr.projekat.model;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.javabean.Account;
 import ba.unsa.etf.rpr.projekat.javabean.Group;
 import ba.unsa.etf.rpr.projekat.javabean.GroupColor;
-import ba.unsa.etf.rpr.projekat.javabean.Note;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,9 +24,9 @@ public class GroupModel {
     private final PreparedStatement updateGroupStatement;
     private final PreparedStatement getNewIdGroupStatement;
 
-    private ObservableList<Group> allGroups;
-    private ObservableList<String> stringGroups;
-    private SimpleStringProperty currentGroup;
+    private final ObservableList<Group> allGroups;
+    private final ObservableList<String> stringGroups;
+    private final SimpleStringProperty currentGroup;
 
     private GroupModel (Connection conn) throws SQLException {
         createGroupStatement = conn.prepareStatement("INSERT INTO groups (id, accountId, groupName, " +
@@ -52,12 +50,14 @@ public class GroupModel {
     }
 
     private Group getGroupFromAllGroups(int id) {
-        return allGroups.stream ().filter (group -> group.getId () == id).findFirst ().get ();
+        var optional = allGroups.stream ().filter (group -> group.getId () == id).findFirst ();
+        return optional.orElse (null);
     }
 
     private String getGroupFromStringGroups(int id) {
         Group group = getGroupFromAllGroups (id);
-        return group.getGroupName ();
+        if(group == null) return "";
+        else return group.getGroupName ();
     }
 
     private GroupColor stringToGroupColor(String string) {
@@ -132,7 +132,7 @@ public class GroupModel {
     }
 
 
-    public boolean updateGroup(Group group) {
+    public void updateGroup(Group group) {
         try {
             updateGroupStatement.setInt(4, group.getId());
             updateGroupStatement.setString(1, group.getGroupName());
@@ -141,23 +141,19 @@ public class GroupModel {
             updateGroupStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            return  false;
         }
 
 
-        return  true;
     }
 
-    public boolean deleteGroup(int id) {
+    public void deleteGroup(int id) {
         try {
             deleteGroupStatement.setInt (1, id);
             deleteGroupStatement.executeUpdate ();
             stringGroups.remove (getGroupFromStringGroups (id));
         } catch (SQLException throwables) {
             throwables.printStackTrace ();
-            return false;
         }
-        return true;
 
     }
 
@@ -174,11 +170,15 @@ public class GroupModel {
     }
 
     public String getNameFromId(int id) {
-        return allGroups.stream().filter(g -> g.getId() == id).findFirst().get().getGroupName();
+        var optional = allGroups.stream().filter(g -> g.getId() == id).findFirst();
+        if(optional.isEmpty ()) return "";
+        else return  optional.get().getGroupName();
     }
 
     public int getIdFromName(String name) {
-        return allGroups.stream().filter(g -> g.getGroupName().equals(name)).findFirst().get().getId();
+        var optional = allGroups.stream().filter(g -> g.getGroupName().equals(name)).findFirst();
+        if(optional.isEmpty ()) return 0;
+        else return  optional.get().getId ();
     }
 
     public ObservableList<Group> getAllGroups () {

@@ -1,11 +1,7 @@
 
 G
-java:S5869"*Remove duplicates in this character class.(Èõå¯8©…é¶/
-G
-java:S5869"*Remove duplicates in this character class.(Èõå¯8©…é¶/
-£
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(áøëÄøÿÿÿÿ8°óúæ¹/
-G
-java:S5869"*Remove duplicates in this character class.(Èõå¯8©…é¶/
+java:S5869&"*Remove duplicates in this character class.(ØÖÛï8†Ğ²æº/
+q
+java:S5843"TSimplify this regular expression to reduce its complexity from 94 to the 20 allowed.(‚ã–8Õå°æº/
 F
-java:S58693"*Remove duplicates in this character class.(ŒÆã8©…é¶/
+java:S5869C"*Remove duplicates in this character class.(ŒÆã8†Ğ²æº/

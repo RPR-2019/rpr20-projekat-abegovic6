@@ -132,15 +132,19 @@ public class NoteModel {
             } else {
                 note.setId(1);
             }
+            var date = LocalDateTime.now ();
             createNoteStatement.setInt(1, note.getId());
             createNoteStatement.setInt(2, note.getGroupId ());
             createNoteStatement.setString(3, note.getNoteTitle ());
             createNoteStatement.setString(4, note.getDescription ());
             createNoteStatement.setString(5, note.getNoteColor ().name ());
             createNoteStatement.setBytes (6, note.getImage ());
-            createNoteStatement.setString (7, localeDateTimeToString (LocalDateTime.now ()));
-            createNoteStatement.setString (8, localeDateTimeToString (LocalDateTime.now ()));
+            createNoteStatement.setString (7, localeDateTimeToString (date));
+            createNoteStatement.setString (8, localeDateTimeToString (date));
             createNoteStatement.executeUpdate();
+
+            note.setDateCreated (date);
+            note.setDateUpdated (date);
 
             setLabelListForNote (note.getId (), note.getLabels ());
 
@@ -160,12 +164,15 @@ public class NoteModel {
 
     public void updateNote (Note note) {
         try {
+            var date = LocalDateTime.now ();
             updateNotesStatement.setInt(6, note.getId());
             updateNotesStatement.setString(1, note.getNoteTitle ());
             updateNotesStatement.setString(2, note.getDescription());
             updateNotesStatement.setString(3, note.getNoteColor ().name ());
             updateNotesStatement.setBytes (4, note.getImage ());
-            updateNotesStatement.setString (5, localeDateTimeToString (LocalDateTime.now ()));
+            updateNotesStatement.setString (5, localeDateTimeToString (date));
+
+            note.setDateUpdated (date);
 
             updateNoteLabels (note.getId (), note.getLabels ());
 
@@ -230,9 +237,9 @@ public class NoteModel {
     public void sortNotes(String sort) {
         ArrayList<Note> list;
         if(sort.equals (MyResourceBundle.getString ("LastAdded"))) {
-            list = new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getId).reversed ()));
+            list = new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getDateCreated).reversed ()));
         } else if (sort.equals (MyResourceBundle.getString ("FirstAdded"))) {
-            list= new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getId)));
+            list= new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getDateCreated)));
         } else if(sort.equals (MyResourceBundle.getString ("LastUpdated"))) {
             list = new ArrayList<> (currentNotes.sorted (Comparator.comparing (Note::getDateUpdated).reversed ()));
         } else if (sort.equals (MyResourceBundle.getString ("FirstUpdated"))) {

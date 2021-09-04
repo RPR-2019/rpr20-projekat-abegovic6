@@ -1,11 +1,9 @@
 package ba.unsa.etf.rpr.projekat.model;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.javabean.Account;
 import ba.unsa.etf.rpr.projekat.javabean.Label;
 import ba.unsa.etf.rpr.projekat.javabean.LabelColor;
-import ba.unsa.etf.rpr.projekat.javabean.Note;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -27,7 +25,7 @@ public class LabelModel {
     private final PreparedStatement getAllLabelsIdForNoteStatement;
     private final PreparedStatement deleteLabelIdStatement;
 
-    private ObservableList<Label> allLabels;
+    private final ObservableList<Label> allLabels;
 
     private LabelModel (Connection conn) throws SQLException {
         allLabels = FXCollections.observableArrayList ();

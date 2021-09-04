@@ -27,8 +27,6 @@ n
 >out/production/rpr20-projekat-abegovic6/Translation.properties,3\d\3d5fb7bc642fc557db11a5b67d324b64d345ffd8
 q
 Aout/production/rpr20-projekat-abegovic6/Translation_bs.properties,8\c\8c652cd582641ff83641b3e22c3919f7f77ed195
-t
-Dout/production/rpr20-projekat-abegovic6/Translation_en_US.properties,e\d\ed52a893c99ff3c1b670b09ba8d8852cb0aae66d
 l
 <src/ba/unsa/etf/rpr/projekat/controller/LoginController.java,e\b\eb707ec407e6b9b289ad6cb50f5da799b2c7f8a1
 k
@@ -119,8 +117,6 @@ M
 resources/reports/label.jrxml,c\4\c4fd80394fc5c11a57cc4131d8fea9672dfd643e
 I
 resources/fxml/login.fxml,8\2\82c591fb13b8d561beda7548c6e5f0df218b604c
-H
-resources/fxml/main.fxml,1\7\1717211d21a149ed417a055ba59f01ec1c546de5
 m
 =.idea/libraries/net_sf_jasperreports_jasperreports_6_17_0.xml,c\9\c9b82fea1e5d5ef6a4f1a4678d4e0ed07f309cef
 H
@@ -137,3 +133,43 @@ k
 ;out/production/rpr20-projekat-abegovic6/reports/label.jrxml,d\7\d7667d6add3406bb5e53086ea48174cf93a29a15
 j
 :out/production/rpr20-projekat-abegovic6/reports/note.jrxml,3\1\31cf956752c95b5e4d11dd0e15df97c64e6ba065
+\
+,test/controllertest/AboutControllerTest.java,6\e\6ed15b67b37c4b459c4b0e9cbf909a8fe6edb718
+\
+,test/controllertest/GroupControllerTest.java,8\b\8b9ef80047012833294c94f5270eabc678ff138b
+[
++test/controllertest/HelpControllerTest.java,e\6\e6394318fae24c6469d3e50b475069bdbfbbf6ab
+\
+,test/controllertest/LabelControllerTest.java,f\3\f3a6707203dd5a7783a130bb39592a68200a78c0
+R
+"test/modeltest/LabelModelTest.java,2\e\2e6c9b82026c5449c8b0236aa38830c338b9aafd
+\
+,test/controllertest/LoginControllerTest.java,5\6\56af1cb27a4dd6662b9e9a2cb969effab6d6f755
+[
++test/controllertest/MainControllerTest.java,8\f\8f332da21e1621ce23f30da60e4996bee9bfb8a3
+[
++test/controllertest/NoteControllerTest.java,8\e\8ea8c40177735b957eda73642ef768a623150a5a
+Q
+!test/modeltest/NoteModelTest.java,5\e\5e76c990860d0c3daaa8c914ac38f7c4c46e1186
+i
+9.idea/libraries/org_testfx_testfx_junit5_4_0_15_alpha.xml,a\8\a8f48de4ecfdd46bf246473730bfcac7810419aa
+_
+/test/controllertest/SettingsControllerTest.java,b\1\b1a93ab946bf956f06d91ef33b78597a4a0a6447
+]
+-test/controllertest/SignupControllerTest.java,f\a\fa17e4fdb77926809357fa517e22b86339c69639
+q
+Aout/production/rpr20-projekat-abegovic6/Translation_en.properties,f\6\f6b5255d84ece40b1b06284856f770ab62d4302a
+O
+test/javabeantest/NoteTest.java,9\2\9236b230fd787f4330b1ae5be4bd02d3b1d015ba
+R
+"test/javabeantest/AccountTest.java,3\5\35b35b9cc6188b33ab33cae3aee8d3e0a2acc18d
+P
+ test/javabeantest/LabelTest.java,f\5\f5e9cc374bfc3a3cbdd7614c8483dc7a3283b631
+P
+ test/javabeantest/GroupTest.java,7\7\77649b1d76e4be8e24370165704867e4787babc0
+T
+$test/modeltest/AccountModelTest.java,5\8\581324b9c493feeb2f233a78daedbd8bfcbc4a85
+H
+test/ProjectDAOTest.java,8\a\8ac8f25cb8662b473226f7d6f927f73b7cb46a9f
+R
+"test/modeltest/GroupModelTest.java,b\2\b210f4f1e90efde6317b0c0de4980ddde934c83a

@@ -1,4 +1,4 @@
-package ba.unsa.etf.rpr.projekat;
+package ba.unsa.etf.rpr.projekat.utilities;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

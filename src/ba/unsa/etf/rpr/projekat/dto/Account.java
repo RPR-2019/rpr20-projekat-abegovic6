@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.projekat.dto;
 
-import ba.unsa.etf.rpr.projekat.MyResourceBundle;
+import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
 
 import java.util.Objects;
 import java.util.regex.Matcher;

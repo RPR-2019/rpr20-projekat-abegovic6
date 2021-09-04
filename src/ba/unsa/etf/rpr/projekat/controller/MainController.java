@@ -1,7 +1,7 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
-import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.PrintReport;
+import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
+import ba.unsa.etf.rpr.projekat.utilities.PrintReport;
 import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
 import ba.unsa.etf.rpr.projekat.dal.*;
 import ba.unsa.etf.rpr.projekat.dto.*;

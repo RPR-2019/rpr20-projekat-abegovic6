@@ -1,6 +1,6 @@
 package javabeantest;
 
-import ba.unsa.etf.rpr.projekat.MyResourceBundle;
+import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.dto.Note;
 import ba.unsa.etf.rpr.projekat.dto.NoteColor;
 import org.junit.jupiter.api.BeforeAll;

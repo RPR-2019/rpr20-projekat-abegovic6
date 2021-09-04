@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
-import ba.unsa.etf.rpr.projekat.MyResourceBundle;
+import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.dal.GroupColorModel;
 import ba.unsa.etf.rpr.projekat.dal.GroupModel;
 import ba.unsa.etf.rpr.projekat.dal.NoteModel;

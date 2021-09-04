@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
-import ba.unsa.etf.rpr.projekat.MyHostServices;
+import ba.unsa.etf.rpr.projekat.utilities.MyHostServices;
 import javafx.application.HostServices;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;

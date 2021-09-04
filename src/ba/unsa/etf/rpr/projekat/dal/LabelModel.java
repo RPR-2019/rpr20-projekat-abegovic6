@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.projekat.dal;
 
-import ba.unsa.etf.rpr.projekat.MyResourceBundle;
+import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.dto.Account;
 import ba.unsa.etf.rpr.projekat.dto.Label;
 import ba.unsa.etf.rpr.projekat.dto.LabelColor;

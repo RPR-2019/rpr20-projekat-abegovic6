@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.projekat.dto;
 
-import ba.unsa.etf.rpr.projekat.MyResourceBundle;
+import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.time.LocalDateTime;

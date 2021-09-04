@@ -167,8 +167,6 @@ T
 $test/modeltest/AccountModelTest.java,5\8\581324b9c493feeb2f233a78daedbd8bfcbc4a85
 R
 "test/modeltest/GroupModelTest.java,b\2\b210f4f1e90efde6317b0c0de4980ddde934c83a
-H
-resources/fxml/main.fxml,1\7\1717211d21a149ed417a055ba59f01ec1c546de5
 S
 #resources/Translation_bs.properties,0\c\0c6f81a569f3bf275f5b81629d754b261b81207d
 S

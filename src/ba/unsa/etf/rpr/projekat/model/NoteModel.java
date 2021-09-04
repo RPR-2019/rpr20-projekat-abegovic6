@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr.projekat.model;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
+import ba.unsa.etf.rpr.projekat.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.javabean.Account;
 import ba.unsa.etf.rpr.projekat.javabean.Label;
 import ba.unsa.etf.rpr.projekat.javabean.Note;
@@ -103,10 +104,11 @@ public class NoteModel {
         return Collections.emptyList();
     }
 
-    public List<Note> getAllNotesForUser(Account user, LabelModel labelModel) {
+    public List<Note> getAllNotesForUser(Account user) {
         try {
             getAllNotesForAccountStatement.setInt (1, user.getId ());
-            return getNoteListFromResultSet(getAllNotesForAccountStatement.executeQuery(), labelModel);
+            return getNoteListFromResultSet(getAllNotesForAccountStatement.executeQuery(),
+                    ProjectDAO.getInstance ().getLabelModel ());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -114,17 +116,18 @@ public class NoteModel {
 
     }
 
-    public List<Note> getAllNotesForGroup(int groupId, LabelModel labelModel) {
+    public List<Note> getAllNotesForGroup(int groupId) {
         try {
             getAllNotesForGroupStatement.setInt(1, groupId);
-            return getNoteListFromResultSet(getAllNotesForGroupStatement.executeQuery(), labelModel);
+            return getNoteListFromResultSet(getAllNotesForGroupStatement.executeQuery(),
+                    ProjectDAO.getInstance ().getLabelModel ());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return Collections.emptyList();
     }
 
-    public boolean createNote (Note note) {
+    public void createNote (Note note) {
         try {
             ResultSet resultSet = getNewIdNoteStatement.executeQuery();
             if(resultSet.next()) {
@@ -151,10 +154,8 @@ public class NoteModel {
             allNotes.add (note);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            return false;
         }
 
-        return true;
     }
 
     private void updateNoteLabels(int id, List<Label> labels) {

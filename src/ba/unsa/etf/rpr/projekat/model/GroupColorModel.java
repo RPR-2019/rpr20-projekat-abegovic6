@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.projekat.model;
 
+import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.javabean.GroupColor;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -14,10 +15,6 @@ public class GroupColorModel {
         this.colors = FXCollections.observableArrayList();
         currentColor = new SimpleStringProperty();
         fill();
-    }
-
-    public String getCurrentColor() {
-        return currentColor.get();
     }
 
     public SimpleStringProperty currentColorProperty() {

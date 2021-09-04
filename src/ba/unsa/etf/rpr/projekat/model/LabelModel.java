@@ -122,7 +122,7 @@ public class LabelModel {
         return Collections.emptyList();
     }
 
-    public boolean createLabel(Label label) {
+    public void createLabel(Label label) {
         try {
             ResultSet resultSet = getNewIdLabelStatement.executeQuery();
             if(resultSet.next()) {
@@ -142,10 +142,8 @@ public class LabelModel {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            return false;
         }
 
-        return true;
     }
 
     public void updateLabel(Label label) {

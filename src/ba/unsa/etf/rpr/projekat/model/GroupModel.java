@@ -1,9 +1,11 @@
 package ba.unsa.etf.rpr.projekat.model;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
+import ba.unsa.etf.rpr.projekat.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.javabean.Account;
 import ba.unsa.etf.rpr.projekat.javabean.Group;
 import ba.unsa.etf.rpr.projekat.javabean.GroupColor;
+import ba.unsa.etf.rpr.projekat.javabean.Note;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -104,7 +106,7 @@ public class GroupModel {
         return Collections.emptyList();
     }
 
-    public boolean createGroup(Group group) {
+    public void createGroup(Group group) {
         try {
             ResultSet resultSet = getNewIdGroupStatement.executeQuery();
             if(resultSet.next()) {
@@ -125,10 +127,8 @@ public class GroupModel {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            return false;
         }
 
-        return true;
     }
 
 
@@ -147,7 +147,11 @@ public class GroupModel {
     }
 
     public void deleteGroup(int id) {
+        NoteModel noteModel = ProjectDAO.getInstance ().getNoteModel ();
         try {
+            for(Note note : noteModel.getAllNotesForGroup (id)) {
+                noteModel.deleteNote (note.getId ());
+            }
             deleteGroupStatement.setInt (1, id);
             deleteGroupStatement.executeUpdate ();
             stringGroups.remove (getGroupFromStringGroups (id));

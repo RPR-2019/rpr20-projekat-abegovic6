@@ -51,7 +51,7 @@ class NoteModelTest {
         noteModel.createNote (note1);
         noteModel.createNote (note1);
         noteModel.createNote (note1);
-        assertEquals (3, noteModel.getAllNotesForUser (account, projectDAO.getLabelModel ()).size ());
+        assertEquals (3, noteModel.getAllNotesForUser (account).size ());
         assertEquals (3, noteModel.getAllNotes ().size ());
     }
 
@@ -104,7 +104,7 @@ class NoteModelTest {
         noteModel.createNote (note2); // id = 1
 
         // notes creating
-        assertEquals (2, noteModel.getAllNotesForUser (account, projectDAO.getLabelModel ()).size ());
+        assertEquals (2, noteModel.getAllNotesForUser (account).size ());
 
         // createNote should change noteid
         assertEquals (0, note1.getId ());
@@ -123,21 +123,21 @@ class NoteModelTest {
         // update label
         noteModel.updateNote (note1);
         // check if updated
-        List<Note> notes = new ArrayList<> (noteModel.getAllNotesForUser (account, projectDAO.getLabelModel ()));
+        List<Note> notes = new ArrayList<> (noteModel.getAllNotesForUser (account));
         assertEquals ("Newname", notes.get (0).getNoteTitle ());
     }
 
     @Test
-    void labelIsDeleting() {
+    void noteIsDeleting() {
         // database empty
         Note note1 = new Note (0, 0, "notename", "notedescription", "BLUE");
         // create notes
         noteModel.createNote (note1);
-        assertEquals (1,noteModel.getAllNotesForUser (account, projectDAO.getLabelModel ()).size ());
-        // delete label
+        assertEquals (1,noteModel.getAllNotesForUser (account).size ());
+        // delete note
         noteModel.deleteNote (note1.getId ());
         // check if deleted
-        assertEquals (0, noteModel.getAllNotesForUser (account, projectDAO.getLabelModel ()).size ());
+        assertEquals (0, noteModel.getAllNotesForUser (account).size ());
     }
 
 

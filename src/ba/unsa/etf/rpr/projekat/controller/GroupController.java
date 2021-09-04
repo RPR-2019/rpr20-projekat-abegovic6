@@ -13,7 +13,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -26,8 +25,6 @@ import java.util.ResourceBundle;
 
 public class GroupController {
 
-
-    private final ProjectDAO projectDAO;
     private final NoteModel noteModel;
     private final GroupModel groupModel;
     private final Group group;
@@ -43,8 +40,6 @@ public class GroupController {
     @FXML
     public ChoiceBox<String> groupColorChoiceBox;
     @FXML
-    public GridPane groupGridPane;
-    @FXML
     public Label groupNameErrorLabel;
     @FXML
     public Label groupColorErrorLabel;
@@ -58,7 +53,7 @@ public class GroupController {
     public GroupController(Group group) {
         this.group = group;
 
-        this.projectDAO = ProjectDAO.getInstance ();
+        ProjectDAO projectDAO = ProjectDAO.getInstance ();
         this.noteModel = projectDAO.getNoteModel ();
         this.groupModel = projectDAO.getGroupModel ();
     }
@@ -189,26 +184,27 @@ public class GroupController {
         File file = izbornik.showSaveDialog(groupColorChoiceBox.getScene().getWindow());
 
         if(file == null) return;
+        FileWriter fileWriter = null;
         try {
-            FileWriter fileWriter = new FileWriter(file.getAbsolutePath());
+            fileWriter = new FileWriter(file.getAbsolutePath());
             fileWriter.write(group.writeInFile(noteModel.getNotesForGroup (group.getId ())));
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if(fileWriter != null) {
+                try {
+                    fileWriter.close ();
+                } catch (IOException e) {
+                    e.printStackTrace ();
+                }
+            }
         }
     }
 
-    public void filePrint() {
-
-    }
-
-    public void fileSettings() {
-
-    }
-
-    public void fileExit(ActionEvent actionEvent) {
+    public void fileExit() {
         group.setUpdatedNeeded (false);
-        Node n = (Node) groupNameTextField;
+        Node n = groupNameTextField;
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
     }

@@ -17,10 +17,6 @@ public class SortModel {
         fill();
     }
 
-    public String getCurrentSorting () {
-        return currentSorting.get();
-    }
-
     public SimpleStringProperty currentSortingProperty () {
         return currentSorting;
     }
@@ -45,7 +41,4 @@ public class SortModel {
         return sorting;
     }
 
-    public void setSorting (ObservableList<String> sorting) {
-        this.sorting = sorting;
-    }
 }

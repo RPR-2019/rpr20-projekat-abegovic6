@@ -16,10 +16,6 @@ public class LabelColorModel {
         fill();
     }
 
-    public String getCurrentColor() {
-        return currentColor.get();
-    }
-
     public SimpleStringProperty currentColorProperty() {
         return currentColor;
     }

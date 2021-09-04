@@ -15,10 +15,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Locale;
 
-import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
-
 public class SignupController {
-    private final ProjectDAO projectDAO;
+    private final AccountModel accountModel;
 
     private boolean isAlertNeeded;
 
@@ -54,7 +52,7 @@ public class SignupController {
 
 
     public SignupController() {
-        this.projectDAO = ProjectDAO.getInstance ();
+        this.accountModel = ProjectDAO.getInstance ().getAccountModel ();
     }
 
     @FXML
@@ -128,7 +126,7 @@ public class SignupController {
         AccountModel.getCurrentUser ().setEmailAdress(emailAdressSignUpTextField.getText());
         AccountModel.getCurrentUser ().setPassword(passwordSignUpPasswordField.getText());
 
-        if(projectDAO.createAccount(AccountModel.getCurrentUser ())) {
+        if(accountModel.createAccount(AccountModel.getCurrentUser ())) {
             try {
                 Node source = (Node)  actionEvent.getSource();
                 Stage oldStage  = (Stage) source.getScene().getWindow();
@@ -186,7 +184,7 @@ public class SignupController {
     private void checkEmail() {
         try {
             AccountModel.getCurrentUser ().setEmailAdress(emailAdressSignUpTextField.getText());
-            projectDAO.isEmailUnique(emailAdressSignUpTextField.getText());
+            accountModel.isEmailUnique(emailAdressSignUpTextField.getText());
 
         } catch (IllegalArgumentException exception) {
             isAlertNeeded = true;
@@ -202,7 +200,7 @@ public class SignupController {
     private void checkUsername() {
         try {
             AccountModel.getCurrentUser ().setUserName(usernameSignUpTextField.getText());
-            projectDAO.isUsernameUnique(usernameSignUpTextField.getText());
+            accountModel.isUsernameUnique(usernameSignUpTextField.getText());
 
         } catch (IllegalArgumentException exception) {
             isAlertNeeded = true;

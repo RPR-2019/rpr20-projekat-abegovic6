@@ -6,7 +6,6 @@ import ba.unsa.etf.rpr.projekat.model.NoteModel;
 import ba.unsa.etf.rpr.projekat.ProjectDAO;
 import ba.unsa.etf.rpr.projekat.javabean.LabelColor;
 import ba.unsa.etf.rpr.projekat.javabean.Note;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,7 +19,6 @@ import java.util.List;
 
 public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.javabean.Label> {
 
-    private final ProjectDAO projectDAO;
     private final LabelModel labelModel;
     private final NoteModel noteModel;
     private final List<ba.unsa.etf.rpr.projekat.javabean.Label> labels;
@@ -36,7 +34,7 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.j
     private FXMLLoader mLLoader;
 
     public LabelListCellController (List<ba.unsa.etf.rpr.projekat.javabean.Label> labels) {
-        this.projectDAO = ProjectDAO.getInstance ();
+        ProjectDAO projectDAO = ProjectDAO.getInstance ();
         this.labelModel = projectDAO.getLabelModel ();
         this.noteModel = projectDAO.getNoteModel ();
         this.labels = labels;
@@ -124,10 +122,10 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.j
 
             newStage.setOnHiding(windowEvent -> {
                 if(label.isUpdateNeeded ()) {
-                    projectDAO.updateLabel (label);
+                    labelModel.updateLabel (label);
                 }
                 if(label.isDelete ()) {
-                    projectDAO.deleteLabel (label.getId ());
+                    labelModel.deleteLabel (label.getId ());
                     for(Note note : noteModel.getNotesForLabel (label.getId ())) {
                         noteModel.getCurrentNotes ().remove (note);
                     }

@@ -12,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -24,7 +23,6 @@ import java.util.Optional;
 
 public class LabelController {
 
-    private final ProjectDAO projectDAO;
     private final NoteModel noteModel;
     private final LabelModel labelModel;
     private final ba.unsa.etf.rpr.projekat.javabean.Label label;
@@ -42,8 +40,6 @@ public class LabelController {
     @FXML
     public ChoiceBox<String> labelColorChoiceBox;
     @FXML
-    public GridPane labelGridPane;
-    @FXML
     public Label labelNameErrorLabel;
     @FXML
     public Label labelColorErrorLabel;
@@ -54,7 +50,7 @@ public class LabelController {
 
     public LabelController(ba.unsa.etf.rpr.projekat.javabean.Label label) {
         this.label = label;
-        this.projectDAO = ProjectDAO.getInstance ();
+        ProjectDAO projectDAO = ProjectDAO.getInstance ();
         this.noteModel = projectDAO.getNoteModel ();
         this.labelModel = projectDAO.getLabelModel ();
 
@@ -191,17 +187,9 @@ public class LabelController {
 
     }
 
-    public void filePrint() {
-
-    }
-
-    public void fileSettings() {
-
-    }
-
-    public void fileExit(ActionEvent actionEvent) {
+    public void fileExit() {
         label.setUpdateNeeded (false);
-        Node n = (Node) labelOkButton;
+        Node n = labelOkButton;
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
     }
@@ -216,7 +204,7 @@ public class LabelController {
 
     }
 
-    public void editDelete(ActionEvent actionEvent) {
+    public void editDelete() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initOwner(labelOkButton.getContextMenu ());
         alert.initModality(Modality.WINDOW_MODAL);
@@ -230,7 +218,7 @@ public class LabelController {
             label.setDelete (true);
         }
 
-        Node n = (Node) labelOkButton;
+        Node n = labelOkButton;
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
     }

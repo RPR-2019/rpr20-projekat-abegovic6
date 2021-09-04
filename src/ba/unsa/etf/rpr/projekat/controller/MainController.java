@@ -29,7 +29,6 @@ import net.sf.jasperreports.engine.JRException;
 
 import java.io.*;
 import java.util.*;
-import java.util.stream.Collectors;
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class MainController {
@@ -73,19 +72,19 @@ public class MainController {
 
         this.noteModel = projectDAO.getNoteModel ();
         this.noteModel.getAllNotes ().clear ();
-        this.noteModel.getAllNotes().addAll (this.projectDAO.getAllNotesForUser (AccountModel.getCurrentUser ()));
+        this.noteModel.getAllNotes().addAll (this.noteModel.getAllNotesForUser (AccountModel.getCurrentUser ()));
 
         this.groupModel = projectDAO.getGroupModel ();
         this.groupModel.getAllGroups ().clear ();
         this.groupModel.getGroups ().clear ();
-        this.groupModel.getAllGroups ().addAll (this.projectDAO.getAllGroupsForAccount (AccountModel.getCurrentUser ()));
+        this.groupModel.getAllGroups ().addAll (this.groupModel.getAllGroupsForAccount (AccountModel.getCurrentUser ()));
         for(Group group : this.groupModel.getAllGroups ()) {
             this.groupModel.getGroups ().add (group.getGroupName ());
         }
 
         this.labelModel = projectDAO.getLabelModel ();
         this.labelModel.getAllLabels ().clear ();
-        this.labelModel.getAllLabels ().addAll (this.projectDAO.getAllLabelsForAccount (AccountModel.getCurrentUser ()));
+        this.labelModel.getAllLabels ().addAll (this.labelModel.getAllLabelsForAccount (AccountModel.getCurrentUser ()));
 
         this.nodes = new ArrayList<> ();
     }
@@ -99,13 +98,7 @@ public class MainController {
 
         noteModel.getCurrentNotes ().addListener ((ListChangeListener<Note>) c -> {
             while (c.next()) {
-                if (c.wasPermutated()) {
-                    for (int i = c.getFrom(); i < c.getTo(); ++i) {
-                        //permutate
-                    }
-                } else if (c.wasUpdated()) {
-
-                } else {
+                if(!c.wasPermutated () && !c.wasUpdated ()) {
                     for (Note remitem : c.getRemoved()) {
                         hideTheNode (remitem);
                     }
@@ -272,10 +265,7 @@ public class MainController {
 
         gridPane.setCursor (Cursor.HAND);
 
-        gridPane.setOnMouseClicked (mouseEvent -> {
-            opetNoteDetails (note);
-
-        });
+        gridPane.setOnMouseClicked (mouseEvent -> opetNoteDetails (note));
 
         return gridPane;
 
@@ -303,10 +293,10 @@ public class MainController {
 
             newStage.setOnHiding(windowEvent -> {
                 if(note.isUpdateNeeded ()) {
-                    projectDAO.updateNote(note);
+                    noteModel.updateNote(note);
                 }
                 if(note.isDelete ()) {
-                    projectDAO.deleteNote (note.getId ());
+                    noteModel.deleteNote (note.getId ());
                 }
                 var selected = sortNotesChoiceBox.getSelectionModel ().selectedItemProperty ().get ();
                 if (selected != null) noteModel.sortNotes (selected);
@@ -353,7 +343,7 @@ public class MainController {
 
             newStage.setOnHiding(windowEvent -> {
                 if(group.getId() == -1) {
-                    projectDAO.createGroup (group);
+                    groupModel.createGroup (group);
                 }
             });
 
@@ -386,7 +376,7 @@ public class MainController {
 
             newStage.setOnHiding(windowEvent -> {
                 if(label.getId() == -1) {
-                    projectDAO.createLabel (label);
+                    labelModel.createLabel (label);
                 }
             });
         } catch (IOException e) {
@@ -425,7 +415,7 @@ public class MainController {
 
                 newStage.setOnHiding (windowEvent -> {
                     if (note.getId () == -1) {
-                        projectDAO.createNote (note);
+                        noteModel.createNote (note);
                         nodes.add (getNoteBlock (note));
                         if(groupListView.getSelectionModel ().selectedItemProperty ().get () != null &&
                                 groupListView.getSelectionModel ().selectedItemProperty ().get ().getId () == note.getGroupId ())
@@ -520,7 +510,7 @@ public class MainController {
 
     public void fileSettings() {
         try {
-            Node source = (Node)  flowPaneForNotes;
+            Node source = flowPaneForNotes;
             Stage oldStage  = (Stage) source.getScene().getWindow();
             Stage newStage = new Stage();
 
@@ -542,8 +532,8 @@ public class MainController {
 
     }
 
-    public void fileExit(ActionEvent actionEvent) {
-        Node n = (Node) flowPaneForNotes;
+    public void fileExit() {
+        Node n =  flowPaneForNotes;
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
     }
@@ -559,7 +549,7 @@ public class MainController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if(result.isPresent() && result.get() == ButtonType.OK) {
-            projectDAO.deleteAccount (AccountModel.getCurrentUser ());
+            ProjectDAO.getInstance ().getAccountModel ().deleteAccount (AccountModel.getCurrentUser ());
         }
         logout ();
 

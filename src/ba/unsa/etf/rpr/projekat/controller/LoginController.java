@@ -23,7 +23,6 @@ import java.util.Locale;
 
 
 public class LoginController {
-    private final ProjectDAO projectDAO;
 
 
     @FXML
@@ -37,7 +36,6 @@ public class LoginController {
 
 
     public LoginController() {
-        this.projectDAO = ProjectDAO.getInstance ();
     }
 
     @FXML
@@ -50,7 +48,7 @@ public class LoginController {
     }
 
     public void logIn(ActionEvent actionEvent) {
-        List<Account> accounts = projectDAO.getAllAccounts();
+        List<Account> accounts = ProjectDAO.getInstance ().getAccountModel ().getAllAccounts ();
         boolean isPasswordCorrect = false;
         boolean isUsernameCorrect = false;
 

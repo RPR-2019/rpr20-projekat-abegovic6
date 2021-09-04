@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class GroupListCellController extends ListCell<Group> {
-    private final ProjectDAO projectDAO;
+    private final GroupModel groupModel;
     private final List<Group> groups;
     private final NoteModel noteModel;
 
@@ -35,8 +35,8 @@ public class GroupListCellController extends ListCell<Group> {
     private FXMLLoader mLLoader;
 
     public GroupListCellController (List<Group> groups) {
-        this.projectDAO = ProjectDAO.getInstance ();
-        this.noteModel = projectDAO.getNoteModel ();
+        this.groupModel = ProjectDAO.getInstance ().getGroupModel ();
+        this.noteModel = ProjectDAO.getInstance ().getNoteModel ();
         this.groups = groups;
     }
 
@@ -99,7 +99,7 @@ public class GroupListCellController extends ListCell<Group> {
 
     }
 
-    public void openInformation(ActionEvent actionEvent) {
+    public void openInformation() {
         try {
             Stage newStage = new Stage();
 
@@ -120,11 +120,11 @@ public class GroupListCellController extends ListCell<Group> {
 
             newStage.setOnHiding(windowEvent -> {
                 if(group.isUpdatedNeeded ()) {
-                    projectDAO.updateGroup (group);
+                    groupModel.updateGroup (group);
                 }
                 if(group.isDelete ()) {
-                    projectDAO.deleteGroup (group.getId ());
-                    for(Note note : projectDAO.getAllNotesForGroup (group.getId ())) {
+                    groupModel.deleteGroup (group.getId ());
+                    for(Note note : noteModel.getAllNotesForGroup (group.getId ())) {
                         noteModel.deleteNote (note.getId ());
                     }
                     groups.remove (group);

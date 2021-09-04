@@ -9,11 +9,9 @@ import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class HelpController {
 
-    private List<Image> images;
     private SimpleObjectProperty<Integer> currentImageId;
 
     @FXML
@@ -30,7 +28,7 @@ public class HelpController {
 
     @FXML
     public void initialize() {
-        images = new ArrayList<> ();
+        List<Image> images = new ArrayList<> ();
 
         images.add (new Image ("/images/logoRPR.jpg"));
         images.add (new Image ("/images/logoRPR.jpg"));

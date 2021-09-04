@@ -125,8 +125,6 @@ L
 resources/reports/note.jrxml,f\a\fafb9f7b18e8adb497b78ab46c78c961ca2d5e1b
 ]
 -src/ba/unsa/etf/rpr/projekat/PrintReport.java,3\0\30bf799ae7f55d1f912cb2e825e75ca2168194bb
-S
-#resources/Translation_bs.properties,0\c\0c6f81a569f3bf275f5b81629d754b261b81207d
 k
 ;out/production/rpr20-projekat-abegovic6/reports/group.jrxml,3\e\3e0e3abd5c1e23785b452a4011dd4aed3a38ef79
 k

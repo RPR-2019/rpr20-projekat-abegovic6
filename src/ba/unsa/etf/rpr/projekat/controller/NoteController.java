@@ -93,7 +93,8 @@ public class NoteController {
         noteGroupChoiceBox.setItems(groupModel.getGroups());
 
         groupModel.currentGroupProperty().addListener((obp, oldName, newName) -> {
-            groupName = newName;
+            if(newName != null)
+                groupName = newName;
         });
 
         groupName = groupModel.getGroups ().get (0);
@@ -141,7 +142,7 @@ public class NoteController {
 
 
 
-    public void getPictureForNote(ActionEvent actionEvent) {
+    public void getPictureForNote() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(MyResourceBundle.getString ("GetImage"));
         fileChooser.getExtensionFilters().addAll(
@@ -256,8 +257,9 @@ public class NoteController {
             for(Node node : noteFlowPane.getChildren ()){
                 CheckBox checkBox = (CheckBox) node;
                 if(checkBox.isSelected ()) {
-                    labelsList.add (labelModel.getAllLabels ().stream()
-                            .filter(l -> l.getLabelName().equals (checkBox.getText())).findFirst().get());
+                    var optional = labelModel.getAllLabels ().stream()
+                            .filter(l -> l.getLabelName().equals (checkBox.getText())).findFirst();
+                    optional.ifPresent (labelsList::add);
                 }
             }
 
@@ -298,15 +300,11 @@ public class NoteController {
 
     }
 
-    public void filePrint() {
-
-    }
 
 
-
-    public void fileExit(ActionEvent actionEvent) {
+    public void fileExit() {
         note.setUpdateNeeded (false);
-        Node n = (Node) noteTitleLabel;
+        Node n =  noteTitleLabel;
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
     }
@@ -338,7 +336,7 @@ public class NoteController {
             note.setDelete (true);
         }
 
-        Node n = (Node) noteTitleLabel;
+        Node n = noteTitleLabel;
         Stage stage = (Stage) n.getScene().getWindow();
         stage.close();
 

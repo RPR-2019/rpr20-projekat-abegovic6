@@ -21,8 +21,7 @@ import java.util.Optional;
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class SettingsController {
-
-    private final ProjectDAO projectDAO;
+    private final AccountModel accountModel;
 
     private boolean isAlertNeeded;
 
@@ -56,7 +55,7 @@ public class SettingsController {
     public RadioButton bosnian;
 
     public SettingsController () {
-        this.projectDAO = ProjectDAO.getInstance ();
+        accountModel = ProjectDAO.getInstance ().getAccountModel ();
     }
 
     @FXML
@@ -86,7 +85,7 @@ public class SettingsController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if(result.isPresent() && result.get() == ButtonType.OK) {
-            projectDAO.deleteAccount (AccountModel.getCurrentUser ());
+            accountModel.deleteAccount (AccountModel.getCurrentUser ());
         }
 
         try {
@@ -218,7 +217,7 @@ public class SettingsController {
         AccountModel.getCurrentUser ().setEmailAdress(emailAdressSignUpTextField.getText());
         AccountModel.getCurrentUser ().setPassword(passwordSignUpPasswordField.getText());
 
-        projectDAO.updateUser(AccountModel.getCurrentUser ());
+        accountModel.updateUser(AccountModel.getCurrentUser ());
 
         cancelSettings (actionEvent);
     }
@@ -255,7 +254,7 @@ public class SettingsController {
         try {
             AccountModel.getCurrentUser ().setEmailAdress(emailAdressSignUpTextField.getText());
             if(!emailAdressSignUpTextField.getText ().equals (AccountModel.getCurrentUser ().getEmailAdress ()))
-                projectDAO.isEmailUnique(emailAdressSignUpTextField.getText());
+                accountModel.isEmailUnique(emailAdressSignUpTextField.getText());
 
         } catch (IllegalArgumentException exception) {
             isAlertNeeded = true;
@@ -272,7 +271,7 @@ public class SettingsController {
         try {
             AccountModel.getCurrentUser ().setUserName(usernameSignUpTextField.getText());
             if(!usernameSignUpTextField.getText ().equals (AccountModel.getCurrentUser ().getUserName ()))
-                projectDAO.isUsernameUnique(usernameSignUpTextField.getText());
+                accountModel.isUsernameUnique(usernameSignUpTextField.getText());
 
         } catch (IllegalArgumentException exception) {
             isAlertNeeded = true;

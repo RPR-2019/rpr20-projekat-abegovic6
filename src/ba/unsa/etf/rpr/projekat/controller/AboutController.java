@@ -7,7 +7,9 @@ import javafx.scene.control.Hyperlink;
 
 public class AboutController {
     private final HostServices hostServices;
+    @FXML
     public Hyperlink page;
+    @FXML
     public Hyperlink git;
 
     public AboutController() {

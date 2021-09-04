@@ -1,17 +1,12 @@
-package ba.unsa.etf.rpr.projekat;
-
-import ba.unsa.etf.rpr.projekat.model.AccountModel;
-import ba.unsa.etf.rpr.projekat.model.GroupModel;
-import ba.unsa.etf.rpr.projekat.model.LabelModel;
-import ba.unsa.etf.rpr.projekat.model.NoteModel;
+package ba.unsa.etf.rpr.projekat.dal;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.*;
 import java.util.*;
 
-public class ProjectDAO {
-    private static ProjectDAO instance = null;
+public class DatabaseConnection {
+    private static DatabaseConnection instance = null;
     private Connection connection;
 
 
@@ -21,7 +16,7 @@ public class ProjectDAO {
     private NoteModel noteModel = null;
 
 
-    private ProjectDAO() {
+    private DatabaseConnection () {
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:projectdatabase.db");
         } catch (SQLException throwables) {
@@ -50,8 +45,8 @@ public class ProjectDAO {
     }
 
     // METHODS FOR DATABASE
-    public static ProjectDAO getInstance() {
-        if(instance == null) instance = new ProjectDAO();
+    public static DatabaseConnection getInstance() {
+        if(instance == null) instance = new DatabaseConnection ();
         return instance;
     }
 

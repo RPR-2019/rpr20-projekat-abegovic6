@@ -1,8 +1,7 @@
 
+]	java:S110"<This class has 9 parents which is greater than 5 authorized.(›şÒ´ÿÿÿÿÿ8·µ‚é¹/
 t
 java:S3776,"RRefactor this method to reduce its Cognitive Complexity from 26 to the 15 allowed.(öÍÃàıÿÿÿÿ8·µ‚é¹/
-O
-java:S1172f"2Remove this unused method parameter "actionEvent".(ñœÂ8·µ‚é¹/
-h
-java:S1128"FRemove this unused import 'ba.unsa.etf.rpr.projekat.model.GroupModel'.(ÿî×œüÿÿÿÿ8×Ä±°º/
-]	java:S110"<This class has 9 parents which is greater than 5 authorized.(›şÒ´ÿÿÿÿÿ8·µ‚é¹/
+W
+java:S1128
+"5Remove this unused import 'javafx.event.ActionEvent'.(î•¯¼ıÿÿÿÿ8¥úè»/

@@ -1,6 +1,6 @@
-package ba.unsa.etf.rpr.projekat.javabean;
+package ba.unsa.etf.rpr.projekat.dto;
 
-public enum NoteColor {
+public enum LabelColor {
     BLUE("#048a81"),
     COPPER("#c57b57"),
     GREEN("#70ae6e"),
@@ -12,10 +12,10 @@ public enum NoteColor {
 
     private String value;
 
-    private NoteColor() {
+    private LabelColor() {
     }
 
-    private NoteColor(String value) {
+    private LabelColor(String value) {
         this.value = value;
     }
 

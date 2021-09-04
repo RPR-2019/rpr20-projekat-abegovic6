@@ -1,13 +1,12 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.javabean.Note;
-import ba.unsa.etf.rpr.projekat.model.GroupModel;
-import ba.unsa.etf.rpr.projekat.model.NoteModel;
-import ba.unsa.etf.rpr.projekat.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.javabean.Group;
-import ba.unsa.etf.rpr.projekat.javabean.GroupColor;
-import javafx.event.ActionEvent;
+import ba.unsa.etf.rpr.projekat.dto.Note;
+import ba.unsa.etf.rpr.projekat.dal.GroupModel;
+import ba.unsa.etf.rpr.projekat.dal.NoteModel;
+import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
+import ba.unsa.etf.rpr.projekat.dto.Group;
+import ba.unsa.etf.rpr.projekat.dto.GroupColor;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -35,8 +34,8 @@ public class GroupListCellController extends ListCell<Group> {
     private FXMLLoader mLLoader;
 
     public GroupListCellController (List<Group> groups) {
-        this.groupModel = ProjectDAO.getInstance ().getGroupModel ();
-        this.noteModel = ProjectDAO.getInstance ().getNoteModel ();
+        this.groupModel = DatabaseConnection.getInstance ().getGroupModel ();
+        this.noteModel = DatabaseConnection.getInstance ().getNoteModel ();
         this.groups = groups;
     }
 

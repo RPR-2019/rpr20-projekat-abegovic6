@@ -1,10 +1,9 @@
-package ba.unsa.etf.rpr.projekat.model;
+package ba.unsa.etf.rpr.projekat.dal;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.javabean.Account;
-import ba.unsa.etf.rpr.projekat.javabean.Group;
-import ba.unsa.etf.rpr.projekat.javabean.Label;
+import ba.unsa.etf.rpr.projekat.dto.Account;
+import ba.unsa.etf.rpr.projekat.dto.Group;
+import ba.unsa.etf.rpr.projekat.dto.Label;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -156,8 +155,8 @@ public class AccountModel {
 
     public void deleteAccount(Account account) {
         try {
-            var groupModel = ProjectDAO.getInstance ().getGroupModel ();
-            var labelModel = ProjectDAO.getInstance ().getLabelModel ();
+            var groupModel = DatabaseConnection.getInstance ().getGroupModel ();
+            var labelModel = DatabaseConnection.getInstance ().getLabelModel ();
             List<Group> groups = groupModel.getAllGroupsForAccount (account);
             List<Label> labels = labelModel.getAllLabelsForAccount (account);
 

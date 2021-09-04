@@ -1,4 +1,4 @@
-package ba.unsa.etf.rpr.projekat.javabean;
+package ba.unsa.etf.rpr.projekat.dto;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 

@@ -1,11 +1,10 @@
-package ba.unsa.etf.rpr.projekat.model;
+package ba.unsa.etf.rpr.projekat.dal;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.javabean.Account;
-import ba.unsa.etf.rpr.projekat.javabean.Group;
-import ba.unsa.etf.rpr.projekat.javabean.GroupColor;
-import ba.unsa.etf.rpr.projekat.javabean.Note;
+import ba.unsa.etf.rpr.projekat.dto.Account;
+import ba.unsa.etf.rpr.projekat.dto.Group;
+import ba.unsa.etf.rpr.projekat.dto.GroupColor;
+import ba.unsa.etf.rpr.projekat.dto.Note;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -147,7 +146,7 @@ public class GroupModel {
     }
 
     public void deleteGroup(int id) {
-        NoteModel noteModel = ProjectDAO.getInstance ().getNoteModel ();
+        NoteModel noteModel = DatabaseConnection.getInstance ().getNoteModel ();
         try {
             for(Note note : noteModel.getAllNotesForGroup (id)) {
                 noteModel.deleteNote (note.getId ());

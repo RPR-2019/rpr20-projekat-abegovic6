@@ -1,11 +1,11 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.model.LabelModel;
-import ba.unsa.etf.rpr.projekat.model.NoteModel;
-import ba.unsa.etf.rpr.projekat.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.model.LabelColorModel;
-import ba.unsa.etf.rpr.projekat.javabean.LabelColor;
+import ba.unsa.etf.rpr.projekat.dal.LabelModel;
+import ba.unsa.etf.rpr.projekat.dal.NoteModel;
+import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
+import ba.unsa.etf.rpr.projekat.dal.LabelColorModel;
+import ba.unsa.etf.rpr.projekat.dto.LabelColor;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +25,7 @@ public class LabelController {
 
     private final NoteModel noteModel;
     private final LabelModel labelModel;
-    private final ba.unsa.etf.rpr.projekat.javabean.Label label;
+    private final ba.unsa.etf.rpr.projekat.dto.Label label;
 
     private LabelColorModel labelColorModel;
     private String color = null;
@@ -48,11 +48,11 @@ public class LabelController {
     @FXML
     public Button labelCancelButton;
 
-    public LabelController(ba.unsa.etf.rpr.projekat.javabean.Label label) {
+    public LabelController(ba.unsa.etf.rpr.projekat.dto.Label label) {
         this.label = label;
-        ProjectDAO projectDAO = ProjectDAO.getInstance ();
-        this.noteModel = projectDAO.getNoteModel ();
-        this.labelModel = projectDAO.getLabelModel ();
+        DatabaseConnection databaseConnection = DatabaseConnection.getInstance ();
+        this.noteModel = databaseConnection.getNoteModel ();
+        this.labelModel = databaseConnection.getLabelModel ();
 
     }
 

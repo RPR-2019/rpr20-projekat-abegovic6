@@ -1,11 +1,11 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.model.GroupColorModel;
-import ba.unsa.etf.rpr.projekat.model.GroupModel;
-import ba.unsa.etf.rpr.projekat.model.NoteModel;
-import ba.unsa.etf.rpr.projekat.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.javabean.*;
+import ba.unsa.etf.rpr.projekat.dal.GroupColorModel;
+import ba.unsa.etf.rpr.projekat.dal.GroupModel;
+import ba.unsa.etf.rpr.projekat.dal.NoteModel;
+import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
+import ba.unsa.etf.rpr.projekat.dto.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -53,9 +53,9 @@ public class GroupController {
     public GroupController(Group group) {
         this.group = group;
 
-        ProjectDAO projectDAO = ProjectDAO.getInstance ();
-        this.noteModel = projectDAO.getNoteModel ();
-        this.groupModel = projectDAO.getGroupModel ();
+        DatabaseConnection databaseConnection = DatabaseConnection.getInstance ();
+        this.noteModel = databaseConnection.getNoteModel ();
+        this.groupModel = databaseConnection.getGroupModel ();
     }
 
     @FXML

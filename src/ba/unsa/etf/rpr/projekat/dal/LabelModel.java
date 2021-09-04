@@ -1,9 +1,9 @@
-package ba.unsa.etf.rpr.projekat.model;
+package ba.unsa.etf.rpr.projekat.dal;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.javabean.Account;
-import ba.unsa.etf.rpr.projekat.javabean.Label;
-import ba.unsa.etf.rpr.projekat.javabean.LabelColor;
+import ba.unsa.etf.rpr.projekat.dto.Account;
+import ba.unsa.etf.rpr.projekat.dto.Label;
+import ba.unsa.etf.rpr.projekat.dto.LabelColor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

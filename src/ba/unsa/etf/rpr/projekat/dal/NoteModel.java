@@ -1,11 +1,10 @@
-package ba.unsa.etf.rpr.projekat.model;
+package ba.unsa.etf.rpr.projekat.dal;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.javabean.Account;
-import ba.unsa.etf.rpr.projekat.javabean.Label;
-import ba.unsa.etf.rpr.projekat.javabean.Note;
-import ba.unsa.etf.rpr.projekat.javabean.NoteColor;
+import ba.unsa.etf.rpr.projekat.dto.Account;
+import ba.unsa.etf.rpr.projekat.dto.Label;
+import ba.unsa.etf.rpr.projekat.dto.Note;
+import ba.unsa.etf.rpr.projekat.dto.NoteColor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -108,7 +107,7 @@ public class NoteModel {
         try {
             getAllNotesForAccountStatement.setInt (1, user.getId ());
             return getNoteListFromResultSet(getAllNotesForAccountStatement.executeQuery(),
-                    ProjectDAO.getInstance ().getLabelModel ());
+                    DatabaseConnection.getInstance ().getLabelModel ());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -120,7 +119,7 @@ public class NoteModel {
         try {
             getAllNotesForGroupStatement.setInt(1, groupId);
             return getNoteListFromResultSet(getAllNotesForGroupStatement.executeQuery(),
-                    ProjectDAO.getInstance ().getLabelModel ());
+                    DatabaseConnection.getInstance ().getLabelModel ());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

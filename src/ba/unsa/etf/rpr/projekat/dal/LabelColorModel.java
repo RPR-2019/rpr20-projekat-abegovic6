@@ -1,16 +1,16 @@
-package ba.unsa.etf.rpr.projekat.model;
+package ba.unsa.etf.rpr.projekat.dal;
 
-import ba.unsa.etf.rpr.projekat.javabean.NoteColor;
+import ba.unsa.etf.rpr.projekat.dto.LabelColor;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class NoteColorModel {
+public class LabelColorModel {
 
     ObservableList<String> colors;
     SimpleStringProperty currentColor;
 
-    public NoteColorModel() {
+    public LabelColorModel() {
         this.colors = FXCollections.observableArrayList();
         currentColor = new SimpleStringProperty();
         fill();
@@ -25,8 +25,8 @@ public class NoteColorModel {
     }
 
     public void fill() {
-        for(NoteColor noteColor : NoteColor.values()) {
-            colors.add(noteColor.toString());
+        for(LabelColor labelColor : LabelColor.values()) {
+            colors.add(labelColor.toString());
         }
     }
 

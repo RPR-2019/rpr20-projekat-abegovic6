@@ -1,9 +1,9 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.model.AccountModel;
-import ba.unsa.etf.rpr.projekat.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.javabean.Account;
+import ba.unsa.etf.rpr.projekat.dal.AccountModel;
+import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
+import ba.unsa.etf.rpr.projekat.dto.Account;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -48,7 +48,7 @@ public class LoginController {
     }
 
     public void logIn(ActionEvent actionEvent) {
-        List<Account> accounts = ProjectDAO.getInstance ().getAccountModel ().getAllAccounts ();
+        List<Account> accounts = DatabaseConnection.getInstance ().getAccountModel ().getAllAccounts ();
         boolean isPasswordCorrect = false;
         boolean isUsernameCorrect = false;
 

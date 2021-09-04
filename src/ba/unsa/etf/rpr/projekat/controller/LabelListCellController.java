@@ -1,11 +1,11 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.model.LabelModel;
-import ba.unsa.etf.rpr.projekat.model.NoteModel;
-import ba.unsa.etf.rpr.projekat.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.javabean.LabelColor;
-import ba.unsa.etf.rpr.projekat.javabean.Note;
+import ba.unsa.etf.rpr.projekat.dal.LabelModel;
+import ba.unsa.etf.rpr.projekat.dal.NoteModel;
+import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
+import ba.unsa.etf.rpr.projekat.dto.LabelColor;
+import ba.unsa.etf.rpr.projekat.dto.Note;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,11 +17,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 
-public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.javabean.Label> {
+public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.dto.Label> {
 
     private final LabelModel labelModel;
     private final NoteModel noteModel;
-    private final List<ba.unsa.etf.rpr.projekat.javabean.Label> labels;
+    private final List<ba.unsa.etf.rpr.projekat.dto.Label> labels;
     @FXML
     public Label groupItemDescriptionLabel;
     @FXML
@@ -29,19 +29,19 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.j
     @FXML
     public VBox groupItemVbox;
 
-    ba.unsa.etf.rpr.projekat.javabean.Label label;
+    ba.unsa.etf.rpr.projekat.dto.Label label;
 
     private FXMLLoader mLLoader;
 
-    public LabelListCellController (List<ba.unsa.etf.rpr.projekat.javabean.Label> labels) {
-        ProjectDAO projectDAO = ProjectDAO.getInstance ();
-        this.labelModel = projectDAO.getLabelModel ();
-        this.noteModel = projectDAO.getNoteModel ();
+    public LabelListCellController (List<ba.unsa.etf.rpr.projekat.dto.Label> labels) {
+        DatabaseConnection databaseConnection = DatabaseConnection.getInstance ();
+        this.labelModel = databaseConnection.getLabelModel ();
+        this.noteModel = databaseConnection.getNoteModel ();
         this.labels = labels;
     }
 
     @Override
-    protected void updateItem(ba.unsa.etf.rpr.projekat.javabean.Label label, boolean empty) {
+    protected void updateItem(ba.unsa.etf.rpr.projekat.dto.Label label, boolean empty) {
         super.updateItem(label, empty);
 
         this.label = label;

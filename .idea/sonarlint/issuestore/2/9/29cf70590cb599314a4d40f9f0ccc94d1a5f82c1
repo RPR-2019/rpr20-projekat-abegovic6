@@ -1,22 +1,13 @@
 
-?
-java:S1643Ì"Use a StringBuilder instead.(æÏÜÅùÿÿÿÿ8¿ãŸ°º/
-t
-java:S3776^"RRefactor this method to reduce its Cognitive Complexity from 33 to the 15 allowed.(·òşÿÿÿÿ8·Ò«ë¹/
-Z
-java:S1128 "8Remove this unused import 'java.util.stream.Collectors'.(Óóº´úÿÿÿÿ8Æ´í¹/
-J	java:S108j")Either remove or fill this block of code.(ûï›±úÿÿÿÿ8·Ò«ë¹/
-U
-java:S1172›"2Remove this unused method parameter "actionEvent".(µ¶Íòûÿÿÿÿ8¿ãŸ°º/
-J
-java:S1602‘",Remove useless curly braces around statement(Ñ³¢ê8·Ò«ë¹/
 k
-java:S2095Û"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8¿ãŸ°º/
-:
-java:S1643Ç"Use a StringBuilder instead.(Úİ™‡8¿ãŸ°º/
+java:S2095×"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8¿ãŸ°º/
+?
+java:S1643È"Use a StringBuilder instead.(æÏÜÅùÿÿÿÿ8¿ãŸ°º/
 u
-java:S3776‹"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(³Ø†¼ûÿÿÿÿ8Á¤¢í¹/
-E
-java:S1905…"'Remove this unnecessary cast to "Node".(£ß»š8¿ãŸ°º/
-D
-java:S1905œ"'Remove this unnecessary cast to "Node".(É·¢y8¿ãŸ°º/
+java:S3776…"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(³Ø†¼ûÿÿÿÿ8Á¤¢í¹/
+t
+java:S3776]"RRefactor this method to reduce its Cognitive Complexity from 28 to the 15 allowed.(·òşÿÿÿÿ8·Ò«ë¹/
+:
+java:S1643Ã"Use a StringBuilder instead.(Úİ™‡8¿ãŸ°º/
+W
+java:S1128	"5Remove this unused import 'javafx.event.ActionEvent'.(î•¯¼ıÿÿÿÿ8‘µ†»/

@@ -1,12 +1,12 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.model.GroupModel;
-import ba.unsa.etf.rpr.projekat.model.LabelModel;
-import ba.unsa.etf.rpr.projekat.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.model.NoteColorModel;
-import ba.unsa.etf.rpr.projekat.javabean.*;
-import ba.unsa.etf.rpr.projekat.javabean.Label;
+import ba.unsa.etf.rpr.projekat.dal.GroupModel;
+import ba.unsa.etf.rpr.projekat.dal.LabelModel;
+import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
+import ba.unsa.etf.rpr.projekat.dal.NoteColorModel;
+import ba.unsa.etf.rpr.projekat.dto.*;
+import ba.unsa.etf.rpr.projekat.dto.Label;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -65,10 +65,10 @@ public class NoteController {
     public Button imageButton;
 
     public NoteController(Note note) {
-        ProjectDAO projectDAO = ProjectDAO.getInstance ();
+        DatabaseConnection databaseConnection = DatabaseConnection.getInstance ();
         this.note = note;
-        this.labelModel = projectDAO.getLabelModel ();
-        this.groupModel = projectDAO.getGroupModel ();
+        this.labelModel = databaseConnection.getLabelModel ();
+        this.groupModel = databaseConnection.getGroupModel ();
     }
 
     @FXML

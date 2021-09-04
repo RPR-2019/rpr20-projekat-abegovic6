@@ -1,6 +1,6 @@
 package ba.unsa.etf.rpr.projekat;
 
-import ba.unsa.etf.rpr.projekat.model.AccountModel;
+import ba.unsa.etf.rpr.projekat.dal.AccountModel;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 

@@ -1,6 +1,6 @@
-package ba.unsa.etf.rpr.projekat.javabean;
+package ba.unsa.etf.rpr.projekat.dto;
 
-public enum GroupColor {
+public enum NoteColor {
     BLUE("#048a81"),
     COPPER("#c57b57"),
     GREEN("#70ae6e"),
@@ -12,17 +12,14 @@ public enum GroupColor {
 
     private String value;
 
-    private GroupColor() {
+    private NoteColor() {
     }
 
-    private GroupColor(String value) {
+    private NoteColor(String value) {
         this.value = value;
     }
 
     public String getHexCode() {
         return this.value;
     }
-
-
-
 }

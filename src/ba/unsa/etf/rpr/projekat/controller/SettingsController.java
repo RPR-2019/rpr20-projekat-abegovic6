@@ -1,9 +1,9 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.javabean.Account;
-import ba.unsa.etf.rpr.projekat.model.AccountModel;
+import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
+import ba.unsa.etf.rpr.projekat.dto.Account;
+import ba.unsa.etf.rpr.projekat.dal.AccountModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -55,7 +55,7 @@ public class SettingsController {
     public RadioButton bosnian;
 
     public SettingsController () {
-        accountModel = ProjectDAO.getInstance ().getAccountModel ();
+        accountModel = DatabaseConnection.getInstance ().getAccountModel ();
     }
 
     @FXML

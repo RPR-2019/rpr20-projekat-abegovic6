@@ -1,8 +1,8 @@
 package ba.unsa.etf.rpr.projekat;
 
 import ba.unsa.etf.rpr.projekat.controller.LoginController;
-import ba.unsa.etf.rpr.projekat.model.AccountModel;
-import ba.unsa.etf.rpr.projekat.javabean.Account;
+import ba.unsa.etf.rpr.projekat.dal.AccountModel;
+import ba.unsa.etf.rpr.projekat.dto.Account;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

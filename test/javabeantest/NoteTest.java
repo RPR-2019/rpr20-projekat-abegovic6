@@ -1,15 +1,12 @@
 package javabeantest;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.javabean.Label;
-import ba.unsa.etf.rpr.projekat.javabean.LabelColor;
-import ba.unsa.etf.rpr.projekat.javabean.Note;
-import ba.unsa.etf.rpr.projekat.javabean.NoteColor;
+import ba.unsa.etf.rpr.projekat.dto.Note;
+import ba.unsa.etf.rpr.projekat.dto.NoteColor;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -109,8 +109,6 @@ P
  resources/fxml/listviewitem.fxml,2\0\202bae0e7d4fac50d6d4eacf1782a08a3b57baf2
 I
 resources/fxml/group.fxml,a\3\a3c2e1aa41ba72f9b4247f25c56b4095f38ae2f0
-M
-resources/reports/group.jrxml,4\2\4250ea1afb02d4244ff1a68eeb1fda8bef5958ab
 I
 resources/fxml/label.fxml,d\d\dda1ea7deebaa2b192b69125fb770986016937f5
 M
@@ -167,7 +165,11 @@ P
  test/javabeantest/GroupTest.java,7\7\77649b1d76e4be8e24370165704867e4787babc0
 T
 $test/modeltest/AccountModelTest.java,5\8\581324b9c493feeb2f233a78daedbd8bfcbc4a85
-H
-test/ProjectDAOTest.java,8\a\8ac8f25cb8662b473226f7d6f927f73b7cb46a9f
 R
 "test/modeltest/GroupModelTest.java,b\2\b210f4f1e90efde6317b0c0de4980ddde934c83a
+H
+resources/fxml/main.fxml,1\7\1717211d21a149ed417a055ba59f01ec1c546de5
+S
+#resources/Translation_bs.properties,0\c\0c6f81a569f3bf275f5b81629d754b261b81207d
+S
+#resources/Translation_en.properties,1\5\151cfaa1996cb211e7306b41da4fc83a109637af

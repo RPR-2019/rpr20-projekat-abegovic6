@@ -1,10 +1,10 @@
 package modeltest;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.javabean.Account;
-import ba.unsa.etf.rpr.projekat.javabean.Group;
-import ba.unsa.etf.rpr.projekat.model.GroupModel;
+import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
+import ba.unsa.etf.rpr.projekat.dto.Account;
+import ba.unsa.etf.rpr.projekat.dto.Group;
+import ba.unsa.etf.rpr.projekat.dal.GroupModel;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ import java.util.Locale;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GroupModelTest {
-    private static ProjectDAO projectDAO;
+    private static DatabaseConnection databaseConnection;
     private static GroupModel groupModel;
     private static Account account;
 
@@ -24,20 +24,20 @@ class GroupModelTest {
     static void setUp () {
         account = new Account (0, "firstname", "lastname",
                 "username", "email@gmail.com", "Password10#");
-        projectDAO = ProjectDAO.getInstance ();
-        groupModel = ProjectDAO.getInstance ().getGroupModel ();
+        databaseConnection = DatabaseConnection.getInstance ();
+        groupModel = DatabaseConnection.getInstance ().getGroupModel ();
         MyResourceBundle.setLocale (new Locale ("en"));
     }
 
     @AfterAll
     static void onEnd() {
-        ProjectDAO.removeInstance ();
+        DatabaseConnection.removeInstance ();
     }
 
     @Test
     void testProperty() {
         // database empty
-        projectDAO.vratiNaDefault ();
+        databaseConnection.vratiNaDefault ();
         Group group1 = new Group (0, 0, "groupname", "groupdescription", "BLUE");
         // create groups
         groupModel.createGroup (group1);
@@ -51,7 +51,7 @@ class GroupModelTest {
     @Test
     void testSorting() {
         // database empty
-        projectDAO.vratiNaDefault ();
+        databaseConnection.vratiNaDefault ();
         Group group1 = new Group (0, 0, "2 by name", "3 by description", "BLUE");
         Group group2 = new Group (0, 0, "3 by name", "1 by description", "BLUE");
         Group group3 = new Group (0, 0, "1 by name", "2 by description", "BLUE");
@@ -83,7 +83,7 @@ class GroupModelTest {
     @Test
     void getNameFromId() {
         // database empty
-        projectDAO.vratiNaDefault ();
+        databaseConnection.vratiNaDefault ();
         Group group1 = new Group (0, 0, "first", "groupdescription", "BLUE");
         Group group2 = new Group (0, 0, "second", "groupdescription", "BLUE");
         Group group3 = new Group (0, 0, "third", "groupdescription", "BLUE");
@@ -100,7 +100,7 @@ class GroupModelTest {
     @Test
     void getIdFromName() {
         // database empty
-        projectDAO.vratiNaDefault ();
+        databaseConnection.vratiNaDefault ();
         Group group1 = new Group (0, 0, "first", "groupdescription", "BLUE");
         Group group2 = new Group (0, 0, "second", "groupdescription", "BLUE");
         Group group3 = new Group (0, 0, "third", "groupdescription", "BLUE");
@@ -117,7 +117,7 @@ class GroupModelTest {
     @Test
     void groupIsCreating() {
         // database empty
-        projectDAO.vratiNaDefault ();
+        databaseConnection.vratiNaDefault ();
 
         Group group1 = new Group (0, 0, "groupname", "groupdescription", "BLUE");
         Group group2 = new Group (0, 0, "groupname", "groupdescription", "BLUE");
@@ -136,7 +136,7 @@ class GroupModelTest {
     @Test
     void groupIsUpdating() {
         // database empty
-        projectDAO.vratiNaDefault ();
+        databaseConnection.vratiNaDefault ();
         Group group1 = new Group (0, 0, "groupname", "groupdescription", "BLUE");
         // create group before updating
         groupModel.createGroup (group1);
@@ -153,7 +153,7 @@ class GroupModelTest {
     @Test
     void groupIsDeleting() {
         // database empty
-        projectDAO.vratiNaDefault ();
+        databaseConnection.vratiNaDefault ();
         Group group1 = new Group (0, 0, "groupname", "groupdescription", "BLUE");
         // create group before updating
         groupModel.createGroup (group1);

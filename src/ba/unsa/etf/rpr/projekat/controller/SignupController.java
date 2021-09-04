@@ -1,8 +1,8 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.model.AccountModel;
+import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
+import ba.unsa.etf.rpr.projekat.dal.AccountModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,7 +52,7 @@ public class SignupController {
 
 
     public SignupController() {
-        this.accountModel = ProjectDAO.getInstance ().getAccountModel ();
+        this.accountModel = DatabaseConnection.getInstance ().getAccountModel ();
     }
 
     @FXML

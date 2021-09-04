@@ -2,11 +2,10 @@ package ba.unsa.etf.rpr.projekat.controller;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.PrintReport;
-import ba.unsa.etf.rpr.projekat.ProjectDAO;
-import ba.unsa.etf.rpr.projekat.model.*;
-import ba.unsa.etf.rpr.projekat.javabean.*;
+import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
+import ba.unsa.etf.rpr.projekat.dal.*;
+import ba.unsa.etf.rpr.projekat.dto.*;
 import javafx.collections.ListChangeListener;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -32,7 +31,7 @@ import java.util.*;
 import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class MainController {
-    private final ProjectDAO projectDAO;
+    private final DatabaseConnection databaseConnection;
 
     private List<Node> nodes;
 
@@ -47,7 +46,7 @@ public class MainController {
     @FXML
     public ListView<Group> groupListView;
     @FXML
-    public ListView<ba.unsa.etf.rpr.projekat.javabean.Label> labelListView;
+    public ListView<ba.unsa.etf.rpr.projekat.dto.Label> labelListView;
     @FXML
     public Label userEmailLabel;
     @FXML
@@ -68,13 +67,13 @@ public class MainController {
 
 
     public MainController() {
-        this.projectDAO = ProjectDAO.getInstance ();
+        this.databaseConnection = DatabaseConnection.getInstance ();
 
-        this.noteModel = projectDAO.getNoteModel ();
+        this.noteModel = databaseConnection.getNoteModel ();
         this.noteModel.getAllNotes ().clear ();
         this.noteModel.getAllNotes().addAll (this.noteModel.getAllNotesForUser (AccountModel.getCurrentUser ()));
 
-        this.groupModel = projectDAO.getGroupModel ();
+        this.groupModel = databaseConnection.getGroupModel ();
         this.groupModel.getAllGroups ().clear ();
         this.groupModel.getGroups ().clear ();
         this.groupModel.getAllGroups ().addAll (this.groupModel.getAllGroupsForAccount (AccountModel.getCurrentUser ()));
@@ -82,7 +81,7 @@ public class MainController {
             this.groupModel.getGroups ().add (group.getGroupName ());
         }
 
-        this.labelModel = projectDAO.getLabelModel ();
+        this.labelModel = databaseConnection.getLabelModel ();
         this.labelModel.getAllLabels ().clear ();
         this.labelModel.getAllLabels ().addAll (this.labelModel.getAllLabelsForAccount (AccountModel.getCurrentUser ()));
 
@@ -357,7 +356,7 @@ public class MainController {
         try {
             Stage newStage = new Stage();
 
-            ba.unsa.etf.rpr.projekat.javabean.Label label = new ba.unsa.etf.rpr.projekat.javabean.Label();
+            ba.unsa.etf.rpr.projekat.dto.Label label = new ba.unsa.etf.rpr.projekat.dto.Label();
             label.setId(-2);
             label.setAccountId(AccountModel.getCurrentUser ().getId());
 
@@ -452,7 +451,7 @@ public class MainController {
         }
 
         string +=  "\n**********\n\n" + MyResourceBundle.getString ("UserLabels") + "\n\n";
-        for(ba.unsa.etf.rpr.projekat.javabean.Label label : labelModel.getAllLabels ()) {
+        for(ba.unsa.etf.rpr.projekat.dto.Label label : labelModel.getAllLabels ()) {
             string += label.writeInFile (noteModel.getNotesForLabel (label.getId ()));
         }
 
@@ -481,7 +480,7 @@ public class MainController {
 
     public void printNotes() {
         try {
-            new PrintReport ().showReport(projectDAO.getConnection (), "note");
+            new PrintReport ().showReport(databaseConnection.getConnection (), "note");
         } catch (JRException e1) {
             e1.printStackTrace();
         }
@@ -489,7 +488,7 @@ public class MainController {
     }
     public void printLabels() {
         try {
-            new PrintReport ().showReport(projectDAO.getConnection (), "label");
+            new PrintReport ().showReport(databaseConnection.getConnection (), "label");
         } catch (JRException e1) {
             e1.printStackTrace();
         }
@@ -497,7 +496,7 @@ public class MainController {
     }
     public void printGroups() {
         try {
-            new PrintReport ().showReport(projectDAO.getConnection (), "group");
+            new PrintReport ().showReport(databaseConnection.getConnection (), "group");
         } catch (JRException e1) {
             e1.printStackTrace();
         }
@@ -549,7 +548,7 @@ public class MainController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if(result.isPresent() && result.get() == ButtonType.OK) {
-            ProjectDAO.getInstance ().getAccountModel ().deleteAccount (AccountModel.getCurrentUser ());
+            DatabaseConnection.getInstance ().getAccountModel ().deleteAccount (AccountModel.getCurrentUser ());
         }
         logout ();
 

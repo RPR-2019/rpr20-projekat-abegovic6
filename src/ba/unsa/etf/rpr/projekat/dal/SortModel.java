@@ -1,4 +1,4 @@
-package ba.unsa.etf.rpr.projekat.model;
+package ba.unsa.etf.rpr.projekat.dal;
 
 import ba.unsa.etf.rpr.projekat.MyResourceBundle;
 import javafx.beans.property.SimpleStringProperty;

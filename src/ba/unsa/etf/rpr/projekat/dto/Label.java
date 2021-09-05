@@ -3,6 +3,7 @@ package ba.unsa.etf.rpr.projekat.dto;
 import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 
+
 import java.util.List;
 
 public class Label {
@@ -79,12 +80,12 @@ public class Label {
         this.description.set(description);
     }
 
-    public LabelColor getLabelColor() {
+    public ba.unsa.etf.rpr.projekat.dto.LabelColor getLabelColor() {
         if(labelColor.get () == null) return null;
-        return LabelColor.valueOf(labelColor.get());
+        return ba.unsa.etf.rpr.projekat.dto.LabelColor.valueOf(labelColor.get());
     }
 
-    public void setLabelColor(LabelColor labelColor) {
+    public void setLabelColor(ba.unsa.etf.rpr.projekat.dto.LabelColor labelColor) {
         this.labelColor.set(labelColor.name());
     }
 
@@ -104,11 +105,11 @@ public class Label {
         this.labelColor.set(labelColor);
     }
 
-    public String writeInFile (List<Note> notes) {
+    public String writeInFile (List<ba.unsa.etf.rpr.projekat.dto.Note> notes) {
         String string = MyResourceBundle.getString ("LabelId") + id + "\n" + MyResourceBundle.getString ("LabelName") +
                 labelName.get () + "\n" + MyResourceBundle.getString ("LabelDescription") + description.get ()
                 + "\n----------\n" + MyResourceBundle.getString ("UserNotes") + "\n\n";
-        for (Note note : notes) {
+        for (ba.unsa.etf.rpr.projekat.dto.Note note : notes) {
             string += note.writeInFile();
         }
 

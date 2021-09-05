@@ -38,6 +38,13 @@
                         <MenuItem id="menuItemPrint" onAction="#printLabels" text="%PrintLabels" />
                     </items>
                   </Menu>
+                  <Menu id="menuItemNew" text="%New">
+                    <items>
+                      <MenuItem onAction="#createNewGroup" text="%NewGroups" />
+                        <MenuItem onAction="#createNewLabel" text="%NewLabels" />
+                        <MenuItem onAction="#createNewNote" text="%NewNotes" />
+                    </items>
+                  </Menu>
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem id="menuItemSettings" onAction="#fileSettings" text="%Settings" />
                   <SeparatorMenuItem mnemonicParsing="false" />

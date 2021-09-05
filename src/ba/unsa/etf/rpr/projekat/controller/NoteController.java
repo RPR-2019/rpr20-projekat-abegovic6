@@ -1,13 +1,12 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
+import ba.unsa.etf.rpr.projekat.dto.*;
 import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.dal.GroupModel;
 import ba.unsa.etf.rpr.projekat.dal.LabelModel;
 import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
 import ba.unsa.etf.rpr.projekat.dal.NoteColorModel;
-import ba.unsa.etf.rpr.projekat.dto.*;
 import ba.unsa.etf.rpr.projekat.dto.Label;
-import javafx.collections.ObservableArray;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +20,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;

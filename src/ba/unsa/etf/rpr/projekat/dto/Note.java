@@ -1,10 +1,8 @@
 package ba.unsa.etf.rpr.projekat.dto;
 
 import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
-import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDateTime;
@@ -15,14 +13,13 @@ import java.util.Objects;
 public class Note {
     private int id;
     private int groupId;
-    private List<Label> labels;
-    private ObservableList<TextStyle> textStyles;
+    private final ObservableList<TextStyle> textStyles;
     private final SimpleStringProperty noteTitle;
     private final SimpleStringProperty description;
     private final SimpleStringProperty noteColor;
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
-
+    private List<Label> labels;
     private boolean delete = false;
     private byte[] image;
 
@@ -57,10 +54,6 @@ public class Note {
         return textStyles;
     }
 
-    public void setTextStyles (ObservableList<TextStyle> textStyles) {
-        this.textStyles = textStyles;
-    }
-
     public boolean isDelete () {
         return delete;
     }
@@ -78,8 +71,6 @@ public class Note {
     }
 
     private boolean isUpdateNeeded = false;
-
-
 
     public NoteColor getNoteColor() {
         if(noteColor.get () == null) return null;

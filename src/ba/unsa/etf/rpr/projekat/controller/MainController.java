@@ -356,7 +356,7 @@ public class MainController {
         try {
             Stage newStage = new Stage();
 
-            ba.unsa.etf.rpr.projekat.dto.Label label = new ba.unsa.etf.rpr.projekat.dto.Label();
+            ba.unsa.etf.rpr.projekat.dto.Label label = new ba.unsa.etf.rpr.projekat.dto.Label ();
             label.setId(-2);
             label.setAccountId(AccountModel.getCurrentUser ().getId());
 

@@ -1,9 +1,9 @@
 package ba.unsa.etf.rpr.projekat.dal;
 
-import ba.unsa.etf.rpr.projekat.dto.*;
 import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import ba.unsa.etf.rpr.projekat.dto.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

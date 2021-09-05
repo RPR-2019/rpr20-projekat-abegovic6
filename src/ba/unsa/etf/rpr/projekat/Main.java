@@ -17,10 +17,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Locale.setDefault (new Locale ("bs", "BA"));
-        Locale currentLocale = Locale.getDefault();
-
-        MyResourceBundle.setLocale (currentLocale);
+        MyResourceBundle.setLocale (Locale.getDefault());
         MyHostServices.setHostServices (getHostServices ());
         AccountModel.setCurrentUser (new Account ());
 

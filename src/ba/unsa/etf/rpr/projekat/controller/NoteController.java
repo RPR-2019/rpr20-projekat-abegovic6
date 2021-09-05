@@ -7,6 +7,7 @@ import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
 import ba.unsa.etf.rpr.projekat.dal.NoteColorModel;
 import ba.unsa.etf.rpr.projekat.dto.*;
 import ba.unsa.etf.rpr.projekat.dto.Label;
+import javafx.collections.ObservableArray;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,9 +18,14 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.text.WordUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -34,6 +40,7 @@ public class NoteController {
     private NoteColorModel noteColorModel;
     private String color = null;
     private String groupName = null;
+    private List<TextStyle> textStyles = null;
 
     @FXML
     public MenuBar notesMenuBar;
@@ -63,6 +70,8 @@ public class NoteController {
     public ImageView noteImage;
     @FXML
     public Button imageButton;
+    @FXML
+    public ToolBar toolBar;
 
     public NoteController(Note note) {
         DatabaseConnection databaseConnection = DatabaseConnection.getInstance ();
@@ -90,6 +99,9 @@ public class NoteController {
             noteFlowPane.getChildren ().add (label);
         }
 
+        textStyles = new ArrayList<> ();
+
+
         noteGroupChoiceBox.setItems(groupModel.getGroups());
 
         groupModel.currentGroupProperty().addListener((obp, oldName, newName) -> {
@@ -115,6 +127,25 @@ public class NoteController {
         } else {
             noteNameTextField.setText(note.getNoteTitle());
             noteDescriptionTextArea.setText(note.getDescription());
+            if(note.getDescription ().length () > 0) {
+                if(note.getTextStyles ().contains (TextStyle.BOLD) && note.getTextStyles ().contains (TextStyle.ITALIC)) {
+                    noteDescriptionTextArea.setFont (Font.font (noteDescriptionTextArea.getFont ().getFamily (),
+                            FontWeight.BOLD, FontPosture.ITALIC, noteDescriptionTextArea.getFont ().getSize ()));
+                    textStyles.add(TextStyle.BOLD);
+                    textStyles.add (TextStyle.ITALIC);
+                } else if(note.getTextStyles ().contains (TextStyle.BOLD)) {
+                    noteDescriptionTextArea.setFont (Font.font (noteDescriptionTextArea.getFont ().getFamily (),
+                            FontWeight.BOLD, noteDescriptionTextArea.getFont ().getSize ()));
+                    textStyles.add(TextStyle.BOLD);
+                } else if(note.getTextStyles ().contains (TextStyle.ITALIC)) {
+                    noteDescriptionTextArea.setFont (Font.font (noteDescriptionTextArea.getFont ().getFamily (),
+                            FontPosture.ITALIC, noteDescriptionTextArea.getFont ().getSize ()));
+                    textStyles.add (TextStyle.ITALIC);
+                } else {
+                    noteDescriptionTextArea.setFont (Font.font (noteDescriptionTextArea.getFont ().getFamily (),
+                            noteDescriptionTextArea.getFont ().getSize ()));
+                }
+            }
             noteColorChoiceBox.getSelectionModel().select(note.getNoteColor().name());
             noteGroupChoiceBox.getSelectionModel().select(groupModel.getNameFromId(note.getGroupId ()));
             groupName = groupModel.getNameFromId(note.getGroupId ());
@@ -131,6 +162,7 @@ public class NoteController {
     private void setEditFalse() {
         noteTitleLabel.setText(MyResourceBundle.getString("NoteInformation"));
         noteOkButton.setVisible (false);
+        toolBar.setDisable (true);
         noteOkButton.setDisable (true);
         imageButton.setDisable (true);
         noteColorChoiceBox.setDisable (true);
@@ -263,6 +295,8 @@ public class NoteController {
                 }
             }
 
+        note.getTextStyles ().clear ();
+        note.getTextStyles ().addAll (textStyles);
         note.setLabels (labelsList);
 
     }
@@ -311,6 +345,7 @@ public class NoteController {
 
     public void editEditNote() {
         noteTitleLabel.setText(MyResourceBundle.getString("UpdateNote"));
+        toolBar.setDisable (false);
         noteOkButton.setVisible (true);
         noteOkButton.setDisable (false);
         imageButton.setDisable (false);
@@ -341,6 +376,71 @@ public class NoteController {
         stage.close();
 
     }
+
+
+
+    public void boldAction() {
+        Font font;
+        if(textStyles.contains (TextStyle.BOLD)) {
+            textStyles.remove (TextStyle.BOLD);
+            if(textStyles.contains (TextStyle.ITALIC)) {
+                font = Font.font (noteDescriptionTextArea.getFont ().getFamily (), FontPosture.ITALIC,
+                        noteDescriptionTextArea.getFont ().getSize ());
+            } else {
+                font = Font.font (noteDescriptionTextArea.getFont ().getFamily (),
+                        noteDescriptionTextArea.getFont ().getSize ());
+            }
+        } else {
+            textStyles.add (TextStyle.BOLD);
+            if(textStyles.contains (TextStyle.ITALIC)) {
+                font = Font.font (noteDescriptionTextArea.getFont ().getFamily (),FontWeight.BOLD, FontPosture.ITALIC,
+                        noteDescriptionTextArea.getFont ().getSize ());
+            } else {
+                font = Font.font (noteDescriptionTextArea.getFont ().getFamily (), FontWeight.BOLD,
+                        noteDescriptionTextArea.getFont ().getSize ());
+            }
+        }
+        noteDescriptionTextArea.setFont (font);
+     }
+
+    public void italicAction() {
+        Font font;
+        if(textStyles.contains (TextStyle.ITALIC)) {
+            textStyles.remove (TextStyle.ITALIC);
+            if(textStyles.contains (TextStyle.BOLD)) {
+                font = Font.font (noteDescriptionTextArea.getFont ().getFamily (), FontWeight.BOLD,
+                        noteDescriptionTextArea.getFont ().getSize ());
+            } else {
+                font = Font.font (noteDescriptionTextArea.getFont ().getFamily (),
+                        noteDescriptionTextArea.getFont ().getSize ());
+            }
+        } else {
+            textStyles.add (TextStyle.ITALIC);
+            if(textStyles.contains (TextStyle.BOLD)) {
+                font = Font.font (noteDescriptionTextArea.getFont ().getFamily (),FontWeight.BOLD, FontPosture.ITALIC,
+                        noteDescriptionTextArea.getFont ().getSize ());
+            } else {
+                font = Font.font (noteDescriptionTextArea.getFont ().getFamily (), FontPosture.ITALIC,
+                        noteDescriptionTextArea.getFont ().getSize ());
+            }
+        }
+        noteDescriptionTextArea.setFont (font);
+
+    }
+
+    public void uppercaseAction() {
+        noteDescriptionTextArea.setText (noteDescriptionTextArea.getText ().toUpperCase ());
+    }
+
+    public void lowercaseAction() {
+        noteDescriptionTextArea.setText (noteDescriptionTextArea.getText ().toLowerCase ());
+    }
+
+    public void capitalizeAction() {
+        noteDescriptionTextArea.setText (noteDescriptionTextArea.getText ().toLowerCase ());
+        noteDescriptionTextArea.setText (WordUtils.capitalize (noteDescriptionTextArea.getText (), '.', '?', '!', ' '));
+    }
+
 
     public void helpUserGuide() {
         try {

@@ -1,7 +1,11 @@
 package ba.unsa.etf.rpr.projekat.dto;
 
 import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -12,17 +16,20 @@ public class Note {
     private int id;
     private int groupId;
     private List<Label> labels;
-    private SimpleStringProperty noteTitle;
-    private SimpleStringProperty description;
+    private ObservableList<TextStyle> textStyles;
+    private final SimpleStringProperty noteTitle;
+    private final SimpleStringProperty description;
+    private final SimpleStringProperty noteColor;
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
-    private SimpleStringProperty noteColor;
+
     private boolean delete = false;
     private byte[] image;
 
 
     public Note() {
         labels = new ArrayList<>();
+        textStyles = FXCollections.observableArrayList ();
         dateUpdated = LocalDateTime.now ();
         dateCreated = LocalDateTime.now ();
 
@@ -41,8 +48,17 @@ public class Note {
         this.description.set (description);
         this.noteColor.set (noteColor);
         labels = new ArrayList<>();
+        textStyles = FXCollections.observableArrayList ();
         dateUpdated = LocalDateTime.now ();
         dateCreated = LocalDateTime.now ();
+    }
+
+    public ObservableList<TextStyle> getTextStyles () {
+        return textStyles;
+    }
+
+    public void setTextStyles (ObservableList<TextStyle> textStyles) {
+        this.textStyles = textStyles;
     }
 
     public boolean isDelete () {

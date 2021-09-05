@@ -39,4 +39,8 @@ CREATE TABLE IF NOT EXISTS "notes" (
 	"dateUpdated"	TEXT,
 	PRIMARY KEY("id")
 );
+CREATE TABLE IF NOT EXISTS "textstyle" (
+    "noteId" INTEGER,
+    "textstyle" VARCHAR
+);
 COMMIT;

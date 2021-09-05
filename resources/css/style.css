@@ -117,3 +117,10 @@
    -fx-border-color: #1A1A1C;
 }
 
+.bold {
+    font-weight: bold;
+}
+.italic {
+    font-style: italic;
+}
+

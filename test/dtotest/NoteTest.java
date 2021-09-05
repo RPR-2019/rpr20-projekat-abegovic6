@@ -1,4 +1,4 @@
-package javabeantest;
+package dtotest;
 
 import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.dto.Note;
@@ -13,17 +13,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 class NoteTest {
-    private static Note note;
 
     @BeforeAll
     static void setUp () {
-        note = new Note ();
         MyResourceBundle.setLocale (new Locale ("en"));
     }
 
     @Test
     void groupIsEmpty() {
-        note = new Note ();
+        Note note = new Note ();
         assertEquals (0, note.getId ());
         assertEquals (0, note.getGroupId ());
         assertNull (note.getNoteTitle ());
@@ -35,7 +33,7 @@ class NoteTest {
 
     @Test
     void secondConstructorTest() {
-        note = new Note (0, 0, "notename", "notedescription", "BLUE");
+        Note note = new Note (0, 0, "notename", "notedescription", "BLUE");
         assertEquals (0, note.getId ());
         assertEquals (0, note.getGroupId ());
         assertEquals ("Notename", note.getNoteTitle ());

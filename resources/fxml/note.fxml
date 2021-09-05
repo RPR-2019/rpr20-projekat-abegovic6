@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #1A1A1C;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #1A1A1C;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@../css/images.css" />
         <URL value="@../css/style.css" />
@@ -22,14 +22,14 @@
     <rowConstraints>
         <RowConstraints fillHeight="false" vgrow="NEVER" />
         <RowConstraints fillHeight="false" vgrow="NEVER" />
-        <RowConstraints fillHeight="false" minHeight="10.0" vgrow="SOMETIMES" />
-      <RowConstraints vgrow="SOMETIMES" />
-        <RowConstraints vgrow="NEVER" />
+        <RowConstraints fillHeight="false" minHeight="10.0" vgrow="NEVER" />
+      <RowConstraints minHeight="0.0" vgrow="SOMETIMES" />
+        <RowConstraints vgrow="SOMETIMES" />
+        <RowConstraints minHeight="0.0" vgrow="SOMETIMES" />
         <RowConstraints vgrow="SOMETIMES" />
         <RowConstraints vgrow="NEVER" />
-        <RowConstraints vgrow="NEVER" />
       <RowConstraints maxHeight="189.20000000000005" minHeight="156.20000000000005" prefHeight="156.20000000000005" vgrow="ALWAYS" />
-      <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints vgrow="ALWAYS" />
     </rowConstraints>
     <children>
         <MenuBar fx:id="notesMenuBar" style="-fx-background-color: #FFFFFF;" GridPane.columnSpan="2147483647">
@@ -66,12 +66,34 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
         </MenuBar>
-        <TextArea fx:id="noteDescriptionTextArea" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="8" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-            <GridPane.margin>
-                <Insets bottom="10.0" left="10.0" right="10.0" />
-            </GridPane.margin>
-        </TextArea>
-        <HBox alignment="CENTER_LEFT" GridPane.rowIndex="6">
+      <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="8" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <GridPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" />
+         </GridPane.margin>
+         <children>
+            <ToolBar fx:id="toolBar">
+              <items>
+                <Button id="boldButton" mnemonicParsing="false" onAction="#boldAction">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Button id="italicButton" mnemonicParsing="false" onAction="#italicAction">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <MenuButton id="letterButton" mnemonicParsing="false">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#lowercaseAction" text="%Lowercase" />
+                      <MenuItem mnemonicParsing="false" onAction="#uppercaseAction" text="%Upercase" />
+                        <MenuItem mnemonicParsing="false" onAction="#capitalizeAction" text="%SentenceCase" />
+                    </items>
+                  </MenuButton>
+              </items>
+            </ToolBar>
+              <TextArea fx:id="noteDescriptionTextArea" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+        <HBox alignment="CENTER_LEFT" GridPane.hgrow="NEVER" GridPane.rowIndex="6">
             <children>
                 <Label styleClass="paragraph" text="%NoteGroup">
                     <HBox.margin>
@@ -85,7 +107,7 @@
                 </ChoiceBox>
             </children>
         </HBox>
-        <ScrollPane hbarPolicy="NEVER" nodeOrientation="LEFT_TO_RIGHT" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="6" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+        <ScrollPane hbarPolicy="NEVER" nodeOrientation="LEFT_TO_RIGHT" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="6" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES">
             <content>
                 <FlowPane fx:id="noteFlowPane" alignment="CENTER_LEFT" hgap="5.0" rowValignment="TOP" vgap="5.0">
                     <padding>
@@ -150,7 +172,13 @@
                 <Insets bottom="10.0" left="20.0" right="40.0" top="10.0" />
             </GridPane.margin>
         </ButtonBar>
-        <Button fx:id="imageButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#getPictureForNote" style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="8" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+        <Button id="addImageButton" fx:id="imageButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#getPictureForNote" style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="8" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+            <GridPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </GridPane.margin>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
             <graphic>
                 <ImageView fx:id="noteImage" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true">
                     <image>
@@ -158,13 +186,7 @@
                     </image>
                 </ImageView>
             </graphic>
-            <GridPane.margin>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </GridPane.margin>
-            <cursor>
-                <Cursor fx:constant="HAND" />
-            </cursor>
-        </Button><Label fx:id="noteGroupErrorLabel" maxWidth="1.7976931348623157E308" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+        </Button><Label fx:id="noteGroupErrorLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" GridPane.rowIndex="5" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
@@ -172,7 +194,7 @@
             <Font size="1.0" />
          </font>
       </Label>
-      <Label fx:id="noteNameErrorLabel" maxWidth="1.7976931348623157E308" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+      <Label fx:id="noteNameErrorLabel" alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" GridPane.rowIndex="3" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
@@ -180,7 +202,7 @@
             <Font size="1.0" />
          </font>
       </Label>
-      <Label fx:id="noteColorErrorLabel" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <Label fx:id="noteColorErrorLabel" alignment="CENTER" contentDisplay="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="3">
          <font>
             <Font size="1.0" />
          </font></Label>

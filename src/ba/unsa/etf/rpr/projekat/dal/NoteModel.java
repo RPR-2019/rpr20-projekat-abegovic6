@@ -1,10 +1,7 @@
 package ba.unsa.etf.rpr.projekat.dal;
 
+import ba.unsa.etf.rpr.projekat.dto.*;
 import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
-import ba.unsa.etf.rpr.projekat.dto.Account;
-import ba.unsa.etf.rpr.projekat.dto.Label;
-import ba.unsa.etf.rpr.projekat.dto.Note;
-import ba.unsa.etf.rpr.projekat.dto.NoteColor;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -29,7 +26,10 @@ public class NoteModel {
     private final PreparedStatement addNewLabelForNoteStatement;
     private final PreparedStatement removeLabelsFromNote;
     private final PreparedStatement deleteNoteIdStatement;
-
+    private final PreparedStatement getAllTextStylesStatement;
+    private final PreparedStatement addNewStyleForNoteStatement;
+    private final PreparedStatement removeStylesForNoteStatement;
+    private final PreparedStatement deleteTextStyleStatement;
     ObservableList<Note> allNotes;
     ObservableList<Note> currentNotes;
 
@@ -47,6 +47,11 @@ public class NoteModel {
         addNewLabelForNoteStatement = conn.prepareStatement("INSERT INTO intertable (noteId, labelId) VALUES (?, ?)");
         removeLabelsFromNote = conn.prepareStatement("DELETE FROM intertable WHERE noteId = ?");
         deleteNoteIdStatement = conn.prepareStatement("DELETE FROM intertable WHERE noteId = ?");
+
+        getAllTextStylesStatement = conn.prepareStatement ("SELECT textstyle FROM textstyle WHERE noteId = ?");
+        addNewStyleForNoteStatement = conn.prepareStatement ("INSERT INTO textstyle (noteId, textstyle) VALUES (?, ?)");
+        removeStylesForNoteStatement = conn.prepareStatement ("DELETE FROM textstyle WHERE noteId = ?");
+        deleteTextStyleStatement = conn.prepareStatement ("DELETE FROM textstyle WHERE noteId = ?");
     }
 
     public static NoteModel getInstance(Connection conn) throws SQLException {
@@ -79,6 +84,7 @@ public class NoteModel {
             note.setDateCreated (stringToLocalDateTime (resultSetNotes.getString (7)));
             note.setDateUpdated (stringToLocalDateTime (resultSetNotes.getString (8)));
             note.setLabels (labelModel.getLabelListForNote (note.getId ()));
+            note.getTextStyles ().addAll (getTextStyleForNote (note.getId ()));
             note.setImage (null);
 
 
@@ -88,6 +94,23 @@ public class NoteModel {
             throwables.printStackTrace();
         }
         return null;
+    }
+
+    private List<TextStyle> getTextStyleForNote (int id) {
+        try {
+            List<TextStyle> textStyles = new ArrayList<> ();
+            getAllTextStylesStatement.setInt (1, id);
+            ResultSet resultSet = getAllTextStylesStatement.executeQuery ();
+            while (resultSet.next ()) {
+                textStyles.add (TextStyle.valueOf (resultSet.getString (1)));
+            }
+            return textStyles;
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return Collections.emptyList();
+
     }
 
     private List<Note> getNoteListFromResultSet(ResultSet resultSetNotes, LabelModel labelModel) {
@@ -149,12 +172,40 @@ public class NoteModel {
             note.setDateUpdated (date);
 
             setLabelListForNote (note.getId (), note.getLabels ());
+            setTexstStyleForNote (note.getId (), note.getTextStyles ());
 
             allNotes.add (note);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
+    }
+
+    private void setTexstStyleForNote (int id, List<TextStyle> textStyles) {
+        for(TextStyle textStyle : textStyles) {
+            try {
+                addNewStyleForNoteStatement.setInt (1, id);
+                addNewStyleForNoteStatement.setString (2, textStyle.toString ());
+                addNewStyleForNoteStatement.executeUpdate ();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace ();
+            }
+        }
+    }
+
+    private void removeTextStyleForLabel(int id) {
+        try {
+            removeStylesForNoteStatement.setInt (1, id);
+            removeStylesForNoteStatement.executeUpdate ();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace ();
+        }
+
+    }
+
+    private void updateTextStyle(int id, List<TextStyle> textStyles) {
+        removeTextStyleForLabel (id);
+        setTexstStyleForNote (id, textStyles);
     }
 
     private void updateNoteLabels(int id, List<Label> labels) {
@@ -175,6 +226,7 @@ public class NoteModel {
             note.setDateUpdated (date);
 
             updateNoteLabels (note.getId (), note.getLabels ());
+            updateTextStyle (note.getId (), note.getTextStyles ());
 
             updateNotesStatement.executeUpdate();
         } catch (SQLException throwables) {
@@ -188,6 +240,8 @@ public class NoteModel {
             deleteNoteStatement.executeUpdate ();
             deleteNoteIdStatement.setInt (1, id);
             deleteNoteIdStatement.executeUpdate ();
+            deleteTextStyleStatement.setInt (1, id);
+            deleteTextStyleStatement.executeUpdate ();
 
             Optional<Note> note = allNotes.stream ().filter (note1 -> note1.getId () == id).findAny ();
             note.ifPresent (value -> allNotes.remove (value));

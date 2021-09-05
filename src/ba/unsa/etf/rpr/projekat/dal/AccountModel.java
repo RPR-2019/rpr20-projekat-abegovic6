@@ -4,6 +4,7 @@ import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.dto.Account;
 import ba.unsa.etf.rpr.projekat.dto.Group;
 import ba.unsa.etf.rpr.projekat.dto.Label;
+import ba.unsa.etf.rpr.projekat.utilities.AccountValidationFailedException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -95,7 +96,7 @@ public class AccountModel {
             emailAdressUniqueStatement.setString(1, emailAdress);
             ResultSet resultSet = emailAdressUniqueStatement.executeQuery();
             if(resultSet.next() && resultSet.getInt(1) != 0)
-                throw new IllegalArgumentException(MyResourceBundle.getString("EmailNotUniqueError"));
+                throw new AccountValidationFailedException (MyResourceBundle.getString("EmailNotUniqueError"));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -106,7 +107,7 @@ public class AccountModel {
             usernameUniqueStatement.setString(1, username);
             ResultSet resultSet = usernameUniqueStatement.executeQuery();
             if(resultSet.next() && resultSet.getInt(1) != 0)
-                throw new IllegalArgumentException(MyResourceBundle.getString("UsernameNotUniqueError"));
+                throw new AccountValidationFailedException (MyResourceBundle.getString("UsernameNotUniqueError"));
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

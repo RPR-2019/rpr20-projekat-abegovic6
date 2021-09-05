@@ -1,13 +1,11 @@
 
 k
-java:S2095×"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8¿ãŸ°º/
-?
-java:S1643È"Use a StringBuilder instead.(æÏÜÅùÿÿÿÿ8¿ãŸ°º/
+java:S2095Ö"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8¿ãŸ°º/
 u
-java:S3776…"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(³Ø†¼ûÿÿÿÿ8Á¤¢í¹/
+java:S3776„"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(³Ø†¼ûÿÿÿÿ8Á¤¢í¹/
 t
-java:S3776]"RRefactor this method to reduce its Cognitive Complexity from 28 to the 15 allowed.(·òşÿÿÿÿ8·Ò«ë¹/
+java:S3776\"RRefactor this method to reduce its Cognitive Complexity from 28 to the 15 allowed.(·òşÿÿÿÿ8·Ò«ë¹/
 :
-java:S1643Ã"Use a StringBuilder instead.(Úİ™‡8¿ãŸ°º/
-W
-java:S1128	"5Remove this unused import 'javafx.event.ActionEvent'.(î•¯¼ıÿÿÿÿ8‘µ†»/
+java:S1643Â"Use a StringBuilder instead.(Úİ™‡8÷óå—»/
+?
+java:S1643Ç"Use a StringBuilder instead.(æÏÜÅùÿÿÿÿ8÷óå—»/

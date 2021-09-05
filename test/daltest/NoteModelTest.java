@@ -1,4 +1,4 @@
-package modeltest;
+package daltest;
 
 import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;

@@ -1,5 +1,5 @@
 
 k
-java:S2095¦"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8ôìÔë¹/
-k
 java:S2095"MUse try-with-resources or close this "FileInputStream" in a "finally" clause.(†š­î8ôìÔë¹/
+k
+java:S2095¦"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8ôìÔë¹/

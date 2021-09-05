@@ -4,6 +4,7 @@ import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
 import ba.unsa.etf.rpr.projekat.dto.Account;
 import ba.unsa.etf.rpr.projekat.dal.AccountModel;
+import ba.unsa.etf.rpr.projekat.utilities.AccountValidationFailedException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -256,7 +257,7 @@ public class SettingsController {
             if(!emailAdressSignUpTextField.getText ().equals (AccountModel.getCurrentUser ().getEmailAdress ()))
                 accountModel.isEmailUnique(emailAdressSignUpTextField.getText());
 
-        } catch (IllegalArgumentException exception) {
+        } catch (AccountValidationFailedException exception) {
             isAlertNeeded = true;
             emailAdressSignUpTextField.getStyleClass().add("turnRed");
             emailErrorLabel.getStyleClass().add("errorLabel");
@@ -273,7 +274,7 @@ public class SettingsController {
             if(!usernameSignUpTextField.getText ().equals (AccountModel.getCurrentUser ().getUserName ()))
                 accountModel.isUsernameUnique(usernameSignUpTextField.getText());
 
-        } catch (IllegalArgumentException exception) {
+        } catch (AccountValidationFailedException exception) {
             isAlertNeeded = true;
             usernameSignUpTextField.getStyleClass().add("turnRed");
             usernameErrorLabel.getStyleClass().add("errorLabel");
@@ -286,7 +287,7 @@ public class SettingsController {
         try {
             AccountModel.getCurrentUser ().setPassword(passwordSignUpPasswordField.getText());
 
-        } catch (IllegalArgumentException exception) {
+        } catch (AccountValidationFailedException exception) {
             isAlertNeeded = true;
             passwordSignUpPasswordField.getStyleClass().add("turnRed");
             passwordErrorLabel.getStyleClass().add("errorLabel");

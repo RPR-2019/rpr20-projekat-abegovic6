@@ -75,8 +75,6 @@ I
 resources/fxml/label.fxml,d\d\dda1ea7deebaa2b192b69125fb770986016937f5
 M
 resources/reports/label.jrxml,c\4\c4fd80394fc5c11a57cc4131d8fea9672dfd643e
-I
-resources/fxml/login.fxml,8\2\82c591fb13b8d561beda7548c6e5f0df218b604c
 m
 =.idea/libraries/net_sf_jasperreports_jasperreports_6_17_0.xml,c\9\c9b82fea1e5d5ef6a4f1a4678d4e0ed07f309cef
 L

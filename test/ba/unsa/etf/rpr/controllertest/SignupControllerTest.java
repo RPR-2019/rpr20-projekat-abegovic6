@@ -26,14 +26,12 @@ import java.util.Locale;
 @ExtendWith(ApplicationExtension.class)
 class SignupControllerTest {
     private static DatabaseConnection databaseConnection;
-    private static AccountModel accountModel;
     private static Account account;
 
     @Start
     public void start (Stage stage) throws Exception {
         account = Utility.getInstance ().getTestAccount ();
         databaseConnection = DatabaseConnection.getInstance ();
-        accountModel = databaseConnection.getAccountModel ();
 
         MyResourceBundle.setLocale (Locale.getDefault());
         AccountModel.setCurrentUser (new Account ());

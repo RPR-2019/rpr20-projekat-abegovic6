@@ -77,6 +77,7 @@ public class LoginController {
         }
 
         if(isUsernameCorrect && !isPasswordCorrect) {
+            passwordLoginPasswordField.getStyleClass ().add ("turnRed");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(MyResourceBundle.getString("PasswordError"));
             alert.setHeaderText(MyResourceBundle.getString("PasswordNotCorrectHeaderError"));
@@ -88,6 +89,7 @@ public class LoginController {
         }
 
         if(!isUsernameCorrect) {
+            usernameLoginTextField.getStyleClass ().add ("turnRed");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle(MyResourceBundle.getString("UssernameError"));
             alert.setHeaderText(MyResourceBundle.getString("UssernameDoesntExistHeaderError"));

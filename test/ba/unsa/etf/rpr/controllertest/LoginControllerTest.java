@@ -2,7 +2,6 @@ package ba.unsa.etf.rpr.controllertest;
 
 import ba.unsa.etf.rpr.Utility;
 import ba.unsa.etf.rpr.projekat.controller.LoginController;
-import ba.unsa.etf.rpr.projekat.controller.SignupController;
 import ba.unsa.etf.rpr.projekat.dal.AccountModel;
 import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
 import ba.unsa.etf.rpr.projekat.dto.Account;
@@ -123,5 +122,8 @@ class LoginControllerTest {
         robot.clickOn ("#passwordLoginPasswordField").write (account.getPassword ());
         robot.clickOn ("#loginbutton");
         robot.lookup ("NOTA");
+
+        Label label = robot.lookup ("#userNameLabel").queryAs (Label.class);
+        assertTrue (label.getText ().contains (account.getFirstName ()));
     }
 }

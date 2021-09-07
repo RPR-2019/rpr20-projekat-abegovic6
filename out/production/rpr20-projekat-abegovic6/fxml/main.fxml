@@ -174,7 +174,7 @@
                   </RadioButton>
                </children>
             </HBox>
-            <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
+            <HBox alignment="CENTER" VBox.vgrow="SOMETIMES">
                <children>
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#createNewGroup" styleClass="buttonframesmaller" text="%NewGroup" HBox.hgrow="ALWAYS">
                      <HBox.margin>

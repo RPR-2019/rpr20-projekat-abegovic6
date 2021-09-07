@@ -111,6 +111,7 @@ public class MainController {
         setUpTheFlowPane ();
 
         groupListView = new ListView<> ();
+        groupListView.setId ("groupListView");
         groupListView.setItems (groupModel.getAllGroups ());
         groupListView.setCellFactory (listView -> new GroupListCellController (groupModel.getAllGroups ()));
         groupListView.getSelectionModel ().selectedItemProperty().addListener((obs, oldGroup, newGroup) -> {
@@ -124,6 +125,7 @@ public class MainController {
         vboxForListview.getChildren ().add (2, groupListView);
 
         labelListView = new ListView<>();
+        labelListView.setId ("labelListView");
         labelListView.setItems(labelModel.getAllLabels ());
         labelListView.setCellFactory(listView -> new LabelListCellController (labelModel.getAllLabels ()));
         labelListView.getSelectionModel ().selectedItemProperty ().addListener ((obs, oldLabel, newLabel) -> {

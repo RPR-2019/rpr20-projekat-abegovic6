@@ -230,6 +230,9 @@ class SignupControllerTest {
         robot.clickOn ("#signupbutton");
 
         robot.lookup ("NOTA");
+
+        Label label = robot.lookup ("#userNameLabel").queryAs (Label.class);
+        assertTrue (label.getText ().contains (account.getFirstName ()));
     }
 
 }

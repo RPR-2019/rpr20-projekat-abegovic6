@@ -85,7 +85,7 @@ public class NoteModel {
             note.setDateUpdated (stringToLocalDateTime (resultSetNotes.getString (8)));
             note.setLabels (labelModel.getLabelListForNote (note.getId ()));
             note.getTextStyles ().addAll (getTextStyleForNote (note.getId ()));
-            note.setImage (null);
+            note.setImage (resultSetNotes.getString (6));
 
 
             return note;
@@ -163,7 +163,7 @@ public class NoteModel {
             createNoteStatement.setString(3, note.getNoteTitle ());
             createNoteStatement.setString(4, note.getDescription ());
             createNoteStatement.setString(5, note.getNoteColor ().name ());
-            createNoteStatement.setBytes (6, note.getImage ());
+            createNoteStatement.setString (6, note.getImage ());
             createNoteStatement.setString (7, localeDateTimeToString (date));
             createNoteStatement.setString (8, localeDateTimeToString (date));
             createNoteStatement.executeUpdate();
@@ -220,7 +220,7 @@ public class NoteModel {
             updateNotesStatement.setString(1, note.getNoteTitle ());
             updateNotesStatement.setString(2, note.getDescription());
             updateNotesStatement.setString(3, note.getNoteColor ().name ());
-            updateNotesStatement.setBytes (4, note.getImage ());
+            updateNotesStatement.setString (4, note.getImage ());
             updateNotesStatement.setString (5, localeDateTimeToString (date));
 
             note.setDateUpdated (date);

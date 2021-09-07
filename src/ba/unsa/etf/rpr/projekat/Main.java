@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.projekat;
 
 import ba.unsa.etf.rpr.projekat.controller.LoginController;
 import ba.unsa.etf.rpr.projekat.dal.AccountModel;
+import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
 import ba.unsa.etf.rpr.projekat.dto.Account;
 import ba.unsa.etf.rpr.projekat.utilities.MyHostServices;
 import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;

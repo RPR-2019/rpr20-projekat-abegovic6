@@ -17,11 +17,13 @@ public class Note {
     private final SimpleStringProperty noteTitle;
     private final SimpleStringProperty description;
     private final SimpleStringProperty noteColor;
+    private String image;
     private LocalDateTime dateCreated;
     private LocalDateTime dateUpdated;
     private List<Label> labels;
     private boolean delete = false;
-    private byte[] image;
+    private boolean isUpdateNeeded = false;
+
 
 
     public Note() {
@@ -62,15 +64,13 @@ public class Note {
         this.delete = delete;
     }
 
-    public byte[] getImage () {
+    public String getImage () {
         return image;
     }
 
-    public void setImage (byte[] image) {
+    public void setImage (String image) {
         this.image = image;
     }
-
-    private boolean isUpdateNeeded = false;
 
     public NoteColor getNoteColor() {
         if(noteColor.get () == null) return null;

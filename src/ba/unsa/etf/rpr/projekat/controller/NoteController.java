@@ -26,6 +26,7 @@ import javafx.stage.Stage;
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.io.*;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -152,6 +153,13 @@ public class NoteController {
                         (n -> n.getId ().equals ("labelId" + label.getId ())).findAny ();
                 node.ifPresent (value -> ((CheckBox) value).setSelected (true));
             }
+            if(note.getImage () != null) {
+                Image image = new Image (note.getImage ());
+                noteImage.setImage (image);
+
+            }
+
+
             setEditFalse ();
         }
 
@@ -181,24 +189,12 @@ public class NoteController {
         );
         File file = fileChooser.showOpenDialog(noteTitleLabel.getContextMenu());
         if (file != null) {
-            try {
-                Image image = new Image(file.toURI().toString());
-                noteImage.setImage(image);
-                FileInputStream fileInputStream = new FileInputStream (file);
+            String imageLocation = file.getAbsolutePath ();
+            File file1 = new File("", imageLocation);
+            Image img = new Image(file1.toURI().toString());
+            noteImage.setImage (img);
+            note.setImage (imageLocation);
 
-
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                byte[] buf = new byte[1024];
-                for (int readNum; (readNum = fileInputStream.read(buf)) != -1;){
-                    byteArrayOutputStream.write(buf, 0, readNum);
-                }
-                fileInputStream.close();
-
-                note.setImage (buf);
-
-            } catch (IOException e) {
-                e.printStackTrace ();
-            }
         }
     }
 

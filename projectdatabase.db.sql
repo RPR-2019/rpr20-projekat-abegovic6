@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS "notes" (
 	"noteTitle"	TEXT,
 	"description"	TEXT,
 	"noteColor"	TEXT,
-	"image"	BLOB,
+	"image"	TEXT,
 	"dateCreated"	TEXT,
 	"dateUpdated"	TEXT,
 	PRIMARY KEY("id")

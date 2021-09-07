@@ -221,8 +221,6 @@ public class SignupController {
             passwordSignUpPasswordField.getStyleClass().add("turnRed");
             passwordErrorLabel.getStyleClass().add("errorLabel");
             passwordErrorLabel.setText("*" + exception.getMessage());
-            repeatPasswordSignUpPasswordField.setText("");
-            passwordSignUpPasswordField.setText("");
         }
     }
 
@@ -232,8 +230,6 @@ public class SignupController {
             repeatPasswordSignUpPasswordField.getStyleClass().add("turnRed");
             repeatPasswordErrorLabel.getStyleClass().add("errorLabel");
             repeatPasswordErrorLabel.setText("*" + MyResourceBundle.getString("PasswordsDontMatchHeaderError"));
-            repeatPasswordSignUpPasswordField.setText("");
-            passwordSignUpPasswordField.setText("");
 
         }
     }

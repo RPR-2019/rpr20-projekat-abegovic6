@@ -95,38 +95,18 @@ j
 +test/controllertest/HelpControllerTest.java,e\6\e6394318fae24c6469d3e50b475069bdbfbbf6ab
 \
 ,test/controllertest/LabelControllerTest.java,f\3\f3a6707203dd5a7783a130bb39592a68200a78c0
-R
-"test/modeltest/LabelModelTest.java,2\e\2e6c9b82026c5449c8b0236aa38830c338b9aafd
 \
 ,test/controllertest/LoginControllerTest.java,5\6\56af1cb27a4dd6662b9e9a2cb969effab6d6f755
 [
 +test/controllertest/MainControllerTest.java,8\f\8f332da21e1621ce23f30da60e4996bee9bfb8a3
 [
 +test/controllertest/NoteControllerTest.java,8\e\8ea8c40177735b957eda73642ef768a623150a5a
-Q
-!test/modeltest/NoteModelTest.java,5\e\5e76c990860d0c3daaa8c914ac38f7c4c46e1186
 i
 9.idea/libraries/org_testfx_testfx_junit5_4_0_15_alpha.xml,a\8\a8f48de4ecfdd46bf246473730bfcac7810419aa
 _
 /test/controllertest/SettingsControllerTest.java,b\1\b1a93ab946bf956f06d91ef33b78597a4a0a6447
 ]
 -test/controllertest/SignupControllerTest.java,f\a\fa17e4fdb77926809357fa517e22b86339c69639
-q
-Aout/production/rpr20-projekat-abegovic6/Translation_en.properties,f\6\f6b5255d84ece40b1b06284856f770ab62d4302a
-O
-test/javabeantest/NoteTest.java,9\2\9236b230fd787f4330b1ae5be4bd02d3b1d015ba
-R
-"test/javabeantest/AccountTest.java,3\5\35b35b9cc6188b33ab33cae3aee8d3e0a2acc18d
-P
- test/javabeantest/LabelTest.java,f\5\f5e9cc374bfc3a3cbdd7614c8483dc7a3283b631
-P
- test/javabeantest/GroupTest.java,7\7\77649b1d76e4be8e24370165704867e4787babc0
-T
-$test/modeltest/AccountModelTest.java,5\8\581324b9c493feeb2f233a78daedbd8bfcbc4a85
-R
-"test/modeltest/GroupModelTest.java,b\2\b210f4f1e90efde6317b0c0de4980ddde934c83a
-S
-#resources/Translation_en.properties,1\5\151cfaa1996cb211e7306b41da4fc83a109637af
 `
 0src/ba/unsa/etf/rpr/projekat/dto/GroupColor.java,f\2\f25ba2f53125f205cde52f6b023e05d51e06630e
 e

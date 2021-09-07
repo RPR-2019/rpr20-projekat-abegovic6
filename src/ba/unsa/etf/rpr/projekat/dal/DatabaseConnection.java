@@ -1,5 +1,7 @@
 package ba.unsa.etf.rpr.projekat.dal;
 
+import ba.unsa.etf.rpr.projekat.dto.Account;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.*;
@@ -8,7 +10,6 @@ import java.util.*;
 public class DatabaseConnection {
     private static DatabaseConnection instance = null;
     private Connection connection;
-
 
     private AccountModel accountModel = null;
     private GroupModel groupModel = null;
@@ -85,31 +86,8 @@ public class DatabaseConnection {
 
     }
 
-    public void vratiNaDefault() {
-        Statement stmt = null;
-        try {
-            stmt = connection.createStatement();
-            stmt.executeUpdate("DELETE FROM account");
-            stmt.executeUpdate("DELETE FROM groups");
-            stmt.executeUpdate("DELETE FROM label");
-            stmt.executeUpdate("DELETE FROM intertable");
-            stmt.executeUpdate("DELETE FROM notes");
-            deleteAllData ();
-            createDatabase ();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } finally {
-            if(stmt != null) {
-                try {
-                    stmt.close ();
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace ();
-                }
-            }
-        }
-    }
-
-    private void deleteAllData() {
+    public void deleteTestUser (Account account) {
+        accountModel.deleteAccount (account);
         accountModel.getAllAccounts ().clear ();
         groupModel.getAllGroups ().clear ();
         groupModel.getGroups ().clear ();

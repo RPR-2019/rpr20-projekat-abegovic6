@@ -127,9 +127,7 @@ public class Account {
         if (this == o) return true;
         if (o == null || getClass () != o.getClass ()) return false;
         Account account = (Account) o;
-        return id == account.id &&
-                userName.equals (account.userName) &&
-                emailAdress.equals (account.emailAdress);
+        return id == account.id;
     }
 
     @Override

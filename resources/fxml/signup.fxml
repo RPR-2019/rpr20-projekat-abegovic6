@@ -24,7 +24,7 @@
    <children>
       <VBox alignment="CENTER" style="-fx-background-color: #1A1A1C;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" styleClass="heading" text="%SignupHeadingLabel" VBox.vgrow="SOMETIMES" />
+            <Label fx:id="title" alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" styleClass="heading" text="%SignupHeadingLabel" VBox.vgrow="SOMETIMES" />
             <Label alignment="CENTER" contentDisplay="CENTER" focusTraversable="false" maxWidth="1.7976931348623157E308" styleClass="subheading" text="%SignupSubheadingLabel" VBox.vgrow="ALWAYS" />
             <GridPane alignment="CENTER" VBox.vgrow="SOMETIMES">
               <columnConstraints>
@@ -167,7 +167,7 @@
                               <Cursor fx:constant="HAND" />
                            </cursor>
                         </Button>
-                      <Button defaultButton="true" mnemonicParsing="false" onAction="#signUp" styleClass="buttonframe" text="%SignUp">
+                      <Button fx:id="signupbutton" defaultButton="true" mnemonicParsing="false" onAction="#signUp" styleClass="buttonframe" text="%SignUp">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>

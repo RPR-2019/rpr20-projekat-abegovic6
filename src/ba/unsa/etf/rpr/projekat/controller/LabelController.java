@@ -132,6 +132,7 @@ public class LabelController {
 
         if(color == null) {
             isAlertNeeded = true;
+            labelNameTextField.getStyleClass ().add ("turnRed");
             labelColorErrorLabel.getStyleClass().add("errorLabel");
             labelColorErrorLabel.setText(MyResourceBundle.getString("LabelColorNotChosen"));
         }

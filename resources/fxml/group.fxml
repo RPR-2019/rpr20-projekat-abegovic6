@@ -31,7 +31,7 @@
    <children>
        <MenuBar fx:id="groupMenuBar" style="-fx-background-color: #FFFFFF;" GridPane.columnSpan="2147483647">
            <menus>
-               <Menu text="%File">
+               <Menu fx:id="file" text="%File">
                    <items>
                        <MenuItem id="menuItemSave" onAction="#fileSave" styleClass="menuItemSave" text="%Save">
                            <accelerator>
@@ -41,17 +41,17 @@
                        <MenuItem onAction="#fileExit" styleClass="menuItem" text="%Exit" />
                    </items>
                </Menu>
-               <Menu text="%Edit">
+               <Menu fx:id="edit" text="%Edit">
                    <items>
                        <MenuItem onAction="#editEditNote" styleClass="menuItem" text="%EditGroup" />
-                       <MenuItem id="menuItemDelete" onAction="#editDelete" text="%Delete">
+                       <MenuItem id="menuItemDelete" fx:id="delete" onAction="#editDelete" text="%Delete">
                            <accelerator>
                                <KeyCodeCombination alt="UP" code="DELETE" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                            </accelerator>
                        </MenuItem>
                    </items>
                </Menu>
-               <Menu text="%Help">
+               <Menu fx:id="help" text="%Help">
                    <items>
                        <MenuItem id="menuItemUserGuide" onAction="#helpUserGuide" text="%UserGuide" />
                        <SeparatorMenuItem mnemonicParsing="false" />

@@ -9,8 +9,10 @@ import ba.unsa.etf.rpr.projekat.dto.Note;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -28,6 +30,8 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.d
     public Label groupItemNameLabel;
     @FXML
     public VBox groupItemVbox;
+    @FXML
+    public HBox box;
 
     ba.unsa.etf.rpr.projekat.dto.Label label;
 
@@ -95,6 +99,13 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.d
 
 
             });
+
+            Button button = new Button ();
+            button.setId ("label" + label.getId ());
+            button.setOnAction (e -> openInformation ());
+            button.getStyleClass ().add ("infoButton");
+            box.getChildren ().add (button);
+
             setText(null);
             setGraphic(groupItemVbox);
         }

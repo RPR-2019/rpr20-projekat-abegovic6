@@ -189,4 +189,10 @@ public class LabelModel {
             allLabels.sort (Comparator.comparing(Label::getDescription).reversed ());
         }
     }
+
+    public int getIdFromName (String name) {
+        var optional = allLabels.stream().filter(g -> g.getLabelName ().equals(name)).findFirst();
+        if(optional.isEmpty ()) return 0;
+        else return  optional.get().getId ();
+    }
 }

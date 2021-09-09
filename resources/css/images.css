@@ -71,7 +71,7 @@
     -fx-graphic: url("/images/insert_picture.jpg");
     -fx-background-color: Transparent;
 }
-#infoButton{
+.infoButton{
     -fx-graphic: url("/images/info.png");
     -fx-background-color: Transparent;
 }

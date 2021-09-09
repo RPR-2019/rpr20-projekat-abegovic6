@@ -10,6 +10,7 @@
     <stylesheets>
         <URL value="@../css/style.css" />
         <URL value="@../css/validations.css" />
+        <URL value="@../css/images.css" />
     </stylesheets>
     <children>
       <HBox alignment="CENTER_LEFT" VBox.vgrow="ALWAYS">
@@ -19,11 +20,7 @@
                   <Insets left="10.0" right="10.0" />
                </padding>
             </Label>
-            <Button id="infoButton" mnemonicParsing="false" onAction="#openInformation" style="-fx-background-color: transparent;">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
+            <HBox fx:id="box" />
          </children>
       </HBox>
       <Label fx:id="groupItemDescriptionLabel" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" styleClass="paragraphsmaller" text="Label">

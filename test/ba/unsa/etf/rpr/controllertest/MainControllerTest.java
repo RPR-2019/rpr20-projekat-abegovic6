@@ -15,7 +15,9 @@ import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -31,7 +33,6 @@ import java.util.concurrent.TimeUnit;
 
 @ExtendWith(ApplicationExtension.class)
 class MainControllerTest {
-    private static DatabaseConnection databaseConnection;
     private static Account account;
 
     @Start
@@ -53,7 +54,7 @@ class MainControllerTest {
     @BeforeAll
     static void setUp() {
         account = Utility.getInstance ().getTestAccount ();
-        databaseConnection = DatabaseConnection.getInstance ();
+        DatabaseConnection databaseConnection = DatabaseConnection.getInstance ();
         databaseConnection.deleteTestUser (account);
         databaseConnection.getAccountModel ().createAccount (account);
 
@@ -85,12 +86,6 @@ class MainControllerTest {
         MyResourceBundle.setLocale (new Locale ("en"));
     }
 
-    @AfterAll
-    static void onEnd() {
-        databaseConnection.deleteTestUser (account);
-        DatabaseConnection.removeInstance ();
-    }
-
     @Test
     void checkIfAllThere1(FxRobot robot) {
         robot.clickOn ("#labelRadioButton");
@@ -98,8 +93,6 @@ class MainControllerTest {
         assertEquals (3, listView2.getItems ().size ());
 
         robot.clickOn ("Label 1");
-        javafx.scene.control.Label label = robot.lookup ("#userNameLabel").queryAs (javafx.scene.control.Label.class);
-        assertTrue (label.getText ().contains (account.getFirstName ()));
         FlowPane flowPane = robot.lookup ("#flowPaneForNotes").queryAs (FlowPane.class);
         assertEquals (1, flowPane.getChildren ().size ());
 
@@ -108,8 +101,6 @@ class MainControllerTest {
         assertEquals (3, listView1.getItems ().size ());
 
         robot.clickOn ("Group 1");
-        label = robot.lookup ("#userNameLabel").queryAs (javafx.scene.control.Label.class);
-        assertTrue (label.getText ().contains (account.getFirstName ()));
         flowPane = robot.lookup ("#flowPaneForNotes").queryAs (FlowPane.class);
         assertEquals (2, flowPane.getChildren ().size ());
 
@@ -117,7 +108,50 @@ class MainControllerTest {
 
     @Test
     void checkIfAllThere2(FxRobot robot) {
+        javafx.scene.control.Label label = robot.lookup ("#userNameLabel").queryAs (javafx.scene.control.Label.class);
+        assertTrue (label.getText ().contains (account.getFirstName ()));
+        assertTrue (label.getText ().contains (account.getLastName ()));
+        label = robot.lookup ("#userEmailLabel").queryAs (javafx.scene.control.Label.class);
+        assertTrue (label.getText ().contains (account.getEmailAdress ()));
+        label = robot.lookup ("#userUsernameLabel").queryAs (javafx.scene.control.Label.class);
+        assertTrue (label.getText ().contains (account.getUserName ()));
+    }
+
+    @Test
+    void testSearchAndReset(FxRobot robot) {
+        robot.clickOn ("#searchNotesField").write ("1");
+        robot.clickOn ("#searchNottesButton");
+        FlowPane flowPane = robot.lookup ("#flowPaneForNotes").queryAs (FlowPane.class);
+        assertEquals (1, flowPane.getChildren ().size ());
+        robot.clickOn ("#resetButton");
+        assertEquals (0, flowPane.getChildren ().size ());
+    }
+
+    @Test
+    void testSortGroups(FxRobot robot) {
+        robot.clickOn ("#groupRadioButton");
+        robot.clickOn ("#sortGroupLabelsChoiceBox").clickOn (MyResourceBundle.getString ("LastAdded"));
+        ListView listView1 = robot.lookup("#groupListView").queryAs(ListView.class);
+        assertEquals ("Group 3", ((Group)listView1.getItems ().get (0)).getGroupName ());
         robot.clickOn ("#labelRadioButton");
+        ListView listView2= robot.lookup("#labelListView").queryAs(ListView.class);
+        assertEquals ("Label 3", ((Label)listView2.getItems ().get (0)).getLabelName ());
+    }
+
+    @Test
+    void testSortNotes(FxRobot robot) {
+        robot.clickOn ("#groupRadioButton");
+        robot.clickOn ("Group 1");
+        robot.clickOn ("#sortNotesChoiceBox").clickOn (MyResourceBundle.getString ("LastAdded"));
+        FlowPane flowPane = robot.lookup ("#flowPaneForNotes").queryAs (FlowPane.class);
+        assertEquals ("Note 2", ((javafx.scene.control.Label)
+                ((GridPane) flowPane.getChildren ().get (0)).getChildren ().get (0)).getText ());
 
     }
+
+
+
+
+
+
 }

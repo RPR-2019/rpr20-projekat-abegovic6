@@ -9,12 +9,16 @@ import ba.unsa.etf.rpr.projekat.dto.Group;
 import ba.unsa.etf.rpr.projekat.dto.GroupColor;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
 
@@ -29,6 +33,8 @@ public class GroupListCellController extends ListCell<Group> {
     public Label groupItemNameLabel;
     @FXML
     public VBox groupItemVbox;
+    @FXML
+    public HBox box;
 
     private Group group;
     private FXMLLoader mLLoader;
@@ -91,6 +97,12 @@ public class GroupListCellController extends ListCell<Group> {
 
 
             });
+
+            Button button = new Button ();
+            button.setId ("group" + group.getId ());
+            button.setOnAction (e -> openInformation ());
+            button.getStyleClass ().add ("infoButton");
+            box.getChildren ().add (button);
 
             setText(null);
             setGraphic(groupItemVbox);

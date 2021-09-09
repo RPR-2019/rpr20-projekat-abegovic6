@@ -1,5 +1,7 @@
 
 k
-java:S2095"MUse try-with-resources or close this "FileInputStream" in a "finally" clause.(†š­î8ôìÔë¹/
-k
-java:S2095¦"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8ôìÔë¹/
+java:S2095Â"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8Ø¢…¼/
+t
+java:S3776S"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(·òşÿÿÿÿ8ìÃêƒ¼/
+X
+java:S1128";Remove this unused import 'java.net.MalformedURLException'.(ªËŞˆ8øşº†¼/

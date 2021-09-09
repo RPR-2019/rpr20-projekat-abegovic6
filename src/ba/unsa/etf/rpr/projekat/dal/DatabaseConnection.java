@@ -16,6 +16,8 @@ public class DatabaseConnection {
     private LabelModel labelModel = null;
     private NoteModel noteModel = null;
 
+    private static boolean testing = false;
+
 
     private DatabaseConnection () {
         try {
@@ -96,6 +98,14 @@ public class DatabaseConnection {
         noteModel.getCurrentNotes ().clear ();
     }
 
+    public static boolean isTesting () {
+        return testing;
+    }
+
+    public static void setTesting (boolean testing) {
+        DatabaseConnection.testing = testing;
+    }
+
     public Connection getConnection () {
         return connection;
     }
@@ -111,5 +121,6 @@ public class DatabaseConnection {
     public LabelModel getLabelModel () {
         return labelModel;
     }
+
     public NoteModel getNoteModel () { return noteModel; }
 }

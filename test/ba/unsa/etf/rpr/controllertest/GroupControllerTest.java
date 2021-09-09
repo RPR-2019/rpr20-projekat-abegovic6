@@ -51,6 +51,7 @@ class GroupControllerTest {
     static void setUp() {
         account = Utility.getInstance ().getTestAccount ();
         DatabaseConnection databaseConnection = DatabaseConnection.getInstance ();
+        DatabaseConnection.setTesting (true);
         databaseConnection.deleteTestUser (account);
         databaseConnection.getAccountModel ().createAccount (account);
 

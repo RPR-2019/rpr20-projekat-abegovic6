@@ -26,7 +26,6 @@ import javafx.stage.Stage;
 import org.apache.commons.lang3.text.WordUtils;
 
 import java.io.*;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

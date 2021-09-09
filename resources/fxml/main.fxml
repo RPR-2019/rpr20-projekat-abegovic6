@@ -60,7 +60,7 @@
                   </MenuItem>
                </items>
             </Menu>
-            <Menu text="%Help">
+            <Menu fx:id="help" text="%Help">
                <items>
                   <MenuItem id="menuItemUserGuide" onAction="#helpUserGuide" text="%UserGuide" />
                   <SeparatorMenuItem mnemonicParsing="false" />

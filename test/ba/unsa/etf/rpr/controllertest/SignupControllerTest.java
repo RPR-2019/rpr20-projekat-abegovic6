@@ -15,6 +15,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -46,6 +47,13 @@ class SignupControllerTest {
         stage.setMinWidth(1100);
         stage.show ();
         stage.toFront ();
+    }
+
+    @BeforeAll
+    static void setUp() {
+        account = Utility.getInstance ().getTestAccount ();
+        databaseConnection = DatabaseConnection.getInstance ();
+        DatabaseConnection.setTesting (true);
     }
 
     @BeforeEach

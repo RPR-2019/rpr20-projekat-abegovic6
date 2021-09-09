@@ -55,6 +55,7 @@ class MainControllerTest {
     static void setUp() {
         account = Utility.getInstance ().getTestAccount ();
         DatabaseConnection databaseConnection = DatabaseConnection.getInstance ();
+        DatabaseConnection.setTesting (true);
         databaseConnection.deleteTestUser (account);
         databaseConnection.getAccountModel ().createAccount (account);
 
@@ -142,9 +143,9 @@ class MainControllerTest {
     void testSortNotes(FxRobot robot) {
         robot.clickOn ("#groupRadioButton");
         robot.clickOn ("Group 1");
-        robot.clickOn ("#sortNotesChoiceBox").clickOn (MyResourceBundle.getString ("LastAdded"));
+        robot.clickOn ("#sortNotesChoiceBox").clickOn (MyResourceBundle.getString ("FirstAdded"));
         FlowPane flowPane = robot.lookup ("#flowPaneForNotes").queryAs (FlowPane.class);
-        assertEquals ("Note 2", ((javafx.scene.control.Label)
+        assertEquals ("Note 1", ((javafx.scene.control.Label)
                 ((GridPane) flowPane.getChildren ().get (0)).getChildren ().get (0)).getText ());
 
     }

@@ -102,7 +102,9 @@ public class GroupListCellController extends ListCell<Group> {
             button.setId ("group" + group.getId ());
             button.setOnAction (e -> openInformation ());
             button.getStyleClass ().add ("infoButton");
-            box.getChildren ().add (button);
+
+            if(!box.getChildren ().stream().anyMatch (n ->n.getId ().equals (button.getId ())))
+                box.getChildren ().add (button);
 
             setText(null);
             setGraphic(groupItemVbox);

@@ -121,6 +121,12 @@ public class AccountModel {
             } else {
                 account.setId(1);
             }
+            if(DatabaseConnection.isTesting ()) {
+                account.setId (0);
+                deleteAccount (account);
+            } else if(account.getId () == 0) {
+                account.setId (1);
+            }
             createAccountStatement.setInt(1, account.getId());
             createAccountStatement.setString(2, account.getFirstName());
             createAccountStatement.setString(3, account.getLastName());

@@ -12,10 +12,10 @@ public enum NoteColor {
 
     private String value;
 
-    private NoteColor() {
+    NoteColor() {
     }
 
-    private NoteColor(String value) {
+    NoteColor(String value) {
         this.value = value;
     }
 

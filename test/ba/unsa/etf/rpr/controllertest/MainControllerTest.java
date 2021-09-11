@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import ba.unsa.etf.rpr.Utility;
 import ba.unsa.etf.rpr.projekat.controller.MainController;
-import ba.unsa.etf.rpr.projekat.controller.SignupController;
 import ba.unsa.etf.rpr.projekat.dal.AccountModel;
 import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
 import ba.unsa.etf.rpr.projekat.dto.Account;
@@ -15,13 +14,10 @@ import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.testfx.api.FxRobot;
@@ -29,7 +25,6 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.framework.junit5.Start;
 
 import java.util.Locale;
-import java.util.concurrent.TimeUnit;
 
 @ExtendWith(ApplicationExtension.class)
 class MainControllerTest {

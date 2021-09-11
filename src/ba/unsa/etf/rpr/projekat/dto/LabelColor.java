@@ -12,10 +12,10 @@ public enum LabelColor {
 
     private String value;
 
-    private LabelColor() {
+    LabelColor () {
     }
 
-    private LabelColor(String value) {
+    LabelColor (String value) {
         this.value = value;
     }
 

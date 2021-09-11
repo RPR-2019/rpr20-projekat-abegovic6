@@ -104,10 +104,10 @@ class NoteControllerTest {
     @Test
     void createAndDelete(FxRobot robot) {
         robot.clickOn ("#groupRadioButton");
-        robot.clickOn ("Group 3");
+        robot.clickOn ("Group 1");
 
         FlowPane flowPane = robot.lookup("#flowPaneForNotes").queryAs(FlowPane.class);
-        assertEquals (0, flowPane.getChildren ().size ());
+        assertEquals (2, flowPane.getChildren ().size ());
 
         robot.clickOn ("#newNote");
         javafx.scene.control.Label label = robot.lookup ("#noteTitleLabel").queryAs (javafx.scene.control.Label.class);
@@ -116,14 +116,14 @@ class NoteControllerTest {
         robot.clickOn ("#noteNameTextField").write ("Note 4");
         robot.clickOn ("#noteDescriptionTextArea").write ("New note created");
         robot.clickOn ("#noteColorChoiceBox").clickOn ("ORANGE");
-        robot.clickOn ("#noteGroupChoiceBox").clickOn ("Group 3");
+        robot.clickOn ("#noteGroupChoiceBox").clickOn ("Group 1");
         robot.clickOn ("#noteOkButton");
 
         robot.clickOn ("#groupRadioButton");
-        robot.clickOn ("Group 3");
+        robot.clickOn ("Group 1");
 
         flowPane = robot.lookup("#flowPaneForNotes").queryAs(FlowPane.class);
-        assertEquals (1, flowPane.getChildren ().size ());
+        assertEquals (3, flowPane.getChildren ().size ());
 
         assertTrue (flowPane.getChildren ().stream ()
                 .anyMatch (n -> ((javafx.scene.control.Label)((GridPane)n).getChildren ().get (0)).getText ().equals ("Note 4")));
@@ -135,7 +135,7 @@ class NoteControllerTest {
         robot.clickOn ("OK");
 
         flowPane = robot.lookup("#flowPaneForNotes").queryAs(FlowPane.class);
-        assertEquals (0, flowPane.getChildren ().size ());
+        assertEquals (2, flowPane.getChildren ().size ());
 
         robot.closeCurrentWindow ();
     }

@@ -8,10 +8,10 @@ public enum TextStyle {
 
     private String value;
 
-    private TextStyle () {
+    TextStyle () {
     }
 
-    private TextStyle (String value) {
+    TextStyle (String value) {
         this.value = value;
     }
 

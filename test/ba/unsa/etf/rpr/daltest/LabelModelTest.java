@@ -6,7 +6,6 @@ import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
 import ba.unsa.etf.rpr.projekat.dto.Account;
 import ba.unsa.etf.rpr.projekat.dto.Label;
 import ba.unsa.etf.rpr.projekat.dal.LabelModel;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,12 +29,6 @@ class LabelModelTest {
         labelModel = DatabaseConnection.getInstance ().getLabelModel ();
         MyResourceBundle.setLocale (new Locale ("en"));
     }
-
-//    @AfterAll
-//    static void onEnd() {
-//        databaseConnection.deleteTestUser (account);
-//        DatabaseConnection.removeInstance ();
-//    }
 
     @BeforeEach
     void forEachTest() {

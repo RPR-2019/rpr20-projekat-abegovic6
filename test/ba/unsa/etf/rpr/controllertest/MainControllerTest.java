@@ -100,6 +100,8 @@ class MainControllerTest {
         flowPane = robot.lookup ("#flowPaneForNotes").queryAs (FlowPane.class);
         assertEquals (2, flowPane.getChildren ().size ());
 
+        robot.closeCurrentWindow ();
+
     }
 
     @Test
@@ -111,6 +113,8 @@ class MainControllerTest {
         assertTrue (label.getText ().contains (account.getEmailAdress ()));
         label = robot.lookup ("#userUsernameLabel").queryAs (javafx.scene.control.Label.class);
         assertTrue (label.getText ().contains (account.getUserName ()));
+
+        robot.closeCurrentWindow ();
     }
 
     @Test
@@ -121,6 +125,8 @@ class MainControllerTest {
         assertEquals (1, flowPane.getChildren ().size ());
         robot.clickOn ("#resetButton");
         assertEquals (0, flowPane.getChildren ().size ());
+
+        robot.closeCurrentWindow ();
     }
 
     @Test
@@ -132,6 +138,8 @@ class MainControllerTest {
         robot.clickOn ("#labelRadioButton");
         ListView listView2= robot.lookup("#labelListView").queryAs(ListView.class);
         assertEquals ("Label 3", ((Label)listView2.getItems ().get (0)).getLabelName ());
+
+        robot.closeCurrentWindow ();
     }
 
     @Test
@@ -143,6 +151,7 @@ class MainControllerTest {
         assertEquals ("Note 1", ((javafx.scene.control.Label)
                 ((GridPane) flowPane.getChildren ().get (0)).getChildren ().get (0)).getText ());
 
+        robot.closeCurrentWindow ();
     }
 
 

@@ -1,0 +1,11 @@
+-------------------------------------------------------------------------------
+Test set: ba.unsa.etf.rpr.controllertest.SignupControllerTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 37.428 s <<< FAILURE! - in ba.unsa.etf.rpr.controllertest.SignupControllerTest
+createAccount4{FxRobot}  Time elapsed: 8.768 s  <<< ERROR!
+org.testfx.service.query.EmptyNodeQueryException: 
+there is no node in the scene-graph matching the query: NodeQuery: from nodes: [Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT],
+lookup by function: "org.testfx.util.NodeQueryUtils$$Lambda$953/0x0000000800eb4c20@72e5a8e",
+lookup by selector: "#userNameLabel"
+	at ba.unsa.etf.rpr.controllertest.SignupControllerTest.createAccount4(SignupControllerTest.java:250)
+

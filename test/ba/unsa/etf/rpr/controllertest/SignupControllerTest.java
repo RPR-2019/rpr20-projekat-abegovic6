@@ -92,6 +92,8 @@ class SignupControllerTest {
         assertFalse (radioButton2.isSelected ());
         title = robot.lookup ("#title").queryAs (Label.class);
         assertEquals ("SIGN UP", title.getText ());
+
+        robot.closeCurrentWindow ();
     }
 
     @Test
@@ -136,6 +138,8 @@ class SignupControllerTest {
         assertFalse (Utility.checkLabelStyle (robot.lookup ("#repeatPasswordErrorLabel")
                 .queryAs (Label.class), "errorLabel"));
 
+        robot.closeCurrentWindow ();
+
     }
 
     @Test
@@ -179,6 +183,8 @@ class SignupControllerTest {
                 .queryAs (TextField.class), "turnRed"));
         assertFalse (Utility.checkLabelStyle (robot.lookup ("#repeatPasswordErrorLabel")
                 .queryAs (Label.class), "errorLabel"));
+
+        robot.closeCurrentWindow ();
 
     }
 
@@ -225,6 +231,8 @@ class SignupControllerTest {
         assertTrue (Utility.checkLabelStyle (robot.lookup ("#repeatPasswordErrorLabel")
                 .queryAs (Label.class), "errorLabel"));
 
+        robot.closeCurrentWindow ();
+
     }
 
     @Test
@@ -241,6 +249,8 @@ class SignupControllerTest {
 
         Label label = robot.lookup ("#userNameLabel").queryAs (Label.class);
         assertTrue (label.getText ().contains (account.getFirstName ()));
+
+        robot.closeCurrentWindow ();
     }
 
 }

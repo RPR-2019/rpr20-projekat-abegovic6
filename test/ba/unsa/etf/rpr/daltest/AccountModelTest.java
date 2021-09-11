@@ -6,7 +6,6 @@ import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
 import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
 import ba.unsa.etf.rpr.projekat.dto.Account;
 import ba.unsa.etf.rpr.projekat.dal.AccountModel;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,12 +31,6 @@ class AccountModelTest {
     @BeforeEach
     void forEachTest() {
         databaseConnection.deleteTestUser (account);
-    }
-
-    @AfterAll
-    static void onEnd() {
-        databaseConnection.deleteTestUser (account);
-        DatabaseConnection.removeInstance ();
     }
 
     @Test

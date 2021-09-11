@@ -1,0 +1,89 @@
+.menuItem > .label{
+    -fx-graphic: none;
+}
+.menuItem .accelerator-text{
+    -fx-graphic: none;
+}
+
+#menuItemSave > .label{
+    -fx-graphic: url("/images/saveIcon.png");
+}
+#menuItemSave .accelerator-text{
+    -fx-graphic: none;
+}
+
+#menuItemPrint > .label{
+    -fx-graphic: url("/images/printIcon.png");
+}
+#menuItemPrint .accelerator-text{
+    -fx-graphic: none;
+}
+
+#menuItemHelp > .label{
+    -fx-graphic: url("/images/userGuideIcon.png");
+}
+#menuItemHelp .accelerator-text{
+    -fx-graphic: none;
+}
+
+#menuItemSettings > .label{
+    -fx-graphic: url("/images/settingsIcon.png");
+}
+#menuItemSettings .accelerator-text{
+    -fx-graphic: none;
+}
+
+#menuItemDelete > .label{
+    -fx-graphic: url("/images/deleteIcon.png");
+}
+#menuItemDelete .accelerator-text{
+    -fx-graphic: none;
+}
+
+#menuItemUserGuide > .label{
+    -fx-graphic: url("/images/userGuideIcon.png");
+}
+#menuItemUserGuide .accelerator-text{
+    -fx-graphic: none;
+}
+#next {
+    -fx-graphic: url("/images/next.png");
+    -fx-background-color: Transparent;
+}
+#back {
+    -fx-graphic: url("/images/back.png");
+    -fx-background-color: Transparent;
+}
+
+#deleteAccountButton {
+    -fx-graphic: url("/images/deleteuser.png");
+    -fx-background-color: Transparent;
+}
+#settingsButton{
+    -fx-graphic: url("/images/settings.png");
+    -fx-background-color: Transparent;
+}
+#logoutButton{
+    -fx-graphic: url("/images/logout.png");
+    -fx-background-color: Transparent;
+}
+#addImageButton{
+    -fx-graphic: url("/images/insert_picture.jpg");
+    -fx-background-color: Transparent;
+}
+.infoButton{
+    -fx-graphic: url("/images/info.png");
+    -fx-background-color: Transparent;
+}
+#boldButton{
+    -fx-graphic: url("/images/bold.png");
+    -fx-background-color: Transparent;
+}
+#italicButton{
+    -fx-graphic: url("/images/italic.png");
+    -fx-background-color: Transparent;
+}
+#letterButton{
+    -fx-graphic: url("/images/letter.png");
+    -fx-background-color: Transparent;
+}

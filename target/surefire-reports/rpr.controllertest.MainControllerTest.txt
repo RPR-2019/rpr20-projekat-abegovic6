@@ -1,0 +1,29 @@
+-------------------------------------------------------------------------------
+Test set: rpr.controllertest.MainControllerTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 1, Errors: 4, Skipped: 0, Time elapsed: 5.807 s <<< FAILURE! - in rpr.controllertest.MainControllerTest
+rpr.controllertest.MainControllerTest.testSortGroups(FxRobot)  Time elapsed: 1.486 s  <<< ERROR!
+org.testfx.api.FxRobotException: the query "Last added" returned no nodes.
+	at rpr.controllertest.MainControllerTest.testSortGroups(MainControllerTest.java:135)
+
+rpr.controllertest.MainControllerTest.testSearchAndReset(FxRobot)  Time elapsed: 1.94 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at rpr.controllertest.MainControllerTest.testSearchAndReset(MainControllerTest.java:125)
+
+rpr.controllertest.MainControllerTest.testSortNotes(FxRobot)  Time elapsed: 1.082 s  <<< ERROR!
+org.testfx.api.FxRobotException: the query "Group 1" returned no nodes.
+	at rpr.controllertest.MainControllerTest.testSortNotes(MainControllerTest.java:148)
+
+rpr.controllertest.MainControllerTest.checkIfAllThere1(FxRobot)  Time elapsed: 0.727 s  <<< ERROR!
+org.testfx.service.query.EmptyNodeQueryException: 
+there is no node in the scene-graph matching the query: NodeQuery: from nodes: [DialogPane@544ff7c9[styleClass=root dialog-pane alert error], Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT],
+lookup by function: "org.testfx.util.NodeQueryUtils$$Lambda$958/0x0000000800ea9060@47d9a273",
+lookup by selector: "#labelListView"
+	at rpr.controllertest.MainControllerTest.checkIfAllThere1(MainControllerTest.java:88)
+
+rpr.controllertest.MainControllerTest.checkIfAllThere2(FxRobot)  Time elapsed: 0.531 s  <<< ERROR!
+java.lang.RuntimeException: java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+Caused by: java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+Caused by: java.lang.reflect.InvocationTargetException
+Caused by: java.lang.NullPointerException: Cannot invoke "javafx.stage.Stage.close()" because "oldStage" is null
+

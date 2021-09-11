@@ -1,0 +1,19 @@
+-------------------------------------------------------------------------------
+Test set: rpr.controllertest.GroupControllerTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 2.304 s <<< FAILURE! - in rpr.controllertest.GroupControllerTest
+rpr.controllertest.GroupControllerTest.createAndDelete(FxRobot)  Time elapsed: 0.04 s  <<< ERROR!
+java.lang.RuntimeException: java.lang.IllegalStateException: Not on FX application thread; currentThread = main
+	at rpr.controllertest.GroupControllerTest.setUp(GroupControllerTest.java:55)
+
+rpr.controllertest.GroupControllerTest.updateGroup(FxRobot)  Time elapsed: 0.03 s  <<< ERROR!
+java.lang.RuntimeException: java.lang.IllegalStateException: Not on FX application thread; currentThread = main
+	at rpr.controllertest.GroupControllerTest.setUp(GroupControllerTest.java:55)
+
+rpr.controllertest.GroupControllerTest.createFail(FxRobot)  Time elapsed: 1.984 s  <<< ERROR!
+org.testfx.service.query.EmptyNodeQueryException: 
+there is no node in the scene-graph matching the query: NodeQuery: from nodes: [Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT],
+lookup by function: "org.testfx.util.NodeQueryUtils$$Lambda$958/0x0000000800ea9060@1b1426f4",
+lookup by selector: "#groupsTitleLabel"
+	at rpr.controllertest.GroupControllerTest.createFail(GroupControllerTest.java:89)
+

@@ -1,0 +1,19 @@
+-------------------------------------------------------------------------------
+Test set: ba.unsa.etf.rpr.controllertest.LabelControllerTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 1.572 s <<< FAILURE! - in ba.unsa.etf.rpr.controllertest.LabelControllerTest
+createAndDelete{FxRobot}  Time elapsed: 0 s  <<< ERROR!
+java.lang.RuntimeException: java.lang.IllegalStateException: Not on FX application thread; currentThread = main
+	at ba.unsa.etf.rpr.controllertest.LabelControllerTest.setUp(LabelControllerTest.java:55)
+
+updateGroup{FxRobot}  Time elapsed: 0 s  <<< ERROR!
+java.lang.RuntimeException: java.lang.IllegalStateException: Not on FX application thread; currentThread = main
+	at ba.unsa.etf.rpr.controllertest.LabelControllerTest.setUp(LabelControllerTest.java:55)
+
+createFail{FxRobot}  Time elapsed: 1.398 s  <<< ERROR!
+org.testfx.service.query.EmptyNodeQueryException: 
+there is no node in the scene-graph matching the query: NodeQuery: from nodes: [Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT],
+lookup by function: "org.testfx.util.NodeQueryUtils$$Lambda$953/0x0000000800eb4c20@1cbb87f3",
+lookup by selector: "#labelTitleLabel"
+	at ba.unsa.etf.rpr.controllertest.LabelControllerTest.createFail(LabelControllerTest.java:89)
+

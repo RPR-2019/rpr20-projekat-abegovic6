@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1A1A1C;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@../css/validations.css" />
+        <URL value="@../css/style.css" />
+        <URL value="@../css/images.css" />
+    </stylesheets>
+    <columnConstraints>
+    <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <HBox alignment="CENTER" GridPane.vgrow="ALWAYS">
+         <GridPane.margin>
+            <Insets left="10.0" right="10.0" top="10.0" />
+         </GridPane.margin>
+         <children>
+            <Label fx:id="title" alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="heading" text="%Setting" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </Label>
+            <Button id="deleteAccountButton" mnemonicParsing="false" onAction="#deleteUser">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+         <padding>
+            <Insets left="40.0" right="40.0" />
+         </padding>
+      </HBox>
+       <GridPane GridPane.rowIndex="2">
+           <columnConstraints>
+               <ColumnConstraints halignment="RIGHT" hgrow="NEVER" maxWidth="154.4000244140625" minWidth="112.79998779296875" />
+               <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="224.19997558593752" />
+           </columnConstraints>
+           <rowConstraints>
+            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+            <RowConstraints valignment="CENTER" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+               <RowConstraints fillHeight="false" minHeight="0.0" valignment="CENTER" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+               <RowConstraints fillHeight="false" minHeight="0.0" valignment="CENTER" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+               <RowConstraints fillHeight="false" minHeight="0.0" valignment="CENTER" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+               <RowConstraints fillHeight="false" minHeight="0.0" valignment="CENTER" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
+               <RowConstraints minHeight="10.0" valignment="BASELINE" vgrow="SOMETIMES" />
+           </rowConstraints>
+           <children>
+               <TextField fx:id="firstNameSignUpTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                   <GridPane.margin>
+                       <Insets bottom="2.0" left="2.0" right="10.0" top="2.0" />
+                   </GridPane.margin>
+               </TextField>
+               <TextField fx:id="lastNameSignUpTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                   <GridPane.margin>
+                       <Insets bottom="2.0" left="2.0" right="10.0" top="2.0" />
+                   </GridPane.margin>
+               </TextField>
+               <TextField fx:id="usernameSignUpTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                   <GridPane.margin>
+                       <Insets bottom="2.0" left="2.0" right="10.0" top="2.0" />
+                   </GridPane.margin>
+               </TextField>
+               <TextField fx:id="emailAdressSignUpTextField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                   <GridPane.margin>
+                       <Insets bottom="2.0" left="2.0" right="10.0" top="2.0" />
+                   </GridPane.margin>
+               </TextField>
+               <PasswordField fx:id="passwordSignUpPasswordField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="9" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                   <GridPane.margin>
+                       <Insets bottom="2.0" left="2.0" right="10.0" top="2.0" />
+                   </GridPane.margin>
+               </PasswordField>
+               <PasswordField fx:id="repeatPasswordSignUpPasswordField" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="11" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+                   <GridPane.margin>
+                       <Insets bottom="2.0" left="2.0" right="10.0" top="2.0" />
+                   </GridPane.margin>
+               </PasswordField>
+               <Label focusTraversable="false" styleClass="paragraphsmaller" text="%FirstName" GridPane.rowIndex="1">
+                   <padding>
+                       <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                   </padding>
+               <GridPane.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </GridPane.margin>
+               </Label>
+               <Label focusTraversable="false" styleClass="paragraphsmaller" text="%LastName" GridPane.rowIndex="3">
+                   <padding>
+                       <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                   </padding>
+               <GridPane.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </GridPane.margin>
+               </Label>
+               <Label focusTraversable="false" styleClass="paragraphsmaller" text="%Username" GridPane.rowIndex="5">
+                   <padding>
+                       <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                   </padding>
+               <GridPane.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </GridPane.margin>
+               </Label>
+               <Label focusTraversable="false" styleClass="paragraphsmaller" text="%EmailAdress" GridPane.rowIndex="7">
+                   <padding>
+                       <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                   </padding>
+               <GridPane.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </GridPane.margin>
+               </Label>
+               <Label focusTraversable="false" styleClass="paragraphsmaller" text="%Password" GridPane.rowIndex="9">
+                   <padding>
+                       <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                   </padding>
+               <GridPane.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </GridPane.margin>
+               </Label>
+               <Label focusTraversable="false" styleClass="paragraphsmaller" text="%RepeatPassword" GridPane.rowIndex="11">
+                   <padding>
+                       <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                   </padding>
+               <GridPane.margin>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </GridPane.margin>
+               </Label>
+               <Label fx:id="usernameErrorLabel" minHeight="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                   <GridPane.margin>
+                       <Insets left="10.0" />
+                   </GridPane.margin>
+                   <font>
+                       <Font size="1.0" />
+                   </font>
+               </Label>
+               <Label fx:id="emailErrorLabel" minHeight="0.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                   <GridPane.margin>
+                       <Insets left="10.0" />
+                   </GridPane.margin>
+                   <font>
+                       <Font size="1.0" />
+                   </font>
+               </Label>
+               <Label fx:id="passwordErrorLabel" minHeight="0.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                   <GridPane.margin>
+                       <Insets left="10.0" />
+                   </GridPane.margin>
+                   <font>
+                       <Font size="1.0" />
+                   </font>
+               </Label>
+               <Label fx:id="repeatPasswordErrorLabel" minHeight="0.0" GridPane.columnIndex="1" GridPane.rowIndex="10">
+                   <GridPane.margin>
+                       <Insets left="10.0" />
+                   </GridPane.margin>
+                   <font>
+                       <Font size="1.0" />
+                   </font>
+               </Label>
+               <ButtonBar focusTraversable="false" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="12">
+                   <buttons>
+                       <Button fx:id="buttonOK" defaultButton="true" mnemonicParsing="false" onAction="#changeSettings" styleClass="buttonframesmaller" text="%OK">
+                           <cursor>
+                               <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                       <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelSettings" styleClass="buttonframesmaller" text="%Cancel">
+                           <cursor>
+                               <Cursor fx:constant="HAND" />
+                           </cursor></Button>
+                   </buttons>
+                   <GridPane.margin>
+                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                   </GridPane.margin>
+               </ButtonBar>
+            <Label fx:id="firstNameErrorLabel" minHeight="0.0" GridPane.columnIndex="1">
+               <font>
+                  <Font size="1.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+            <Label fx:id="lastNameErrorLabel" minHeight="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font size="1.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </Label>
+           </children>
+       </GridPane>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+         <children>
+            <Label styleClass="paragraph" text="%Language">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </Label>
+            <VBox alignment="CENTER_LEFT">
+               <children>
+                  <RadioButton fx:id="english" mnemonicParsing="false" onAction="#toEnglish" selected="true" styleClass="paragraphsmaller" text="%English">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="language" />
+                     </toggleGroup>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </RadioButton>
+                  <RadioButton fx:id="bosnian" mnemonicParsing="false" onAction="#toBosnian" styleClass="paragraphsmaller" text="%Bosnian" toggleGroup="$language">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </RadioButton>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</GridPane>

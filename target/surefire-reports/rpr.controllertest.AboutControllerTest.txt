@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: rpr.controllertest.AboutControllerTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 30.721 s <<< FAILURE! - in rpr.controllertest.AboutControllerTest
+rpr.controllertest.AboutControllerTest.testAbout(FxRobot)  Time elapsed: 5.29 s  <<< ERROR!
+org.testfx.api.FxRobotException: the query "About" returned no nodes.
+	at rpr.controllertest.AboutControllerTest.testAbout(AboutControllerTest.java:85)
+

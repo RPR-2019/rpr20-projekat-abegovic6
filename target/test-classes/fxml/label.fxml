@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane fx:id="labelGridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@../css/images.css" />
+        <URL value="@../css/style.css" />
+        <URL value="@../css/validations.css" />
+    </stylesheets>
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+    </columnConstraints>
+    <rowConstraints>
+      <RowConstraints minHeight="10.0" />
+        <RowConstraints minHeight="10.0" />
+      <RowConstraints minHeight="0.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" vgrow="NEVER" />
+      <RowConstraints minHeight="0.0" vgrow="SOMETIMES" />
+        <RowConstraints minHeight="10.0" vgrow="NEVER" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
+        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <children>
+        <MenuBar fx:id="labelMenuBar" style="-fx-background-color: #FFFFFF;" GridPane.columnSpan="2147483647">
+            <menus>
+                <Menu text="%File">
+                    <items>
+                        <MenuItem id="menuItemSave" onAction="#fileSave" styleClass="menuItemSave" text="%Save">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator></MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem onAction="#fileExit" styleClass="menuItem" text="%Exit" />
+                    </items>
+                </Menu>
+                <Menu fx:id="edit" text="%Edit">
+                    <items>
+                        <MenuItem onAction="#editEditNote" styleClass="menuItem" text="%EditLabel" />
+                        <MenuItem id="menuItemDelete" onAction="#editDelete" text="%Delete">
+                            <accelerator>
+                                <KeyCodeCombination alt="UP" code="DELETE" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                            </accelerator>
+                        </MenuItem>
+                    </items>
+                </Menu>
+                <Menu text="%Help">
+                    <items>
+                        <MenuItem id="menuItemUserGuide" onAction="#helpUserGuide" text="%UserGuide" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem onAction="#helpAbout" styleClass="menuItem" text="%About" />
+                    </items>
+                </Menu>
+            </menus>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+        </MenuBar>
+        <Label fx:id="labelTitleLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="heading" text="%CreateANewLabel" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+            <GridPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </GridPane.margin></Label>
+        <Label styleClass="paragraph" text="%LabelName" GridPane.rowIndex="3">
+            <GridPane.margin>
+                <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+            </GridPane.margin>
+        </Label>
+        <Label styleClass="paragraph" text="%LabelColor" GridPane.rowIndex="5">
+            <GridPane.margin>
+                <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+            </GridPane.margin>
+        </Label>
+        <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" styleClass="paragraph" text="%LabelDescription" GridPane.rowIndex="6">
+            <GridPane.margin>
+                <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+            </GridPane.margin>
+        </Label>
+        <TextArea fx:id="labelDescriptionTextField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+            <GridPane.margin>
+                <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
+            </GridPane.margin>
+        </TextArea>
+        <TextField fx:id="labelNameTextField" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <GridPane.margin>
+                <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
+            </GridPane.margin>
+        </TextField>
+        <ChoiceBox fx:id="labelColorChoiceBox" maxWidth="1.7976931348623157E308" onAction="#changeCurrentColor" styleClass="choiceboxframe" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <GridPane.margin>
+                <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
+            </GridPane.margin>
+            <cursor>
+                <Cursor fx:constant="HAND" />
+            </cursor>
+        </ChoiceBox>
+        <ButtonBar buttonMinWidth="90.0" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="7" GridPane.vgrow="ALWAYS">
+            <buttons>
+                <Button fx:id="labelOkButton" defaultButton="true" mnemonicParsing="false" onAction="#confirmLabelChanges" styleClass="buttonframe" text="%OK">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+                <Button fx:id="labelCancelButton" cancelButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelLabelChanges" styleClass="buttonframe" text="%Cancel">
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </Button>
+            </buttons>
+            <GridPane.margin>
+                <Insets bottom="30.0" left="20.0" right="20.0" top="30.0" />
+            </GridPane.margin>
+        </ButtonBar>
+      <Label fx:id="labelNameErrorLabel" minWidth="0.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <font>
+            <Font size="1.0" />
+         </font>
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Label>
+      <Label fx:id="labelColorErrorLabel" minWidth="0.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <font>
+            <Font size="1.0" />
+         </font>
+         <GridPane.margin>
+            <Insets left="10.0" />
+         </GridPane.margin>
+      </Label>
+    </children>
+</GridPane>

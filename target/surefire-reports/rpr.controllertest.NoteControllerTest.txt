@@ -1,0 +1,19 @@
+-------------------------------------------------------------------------------
+Test set: rpr.controllertest.NoteControllerTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 3, Skipped: 0, Time elapsed: 2.663 s <<< FAILURE! - in rpr.controllertest.NoteControllerTest
+rpr.controllertest.NoteControllerTest.createAndDelete(FxRobot)  Time elapsed: 0.968 s  <<< ERROR!
+org.testfx.api.FxRobotException: the query "Group 1" returned no nodes.
+	at rpr.controllertest.NoteControllerTest.createAndDelete(NoteControllerTest.java:107)
+
+rpr.controllertest.NoteControllerTest.updateNote(FxRobot)  Time elapsed: 0.683 s  <<< ERROR!
+org.testfx.api.FxRobotException: the query "Label 2" returned no nodes.
+	at rpr.controllertest.NoteControllerTest.updateNote(NoteControllerTest.java:146)
+
+rpr.controllertest.NoteControllerTest.createFail(FxRobot)  Time elapsed: 0.997 s  <<< ERROR!
+org.testfx.service.query.EmptyNodeQueryException: 
+there is no node in the scene-graph matching the query: NodeQuery: from nodes: [Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT],
+lookup by function: "org.testfx.util.NodeQueryUtils$$Lambda$958/0x0000000800ea9060@54e1c68b",
+lookup by selector: "#noteTitleLabel"
+	at rpr.controllertest.NoteControllerTest.createFail(NoteControllerTest.java:91)
+

@@ -1,0 +1,13 @@
+.turnRed {
+    -fx-background-color: #C3083F;
+    -fx-text-fill: #F2F4F3;
+}
+.errorLabel {
+    -fx-text-fill: #F2F4F3;
+    -fx-font-size: 12px;
+    -fx-line-height: 24px;
+    -fx-margin: 0 0 24px;
+    -fx-text-align: justify;
+    -fx-text-justify:
+    -fx-inter-word;
+}

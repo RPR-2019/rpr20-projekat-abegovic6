@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Test set: ba.unsa.etf.rpr.daltest.AccountModelTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 0.572 s <<< FAILURE! - in ba.unsa.etf.rpr.daltest.AccountModelTest
+emailUniqueTest  Time elapsed: 0.128 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Account with this e-mail adress already exists. ==> Expected ba.unsa.etf.rpr.projekat.utilities.AccountValidationFailedException to be thrown, but nothing was thrown.
+	at ba.unsa.etf.rpr.daltest.AccountModelTest.emailUniqueTest(AccountModelTest.java:85)
+
+accountIsDeleting  Time elapsed: 0.098 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at ba.unsa.etf.rpr.daltest.AccountModelTest.accountIsDeleting(AccountModelTest.java:70)
+
+accountIsCreating  Time elapsed: 0.081 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at ba.unsa.etf.rpr.daltest.AccountModelTest.accountIsCreating(AccountModelTest.java:46)
+
+usernameUniqueTest  Time elapsed: 0.094 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: Account with this username already exists. ==> Expected ba.unsa.etf.rpr.projekat.utilities.AccountValidationFailedException to be thrown, but nothing was thrown.
+	at ba.unsa.etf.rpr.daltest.AccountModelTest.usernameUniqueTest(AccountModelTest.java:100)
+

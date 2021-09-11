@@ -1,0 +1,23 @@
+-------------------------------------------------------------------------------
+Test set: ba.unsa.etf.rpr.controllertest.MainControllerTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 1, Errors: 3, Skipped: 0, Time elapsed: 6.687 s <<< FAILURE! - in ba.unsa.etf.rpr.controllertest.MainControllerTest
+testSortGroups{FxRobot}  Time elapsed: 1.588 s  <<< ERROR!
+java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at ba.unsa.etf.rpr.controllertest.MainControllerTest.testSortGroups(MainControllerTest.java:137)
+
+testSearchAndReset{FxRobot}  Time elapsed: 1.715 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at ba.unsa.etf.rpr.controllertest.MainControllerTest.testSearchAndReset(MainControllerTest.java:125)
+
+testSortNotes{FxRobot}  Time elapsed: 1.063 s  <<< ERROR!
+org.testfx.api.FxRobotException: the query "Group 1" returned no nodes.
+	at ba.unsa.etf.rpr.controllertest.MainControllerTest.testSortNotes(MainControllerTest.java:148)
+
+checkIfAllThere1{FxRobot}  Time elapsed: 0.95 s  <<< ERROR!
+org.testfx.service.query.EmptyNodeQueryException: 
+there is no node in the scene-graph matching the query: NodeQuery: from nodes: [Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT],
+lookup by function: "org.testfx.util.NodeQueryUtils$$Lambda$953/0x0000000800eb4c20@4229bb3f",
+lookup by selector: "#labelListView"
+	at ba.unsa.etf.rpr.controllertest.MainControllerTest.checkIfAllThere1(MainControllerTest.java:88)
+

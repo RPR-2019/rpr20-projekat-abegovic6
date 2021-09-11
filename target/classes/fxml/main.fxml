@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #1A1A1C;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <stylesheets>
+      <URL value="@../css/images.css" />
+      <URL value="@../css/style.css" />
+   </stylesheets>
+   <columnConstraints>
+    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+      <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="NEVER" maxWidth="10.0" minWidth="0.0" prefWidth="0.0" />
+    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+  </columnConstraints>
+  <rowConstraints>
+      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
+  </rowConstraints>
+   <children>
+      <MenuBar style="-fx-background-color: #FFFFFF;" GridPane.columnSpan="2147483647">
+         <menus>
+            <Menu fx:id="file" text="%File">
+               <items>
+                  <MenuItem id="menuItemSave" onAction="#fileSave" styleClass="menuItemSave" text="%Save">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <Menu id="menuItemPrint" text="%Print">
+                    <items>
+                      <MenuItem id="menuItemPrint" onAction="#printNotes" text="%PrintNotes" />
+                        <MenuItem id="menuItemPrint" onAction="#printGroups" text="%PrintGroups" />
+                        <MenuItem id="menuItemPrint" onAction="#printLabels" text="%PrintLabels" />
+                    </items>
+                  </Menu>
+                  <Menu id="menuItemNew" text="%New">
+                    <items>
+                      <MenuItem onAction="#createNewGroup" text="%NewGroups" />
+                        <MenuItem onAction="#createNewLabel" text="%NewLabels" />
+                        <MenuItem onAction="#createNewNote" text="%NewNotes" />
+                    </items>
+                  </Menu>
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem id="menuItemSettings" onAction="#fileSettings" text="%Settings" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem onAction="#fileExit" styleClass="menuItem" text="%Exit" />
+               </items>
+            </Menu>
+            <Menu text="%Edit">
+               <items>
+                  <MenuItem id="menuItemDelete" onAction="#editDelete" text="%Delete">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="DELETE" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
+                  </MenuItem>
+               </items>
+            </Menu>
+            <Menu fx:id="help" text="%Help">
+               <items>
+                  <MenuItem id="menuItemUserGuide" onAction="#helpUserGuide" text="%UserGuide" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem onAction="#helpAbout" styleClass="menuItem" text="%About" />
+               </items>
+            </Menu>
+         </menus>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </MenuBar>
+      <VBox GridPane.columnIndex="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.rowSpan="2147483647" GridPane.vgrow="ALWAYS">
+         <children>
+            <HBox alignment="CENTER_LEFT" VBox.vgrow="SOMETIMES">
+               <children>
+                  <TextField fx:id="searchNotesField" promptText="%SearchAllNotes" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="10.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="searchNottesButton" alignment="CENTER" contentDisplay="CENTER" defaultButton="true" mnemonicParsing="false" onAction="#searchNotesAction" styleClass="buttonframesmaller" text="%Search">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="resetButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#resetNoteListAction" styleClass="buttonframesmaller" text="%Reset">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" VBox.vgrow="SOMETIMES">
+               <children>
+                  <Label fx:id="sortLabel" styleClass="paragraph" text="%Sort">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ChoiceBox fx:id="sortNotesChoiceBox" maxWidth="1.7976931348623157E308" onAction="#changeCurrentNoteSort" styleClass="choiceboxframe" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="10.0" top="5.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ChoiceBox>
+               </children>
+            </HBox>
+            <ScrollPane hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
+               <content>
+                  <FlowPane fx:id="flowPaneForNotes" columnHalignment="CENTER" focusTraversable="true" hgap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefWrapLength="475.0" vgap="5.0" />
+               </content>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="15.0" />
+               </VBox.margin>
+            </ScrollPane>
+         </children>
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </VBox>
+      <VBox fx:id="vboxForListview" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2" GridPane.rowSpan="2147483647">
+         <children>
+            <HBox alignment="CENTER_RIGHT">
+               <children>
+                  <Label styleClass="paragraph" text="%Sort">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <ChoiceBox fx:id="sortGroupLabelsChoiceBox" maxWidth="1.7976931348623157E308" onAction="#changeCurrentGroupLabelSort" styleClass="choiceboxframe" HBox.hgrow="ALWAYS">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" spacing="10.0">
+               <children>
+                  <RadioButton fx:id="groupRadioButton" mnemonicParsing="false" onAction="#changeToGroups" selected="true" styleClass="paragraph" text="%Groups" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="groupOrLabel" />
+                     </toggleGroup>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </RadioButton>
+                  <RadioButton fx:id="labelRadioButton" mnemonicParsing="false" onAction="#changeToLabels" styleClass="paragraph" text="%Label" toggleGroup="$groupOrLabel" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </RadioButton>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" VBox.vgrow="SOMETIMES">
+               <children>
+                  <Button fx:id="newGroup" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#createNewGroup" styleClass="buttonframesmaller" text="%NewGroup" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="2.0" top="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Button fx:id="newLabel" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#createNewLabel" styleClass="buttonframesmaller" text="%NewLabel" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="2.0" right="2.0" top="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+                  <Button fx:id="newNote" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#createNewNote" styleClass="buttonframesmaller" text="%NewNote" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="2.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" styleClass="heading" text="NOTA" GridPane.rowIndex="1" />
+      <Separator maxHeight="1.7976931348623157E308" orientation="VERTICAL" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER" GridPane.vgrow="NEVER" />
+      <HBox alignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+         <children>
+            <Button id="settingsButton" fx:id="settingsButton" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openSettings" prefHeight="30.0" prefWidth="30.0">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+            <Label alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="subheading" text="%CurentUser" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="20.0" top="10.0" />
+               </HBox.margin>
+            </Label>
+            <VBox>
+               <children>
+                  <Label fx:id="userNameLabel" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="paragraphsmaller" text="%Name" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets right="10.0" top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="userEmailLabel" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="paragraphsmaller" text="%EmailAdress" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets right="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="userUsernameLabel" contentDisplay="TOP" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="paragraphsmaller" text="%Username" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets right="10.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
+            <Button id="logoutButton" fx:id="logout" mnemonicParsing="false" onAction="#logout" style="-fx-background-color: transparent;">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</GridPane>

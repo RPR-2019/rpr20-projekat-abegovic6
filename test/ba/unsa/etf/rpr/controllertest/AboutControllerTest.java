@@ -86,6 +86,7 @@ public class AboutControllerTest {
 
         assertEquals ("ABOUT", robot.lookup ("#title").queryAs (javafx.scene.control.Label.class).getText ());
 
+        robot.closeCurrentWindow ();
     }
 
 }

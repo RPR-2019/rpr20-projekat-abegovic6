@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane fx:id="okvir" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #1A1A1C;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <stylesheets>
+        <URL value="@../css/images.css" />
+        <URL value="@../css/style.css" />
+    </stylesheets>
+    <columnConstraints>
+        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="1.7976931348623157E308" valignment="CENTER" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <children>
+        <ImageView fitHeight="319.0" fitWidth="272.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <image>
+                <Image url="@/images/logoRPR.jpg" />
+            </image>
+            <GridPane.margin>
+                <Insets />
+            </GridPane.margin></ImageView>
+        <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+            <children>
+                <Label fx:id="title" alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="heading" text="%about" textAlignment="CENTER" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+                </Label>
+                <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" styleClass="subheading2" text="%version" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" styleClass="paragraph" text="1.0.0" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" styleClass="subheading2" text="%WebPage" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Hyperlink fx:id="page" alignment="CENTER" maxWidth="1.7976931348623157E308" onAction="#openURLPage" text="https://www.linkedin.com/in/abegovic6/" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Hyperlink>
+                <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" styleClass="subheading2" text="%GitPage" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Label>
+                <Hyperlink fx:id="git" alignment="CENTER" layoutX="10.0" layoutY="162.0" maxWidth="1.7976931348623157E308" onAction="#openURLGit" text="https://github.com/abegovic6" VBox.vgrow="ALWAYS">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+               <VBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </VBox.margin>
+                </Hyperlink>
+                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="162.0" maxWidth="1.7976931348623157E308" styleClass="subheading2" text="%Author" VBox.vgrow="ALWAYS">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                </Label>
+                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="162.0" maxWidth="1.7976931348623157E308" styleClass="paragraph" text="Begović Amila" VBox.vgrow="ALWAYS">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </VBox.margin>
+                </Label>
+            </children>
+        </VBox>
+    </children>
+</GridPane>

@@ -1,0 +1,24 @@
+-------------------------------------------------------------------------------
+Test set: ba.unsa.etf.rpr.daltest.LabelModelTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 4, Errors: 1, Skipped: 0, Time elapsed: 0.641 s <<< FAILURE! - in ba.unsa.etf.rpr.daltest.LabelModelTest
+testProperty  Time elapsed: 0.125 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <0>
+	at ba.unsa.etf.rpr.daltest.LabelModelTest.testProperty(LabelModelTest.java:49)
+
+labelIsDeleting  Time elapsed: 0.102 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at ba.unsa.etf.rpr.daltest.LabelModelTest.labelIsDeleting(LabelModelTest.java:125)
+
+labelIsUpdating  Time elapsed: 0.112 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at ba.unsa.etf.rpr.daltest.LabelModelTest.labelIsUpdating(LabelModelTest.java:109)
+
+labelIsCreating  Time elapsed: 0.123 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <2> but was: <0>
+	at ba.unsa.etf.rpr.daltest.LabelModelTest.labelIsCreating(LabelModelTest.java:95)
+
+testSorting  Time elapsed: 0.111 s  <<< ERROR!
+java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at ba.unsa.etf.rpr.daltest.LabelModelTest.testSorting(LabelModelTest.java:66)
+

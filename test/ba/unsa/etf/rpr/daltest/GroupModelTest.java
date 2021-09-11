@@ -6,7 +6,6 @@ import ba.unsa.etf.rpr.projekat.dal.DatabaseConnection;
 import ba.unsa.etf.rpr.projekat.dto.Account;
 import ba.unsa.etf.rpr.projekat.dto.Group;
 import ba.unsa.etf.rpr.projekat.dal.GroupModel;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,13 +26,10 @@ class GroupModelTest {
         account = Utility.getInstance ().getTestAccount ();
         databaseConnection = DatabaseConnection.getInstance ();
         DatabaseConnection.setTesting (true);
+        databaseConnection.deleteTestUser (account);
+        databaseConnection.getAccountModel ().createAccount (account);
         groupModel = DatabaseConnection.getInstance ().getGroupModel ();
         MyResourceBundle.setLocale (new Locale ("en"));
-    }
-
-    @AfterAll
-    static void onEnd() {
-        DatabaseConnection.removeInstance ();
     }
 
     @BeforeEach

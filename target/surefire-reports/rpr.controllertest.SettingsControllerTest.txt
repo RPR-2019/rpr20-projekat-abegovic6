@@ -1,0 +1,44 @@
+-------------------------------------------------------------------------------
+Test set: rpr.controllertest.SettingsControllerTest
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 0, Errors: 7, Skipped: 0, Time elapsed: 6.451 s <<< FAILURE! - in rpr.controllertest.SettingsControllerTest
+rpr.controllertest.SettingsControllerTest.accountUpdateSuccess(FxRobot)  Time elapsed: 1.011 s  <<< ERROR!
+org.testfx.api.FxRobotException: the query "#usernameSignUpTextField" returned no nodes.
+	at rpr.controllertest.SettingsControllerTest.accountUpdateSuccess(SettingsControllerTest.java:270)
+
+rpr.controllertest.SettingsControllerTest.testLanguage(FxRobot)  Time elapsed: 0.499 s  <<< ERROR!
+org.testfx.api.FxRobotException: the query "#bosnian" returned no nodes.
+	at rpr.controllertest.SettingsControllerTest.testLanguage(SettingsControllerTest.java:114)
+
+rpr.controllertest.SettingsControllerTest.updateAccountFail1(FxRobot)  Time elapsed: 0.729 s  <<< ERROR!
+org.testfx.service.query.EmptyNodeQueryException: 
+there is no node in the scene-graph matching the query: NodeQuery: from nodes: [Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT],
+lookup by function: "org.testfx.util.NodeQueryUtils$$Lambda$958/0x0000000800ea9060@130c12b7",
+lookup by selector: "#firstNameSignUpTextField"
+	at rpr.controllertest.SettingsControllerTest.updateAccountFail1(SettingsControllerTest.java:134)
+
+rpr.controllertest.SettingsControllerTest.updateAccountFail2(FxRobot)  Time elapsed: 1.009 s  <<< ERROR!
+org.testfx.service.query.EmptyNodeQueryException: 
+there is no node in the scene-graph matching the query: NodeQuery: from nodes: [Pane@33fab8d0[styleClass=root popup], Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT],
+lookup by function: "org.testfx.util.NodeQueryUtils$$Lambda$958/0x0000000800ea9060@576d5deb",
+lookup by selector: "#usernameSignUpTextField"
+	at rpr.controllertest.SettingsControllerTest.updateAccountFail2(SettingsControllerTest.java:179)
+
+rpr.controllertest.SettingsControllerTest.updateAccountFail3(FxRobot)  Time elapsed: 1.114 s  <<< ERROR!
+org.testfx.service.query.EmptyNodeQueryException: 
+there is no node in the scene-graph matching the query: NodeQuery: from nodes: [Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT],
+lookup by function: "org.testfx.util.NodeQueryUtils$$Lambda$958/0x0000000800ea9060@2e3967ea",
+lookup by selector: "#passwordSignUpPasswordField"
+	at rpr.controllertest.SettingsControllerTest.updateAccountFail3(SettingsControllerTest.java:225)
+
+rpr.controllertest.SettingsControllerTest.openWithButton(FxRobot)  Time elapsed: 0.983 s  <<< ERROR!
+org.testfx.service.query.EmptyNodeQueryException: 
+there is no node in the scene-graph matching the query: NodeQuery: from nodes: [Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT],
+lookup by function: "org.testfx.util.NodeQueryUtils$$Lambda$958/0x0000000800ea9060@4d5650ae",
+lookup by selector: "#firstNameSignUpTextField"
+	at rpr.controllertest.SettingsControllerTest.openWithButton(SettingsControllerTest.java:88)
+
+rpr.controllertest.SettingsControllerTest.openWithMenu(FxRobot)  Time elapsed: 1.022 s  <<< ERROR!
+org.testfx.api.FxRobotException: the query "Settings" returned no nodes.
+	at rpr.controllertest.SettingsControllerTest.openWithMenu(SettingsControllerTest.java:100)
+

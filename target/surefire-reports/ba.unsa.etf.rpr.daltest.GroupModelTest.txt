@@ -1,0 +1,32 @@
+-------------------------------------------------------------------------------
+Test set: ba.unsa.etf.rpr.daltest.GroupModelTest
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 6, Errors: 1, Skipped: 0, Time elapsed: 0.93 s <<< FAILURE! - in ba.unsa.etf.rpr.daltest.GroupModelTest
+groupIsCreating  Time elapsed: 0.128 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <2> but was: <0>
+	at ba.unsa.etf.rpr.daltest.GroupModelTest.groupIsCreating(GroupModelTest.java:127)
+
+getNameFromId  Time elapsed: 0.121 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <First> but was: <>
+	at ba.unsa.etf.rpr.daltest.GroupModelTest.getNameFromId(GroupModelTest.java:97)
+
+getIdFromName  Time elapsed: 0.126 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at ba.unsa.etf.rpr.daltest.GroupModelTest.getIdFromName(GroupModelTest.java:114)
+
+testProperty  Time elapsed: 0.13 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <0>
+	at ba.unsa.etf.rpr.daltest.GroupModelTest.testProperty(GroupModelTest.java:50)
+
+groupIsDeleting  Time elapsed: 0.107 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at ba.unsa.etf.rpr.daltest.GroupModelTest.groupIsDeleting(GroupModelTest.java:157)
+
+groupIsUpdating  Time elapsed: 0.117 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at ba.unsa.etf.rpr.daltest.GroupModelTest.groupIsUpdating(GroupModelTest.java:141)
+
+testSorting  Time elapsed: 0.136 s  <<< ERROR!
+java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at ba.unsa.etf.rpr.daltest.GroupModelTest.testSorting(GroupModelTest.java:68)
+

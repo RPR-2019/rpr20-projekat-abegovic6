@@ -91,6 +91,8 @@ class LoginControllerTest {
         assertFalse (radioButton2.isSelected ());
         title = robot.lookup ("#title").queryAs (Label.class);
         assertEquals ("WELCOME TO NOTA", title.getText ());
+
+        robot.closeCurrentWindow ();
     }
 
     @Test
@@ -105,6 +107,8 @@ class LoginControllerTest {
                 .queryAs (TextField.class), "turnRed"));
         assertFalse (Utility.checkTextFieldStyle (robot.lookup ("#passwordLoginPasswordField")
                 .queryAs (TextField.class), "turnRed"));
+
+        robot.closeCurrentWindow ();
     }
 
     @Test
@@ -119,6 +123,7 @@ class LoginControllerTest {
                 .queryAs (TextField.class), "turnRed"));
         assertTrue (Utility.checkTextFieldStyle (robot.lookup ("#passwordLoginPasswordField")
                 .queryAs (TextField.class), "turnRed"));
+        robot.closeCurrentWindow ();
     }
 
     @Test
@@ -131,5 +136,7 @@ class LoginControllerTest {
 
         Label label = robot.lookup ("#userNameLabel").queryAs (Label.class);
         assertTrue (label.getText ().contains (account.getFirstName ()));
+
+        robot.closeCurrentWindow ();
     }
 }

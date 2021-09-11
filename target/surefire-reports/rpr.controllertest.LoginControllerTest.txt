@@ -1,0 +1,19 @@
+-------------------------------------------------------------------------------
+Test set: rpr.controllertest.LoginControllerTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 2, Errors: 1, Skipped: 0, Time elapsed: 16.606 s <<< FAILURE! - in rpr.controllertest.LoginControllerTest
+rpr.controllertest.LoginControllerTest.testLogIn2(FxRobot)  Time elapsed: 6.221 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <false> but was: <true>
+	at rpr.controllertest.LoginControllerTest.testLogIn2(LoginControllerTest.java:122)
+
+rpr.controllertest.LoginControllerTest.testLogIn3(FxRobot)  Time elapsed: 4.248 s  <<< ERROR!
+org.testfx.service.query.EmptyNodeQueryException: 
+there is no node in the scene-graph matching the query: NodeQuery: from nodes: [Grid hgap=0.0, vgap=0.0, alignment=CENTER, DialogPane@544ff7c9[styleClass=root dialog-pane alert error]],
+lookup by function: "org.testfx.util.NodeQueryUtils$$Lambda$958/0x0000000800ea9060@f0da945",
+lookup by selector: "#userNameLabel"
+	at rpr.controllertest.LoginControllerTest.testLogIn3(LoginControllerTest.java:137)
+
+rpr.controllertest.LoginControllerTest.testTranslation(FxRobot)  Time elapsed: 1.028 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at rpr.controllertest.LoginControllerTest.testTranslation(LoginControllerTest.java:82)
+

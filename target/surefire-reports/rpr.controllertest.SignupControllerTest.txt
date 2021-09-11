@@ -1,0 +1,27 @@
+-------------------------------------------------------------------------------
+Test set: rpr.controllertest.SignupControllerTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 1, Errors: 4, Skipped: 0, Time elapsed: 32.981 s <<< FAILURE! - in rpr.controllertest.SignupControllerTest
+rpr.controllertest.SignupControllerTest.createAccount1(FxRobot)  Time elapsed: 7.777 s  <<< ERROR!
+org.testfx.api.FxRobotException: the query "OK" returned no nodes.
+	at rpr.controllertest.SignupControllerTest.createAccount1(SignupControllerTest.java:109)
+
+rpr.controllertest.SignupControllerTest.createAccount2(FxRobot)  Time elapsed: 6.944 s  <<< ERROR!
+org.testfx.api.FxRobotException: the query "OK" returned no nodes.
+	at rpr.controllertest.SignupControllerTest.createAccount2(SignupControllerTest.java:155)
+
+rpr.controllertest.SignupControllerTest.createAccount3(FxRobot)  Time elapsed: 8.425 s  <<< ERROR!
+org.testfx.api.FxRobotException: the query "OK" returned no nodes.
+	at rpr.controllertest.SignupControllerTest.createAccount3(SignupControllerTest.java:202)
+
+rpr.controllertest.SignupControllerTest.createAccount4(FxRobot)  Time elapsed: 8.854 s  <<< ERROR!
+org.testfx.service.query.EmptyNodeQueryException: 
+there is no node in the scene-graph matching the query: NodeQuery: from nodes: [Grid hgap=0.0, vgap=0.0, alignment=TOP_LEFT],
+lookup by function: "org.testfx.util.NodeQueryUtils$$Lambda$958/0x0000000800ea9060@3e27aa33",
+lookup by selector: "#userNameLabel"
+	at rpr.controllertest.SignupControllerTest.createAccount4(SignupControllerTest.java:250)
+
+rpr.controllertest.SignupControllerTest.testTranslation(FxRobot)  Time elapsed: 0.973 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at rpr.controllertest.SignupControllerTest.testTranslation(SignupControllerTest.java:83)
+

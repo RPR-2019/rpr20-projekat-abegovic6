@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Test set: ba.unsa.etf.rpr.daltest.NoteModelTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 3, Errors: 1, Skipped: 0, Time elapsed: 0.583 s <<< FAILURE! - in ba.unsa.etf.rpr.daltest.NoteModelTest
+testProperty  Time elapsed: 0.14 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <0>
+	at ba.unsa.etf.rpr.daltest.NoteModelTest.testProperty(NoteModelTest.java:54)
+
+noteIsDeleting  Time elapsed: 0.108 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at ba.unsa.etf.rpr.daltest.NoteModelTest.noteIsDeleting(NoteModelTest.java:97)
+
+labelIsUpdating  Time elapsed: 0.137 s  <<< ERROR!
+java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at ba.unsa.etf.rpr.daltest.NoteModelTest.labelIsUpdating(NoteModelTest.java:88)
+
+labelIsCreating  Time elapsed: 0.131 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <2> but was: <0>
+	at ba.unsa.etf.rpr.daltest.NoteModelTest.labelIsCreating(NoteModelTest.java:68)
+

@@ -26,6 +26,8 @@ class LabelModelTest {
         account = Utility.getInstance ().getTestAccount ();
         databaseConnection = DatabaseConnection.getInstance ();
         DatabaseConnection.setTesting (true);
+        databaseConnection.deleteTestUser (account);
+        databaseConnection.getAccountModel ().createAccount (account);
         labelModel = DatabaseConnection.getInstance ().getLabelModel ();
         MyResourceBundle.setLocale (new Locale ("en"));
     }

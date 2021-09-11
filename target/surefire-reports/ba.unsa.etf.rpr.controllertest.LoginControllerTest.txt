@@ -1,0 +1,19 @@
+-------------------------------------------------------------------------------
+Test set: ba.unsa.etf.rpr.controllertest.LoginControllerTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 1, Errors: 2, Skipped: 0, Time elapsed: 15.549 s <<< FAILURE! - in ba.unsa.etf.rpr.controllertest.LoginControllerTest
+testLogIn2{FxRobot}  Time elapsed: 5.493 s  <<< ERROR!
+org.testfx.api.FxRobotException: the query "OK" returned no nodes.
+	at ba.unsa.etf.rpr.controllertest.LoginControllerTest.testLogIn2(LoginControllerTest.java:120)
+
+testLogIn3{FxRobot}  Time elapsed: 3.729 s  <<< ERROR!
+org.testfx.service.query.EmptyNodeQueryException: 
+there is no node in the scene-graph matching the query: NodeQuery: from nodes: [Grid hgap=0.0, vgap=0.0, alignment=CENTER],
+lookup by function: "org.testfx.util.NodeQueryUtils$$Lambda$953/0x0000000800eb4c20@759d26fb",
+lookup by selector: "#userNameLabel"
+	at ba.unsa.etf.rpr.controllertest.LoginControllerTest.testLogIn3(LoginControllerTest.java:137)
+
+testTranslation{FxRobot}  Time elapsed: 0.969 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <true> but was: <false>
+	at ba.unsa.etf.rpr.controllertest.LoginControllerTest.testTranslation(LoginControllerTest.java:82)
+

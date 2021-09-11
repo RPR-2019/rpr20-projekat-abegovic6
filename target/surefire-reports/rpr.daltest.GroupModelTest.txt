@@ -1,0 +1,32 @@
+-------------------------------------------------------------------------------
+Test set: rpr.daltest.GroupModelTest
+-------------------------------------------------------------------------------
+Tests run: 7, Failures: 6, Errors: 1, Skipped: 0, Time elapsed: 0.092 s <<< FAILURE! - in rpr.daltest.GroupModelTest
+rpr.daltest.GroupModelTest.groupIsCreating  Time elapsed: 0.006 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <2> but was: <0>
+	at rpr.daltest.GroupModelTest.groupIsCreating(GroupModelTest.java:128)
+
+rpr.daltest.GroupModelTest.getNameFromId  Time elapsed: 0.023 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <First> but was: <>
+	at rpr.daltest.GroupModelTest.getNameFromId(GroupModelTest.java:98)
+
+rpr.daltest.GroupModelTest.getIdFromName  Time elapsed: 0.008 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at rpr.daltest.GroupModelTest.getIdFromName(GroupModelTest.java:115)
+
+rpr.daltest.GroupModelTest.testProperty  Time elapsed: 0.007 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <0>
+	at rpr.daltest.GroupModelTest.testProperty(GroupModelTest.java:51)
+
+rpr.daltest.GroupModelTest.groupIsDeleting  Time elapsed: 0.005 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at rpr.daltest.GroupModelTest.groupIsDeleting(GroupModelTest.java:158)
+
+rpr.daltest.GroupModelTest.groupIsUpdating  Time elapsed: 0.005 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at rpr.daltest.GroupModelTest.groupIsUpdating(GroupModelTest.java:142)
+
+rpr.daltest.GroupModelTest.testSorting  Time elapsed: 0.006 s  <<< ERROR!
+java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at rpr.daltest.GroupModelTest.testSorting(GroupModelTest.java:69)
+

@@ -1,0 +1,24 @@
+-------------------------------------------------------------------------------
+Test set: rpr.daltest.LabelModelTest
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 4, Errors: 1, Skipped: 0, Time elapsed: 0.051 s <<< FAILURE! - in rpr.daltest.LabelModelTest
+rpr.daltest.LabelModelTest.testProperty  Time elapsed: 0.006 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <3> but was: <0>
+	at rpr.daltest.LabelModelTest.testProperty(LabelModelTest.java:49)
+
+rpr.daltest.LabelModelTest.labelIsDeleting  Time elapsed: 0.004 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at rpr.daltest.LabelModelTest.labelIsDeleting(LabelModelTest.java:125)
+
+rpr.daltest.LabelModelTest.labelIsUpdating  Time elapsed: 0.011 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <1> but was: <0>
+	at rpr.daltest.LabelModelTest.labelIsUpdating(LabelModelTest.java:109)
+
+rpr.daltest.LabelModelTest.labelIsCreating  Time elapsed: 0.005 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <2> but was: <0>
+	at rpr.daltest.LabelModelTest.labelIsCreating(LabelModelTest.java:95)
+
+rpr.daltest.LabelModelTest.testSorting  Time elapsed: 0.005 s  <<< ERROR!
+java.lang.IndexOutOfBoundsException: Index 0 out of bounds for length 0
+	at rpr.daltest.LabelModelTest.testSorting(LabelModelTest.java:66)
+

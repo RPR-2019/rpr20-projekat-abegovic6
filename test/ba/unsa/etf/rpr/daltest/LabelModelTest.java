@@ -26,15 +26,16 @@ class LabelModelTest {
     static void setUp () {
         account = Utility.getInstance ().getTestAccount ();
         databaseConnection = DatabaseConnection.getInstance ();
+        DatabaseConnection.setTesting (true);
         labelModel = DatabaseConnection.getInstance ().getLabelModel ();
         MyResourceBundle.setLocale (new Locale ("en"));
     }
 
-    @AfterAll
-    static void onEnd() {
-        databaseConnection.deleteTestUser (account);
-        DatabaseConnection.removeInstance ();
-    }
+//    @AfterAll
+//    static void onEnd() {
+//        databaseConnection.deleteTestUser (account);
+//        DatabaseConnection.removeInstance ();
+//    }
 
     @BeforeEach
     void forEachTest() {

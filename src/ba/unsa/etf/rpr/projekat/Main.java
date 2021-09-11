@@ -22,9 +22,6 @@ public class Main extends Application {
         MyHostServices.setHostServices (getHostServices ());
         AccountModel.setCurrentUser (new Account ());
 
-        System.out.println("JavaFX Version: " + System.getProperty("javafx.version"));
-        System.out.println("JavaFX Runtime Version: " + System.getProperty("javafx.runtime.version"));
-
         LoginController loginController = new LoginController();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"), MyResourceBundle.getResourceBundle ());
         loader.setController(loginController);

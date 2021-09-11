@@ -26,6 +26,7 @@ class GroupModelTest {
     static void setUp () {
         account = Utility.getInstance ().getTestAccount ();
         databaseConnection = DatabaseConnection.getInstance ();
+        DatabaseConnection.setTesting (true);
         groupModel = DatabaseConnection.getInstance ().getGroupModel ();
         MyResourceBundle.setLocale (new Locale ("en"));
     }

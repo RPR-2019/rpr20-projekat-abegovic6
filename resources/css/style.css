@@ -38,7 +38,7 @@
 .paragraphsmaller {
     -fx-text-fill: #F2F4F3;
     -fx-font-family: 'Helvetica Neue', sans-serif;
-    -fx-font-size: 10px;
+    -fx-font-size: 12px;
     -fx-line-height: 24px;
     -fx-margin: 0 0 24px;
     -fx-text-align: justify;

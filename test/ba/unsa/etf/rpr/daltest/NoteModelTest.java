@@ -29,6 +29,7 @@ class NoteModelTest {
         account = Utility.getInstance ().getTestAccount ();
         group = new Group (0, account.getId (), "2 by name", "3 by description", "BLUE");
         databaseConnection = DatabaseConnection.getInstance ();
+        DatabaseConnection.setTesting (true);
         noteModel = DatabaseConnection.getInstance ().getNoteModel ();
         MyResourceBundle.setLocale (new Locale ("en"));
     }

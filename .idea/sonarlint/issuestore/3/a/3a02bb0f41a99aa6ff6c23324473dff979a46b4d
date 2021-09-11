@@ -1,4 +1,10 @@
 
+K
+java:S1128".Remove this unused import 'javafx.scene.Node'.(ÑÖ¬ï8«¶×Ü¼/
+\
+java:S4034j":Replace this negation and "anyMatch()" with "noneMatch()".(ç¤„šýÿÿÿÿ8éû•à¼/
 t
-java:S3776+"RRefactor this method to reduce its Cognitive Complexity from 26 to the 15 allowed.(öÍÃàýÿÿÿÿ8·µ‚é¹/
-]	java:S110"<This class has 9 parents which is greater than 5 authorized.(›þÒ´ÿÿÿÿÿ8·µ‚é¹/
+java:S37761"RRefactor this method to reduce its Cognitive Complexity from 28 to the 15 allowed.(öÍÃàýÿÿÿÿ8·µ‚é¹/
+T
+java:S1128"7Remove this unused import 'java.awt.event.ActionEvent'.(Úù“‘8žß×Ü¼/
+]	java:S110"<This class has 9 parents which is greater than 5 authorized.(›þÒ´ÿÿÿÿÿ8·µ‚é¹/

@@ -290,6 +290,7 @@ public class NoteController {
 
         note.getTextStyles ().clear ();
         note.getTextStyles ().addAll (textStyles);
+        note.getLabels ().clear ();
         note.setLabels (labelsList);
 
     }

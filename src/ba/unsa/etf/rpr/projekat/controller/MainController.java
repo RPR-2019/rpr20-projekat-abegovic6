@@ -299,8 +299,23 @@ public class MainController {
                 if(note.isDelete ()) {
                     noteModel.deleteNote (note.getId ());
                 }
+                if(groupListView.getSelectionModel ().selectedItemProperty ().get () != null &&
+                        groupListView.getSelectionModel ().selectedItemProperty ().get ().getId () == note.getGroupId ()) {
+                    if(!noteModel.getCurrentNotes ().contains (note))
+                        noteModel.getCurrentNotes ().add (note);
+                }
+                else noteModel.getCurrentNotes ().remove (note);
+                if(labelListView.getSelectionModel ()
+                        .selectedItemProperty ().get () != null &&
+                        note.getLabels ().stream ().anyMatch (l -> labelListView.getSelectionModel ()
+                                .selectedItemProperty ().get ().getId () == l.getId ())) {
+                    if(!noteModel.getCurrentNotes ().contains (note))
+                        noteModel.getCurrentNotes ().add (note);
+                } else noteModel.getCurrentNotes ().remove (note);
+
                 var selected = sortNotesChoiceBox.getSelectionModel ().selectedItemProperty ().get ();
                 if (selected != null) noteModel.sortNotes (selected);
+
             });
         } catch (IOException e) {
             e.printStackTrace();

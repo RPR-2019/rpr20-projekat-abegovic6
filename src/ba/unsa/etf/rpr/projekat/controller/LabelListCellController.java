@@ -104,9 +104,8 @@ public class LabelListCellController extends ListCell<ba.unsa.etf.rpr.projekat.d
             button.setId ("label" + label.getId ());
             button.setOnAction (e -> openInformation ());
             button.getStyleClass ().add ("infoButton");
-            box.getChildren ().add (button);
 
-            if(!box.getChildren ().stream().anyMatch (n ->n.getId ().equals (button.getId ())))
+            if(box.getChildren ().stream().noneMatch (n ->n.getId ().equals (button.getId ())))
                 box.getChildren ().add (button);
 
             setText(null);

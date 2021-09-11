@@ -44,7 +44,7 @@
                   <MenuItem onAction="#fileExit" styleClass="menuItem" text="%Exit" />
                     </items>
                 </Menu>
-                <Menu text="%Edit">
+                <Menu fx:id="edit" text="%Edit">
                     <items>
                   <MenuItem onAction="#editEditNote" styleClass="menuItem" text="%EditNote" />
                   <MenuItem id="menuItemDelete" onAction="#editDelete" text="%Delete">

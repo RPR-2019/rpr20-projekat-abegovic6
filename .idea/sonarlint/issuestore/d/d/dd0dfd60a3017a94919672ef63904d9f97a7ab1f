@@ -1,7 +1,5 @@
 
 k
-java:S2095Â"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8Ø¢…¼/
+java:S2095Á"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8Ø¢…¼/
 t
-java:S3776S"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(·òşÿÿÿÿ8ìÃêƒ¼/
-X
-java:S1128";Remove this unused import 'java.net.MalformedURLException'.(ªËŞˆ8øşº†¼/
+java:S3776R"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(·òşÿÿÿÿ8ìÃêƒ¼/

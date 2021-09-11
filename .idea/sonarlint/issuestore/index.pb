@@ -159,3 +159,17 @@ m
 =test/ba/unsa/etf/rpr/controllertest/SignupControllerTest.java,a\4\a43664b081570e561b1525610d8134bf1928fe90
 k
 ;test/ba/unsa/etf/rpr/controllertest/MainControllerTest.java,4\b\4b17c55517ea79ef1c5c5085e7d83b8eee0ce0d2
+I
+resources/fxml/group.fxml,a\3\a3c2e1aa41ba72f9b4247f25c56b4095f38ae2f0
+H
+resources/css/images.css,d\1\d12ea8bb723d817bec4d8a303d13c98ae74d0fb7
+I
+resources/fxml/label.fxml,d\d\dda1ea7deebaa2b192b69125fb770986016937f5
+P
+ resources/fxml/listviewitem.fxml,2\0\202bae0e7d4fac50d6d4eacf1782a08a3b57baf2
+P
+ resources/Translation.properties,1\6\16da11ed28a04593d9825b11c421f14fb4b29ff5
+V
+&resources/Translation_en_US.properties,a\6\a6142ffa65b83fb245a9695029380a844a46d322
+t
+Dout/production/rpr20-projekat-abegovic6/Translation_en_US.properties,e\d\ed52a893c99ff3c1b670b09ba8d8852cb0aae66d

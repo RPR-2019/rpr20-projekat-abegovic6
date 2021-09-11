@@ -27,7 +27,7 @@
             <Insets left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
          <children>
-            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="heading" text="%Setting" HBox.hgrow="ALWAYS">
+            <Label fx:id="title" alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="heading" text="%Setting" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets right="20.0" />
                </HBox.margin>
@@ -178,7 +178,7 @@
                </Label>
                <ButtonBar focusTraversable="false" GridPane.columnSpan="2147483647" GridPane.hgrow="ALWAYS" GridPane.rowIndex="12">
                    <buttons>
-                       <Button defaultButton="true" mnemonicParsing="false" onAction="#changeSettings" styleClass="buttonframesmaller" text="%OK">
+                       <Button fx:id="buttonOK" defaultButton="true" mnemonicParsing="false" onAction="#changeSettings" styleClass="buttonframesmaller" text="%OK">
                            <cursor>
                                <Cursor fx:constant="HAND" />
                            </cursor></Button>

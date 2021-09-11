@@ -251,9 +251,9 @@ public class GroupController {
             loader.setController(helpController);
 
             newUserGuideStage.setTitle(MyResourceBundle.getString("UserGuideTitle"));
-            newUserGuideStage.setScene(new Scene(loader.load(), 700, 500));
-            newUserGuideStage.setMinHeight(500);
-            newUserGuideStage.setMinWidth(700);
+            newUserGuideStage.setScene(new Scene(loader.load(), 900, 650));
+            newUserGuideStage.setMinHeight(650);
+            newUserGuideStage.setMinWidth(900);
 
             newUserGuideStage.show();
         } catch (IOException e) {

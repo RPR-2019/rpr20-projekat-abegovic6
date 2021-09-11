@@ -226,7 +226,7 @@ public class LabelController {
 
     public void helpUserGuide() {
         try {
-            Stage newStage = new Stage();
+            Stage newUserGuideStage = new Stage();
 
             HelpController helpController = new HelpController ();
 
@@ -235,12 +235,12 @@ public class LabelController {
                     MyResourceBundle.getResourceBundle ());
             loader.setController(helpController);
 
-            newStage.setTitle(MyResourceBundle.getString("UserGuideTitle"));
-            newStage.setScene(new Scene(loader.load(), 700, 500));
-            newStage.setMinHeight(500);
-            newStage.setMinWidth(700);
+            newUserGuideStage.setTitle(MyResourceBundle.getString("UserGuideTitle"));
+            newUserGuideStage.setScene(new Scene(loader.load(), 900, 650));
+            newUserGuideStage.setMinHeight(650);
+            newUserGuideStage.setMinWidth(900);
 
-            newStage.show();
+            newUserGuideStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

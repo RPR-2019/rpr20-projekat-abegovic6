@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr.projekat.controller;
 
+import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -29,10 +30,20 @@ public class HelpController {
     @FXML
     public void initialize() {
         List<Image> images = new ArrayList<> ();
+        String path = "/images/";
+//        images.add (new Image ("/images/logoRPR.jpg"));
+//        images.add (new Image ("/images/logoRPR.jpg"));
+//        images.add (new Image ("/images/logoRPR.jpg"));
 
-        images.add (new Image ("/images/logoRPR.jpg"));
-        images.add (new Image ("/images/logoRPR.jpg"));
-        images.add (new Image ("/images/logoRPR.jpg"));
+        if(MyResourceBundle.getLocale ().getLanguage () == "bs") {
+            path += "bosnian/";
+        } else {
+            path += "english/";
+        }
+
+        for(int i = 1; i < 17; i++) {
+            images.add (new Image (path + "pic" + i + ".jpg"));
+        }
 
         currentImageId = new SimpleObjectProperty<> ();
         currentImageId.set (1);

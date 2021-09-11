@@ -101,7 +101,7 @@
             </HBox>
             <HBox alignment="CENTER" VBox.vgrow="SOMETIMES">
                <children>
-                  <Label styleClass="paragraph" text="%Sort">
+                  <Label fx:id="sortLabel" styleClass="paragraph" text="%Sort">
                      <HBox.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </HBox.margin>
@@ -203,9 +203,9 @@
       </VBox>
       <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" styleClass="heading" text="NOTA" GridPane.rowIndex="1" />
       <Separator maxHeight="1.7976931348623157E308" orientation="VERTICAL" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="2147483647" GridPane.valignment="CENTER" GridPane.vgrow="NEVER" />
-      <HBox id="settingsButton" alignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+      <HBox alignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <children>
-            <Button id="settingsButton" alignment="CENTER" mnemonicParsing="false" onAction="#openSettings">
+            <Button id="settingsButton" fx:id="settingsButton" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#openSettings" prefHeight="30.0" prefWidth="30.0">
                <HBox.margin>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </HBox.margin>

@@ -583,9 +583,9 @@ public class MainController {
             loader.setController(helpController);
 
             newStage.setTitle(MyResourceBundle.getString("UserGuideTitle"));
-            newStage.setScene(new Scene(loader.load(), 700, 500));
-            newStage.setMinHeight(500);
-            newStage.setMinWidth(700);
+            newStage.setScene(new Scene(loader.load(), 900, 650));
+            newStage.setMinHeight(650);
+            newStage.setMinWidth(900);
 
             newStage.show();
         } catch (IOException e) {

@@ -12,7 +12,6 @@ import ba.unsa.etf.rpr.projekat.dto.Note;
 import ba.unsa.etf.rpr.projekat.utilities.MyResourceBundle;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -30,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(ApplicationExtension.class)
-public class NoteControllerTest {
+class NoteControllerTest {
 
     private static Account account;
 
@@ -178,6 +177,8 @@ public class NoteControllerTest {
 
         flowPane = robot.lookup("#flowPaneForNotes").queryAs(FlowPane.class);
         assertEquals (0, flowPane.getChildren ().size ());
+
+        robot.closeCurrentWindow ();
     }
 
 }

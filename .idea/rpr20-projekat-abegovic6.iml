@@ -132,5 +132,6 @@
     <orderEntry type="library" name="Maven: org.apache.maven:maven-archiver:3.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.plexus:plexus-utils:3.3.0" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.6" level="project" />
+    <orderEntry type="library" name="javafx" level="project" />
   </component>
 </module>

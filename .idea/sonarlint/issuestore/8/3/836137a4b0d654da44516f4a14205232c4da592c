@@ -1,13 +1,13 @@
 
-r
-java:S3776"RRefactor this method to reduce its Cognitive Complexity from 28 to the 15 allowed.(·òşÿÿÿÿ8·Ò«ë¹/
-m
-java:S3776"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(†—ß”8»Í±¢½/
-<
-java:S1643"Use a StringBuilder instead.(æÏÜÅùÿÿÿÿ8Û±‰¼/
-7
-java:S1643"Use a StringBuilder instead.(Úİ™‡8Û±‰¼/
-r
-java:S3776"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(³Ø†¼ûÿÿÿÿ8Û±‰¼/
-h
-java:S2095"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8Û±‰¼/
+k
+java:S2095ç"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8Û±‰¼/
+p
+java:S3776“"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(†—ß”8»Í±¢½/
+:
+java:S1643Ó"Use a StringBuilder instead.(Úİ™‡8Û±‰¼/
+t
+java:S3776\"RRefactor this method to reduce its Cognitive Complexity from 28 to the 15 allowed.(·òşÿÿÿÿ8·Ò«ë¹/
+?
+java:S1643Ø"Use a StringBuilder instead.(æÏÜÅùÿÿÿÿ8Û±‰¼/
+u
+java:S3776•"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(³Ø†¼ûÿÿÿÿ8Û±‰¼/

@@ -152,13 +152,6 @@ public class NoteController {
                         (n -> n.getId ().equals ("labelId" + label.getId ())).findAny ();
                 node.ifPresent (value -> ((CheckBox) value).setSelected (true));
             }
-            if(note.getImage () != null) {
-                Image image = new Image (note.getImage ());
-                noteImage.setImage (image);
-
-            }
-
-
             setEditFalse ();
         }
 
@@ -188,12 +181,8 @@ public class NoteController {
         );
         File file = fileChooser.showOpenDialog(noteTitleLabel.getContextMenu());
         if (file != null) {
-            String imageLocation = file.getAbsolutePath ();
-            File file1 = new File("", imageLocation);
-            Image img = new Image(file1.toURI().toString());
+            Image img = new Image(file.toURI().toString());
             noteImage.setImage (img);
-            note.setImage (imageLocation);
-
         }
     }
 

@@ -122,6 +122,7 @@ public class MainController {
                 if (selected != null) noteModel.sortNotes (selected);
             }
         });
+        VBox.setVgrow(groupListView, Priority.ALWAYS);
         vboxForListview.getChildren ().add (2, groupListView);
 
         labelListView = new ListView<>();
@@ -136,6 +137,7 @@ public class MainController {
                 if (selected != null) noteModel.sortNotes (selected);
             }
         });
+        VBox.setVgrow(labelListView, Priority.ALWAYS);
 
 
         sortNotesModel = new SortModel ();
@@ -169,6 +171,7 @@ public class MainController {
 
     public void changeToGroups() {
         vboxForListview.getChildren().remove(2);
+        VBox.setVgrow(groupListView, Priority.ALWAYS);
         vboxForListview.getChildren().add(2, groupListView);
         groupListView.getSelectionModel ().clearSelection ();
         noteModel.getCurrentNotes ().clear ();
@@ -176,6 +179,7 @@ public class MainController {
 
     public void changeToLabels() {
         vboxForListview.getChildren().remove(2);
+        VBox.setVgrow(labelListView, Priority.ALWAYS);
         vboxForListview.getChildren().add(2, labelListView);
         labelListView.getSelectionModel ().clearSelection ();
         noteModel.getCurrentNotes ().clear ();
@@ -295,24 +299,23 @@ public class MainController {
             newStage.setOnHiding(windowEvent -> {
                 if(note.isUpdateNeeded ()) {
                     noteModel.updateNote(note);
+                    if(groupListView.getSelectionModel ().selectedItemProperty ().get () != null) {
+                        if (groupListView.getSelectionModel ().selectedItemProperty ().get ().getId () == note.getGroupId ()) {
+                            if (!noteModel.getCurrentNotes ().contains (note))
+                                noteModel.getCurrentNotes ().add (note);
+                        } else noteModel.getCurrentNotes ().remove (note);
+                    } else
+                    if(labelListView.getSelectionModel ().selectedItemProperty ().get () != null) {
+                        if(note.getLabels ().stream ().anyMatch (l -> labelListView.getSelectionModel ()
+                                .selectedItemProperty ().get ().getId () == l.getId ())) {
+                            if(!noteModel.getCurrentNotes ().contains (note))
+                                noteModel.getCurrentNotes ().add (note);
+                        } else noteModel.getCurrentNotes ().remove (note);
+                    }
                 }
                 if(note.isDelete ()) {
                     noteModel.deleteNote (note.getId ());
                 }
-                if(groupListView.getSelectionModel ().selectedItemProperty ().get () != null &&
-                        groupListView.getSelectionModel ().selectedItemProperty ().get ().getId () == note.getGroupId ()) {
-                    if(!noteModel.getCurrentNotes ().contains (note))
-                        noteModel.getCurrentNotes ().add (note);
-                }
-                else noteModel.getCurrentNotes ().remove (note);
-                if(labelListView.getSelectionModel ()
-                        .selectedItemProperty ().get () != null &&
-                        note.getLabels ().stream ().anyMatch (l -> labelListView.getSelectionModel ()
-                                .selectedItemProperty ().get ().getId () == l.getId ())) {
-                    if(!noteModel.getCurrentNotes ().contains (note))
-                        noteModel.getCurrentNotes ().add (note);
-                } else noteModel.getCurrentNotes ().remove (note);
-
                 var selected = sortNotesChoiceBox.getSelectionModel ().selectedItemProperty ().get ();
                 if (selected != null) noteModel.sortNotes (selected);
 

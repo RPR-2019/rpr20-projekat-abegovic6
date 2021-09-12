@@ -154,9 +154,9 @@ public class SignupController {
                 userGuideLoader.setController(helpController);
 
                 newUserGuideStage.setTitle(MyResourceBundle.getString("UserGuideTitle"));
-                newUserGuideStage.setScene(new Scene(userGuideLoader.load(), 700, 500));
-                newUserGuideStage.setMinHeight(500);
-                newUserGuideStage.setMinWidth(700);
+                newUserGuideStage.setScene(new Scene(userGuideLoader.load(), 900, 650));
+                newUserGuideStage.setMinHeight(650);
+                newUserGuideStage.setMinWidth(900);
 
 
 

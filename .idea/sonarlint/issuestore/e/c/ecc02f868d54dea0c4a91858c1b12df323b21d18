@@ -1,5 +1,5 @@
 
-h
-java:S2095"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8Ø¢…¼/
-r
-java:S3776"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(·òşÿÿÿÿ8ìÃêƒ¼/
+t
+java:S3776R"RRefactor this method to reduce its Cognitive Complexity from 19 to the 15 allowed.(·òşÿÿÿÿ8ìÃêƒ¼/
+k
+java:S2095Â"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¼Á“‰øÿÿÿÿ8Ø¢…¼/
